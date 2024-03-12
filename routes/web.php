@@ -21,7 +21,8 @@ Route::get('/admtm85', function () {
 
 //Rotas de Acesso ao Usuário
 Route::get('/login' , [LoginController::class, 'login']);
-Route::get('/cadastro' , [CadastroController::class, 'cadastro']);
+Route::get('/cadastro' , [CadastroController::class, 'create']);
+Route::post('/cadastro' , [CadastroController::class, 'store']);
 Route::get('/perfil' , [PerfilController::class, 'perfil']);
 
 //Rotas de Acesso do ADM
