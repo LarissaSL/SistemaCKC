@@ -6,12 +6,19 @@ use App\Http\Controllers\Adm\LoginAdmController;
 use App\Http\Controllers\Usuario\CadastroController;
 use App\Http\Controllers\Usuario\LoginController;
 use App\Http\Controllers\Usuario\PerfilController;
+use App\Mail\teste;
+use Illuminate\Support\Facades\Mail;
+
 use Illuminate\Support\Facades\Route;
 
 
 //Index do Usuário
 Route::get('/', function () {
     return view('usuario/index');
+});
+
+Route::get('/teste-email', function () {
+    Mail::to('larissa021222@gmail.com')->send(new teste());
 });
 
 //Index do ADM
