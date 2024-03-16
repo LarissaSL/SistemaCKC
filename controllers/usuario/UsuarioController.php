@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Config/Conexao.php';
+require_once 'models/Usuario.php';
 
 class UsuarioController extends RenderView
 {
@@ -11,32 +11,53 @@ class UsuarioController extends RenderView
 
     public function mostrarPerfil($id)
     {
-        //Lógica para mostrar o Perfil do Usuário
-        echo "Perfil do Usuario\nID: " . $id;
-        $this->carregarViewComArgumentos('perfil', [
-            'nome' => 'Larissa',
-            'id' => $id,
-            'email' => 'email@teste'
-        ]);
+        $usuarioModel = new Usuario();
+
+        $usuario = $usuarioModel->consultarUsuarioPorId($id);
+
+        // Verifica se o usuário foi encontrado
+        if ($usuario) {
+            $this->carregarViewComArgumentos('perfil', [
+                'id' => $usuario['Id'],
+                'nome' => $usuario['Nome'],
+                'email' => $usuario['Email']
+            ]);
+        } else {
+            echo "Usuário não encontrado com o ID: $id";
+        }
+    }
+
+    public function cadastrar() 
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $nome = $_POST['nome'];
+            $cpf = $_POST['cpf'];
+            $email = $_POST['email'];
+            //$senha = $_POST['senha'];
+            //$peso = $_POST['peso'];
+            //$data_nascimento = $_POST['data_nascimento'];
+            //$genero = $_POST['genero'];
+            //$telefone = $_POST['telefone'];
+
+            $novoUsuario = new Usuario();
+            $resultado = $novoUsuario->inserirUsuario($nome, $cpf, $email, '$senha', 22, '021222', 'Feminino', 1155277239, 'teste.jpg');
+
+            if ($resultado) {
+                $feedback = "Usuário cadastrado com Sucesso!";
+                $this->carregarViewComArgumentos('cadastro', ['feedback' => $feedback]);
+            } else {
+                echo "Erro ao cadastrar usuário.";
+            }
+        } 
+        else 
+        {
+            $this->carregarView('cadastro');
+        }
+        
     }
 
     public function login()
     {
         echo "Controller do Login";
-    }
-
-    //Função para se conectar ao Banco de Dados
-    public function getConexao()
-    {
-        try {
-            $conexao = new Conexao();
-
-            // Acessando o método de teste de conexão da classe Conexao
-            $conexao->conexaoBancoDeDados();
-
-            echo "Conexão com o banco de dados estabelecida com sucesso!";
-        } catch (PDOException $erro) {
-            echo "Error! ".$erro->getMessage();
-        } 
     }
 }

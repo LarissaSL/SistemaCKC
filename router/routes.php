@@ -5,8 +5,7 @@ $routes = [
     '/' => 'usuario#IndexUsuarioController#index',
     '/usuario/{id}' => 'usuario#UsuarioController#mostrarPerfil',
     '/usuario/login' => 'usuario#UsuarioController#login',
-
-    '/usuario/teste' => 'usuario#UsuarioController#getConexao'
+    '/usuario/cadastro' => 'usuario#UsuarioController#cadastrar'
 ];
 
 ?>
