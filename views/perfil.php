@@ -7,8 +7,14 @@
 </head>
 <body>
     <h1>Teste Perfil</h1>
-    <h2>Perfil do Usuario ID:<?php echo $id?></h2>
-    <p><?php echo $nome ?></p> 
-    <p><?php echo $email ?></p> 
+    <?php if(isset($feedback)): ?>
+        <p><?php echo $feedback; ?></p>
+    <?php else: ?>
+        <h2>Perfil do Usuário ID: <?php echo $id; ?></h2>
+        <p>Nome: <?php echo $nome; ?></p> 
+        <p>Email: <?php echo $email; ?></p> 
+        <p>Foto:</p>
+        <img src="<?php echo $foto_perfil; ?>" alt="Foto de <?php echo $nome; ?>"> 
+    <?php endif; ?>
 </body>
 </html>

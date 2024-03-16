@@ -5,6 +5,8 @@ $routes = [
     '/' => 'usuario#IndexUsuarioController#index',
     '/usuario/{id}' => 'usuario#UsuarioController#mostrarPerfil',
     '/usuario/login' => 'usuario#UsuarioController#login',
+    
+    //Essa Rota é para solicitações GET e POST
     '/usuario/cadastro' => 'usuario#UsuarioController#cadastrar'
 ];
 
