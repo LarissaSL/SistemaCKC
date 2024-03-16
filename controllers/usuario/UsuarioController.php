@@ -14,19 +14,42 @@ class UsuarioController extends RenderView
     {
         $usuarioModel = new Usuario();
 
+        // Carrega o perfil do usuário
         $usuario = $usuarioModel->consultarUsuarioPorId($id);
 
         if ($usuario) {
             $this->carregarViewComArgumentos('usuario/perfil', [
-                'id' => $usuario['Id'],
+                'id' => $id,
                 'nome' => $usuario['Nome'],
                 'email' => $usuario['Email'],
-                'foto_perfil' => $usuario['Foto_perfil'],
+                'fotoPerfil' => $usuario['Foto_perfil'],
             ]);
         } else {
             $this->carregarViewComArgumentos('usuario/perfil', [
                 'feedback' => "Nenhum usuário encontrado com o ID: " . $id
             ]);
+        }
+
+        // Atualizar ou Inserir uma foto de perfil
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['fotoPerfil'])) {
+            $imagemDePerfil = $_FILES['fotoPerfil'];
+            $imagem = new Imagem();
+
+            $statusFormatoDaImagem = $imagem->validarImagem($imagemDePerfil); 
+
+            if ($statusFormatoDaImagem !== "aceito") {
+                $this->carregarViewComArgumentos('usuario/perfil', [
+                    'id' => $id,
+                    'feedback' => $statusFormatoDaImagem,
+                    'nome' => $usuarioModel['Nome'],
+                    'email' => $usuarioModel['Email'],
+                    'fotoPerfil' => $usuarioModel['Foto_perfil'],
+                ]);
+                return;
+            }
+
+            $caminhoImg = $imagem->moverParaPasta($imagemDePerfil);
+            $usuarioModel->inserirFoto($caminhoImg, $id);
         }
     }
 
