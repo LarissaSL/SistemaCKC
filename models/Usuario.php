@@ -33,6 +33,32 @@ class Usuario
         }
     }
 
+    public function inserirFoto($foto, $id)
+    {
+        try {
+            // Exclui a imagem antiga do servidor
+            $usuarioModel = new Usuario();
+            $usuarioAntigo = $usuarioModel->consultarUsuarioPorId($id);
+            if ($usuarioAntigo && isset($usuarioAntigo['Foto_perfil'])) {
+                
+                $nomeArquivo = basename($usuarioAntigo['Foto_perfil']);
+                $caminho = ".\\views\Img\ImgUsuario\\" . $nomeArquivo;
+                if (file_exists($caminho)) {
+                    unlink($caminho);
+                }
+            }
+
+            $inserir = $this->conexao->prepare("UPDATE usuario SET Foto_perfil = :foto_perfil WHERE Id = :id");
+            $inserir->bindValue(':foto_perfil', $foto);
+            $inserir->bindValue(':id', $id);
+            $inserir->execute();
+            return true; 
+        } catch (PDOException $erro) {
+            echo "Erro na inserção: " . $erro->getMessage();
+            return false; 
+        }
+    }
+
     public function consultarUsuarioPorId($id)
     {
         try {

@@ -22,15 +22,16 @@ class Imagem
 
     public function validarImagem($imagem) {
         $statusDaValidacao = "aceito";
-        $extensaoImagem = strtolower (pathinfo($imagem['name'], PATHINFO_EXTENSION));
-        
-        if($extensaoImagem != 'jpg' && $extensaoImagem != 'png'){
-            return $statusDaValidacao = "Tipo de arquivo não aceito, apenas imagens em jpg e png são aceitas.";
+        $extensaoImagem = strtolower(pathinfo($imagem['name'], PATHINFO_EXTENSION));
+    
+        if (!in_array($extensaoImagem, ['jpg', 'png'])) {
+            return "Tipo de arquivo não aceito, apenas imagens em jpg e png são aceitas.";
         }
-
+    
         if (preg_match("/[_\/\-]/", $imagem['name'])) {
-            return $statusDaValidacao = "O nome da Imagem não pode conter caracteres especiais como '_', '/' ou '-'.";
+            return "O nome da imagem não pode conter caracteres especiais como '_', '/' ou '-'.";
         }
+    
         return $statusDaValidacao;
     }
 }
