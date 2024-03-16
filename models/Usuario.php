@@ -12,11 +12,12 @@ class Usuario
         $this->conexao = $bancoDeDados->getConexao();
     }
 
-    public function inserirUsuario($nome, $cpf, $email, $senha, $peso, $dataNascimento, $genero, $telefone, $fotoPerfil)
+    public function inserirUsuario($nome, $sobrenome, $cpf, $email, $senha, $peso, $dataNascimento, $genero, $telefone)
     {
         try {
-            $inserir = $this->conexao->prepare("INSERT INTO usuario (Nome, Cpf, Email, Senha, Peso, Data_nascimento, Genero, Telefone, Foto_perfil) VALUES (:nome, :cpf, :email, :senha, :peso, :data_nascimento, :genero, :telefone, :foto_perfil)");
+            $inserir = $this->conexao->prepare("INSERT INTO usuario (Nome, Sobrenome, Cpf, Email, Senha, Peso, Data_nascimento, Genero, Telefone) VALUES (:nome, :sobrenome, :cpf, :email, :senha, :peso, :data_nascimento, :genero, :telefone)");
             $inserir->bindValue(':nome', $nome);
+            $inserir->bindValue(':sobrenome', $sobrenome);
             $inserir->bindValue(':cpf', $cpf);
             $inserir->bindValue(':email', $email);
             $inserir->bindValue(':senha', $senha);
@@ -24,7 +25,6 @@ class Usuario
             $inserir->bindValue(':data_nascimento', $dataNascimento);
             $inserir->bindValue(':genero', $genero);
             $inserir->bindValue(':telefone', $telefone);
-            $inserir->bindValue(':foto_perfil', $fotoPerfil);
             $inserir->execute();
             return true; 
         } catch (PDOException $erro) {
@@ -79,12 +79,16 @@ class Usuario
         return $statusDaValidacao;
     }
 
-    public function validarEmail($email) {
+    public function validarEmail($email, $confirmarEmail) {
         $statusDaValidacao = "aceito";
 
         // Verifica se a formatação inserida do Email tem o @
         if (strpos($email, "@") == false) {
             return $statusDaValidacao = "Digite um e-mail válido";
+        }
+
+        if ($email !== $confirmarEmail) {
+            return $statusDaValidacao = "Os e-mails devem ser idênticos";
         }
 
         // Verifica se o E-mail do usuário já foi Cadastrado
@@ -106,6 +110,14 @@ class Usuario
         return $statusDaValidacao;
     }
 
+    public function validarSenha($senha, $confirmarSenha) 
+    {
+        if ($senha !== $confirmarSenha) {
+            return $statusDaValidacao = "As senhas devem ser idênticas";
+        }
+        return "aceito";
+    }
+
     public function criptografarSenha($senha) {
         return $senhaCriptografada = password_hash($senha, PASSWORD_DEFAULT);
     }
@@ -122,8 +134,6 @@ class Usuario
             return $telefone;
         }
     }
-
-
 }
 
 ?>
