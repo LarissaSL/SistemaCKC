@@ -36,5 +36,12 @@ OBS.: Não precisa se preocupar em Inserir o SQL da Tabela Usuário, nosso siste
     - Abra a pasta `CSS` 
     - Crie seu arquivo .css
 
+## Inserindo Icones e Imagens no Site
+1.
+    - Abra a pasta `View` do Projeto
+    - Abra a pasta `IMG` 
+    - Abra a pasta `ImgSistema`
+OBS.: A pasta `ImgUsuario` são as imagens que os Usuários irão salvar em seus perfis
+
 
 ## Em breve tutorial de como criar rotas (mas se precisar de alguma avisa)
