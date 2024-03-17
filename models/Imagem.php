@@ -34,5 +34,12 @@ class Imagem
     
         return $statusDaValidacao;
     }
+
+    public function excluirImagem($caminho) 
+    {
+        if (file_exists($caminho)) {
+            unlink($caminho);
+        }
+    }
 }
 ?>

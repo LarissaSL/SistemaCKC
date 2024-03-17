@@ -56,7 +56,7 @@
         <?php endif; ?>
 
         <?php 
-            if(isset($_SESSION['id'])):
+            if(isset($_SESSION['nome']) && $_SESSION['nome'] == $nome):
         ?>
         <form action="/sistemackc/usuario/<?php echo $id; ?>" method="POST" enctype="multipart/form-data">
             <label for="fotoPerfil">Atualizar sua foto de perfil:</label><br>

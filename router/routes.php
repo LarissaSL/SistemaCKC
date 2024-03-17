@@ -6,11 +6,15 @@ $routes = [
     '/logout' => 'usuario#UsuarioController#logout',
     '/kartodromo' => 'usuario#KartodromoController#index',
 
+    //Essas Rotas tem solicitações GET e POST
     '/usuario/{id}' => 'usuario#UsuarioController#mostrarPerfil',
     '/usuario/login' => 'usuario#UsuarioController#login',
+    '/usuario/cadastro' => 'usuario#UsuarioController#cadastrar',
 
-    //Essa Rota é para solicitações GET e POST
-    '/usuario/cadastro' => 'usuario#UsuarioController#cadastrar'
+    //CRUD do Usuario
+    '/admtm85/usuario' => 'adm#UsuariosAdmController#index',
+    '/admtm85/usuario/{id}' => 'adm#UsuariosAdmController#editar',
+    '/admtm85/usuario/excluir/{id}' => 'adm#UsuariosAdmController#excluir',
 
 ];
 

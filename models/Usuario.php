@@ -38,14 +38,13 @@ class Usuario
         try {
             // Exclui a imagem antiga do servidor
             $usuarioModel = new Usuario();
+            $imagem = new Imagem();
             $usuarioAntigo = $usuarioModel->consultarUsuarioPorId($id);
             if ($usuarioAntigo && isset($usuarioAntigo['Foto_perfil'])) {
                 
                 $nomeArquivo = basename($usuarioAntigo['Foto_perfil']);
                 $caminho = ".\\views\Img\ImgUsuario\\" . $nomeArquivo;
-                if (file_exists($caminho)) {
-                    unlink($caminho);
-                }
+                $imagem->excluirImagem($caminho);
             }
 
             $inserir = $this->conexao->prepare("UPDATE usuario SET Foto_perfil = :foto_perfil WHERE Id = :id");
@@ -56,6 +55,19 @@ class Usuario
         } catch (PDOException $erro) {
             echo "Erro na inserção: " . $erro->getMessage();
             return false; 
+        }
+    }
+
+    public function consultarTodosOsUsuarios()
+    {
+        try {
+            $consulta = $this->conexao->prepare("SELECT * FROM usuario");
+            $consulta->execute();
+            $usuarios = $consulta->fetchAll(PDO::FETCH_ASSOC);
+            return $usuarios;
+        } catch (PDOException $erro) {
+            echo "Erro na consulta: " . $erro->getMessage();
+            return null;
         }
     }
 
@@ -74,6 +86,25 @@ class Usuario
             }
         } catch (PDOException $erro) {
             echo "Erro na consulta: " . $erro->getMessage();
+            return null;
+        }
+    }
+
+    public function excluirUsuarioPorId($id)
+    {
+        try {
+            $consulta = $this->conexao->prepare("DELETE FROM usuario WHERE Id = :id");
+            $consulta->bindValue(':id', $id);
+            $consulta->execute();
+            $resultado = $consulta->fetch(PDO::FETCH_ASSOC);
+            
+            if ($resultado) {
+                return "Usuário excluido com sucesso!";
+            } else {
+                return null;
+            }
+        } catch (PDOException $erro) {
+            echo "Erro na exclusão " . $erro->getMessage();
             return null;
         }
     }

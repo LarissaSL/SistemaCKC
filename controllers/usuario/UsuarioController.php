@@ -75,27 +75,29 @@ class UsuarioController extends RenderView
             $statusDaValidacaoCpf = $novoUsuario->validarCpf($cpf);
             $statusDaValidacaoEmail = $novoUsuario->validarEmail($email, $confirmarEmail);
             $statusDaValidacaoSenha = $novoUsuario->validarSenha($senha, $confirmarSenha);
+            $telefoneFormatado = $novoUsuario->formatarTelefone($telefone);
+            $dataFormatada = date('Y-m-d', strtotime($dataNascimento));
 
             $feedback = "";
             $nomeDaClasseParaErro = "error";
 
             if ($statusDaValidacaoCpf == "aceito" && $statusDaValidacaoEmail == "aceito" && $statusDaValidacaoSenha == "aceito") {
                 $senhaCriptografada = $novoUsuario->criptografarSenha($senha);
-                $telefoneFormatado = $novoUsuario->formatarTelefone($telefone);
-                $dataFormatada = date('Y-m-d', strtotime($dataNascimento));
                 
                 $resultado = $novoUsuario->inserirUsuario($nome, $sobrenome, $cpf, $email, $senhaCriptografada, $peso, $dataFormatada, $genero, $telefoneFormatado);
-
+                
                 if ($resultado) {
                     $this->login($email, $senha);
                 } else {
                     $this->carregarViewComArgumentos('usuario/cadastro', [
                         'feedback' => "Erro ao cadastrar, tente novamente.",
-                        'status' => $nomeDaClasseParaErro
+                        'status' => $nomeDaClasseParaErro,
+                        
                     ]);
                 }
                 // Erros e seus feedbacks
             } else {
+                $dadosPreenchidos = [$nome, $sobrenome, $cpf, $email, $confirmarEmail, $senha, $confirmarSenha, $peso, $genero, $telefone, $dataNascimento];
                 if ($statusDaValidacaoCpf !== "aceito") {
                     $feedback = $statusDaValidacaoCpf;
                 } elseif ($statusDaValidacaoEmail !== "aceito") {
@@ -106,7 +108,8 @@ class UsuarioController extends RenderView
                 // Devolve a view com o Erro
                 $this->carregarViewComArgumentos('usuario/cadastro', [
                     'feedback' => $feedback,
-                    'status' => $nomeDaClasseParaErro
+                    'status' => $nomeDaClasseParaErro,
+                    'dados' => $dadosPreenchidos
                 ]);
             } 
         } else {
@@ -146,17 +149,18 @@ class UsuarioController extends RenderView
         }
     }
 
-    public function logout() {
+    public function logout() 
     {
         if (!isset($_SESSION)) {
             session_start();
         }
 
-            session_unset();
-            session_destroy();
+        session_unset();
+        session_destroy();
 
-            header("Location: /sistemackc/");
-            exit();
-        }
+        header("Location: /sistemackc/");
+        exit();
     }
+
+
 }
