@@ -10,6 +10,8 @@
     - É IMPORTANTE que fique /htdocs/sistemackc
     - Agora é só digitar na URL `localhost/sistemackc`
     - Verifique abaixo as rotas disponives
+  
+OBS.: Não precisa se preocupar em Inserir o SQL da Tabela Usuário, nosso sistema ta com o Procedure disso, então só precisa mesmo criar o Banco de Dados ok?
    
 
 ## Rotas Disponiveis
