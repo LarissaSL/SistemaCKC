@@ -78,7 +78,27 @@ class Usuario
         }
     }
 
-    public function validarCpf($cpf) {
+    public function consultarUsuarioPorEmail($email)
+    {
+        try {
+            $consulta = $this->conexao->prepare("SELECT * FROM usuario WHERE Email = :email");
+            $consulta->bindValue(':email', $email);
+            $consulta->execute();
+            $resultado = $consulta->fetch(PDO::FETCH_ASSOC);
+            
+            if ($resultado) {
+                return $resultado;
+            } else {
+                return null;
+            }
+        } catch (PDOException $erro) {
+            echo "Erro na consulta: " . $erro->getMessage();
+            return null;
+        }
+    }
+
+    public function validarCpf($cpf) 
+    {
         $statusDaValidacao = "aceito";
 
         // Verifica se a formatação inserida do CPF é válida (tam 11 e apenas números)
@@ -144,11 +164,13 @@ class Usuario
         return "aceito";
     }
 
-    public function criptografarSenha($senha) {
+    public function criptografarSenha($senha) 
+    {
         return $senhaCriptografada = password_hash($senha, PASSWORD_DEFAULT);
     }
 
-    function formatarTelefone($telefone) {
+    function formatarTelefone($telefone) 
+    {
         // Deixando apenas os números
         $telefone = preg_replace('/\D/', '', $telefone);
     
@@ -158,6 +180,21 @@ class Usuario
         } else {
             // Pra caso o Usuário já tenha digitado nesse formato
             return $telefone;
+        }
+    }
+
+    public function autentificar($email, $senha) 
+    {
+        $usuario = $this->consultarUsuarioPorEmail($email);
+
+        if($usuario !== null) {
+            if(password_verify($senha, $usuario['Senha'])){
+                return "Sucesso";
+            } else {
+                return "Senha inválida";
+            }
+        } else {
+            return "Email inválido";
         }
     }
 }

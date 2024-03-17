@@ -50,6 +50,8 @@ class UsuarioController extends RenderView
 
             $caminhoImg = $imagem->moverParaPasta($imagemDePerfil);
             $usuarioModel->inserirFoto($caminhoImg, $id);
+            header('Location: /sistemackc/usuario/'.$id);
+            exit();
         }
     }
 
@@ -85,10 +87,7 @@ class UsuarioController extends RenderView
                 $resultado = $novoUsuario->inserirUsuario($nome, $sobrenome, $cpf, $email, $senhaCriptografada, $peso, $dataFormatada, $genero, $telefoneFormatado);
 
                 if ($resultado) {
-                    $this->carregarViewComArgumentos('usuario/cadastro', [
-                        'feedback' => "Usuário cadastrado com Sucesso!",
-                        'status' => 'sucesso'
-                    ]);
+                    $this->login($email, $senha);
                 } else {
                     $this->carregarViewComArgumentos('usuario/cadastro', [
                         'feedback' => "Erro ao cadastrar, tente novamente.",
@@ -117,6 +116,47 @@ class UsuarioController extends RenderView
 
     public function login()
     {
-        echo "Controller do Login";
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $email = $_POST['email'];
+            $senha = $_POST['senha'];
+
+            $usuario = new Usuario();
+            $autenticacao = $usuario->autentificar($email, $senha);
+
+            if ($autenticacao === "Sucesso") {
+                // Inicia a sessão se não estiver iniciada
+                if (!isset($_SESSION)) {
+                    session_start();
+                }
+                $usuarioAutenticado = $usuario->consultarUsuarioPorEmail($email);
+
+                $_SESSION['id'] = $usuarioAutenticado['Id'];
+                $_SESSION['nome'] = $usuarioAutenticado['Nome'];
+
+                header('Location: /sistemackc/');
+                exit();
+            } else {
+                $this->carregarViewComArgumentos('usuario/loginUsuario', [
+                    'feedback' => $autenticacao,
+                    'classe' => 'erro'
+                ]);
+            }
+        } else {
+            $this->carregarView('usuario/loginUsuario');
+        }
+    }
+
+    public function logout() {
+    {
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+
+            session_unset();
+            session_destroy();
+
+            header("Location: /sistemackc/");
+            exit();
+        }
     }
 }

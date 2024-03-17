@@ -31,6 +31,7 @@ class Conexao
             $query = "CREATE TABLE IF NOT EXISTS usuario (
                 Id INT AUTO_INCREMENT PRIMARY KEY,
                 Nome VARCHAR(100),
+                Sobrenome VARCHAR(50), 
                 Cpf CHAR(11) UNIQUE,
                 Email VARCHAR(100) UNIQUE,
                 Senha VARCHAR(100),
@@ -38,7 +39,7 @@ class Conexao
                 Data_nascimento DATE,
                 Genero ENUM('Masculino', 'Feminino', 'Outro'),
                 Telefone VARCHAR(20),
-                Foto_perfil VARCHAR(50),
+                Foto_perfil VARCHAR(60),
                 Data_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )";
             $this->conexao->exec($query);
