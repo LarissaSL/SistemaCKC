@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>  <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
 
-    <link rel="stylesheet" href="varLogin.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../Css/varLogin.css">
+    <link rel="stylesheet" href="../Css/style.css">
     <title>Cadastro</title>
 </head>
 <body>
@@ -25,7 +25,7 @@
                         <li><a href="#">Galeria</a></li>
                         <li><a href="#">Inscrição</a></li>
                         <li><a href="#">Regulamento</a></li>
-                        <li><a href="#">Kartódromo</a></li>
+                        <li><a href="/sistemackc/kartodromo">Kartódromo</a></li>
                     </ul>
                 </li> 
                 <li>

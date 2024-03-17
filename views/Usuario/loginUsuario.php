@@ -25,7 +25,7 @@
                         <li><a href="#">Galeria</a></li>
                         <li><a href="#">Inscrição</a></li>
                         <li><a href="#">Regulamento</a></li>
-                        <li><a href="#">Kartódromo</a></li>
+                        <li><a href="/sistemackc/kartodromo">Kartódromo</a></li>
                     </ul>
                 </li> 
                 <li>

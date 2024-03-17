@@ -1,0 +1,14 @@
+*{/*todos os elenentos da pagina(zerando as medidas padrão do navegador)*/
+    margin: 0; /*espaço a redor 'margem' das caixas*/
+    padding: 0; /*preenchimento interno das caixas*/
+    box-sizing: border-box; /*resetar a caixa para que ela possa fazer calculos da borda*/
+    -webkit-font-smoothing: antialiased; /*serve para deixar a fonte menos groceira no navegador chrome esafari*/
+    -moz-osx-font-smoothing:grayscale; /*serve para deixar a fonte menos groceira no navegador firefox*/
+}
+
+body{
+    background-color: var(--background-principal);
+    color: var(--text-base-light);
+
+}
+
