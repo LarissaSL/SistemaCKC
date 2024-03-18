@@ -33,7 +33,7 @@
     <?php
         foreach ($usuarios as $usuario) {
             echo "<tr>";
-            echo "<td><img style='width: 120px;' src='" . $usuario['Foto_perfil'] . "' alt='Imagem de " . $usuario['Nome'] . "'></td>";
+            echo "<td><img style='width: 120px;' src='/sistemackc/views/Img/ImgUsuario/" . $usuario['Foto_perfil'] . "' alt='Imagem de " . $usuario['Nome'] . "'></td>";
             echo "<td>" . $usuario['Id'] . "</td>";
             echo "<td>". $usuario['Nome'] . "</td>";
             echo "<td>" . $usuario['Sobrenome'] . "</td>";

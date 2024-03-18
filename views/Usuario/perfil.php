@@ -10,7 +10,7 @@
         <nav>
             <i class="ph ph-list"></i><!-- ícone de menu -->
             <ul>
-                <li><img src="../views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></li>
+                <li><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></li>
                 <li><a href="#">História</a></li>
                 <li>
                     <a href="#">Corridas</a>
@@ -53,7 +53,7 @@
         
         <!-- Se o Usuário tiver foto ela irá aparecer -->
         <?php if(isset($usuario['Foto_perfil'])): ?>
-            <img src="<?php echo $usuario['Foto_perfil'] ?>" alt="Foto de <?php echo $usuario['Nome']; ?>"> 
+            <img src="/sistemackc/views/Img/ImgUsuario/<?php echo $usuario['Foto_perfil'] ?>" alt="Foto de <?php echo $usuario['Nome']; ?>"> 
         <?php endif; ?>
 
         <!-- Se o Usuário Logado for o mesmo do ID ele pode trocar sua foto de perfil -->
@@ -117,13 +117,13 @@
 
     <div class="email">
         <label class="email" for="email">E-mail:</label>
-        <input type="text" name="email" value="<?php echo $usuario['Email']?>" <?php echo isset($_SESSION['email']) && $_SESSION['email'] == $usuario['Email'] ? '' : 'readonly'; ?>>
+        <input type="text" name="campo" value="<?php echo $usuario['Email']?>" <?php echo (isset($_SESSION['email']) && $_SESSION['email'] == $usuario['Email']) || (isset($_SESSION['nome']) && $_SESSION['nome'] == 'admtm85') ? '' : 'readonly'; ?>>
     </div>
     <?php 
         if(isset($_SESSION['email']) && $_SESSION['email'] == $usuario['Email']):
     ?>
         <a href="#">Alterar senha</a>  
-        <button type="submit" class="bt-cadastrar">Atualizar</button>
+        <a href="/sistemackc/usuario/atualizar/<?php echo $usuario['Id']; ?>">Atualizar</a>
     </form>     
 
     <?php endif; ?>

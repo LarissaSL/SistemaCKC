@@ -16,10 +16,6 @@ class UsuariosAdmController extends RenderView
         ]);
     }
 
-    public function editar($id)
-    {
-        echo "Editar" . $id;
-    }
 
     public function excluir($id)
     {

@@ -35,8 +35,9 @@ class Imagem
         return $statusDaValidacao;
     }
 
-    public function excluirImagem($caminho) 
+    public function excluirImagem($nome) 
     {
+        $caminho = "./views/Img/ImgUsuario/".$nome;
         if (file_exists($caminho)) {
             unlink($caminho);
         }

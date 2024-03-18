@@ -52,6 +52,7 @@ class UsuarioController extends RenderView
         }
     }
 
+
     public function cadastrar() 
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -158,6 +159,11 @@ class UsuarioController extends RenderView
 
         header("Location: /sistemackc/");
         exit();
+    }
+
+    public function atualizar($id) {
+        //Fazer a lógica para atualizar os Dados, lembrando que a data precisa ser formatada, telefone. Cpf e Email precisam ser verificados
+        echo "atualizar" . $id;
     }
 
 
