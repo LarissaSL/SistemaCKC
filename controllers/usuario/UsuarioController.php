@@ -19,10 +19,7 @@ class UsuarioController extends RenderView
 
         if ($usuario) {
             $this->carregarViewComArgumentos('usuario/perfil', [
-                'id' => $id,
-                'nome' => $usuario['Nome'],
-                'email' => $usuario['Email'],
-                'fotoPerfil' => $usuario['Foto_perfil'],
+                'usuario' => $usuario
             ]);
         } else {
             $this->carregarViewComArgumentos('usuario/perfil', [
@@ -135,6 +132,7 @@ class UsuarioController extends RenderView
 
                 $_SESSION['id'] = $usuarioAutenticado['Id'];
                 $_SESSION['nome'] = $usuarioAutenticado['Nome'];
+                $_SESSION['email'] = $usuarioAutenticado['Email'];
 
                 header('Location: /sistemackc/');
                 exit();

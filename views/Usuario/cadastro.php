@@ -61,6 +61,7 @@
         <?php endif; ?>
 
             <form action="cadastro" method="POST">
+
                 <div class="nome">
                     <label class="nome" for="nome">Nome:</label>
                     <input type="text" name="nome" value="<?php echo isset($dados) ? $dados[0] : ''; ?>" required>

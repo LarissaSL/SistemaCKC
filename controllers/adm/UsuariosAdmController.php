@@ -26,7 +26,7 @@ class UsuariosAdmController extends RenderView
         $usuario = new Usuario();
         $excluirFotoDePerfilDoServer = new Imagem();
 
-        // Pegando a info dele para poder excluir a foto de perfil do Servidor
+        // Pegando a info do Usuario para poder excluir a foto de perfil do Servidor
         $infoExcluido = $usuario->consultarUsuarioPorId($id);
         $nomeArquivo = basename($infoExcluido['Foto_perfil']);
         $caminho = ".\\views\Img\ImgUsuario\\" . $nomeArquivo;
