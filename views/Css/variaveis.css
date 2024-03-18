@@ -6,9 +6,8 @@
     -moz-osx-font-smoothing:grayscale; /*serve para deixar a fonte menos groceira no navegador firefox*/
 }
 
-body{
-    background-color: var(--background-principal);
-    color: var(--text-base-light);
-
+:root{
+    font-size: 62.5%;
+    --background-principal:#100C0C ;
+    --text-base-light: #fff;
 }
-

@@ -10,7 +10,8 @@
         <nav>
             <i class="ph ph-list"></i><!-- ícone de menu -->
             <ul>
-                <li><img src="./views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></li>
+                <li><a href="/sistemackc/"><img src="./views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a></li>
+                
                 <li><a href="#">História</a></li>
                 <li>
                     <a href="#">Corridas</a>

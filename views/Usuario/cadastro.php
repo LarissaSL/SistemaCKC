@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>  <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
 
-    <link rel="stylesheet" href="../Css/varLogin.css">
-    <link rel="stylesheet" href="../Css/style.css">
+    <link rel="stylesheet" href="../views/Css/variaveis.css">
+    <link rel="stylesheet" href="../views/Css/styleGlobal.css">
+
     <title>Cadastro</title>
 </head>
 <body>
@@ -15,7 +16,7 @@
         <nav>
             <i class="ph ph-list"></i><!-- ícone de menu -->
             <ul>
-                <li><img src="../views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></li>
+                <li><a href="/sistemackc/"><img src="../views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a></li>
                 <li><a href="#">História</a></li>
                 <li>
                     <a href="#">Corridas</a>

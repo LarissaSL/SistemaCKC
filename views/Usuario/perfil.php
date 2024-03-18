@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../views/Css/variaveis.css">
+    <link rel="stylesheet" href="../views/Css/styleGlobal.css">
+
     <title>Perfil</title>
 </head>
 <body>
@@ -10,7 +14,7 @@
         <nav>
             <i class="ph ph-list"></i><!-- ícone de menu -->
             <ul>
-                <li><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></li>
+                <li><a href="/sistemackc/"><img src="../views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a></li>
                 <li><a href="#">História</a></li>
                 <li>
                     <a href="#">Corridas</a>
