@@ -33,24 +33,33 @@ class Usuario
         }
     }
 
-    public function atualizarUsuario($nome, $sobrenome, $cpf, $email, $senha, $peso, $dataNascimento, $genero, $telefone)
+    public function atualizarUsuario($id, $nome, $sobrenome, $cpf, $email, $peso, $dataNascimento, $genero, $telefone)
     {
         try {
-            $atualizar = $this->conexao->prepare("UPDATE usuario SET Nome = :nome, Sobrenome = :sobrenome, Cpf = :cpf, Email = :email, Senha = :senha, Peso = :peso, Data_nascimento = :data_nascimento, Genero = :genero, Telefone = :telefone WHERE id = :id");
+            $atualizar = $this->conexao->prepare("UPDATE usuario SET Nome = :nome, Sobrenome = :sobrenome, Cpf = :cpf, Email = :email, Peso = :peso, Data_nascimento = :data_nascimento, Genero = :genero, Telefone = :telefone WHERE id = :id");
             $atualizar->bindValue(':nome', $nome);
             $atualizar->bindValue(':sobrenome', $sobrenome);
             $atualizar->bindValue(':cpf', $cpf);
             $atualizar->bindValue(':email', $email);
-            $atualizar->bindValue(':senha', $senha);
             $atualizar->bindValue(':peso', $peso);
             $atualizar->bindValue(':data_nascimento', $dataNascimento);
             $atualizar->bindValue(':genero', $genero);
             $atualizar->bindValue(':telefone', $telefone);
+            $atualizar->bindValue(':id', $id);
             $atualizar->execute();
-            return true; 
+            return "atualizado"; 
         } catch (PDOException $erro) {
-            echo "Erro na atualização: " . $erro->getMessage();
-            return false; 
+            $codigoDoErro = $erro->getCode();
+
+            switch($codigoDoErro)
+            {
+                case 23000:
+                    return "Ocorreu um erro. CPF ou E-mail já registrados no Sistema. Por favor, tente novamente.";
+                    break;
+                default:
+                    return $erro;
+                    break;
+            }     
         }
     }
 
@@ -158,35 +167,42 @@ class Usuario
         }
     }
 
-    public function validarCpf($cpf) 
+    public function validarCpf($cpf, $acao) 
     {
         $statusDaValidacao = "aceito";
 
         // Verifica se a formatação inserida do CPF é válida (tam 11 e apenas números)
-        if (strlen($cpf) !== 11 || !ctype_digit($cpf)) {
+        if (!ctype_digit($cpf)) 
+        {
             return $statusDaValidacao = "Digite o CPF apenas com números<br>Ex.: 11122233344.";
         }
 
-        // Verifica se o CPF do usuário já foi Cadastrado
-        try {
+        if(strlen($cpf) !== 11 ) 
+        {
+            return $statusDaValidacao = "O CPF precisa ter 11 dígitos."; 
+        }
+
+        // Verifica se o CPF do usuário já foi cadastrado
+        try 
+        {
             $consulta = $this->conexao->prepare("SELECT COUNT(*) AS total FROM usuario WHERE Cpf = :cpf");
             $consulta->bindValue(':cpf', $cpf);
             $consulta->execute();
             $resultado = $consulta->fetch(PDO::FETCH_ASSOC);
-            
-            if($resultado['total'] > 0) {
+
+            // Se a ação for de cadastro e o CPF já estiver cadastrado, retorna uma mensagem de erro
+            if ($resultado['total'] > 0 && $acao === 'cadastrar') {
                 return $statusDaValidacao = "CPF já cadastrado no Sistema";
-            }
-            
-        
-        } catch (PDOException $erro) {
-            return $statusDaValidacao = "Erro na consulta: ".$erro->getMessage();
+            } 
+        } 
+        catch (PDOException $erro) {
+            return $statusDaValidacao = "Erro na consulta: " . $erro->getMessage();
         }
         
         return $statusDaValidacao;
     }
 
-    public function validarEmail($email, $confirmarEmail) {
+    public function validarEmail($email, $confirmarEmail, $acao) {
         $statusDaValidacao = "aceito";
 
         // Verifica se a formatação inserida do Email tem o @
@@ -205,11 +221,9 @@ class Usuario
             $consulta->execute();
             $resultado = $consulta->fetch(PDO::FETCH_ASSOC);
             
-            if($resultado['total'] > 0) {
+            if($resultado['total'] > 0 && $acao === 'cadastrar') {
                 return $statusDaValidacao = "E-mail já cadastrado no Sistema";
             }
-            
-        
         } catch (PDOException $erro) {
             return $statusDaValidacao = "Erro na consulta: ".$erro->getMessage();
         }

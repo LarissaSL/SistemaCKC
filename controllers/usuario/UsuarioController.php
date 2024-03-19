@@ -68,8 +68,8 @@ class UsuarioController extends RenderView
             
             $novoUsuario = new Usuario();
 
-            $statusDaValidacaoCpf = $novoUsuario->validarCpf($cpf);
-            $statusDaValidacaoEmail = $novoUsuario->validarEmail($email, $confirmarEmail);
+            $statusDaValidacaoCpf = $novoUsuario->validarCpf($cpf, 'cadastrar');
+            $statusDaValidacaoEmail = $novoUsuario->validarEmail($email, $confirmarEmail, 'cadastrar');
             $statusDaValidacaoSenha = $novoUsuario->validarSenha($senha, $confirmarSenha);
             $telefoneFormatado = $novoUsuario->formatarTelefone($telefone);
             $dataFormatada = date('Y-m-d', strtotime($dataNascimento));
@@ -169,9 +169,61 @@ class UsuarioController extends RenderView
     }
 
     public function atualizar($id) {
-        //Fazer a lógica para atualizar os Dados, lembrando que a data precisa ser formatada, telefone. Cpf e Email precisam ser verificados
-        echo "atualizar" . $id;
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $nome = $_POST['nome'];
+            $sobrenome = $_POST['sobrenome'];
+            $cpf = $_POST['cpf'];
+            $email = $_POST['email'];
+            $peso = $_POST['peso'];
+            $genero = $_POST['genero'];
+            $telefone = $_POST['telefone'];
+            $dataNascimento = $_POST['dataNascimento'];
+    
+            $atualizarUsuario = new Usuario();
+    
+            $feedbackDeAtualizacao = "";
+    
+            $statusDaValidacaoCpf = $atualizarUsuario->validarCpf($cpf, 'atualizar', $id);
+            $statusDaValidacaoEmail = $atualizarUsuario->validarEmail($email, $email, 'atualizar');
+            $telefoneFormatado = $atualizarUsuario->formatarTelefone($telefone);
+            $dataFormatada = date('Y-m-d', strtotime($dataNascimento));
+    
+            if ($statusDaValidacaoCpf == "aceito" && $statusDaValidacaoEmail == "aceito") {
+                // Atualizando no BD
+                $resultado = $atualizarUsuario->atualizarUsuario($id, $nome, $sobrenome, $cpf, $email, $peso, $dataFormatada, $genero, $telefoneFormatado);
+    
+                if ($resultado == "atualizado") {
+                    session_start();
+    
+                    if ($_SESSION['username'] == 'admtm85') {
+                        header('Location: /sistemackc/admtm85/usuario/'.$id);
+                    } else {
+                        $_SESSION['email'] = $email;
+                        $_SESSION['nome'] = $nome;
+                        header('Location: /sistemackc/usuario/'.$id);
+                    }
+                    exit();
+                } else {
+                    $feedbackDeAtualizacao = $resultado;
+                }
+            } else {
+                if($statusDaValidacaoCpf !== "aceito")
+                {
+                    $feedbackDeAtualizacao = $statusDaValidacaoCpf;
+                }
+                if($statusDaValidacaoEmail !== "aceito")
+                {
+                    $feedbackDeAtualizacao = $statusDaValidacaoEmail;
+                }
+            }
+    
+            echo "<script>
+                      alert('$feedbackDeAtualizacao');
+                      window.location.href = '/sistemackc/usuario/$id'; 
+                  </script>";
+            exit();
+        } 
     }
-
-
+    
+            
 }
