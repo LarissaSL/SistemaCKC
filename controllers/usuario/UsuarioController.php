@@ -2,12 +2,13 @@
 
 require_once 'models/Usuario.php';
 require_once 'models/Imagem.php';
+require_once 'models/Email.php';
 
 class UsuarioController extends RenderView
 {
     public function index()
     {
-
+        
     }
 
     public function mostrarPerfil($id)
@@ -82,9 +83,18 @@ class UsuarioController extends RenderView
             if ($statusDaValidacaoCpf == "aceito" && $statusDaValidacaoEmail == "aceito" && $statusDaValidacaoSenha == "aceito") {
                 $senhaCriptografada = $novoUsuario->criptografarSenha($senha);
                 
+                //Cadastrando no BD
                 $resultado = $novoUsuario->inserirUsuario($nome, $sobrenome, $cpf, $email, $senhaCriptografada, $peso, $dataFormatada, $genero, $telefoneFormatado);
+
+                //Enviando o E-mail de Boas Vindas
+                $emailBoasVindas = new Email();
+                $bodyDoEmail = file_get_contents('views\Email\boasVindas.html');
+                $nomeDaPessoa = $nome." ".$sobrenome;
+                $bodyDoEmail = str_replace('%NOME_DA_PESSOA%', $nomeDaPessoa, $bodyDoEmail);
+                $altDoBody = 'Seja bem-vindo(a) ao CKC';
+                $statusEnvioDoEmail = $emailBoasVindas->enviarEmail($email, 'Boas vindas ao CKC', $bodyDoEmail , $altDoBody);
                 
-                if ($resultado) {
+                if ($resultado && $statusEnvioDoEmail == "Sucesso") {
                     $this->login($email, $senha);
                 } else {
                     $this->carregarViewComArgumentos('usuario/cadastro', [
