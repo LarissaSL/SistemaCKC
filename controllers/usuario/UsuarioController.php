@@ -14,10 +14,32 @@ class UsuarioController extends RenderView
     public function mostrarPerfil($id)
     {
         $usuarioModel = new Usuario();
-
-        // Carrega o perfil do usuário
+        // Carregar o perfil do usuário
         $usuario = $usuarioModel->consultarUsuarioPorId($id);
 
+        // Verificar se foi feita uma requisição POST para atualizar a foto de perfil e verificar se ela passa nas validações
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['fotoPerfil'])) {
+            $imagemDePerfil = $_FILES['fotoPerfil'];
+            $imagem = new Imagem();
+
+            $statusFormatoDaImagem = $imagem->validarImagem($imagemDePerfil); 
+
+            if ($statusFormatoDaImagem !== "aceito") {
+                $this->carregarViewComArgumentos('usuario/perfil', [
+                    'feedbackDaImagem' => $statusFormatoDaImagem,
+                    'usuario' => $usuario,
+                    'classe' => 'erro'
+                ]);
+                exit();
+            } else {
+                $caminhoImg = $imagem->moverParaPasta($imagemDePerfil);
+                $usuarioModel->inserirFoto($caminhoImg, $id);
+                header('Location: /sistemackc/usuario/'.$id);
+                exit();
+            } 
+        }
+
+        // Se não tiver requisição POST então só carrega o perfil
         if ($usuario) {
             $this->carregarViewComArgumentos('usuario/perfil', [
                 'usuario' => $usuario
@@ -27,32 +49,7 @@ class UsuarioController extends RenderView
                 'feedback' => "Nenhum usuário encontrado com o ID: " . $id
             ]);
         }
-
-        // Atualizar ou Inserir uma foto de perfil
-        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['fotoPerfil'])) {
-            $imagemDePerfil = $_FILES['fotoPerfil'];
-            $imagem = new Imagem();
-
-            $statusFormatoDaImagem = $imagem->validarImagem($imagemDePerfil); 
-
-            if ($statusFormatoDaImagem !== "aceito") {
-                $this->carregarViewComArgumentos('usuario/perfil', [
-                    'id' => $id,
-                    'feedback' => $statusFormatoDaImagem,
-                    'nome' => $usuarioModel['Nome'],
-                    'email' => $usuarioModel['Email'],
-                    'fotoPerfil' => $usuarioModel['Foto_perfil'],
-                ]);
-                return;
-            }
-
-            $caminhoImg = $imagem->moverParaPasta($imagemDePerfil);
-            $usuarioModel->inserirFoto($caminhoImg, $id);
-            header('Location: /sistemackc/usuario/'.$id);
-            exit();
-        }
     }
-
 
     public function cadastrar() 
     {

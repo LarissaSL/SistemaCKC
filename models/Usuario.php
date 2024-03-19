@@ -112,11 +112,11 @@ class Usuario
             if ($resultado) {
                 return $resultado;
             } else {
-                return null;
+                return false;
             }
         } catch (PDOException $erro) {
             echo "Erro na consulta: " . $erro->getMessage();
-            return null;
+            return false;
         }
     }
 

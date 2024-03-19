@@ -25,13 +25,13 @@ class Imagem
         $extensaoImagem = strtolower(pathinfo($imagem['name'], PATHINFO_EXTENSION));
     
         if (!in_array($extensaoImagem, ['jpg', 'png'])) {
-            return "Tipo de arquivo não aceito, apenas imagens em jpg e png são aceitas.";
+            $statusDaValidacao = "Tipo de arquivo não aceito, apenas imagens em jpg e png são aceitas.";
         }
     
         if (preg_match("/[_\/\-]/", $imagem['name'])) {
-            return "O nome da imagem não pode conter caracteres especiais como '_', '/' ou '-'.";
+            $statusDaValidacao = "O nome da imagem não pode conter caracteres especiais como '_', '/' ou '-'.";
         }
-    
+
         return $statusDaValidacao;
     }
 
