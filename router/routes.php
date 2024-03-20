@@ -6,14 +6,16 @@ $routes = [
     '/logout' => 'usuario#UsuarioController#logout',
     '/kartodromo' => 'usuario#KartodromoController#index',
 
-    //Essas Rotas tem solicitações GET e POST
+    //Rotas Usuario
     '/usuario/{id}' => 'usuario#UsuarioController#mostrarPerfil',
     '/usuario/login' => 'usuario#UsuarioController#login',
     '/usuario/cadastro' => 'usuario#UsuarioController#cadastrar',
     '/usuario/atualizar/{id}' => 'usuario#UsuarioController#atualizar',
 
-    //CRUD do Usuario (Ler, Alterar, Excluir)
-    '/admtm85/usuario' => 'adm#UsuariosAdmController#index',
+    //Rotas ADM
+    '/admtm85/login' => 'adm#AdmController#login',
+    '/admtm85/menu' => 'adm#AdmController#index',
+    '/admtm85/usuario' => 'adm#UsuariosAdmController#mostrarUsuarios',
     '/admtm85/usuario/{id}' => 'usuario#UsuarioController#mostrarPerfil',
     '/admtm85/usuario/excluir/{id}' => 'adm#UsuariosAdmController#excluir',
     

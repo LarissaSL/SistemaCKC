@@ -13,6 +13,8 @@ class Conexao
     {
         $this->conectarBancoDeDados();
         $this->criarTabelaUsuario();
+        $this->criarTabelaAdm();
+        $this->inserirAdm('admtm85', 'ckckart23@gmail.com', password_hash('crash', PASSWORD_DEFAULT),);
     }
 
     function conectarBancoDeDados()
@@ -47,6 +49,36 @@ class Conexao
             echo "Erro ao criar tabela de usuário: " . $erro->getMessage();
         }
     }
+
+    function criarTabelaAdm()
+    {
+        try {
+            $query = "CREATE TABLE IF NOT EXISTS adm (
+                Id INT AUTO_INCREMENT PRIMARY KEY,
+                Username VARCHAR(50) NOT NULL,
+                Email VARCHAR(100) NOT NULL,
+                Senha VARCHAR(255) NOT NULL
+            )";
+            $this->conexao->exec($query);
+        } catch (PDOException $erro) {
+            echo "Erro ao criar tabela do adm: " . $erro->getMessage();
+        }
+    }
+
+    public function inserirAdm($username, $email, $senha)
+    {
+        try {
+            $inserir = $this->conexao->prepare("INSERT INTO adm (Username, Email, Senha) VALUES (:username, :email, :senha)");
+            $inserir->bindValue(':username', $username);
+            $inserir->bindValue(':email', $email);
+            $inserir->bindValue(':senha', $senha);
+            $inserir->execute();
+            return true; 
+        } catch (PDOException $erro) {
+            echo "Erro na inserção: " . $erro->getMessage();
+            return false; 
+        }
+    }  
 
     function getConexao()
     {

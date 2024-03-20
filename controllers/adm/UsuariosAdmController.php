@@ -5,7 +5,7 @@ require_once 'models/Imagem.php';
 
 class UsuariosAdmController extends RenderView
 {
-    public function index()
+    public function mostrarUsuarios()
     {
         $usuario = new Usuario();
 

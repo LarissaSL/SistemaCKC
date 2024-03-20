@@ -6,10 +6,6 @@ require_once 'models/Email.php';
 
 class UsuarioController extends RenderView
 {
-    public function index()
-    {
-        
-    }
 
     public function mostrarPerfil($id)
     {
