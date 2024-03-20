@@ -131,7 +131,13 @@ class UsuarioController extends RenderView
                 // Inicia a sessão se não estiver iniciada
                 if (!isset($_SESSION)) {
                     session_start();
+                    if(isset($_SESSION['username'])){
+                        session_unset();
+                        session_destroy();
+                        session_start();
+                    }
                 }
+
                 $usuarioAutenticado = $usuario->consultarUsuarioPorEmail($email);
 
                 $_SESSION['id'] = $usuarioAutenticado['Id'];

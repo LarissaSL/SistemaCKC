@@ -21,9 +21,13 @@ class AdmController extends RenderView
             $autenticacao = $adm->autentificar($username, $senha);
 
             if ($autenticacao === "Sucesso") {
-                // Inicia a sessão se não estiver iniciada
                 if (!isset($_SESSION)) {
                     session_start();
+                    if(isset($_SESSION['nome'])){
+                        session_unset();
+                        session_destroy();
+                        session_start();
+                    }
                 }
                 $admAutenticado = $adm->consultarAdmPorUsername($username);
 

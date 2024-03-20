@@ -15,8 +15,11 @@ $routes = [
     //Rotas ADM
     '/admtm85/login' => 'adm#AdmController#login',
     '/admtm85/menu' => 'adm#AdmController#index',
+
+    // CRUD do Usuário
     '/admtm85/usuario' => 'adm#UsuariosAdmController#mostrarUsuarios',
-    '/admtm85/usuario/{id}' => 'usuario#UsuarioController#mostrarPerfil',
+    '/admtm85/usuario/cadastrar' => 'adm#UsuariosAdmController#cadastrar',
+    '/admtm85/usuario/{id}' => 'usuario#UsuariosAdmController#atualizar',
     '/admtm85/usuario/excluir/{id}' => 'adm#UsuariosAdmController#excluir',
     
 

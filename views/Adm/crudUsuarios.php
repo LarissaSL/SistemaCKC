@@ -42,6 +42,7 @@
     </header>
     <!-- Inicio do Conteúdo para o ADM -->
     <h1>CRUD dos Usuarios</h1>
+    <a class='btn btn-primary' href='./usuario/cadastrar'>Cadastrar novo usuário</a>
 
     <table class='table table-striped table-bordered '>
         <thead class='thead-dark'>
@@ -86,6 +87,7 @@
             }
             echo "</table>";
             ?>
+            
             <script>
                 function confirmarExclusao(id, nome, sobrenome) {
                     if (confirm(`Tem certeza que deseja excluir:\nID: ${id}  |  ${nome} ${sobrenome}\n\nOBS.: Essa ação é irreversivel.`)) {

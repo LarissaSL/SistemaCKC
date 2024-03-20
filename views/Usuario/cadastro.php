@@ -16,7 +16,7 @@
         <nav>
             <i class="ph ph-list"></i><!-- ícone de menu -->
             <ul>
-                <li><a href="/sistemackc/"><img src="../views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a></li>
+                <li><a href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a></li>
                 <li><a href="#">História</a></li>
                 <li>
                     <a href="#">Corridas</a>
@@ -61,7 +61,14 @@
             <p class="<?php echo $status ?>"><?php echo $feedback;?></p>
         <?php endif; ?>
 
-            <form action="cadastro" method="POST">
+
+        <?php if (isset($_SESSION['username']) && $_SESSION['username'] == 'admtm85') {
+                echo "<form action='cadastrar' method='POST'>";
+            } 
+            else 
+            {
+                echo "<form action='cadastro' method='POST'>";
+            }?>
 
                 <div class="nome">
                     <label class="nome" for="nome">Nome:</label>
@@ -80,10 +87,10 @@
 
                 <div class="genero">
                     <input type="radio" value="Masculino" name="genero" <?php echo isset($dados) && $dados[8] == 'Masculino' ? 'checked' : ''; ?>>
-                    <label class="homem" for="homem">Homem</label>
+                    <label class="homem" for="homem">Masculino</label>
 
                     <input type="radio" value="Feminino" name="genero" <?php echo isset($dados) && $dados[8] == 'Feminino' ? 'checked' : ''; ?>>
-                    <label class="mulher" for="mulher">Mulher</label>
+                    <label class="mulher" for="mulher">Feminino</label>
 
                     <input type="radio" value="Outro" name="genero" <?php echo isset($dados) && $dados[8] == 'Outro' ? 'checked' : ''; ?>>
                     <label class="outro" for="outro">Outro</label>
