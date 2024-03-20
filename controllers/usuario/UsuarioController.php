@@ -215,12 +215,12 @@ class UsuarioController extends RenderView
                 if ($statusDaValidacaoEmail !== "aceito") {
                     $feedbackDeAtualizacao = $statusDaValidacaoEmail;
                 }
-                echo "<script>
+            }
+            echo "<script>
                       alert('$feedbackDeAtualizacao');
                       window.location.href = '/sistemackc/usuario/$id'; 
                   </script>";
                 exit();
-            }
         }
     }
 }
