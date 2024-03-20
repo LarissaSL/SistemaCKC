@@ -19,10 +19,8 @@ $routes = [
     // CRUD do Usuário
     '/admtm85/usuario' => 'adm#UsuariosAdmController#mostrarUsuarios',
     '/admtm85/usuario/cadastrar' => 'adm#UsuariosAdmController#cadastrar',
-    '/admtm85/usuario/{id}' => 'usuario#UsuariosAdmController#atualizar',
+    '/admtm85/usuario/{id}' => 'adm#UsuariosAdmController#atualizar',
     '/admtm85/usuario/excluir/{id}' => 'adm#UsuariosAdmController#excluir',
-    
+
 
 ];
-
-?>

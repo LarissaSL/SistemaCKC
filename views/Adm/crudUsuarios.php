@@ -87,7 +87,7 @@
             }
             echo "</table>";
             ?>
-            
+
             <script>
                 function confirmarExclusao(id, nome, sobrenome) {
                     if (confirm(`Tem certeza que deseja excluir:\nID: ${id}  |  ${nome} ${sobrenome}\n\nOBS.: Essa ação é irreversivel.`)) {

@@ -18,7 +18,7 @@ class UsuarioController extends RenderView
             $imagemDePerfil = $_FILES['fotoPerfil'];
             $imagem = new Imagem();
 
-            $statusFormatoDaImagem = $imagem->validarImagem($imagemDePerfil); 
+            $statusFormatoDaImagem = $imagem->validarImagem($imagemDePerfil);
 
             if ($statusFormatoDaImagem !== "aceito") {
                 $this->carregarViewComArgumentos('usuario/perfil', [
@@ -30,9 +30,13 @@ class UsuarioController extends RenderView
             } else {
                 $caminhoImg = $imagem->moverParaPasta($imagemDePerfil);
                 $usuarioModel->inserirFoto($caminhoImg, $id);
-                header('Location: /sistemackc/usuario/'.$id);
+                if ($_SESSION['username'] === 'admtm85') {
+                    header('Location: /sistemackc/admtm85/usuario/' . $id);
+                } else {
+                    header('Location: /sistemackc/usuario/' . $id);
+                }
                 exit();
-            } 
+            }
         }
 
         // Se não tiver requisição POST então só carrega o perfil
@@ -47,7 +51,7 @@ class UsuarioController extends RenderView
         }
     }
 
-    public function cadastrar() 
+    public function cadastrar()
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $nome = $_POST['nome'];
@@ -61,7 +65,7 @@ class UsuarioController extends RenderView
             $genero = $_POST['genero'];
             $telefone = $_POST['telefone'];
             $dataNascimento = $_POST['dataNascimento'];
-            
+
             $novoUsuario = new Usuario();
 
             $statusDaValidacaoCpf = $novoUsuario->validarCpf($cpf, 'cadastrar');
@@ -75,25 +79,25 @@ class UsuarioController extends RenderView
 
             if ($statusDaValidacaoCpf == "aceito" && $statusDaValidacaoEmail == "aceito" && $statusDaValidacaoSenha == "aceito") {
                 $senhaCriptografada = $novoUsuario->criptografarSenha($senha);
-                
+
                 //Cadastrando no BD
                 $resultado = $novoUsuario->inserirUsuario($nome, $sobrenome, $cpf, $email, $senhaCriptografada, $peso, $dataFormatada, $genero, $telefoneFormatado);
 
                 //Enviando o E-mail de Boas Vindas
                 $emailBoasVindas = new Email();
                 $bodyDoEmail = file_get_contents('views\Email\boasVindas.html');
-                $nomeDaPessoa = $nome." ".$sobrenome;
+                $nomeDaPessoa = $nome . " " . $sobrenome;
                 $bodyDoEmail = str_replace('%NOME_DA_PESSOA%', $nomeDaPessoa, $bodyDoEmail);
                 $altDoBody = 'Seja bem-vindo(a) ao CKC';
-                $statusEnvioDoEmail = $emailBoasVindas->enviarEmail($email, 'Boas vindas ao CKC', $bodyDoEmail , $altDoBody);
-                
+                $statusEnvioDoEmail = $emailBoasVindas->enviarEmail($email, 'Boas vindas ao CKC', $bodyDoEmail, $altDoBody);
+
                 if ($resultado && $statusEnvioDoEmail == "Sucesso") {
                     $this->login($email, $senha);
                 } else {
                     $this->carregarViewComArgumentos('usuario/cadastro', [
                         'feedback' => "Erro ao cadastrar, tente novamente.",
                         'status' => $nomeDaClasseParaErro,
-                        
+
                     ]);
                 }
                 // Erros e seus feedbacks
@@ -112,7 +116,7 @@ class UsuarioController extends RenderView
                     'status' => $nomeDaClasseParaErro,
                     'dados' => $dadosPreenchidos
                 ]);
-            } 
+            }
         } else {
             $this->carregarView('usuario/cadastro');
         }
@@ -131,7 +135,7 @@ class UsuarioController extends RenderView
                 // Inicia a sessão se não estiver iniciada
                 if (!isset($_SESSION)) {
                     session_start();
-                    if(isset($_SESSION['username'])){
+                    if (isset($_SESSION['username'])) {
                         session_unset();
                         session_destroy();
                         session_start();
@@ -157,7 +161,7 @@ class UsuarioController extends RenderView
         }
     }
 
-    public function logout() 
+    public function logout()
     {
         if (!isset($_SESSION)) {
             session_start();
@@ -170,7 +174,8 @@ class UsuarioController extends RenderView
         exit();
     }
 
-    public function atualizar($id) {
+    public function atualizar($id)
+    {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $nome = $_POST['nome'];
             $sobrenome = $_POST['sobrenome'];
@@ -180,52 +185,42 @@ class UsuarioController extends RenderView
             $genero = $_POST['genero'];
             $telefone = $_POST['telefone'];
             $dataNascimento = $_POST['dataNascimento'];
-    
+
             $atualizarUsuario = new Usuario();
-    
+
             $feedbackDeAtualizacao = "";
-    
+
             $statusDaValidacaoCpf = $atualizarUsuario->validarCpf($cpf, 'atualizar', $id);
             $statusDaValidacaoEmail = $atualizarUsuario->validarEmail($email, $email, 'atualizar');
             $telefoneFormatado = $atualizarUsuario->formatarTelefone($telefone);
             $dataFormatada = date('Y-m-d', strtotime($dataNascimento));
-    
+
             if ($statusDaValidacaoCpf == "aceito" && $statusDaValidacaoEmail == "aceito") {
                 // Atualizando no BD
                 $resultado = $atualizarUsuario->atualizarUsuario($id, $nome, $sobrenome, $cpf, $email, $peso, $dataFormatada, $genero, $telefoneFormatado);
-    
+
                 if ($resultado == "atualizado") {
                     session_start();
-    
-                    if ($_SESSION['username'] == 'admtm85') {
-                        header('Location: /sistemackc/admtm85/usuario/'.$id);
-                    } else {
-                        $_SESSION['email'] = $email;
-                        $_SESSION['nome'] = $nome;
-                        header('Location: /sistemackc/usuario/'.$id);
-                    }
+                    $_SESSION['email'] = $email;
+                    $_SESSION['nome'] = $nome;
+                    header('Location: /sistemackc/usuario/' . $id);
                     exit();
                 } else {
                     $feedbackDeAtualizacao = $resultado;
                 }
             } else {
-                if($statusDaValidacaoCpf !== "aceito")
-                {
+                if ($statusDaValidacaoCpf !== "aceito") {
                     $feedbackDeAtualizacao = $statusDaValidacaoCpf;
                 }
-                if($statusDaValidacaoEmail !== "aceito")
-                {
+                if ($statusDaValidacaoEmail !== "aceito") {
                     $feedbackDeAtualizacao = $statusDaValidacaoEmail;
                 }
-            }
-    
-            echo "<script>
+                echo "<script>
                       alert('$feedbackDeAtualizacao');
                       window.location.href = '/sistemackc/usuario/$id'; 
                   </script>";
-            exit();
-        } 
+                exit();
+            }
+        }
     }
-    
-            
 }

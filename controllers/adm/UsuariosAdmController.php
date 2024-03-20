@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 require_once 'models/Usuario.php';
 require_once 'models/Imagem.php';
@@ -13,31 +13,34 @@ class UsuariosAdmController extends RenderView
         $usuarios = $usuario->consultarTodosOsUsuarios();
 
         $this->carregarViewComArgumentos('adm/crudUsuarios', [
-            'usuarios'=>$usuarios
+            'usuarios' => $usuarios
         ]);
     }
 
 
     public function excluir($id)
     {
-        $usuario = new Usuario();
-        $excluirFotoDePerfilDoServer = new Imagem();
+        session_start();
+        if (isset($_SESSION['username']) && $_SESSION['username'] == 'admtm85') {
+            $usuario = new Usuario();
+            $excluirFotoDePerfilDoServer = new Imagem();
 
-        // Pegando a info do Usuario para poder excluir a foto de perfil do Servidor
-        $infoExcluido = $usuario->consultarUsuarioPorId($id);
-        $nomeArquivo = basename($infoExcluido['Foto_perfil']);
-        $caminho = ".\\views\Img\ImgUsuario\\" . $nomeArquivo;
-        $excluirFotoDePerfilDoServer->excluirImagem($caminho);
+            // Pegando a info do Usuario para poder excluir a foto de perfil do Servidor
+            $infoExcluido = $usuario->consultarUsuarioPorId($id);
+            $nomeArquivo = basename($infoExcluido['Foto_perfil']);
+            $caminho = ".\\views\Img\ImgUsuario\\" . $nomeArquivo;
+            $excluirFotoDePerfilDoServer->excluirImagem($caminho);
 
-        //Excluindo o usuário do BD
-        $infoExcluido = $usuario->excluirUsuarioPorId($id);
-        echo $infoExcluido['Nome'];
+            //Excluindo o usuário do BD
+            $infoExcluido = $usuario->excluirUsuarioPorId($id);
+            echo $infoExcluido['Nome'];
+        }
 
         header('Location: /sistemackc/admtm85/usuario');
         exit();
     }
 
-    public function cadastrar() 
+    public function cadastrar()
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $nome = $_POST['nome'];
@@ -51,7 +54,7 @@ class UsuariosAdmController extends RenderView
             $genero = $_POST['genero'];
             $telefone = $_POST['telefone'];
             $dataNascimento = $_POST['dataNascimento'];
-            
+
             $novoUsuario = new Usuario();
 
             $statusDaValidacaoCpf = $novoUsuario->validarCpf($cpf, 'cadastrar');
@@ -64,18 +67,18 @@ class UsuariosAdmController extends RenderView
 
             if ($statusDaValidacaoCpf == "aceito" && $statusDaValidacaoEmail == "aceito" && $statusDaValidacaoSenha == "aceito") {
                 $senhaCriptografada = $novoUsuario->criptografarSenha($senha);
-                
+
                 //Cadastrando no BD
                 $resultado = $novoUsuario->inserirUsuario($nome, $sobrenome, $cpf, $email, $senhaCriptografada, $peso, $dataFormatada, $genero, $telefoneFormatado);
 
                 //Enviando o E-mail de Boas Vindas
                 $emailBoasVindas = new Email();
                 $bodyDoEmail = file_get_contents('views\Email\boasVindas.html');
-                $nomeDaPessoa = $nome." ".$sobrenome;
+                $nomeDaPessoa = $nome . " " . $sobrenome;
                 $bodyDoEmail = str_replace('%NOME_DA_PESSOA%', $nomeDaPessoa, $bodyDoEmail);
                 $altDoBody = 'Seja bem-vindo(a) ao CKC';
-                $statusEnvioDoEmail = $emailBoasVindas->enviarEmail($email, 'Boas vindas ao CKC', $bodyDoEmail , $altDoBody);
-                
+                $statusEnvioDoEmail = $emailBoasVindas->enviarEmail($email, 'Boas vindas ao CKC', $bodyDoEmail, $altDoBody);
+
                 if ($resultado == "Sucesso") {
                     header('Location: /sistemackc/admtm85/usuario');
                     exit();
@@ -101,13 +104,14 @@ class UsuariosAdmController extends RenderView
                     'status' => 'error',
                     'dados' => $dadosPreenchidos
                 ]);
-            } 
+            }
         } else {
             $this->carregarView('usuario/cadastro');
         }
     }
 
-    public function atualizar($id) {
+    public function atualizar($id)
+    {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $nome = $_POST['nome'];
             $sobrenome = $_POST['sobrenome'];
@@ -117,60 +121,45 @@ class UsuariosAdmController extends RenderView
             $genero = $_POST['genero'];
             $telefone = $_POST['telefone'];
             $dataNascimento = $_POST['dataNascimento'];
-    
-            $atualizarUsuario = new Usuario();
-            $redirecionar = "";
 
-            session_start();
-            if (isset($_SESSION['username']) &&  $_SESSION['username'] == 'admtm85') {
-                $redirecionar = "/sistemackc/admtm85/usuario/'.$id";
-            } else {
-                $redirecionar = "/sistemackc/usuario/$id";
-            }
+            $atualizarUsuario = new Usuario();
+
             $feedbackDeAtualizacao = "";
-    
+
             $statusDaValidacaoCpf = $atualizarUsuario->validarCpf($cpf, 'atualizar', $id);
             $statusDaValidacaoEmail = $atualizarUsuario->validarEmail($email, $email, 'atualizar');
             $telefoneFormatado = $atualizarUsuario->formatarTelefone($telefone);
             $dataFormatada = date('Y-m-d', strtotime($dataNascimento));
-    
+
             if ($statusDaValidacaoCpf == "aceito" && $statusDaValidacaoEmail == "aceito") {
                 // Atualizando no BD
                 $resultado = $atualizarUsuario->atualizarUsuario($id, $nome, $sobrenome, $cpf, $email, $peso, $dataFormatada, $genero, $telefoneFormatado);
-    
+
                 if ($resultado == "atualizado") {
-                    session_start();
-    
-                    if ($_SESSION['username'] == 'admtm85') {
-                        header('Location: ' . $redirecionar);
-                    } else {
-                        $_SESSION['email'] = $email;
-                        $_SESSION['nome'] = $nome;
-                        header('Location: ' . $redirecionar);
-                    }
+                    header('Location: /sistemackc/admtm85/usuario/' . $id);
                     exit();
                 } else {
                     $feedbackDeAtualizacao = $resultado;
                 }
             } else {
-                if($statusDaValidacaoCpf !== "aceito")
-                {
+                if ($statusDaValidacaoCpf !== "aceito") {
                     $feedbackDeAtualizacao = $statusDaValidacaoCpf;
                 }
-                if($statusDaValidacaoEmail !== "aceito")
-                {
+                if ($statusDaValidacaoEmail !== "aceito") {
                     $feedbackDeAtualizacao = $statusDaValidacaoEmail;
                 }
             }
-    
             echo "<script>
                       alert('$feedbackDeAtualizacao');
-                      window.location.href = $redirecionar; 
+                      window.location.href = '/sistemackc/admtm85/usuario/$id'; 
                   </script>";
             exit();
         } else {
-            $this->carregarView('usuario/perfil');
+            $usuarioDados = new Usuario();
+            $usuario = $usuarioDados->consultarUsuarioPorId($id);
+            $this->carregarViewComArgumentos('usuario/perfil', [
+                'usuario' => $usuario
+            ]);
         }
     }
 }
-
