@@ -8,6 +8,51 @@
 
 :root{
     font-size: 62.5%;
-    --background-principal:#100C0C ;
-    --text-base-light: #fff;
+
+    --background-principal:#fff ;/*COR CERTA -> #1E1A18*/
+    --text-base-light: #000; /* COR CERTA -> #fff */
+    --color-button: #0033C1;
+    --background-campos: #232121;
+}
+
+
+body{
+    background-color: var(--background-principal);
+    color: var(--text-base-light);
+    font-size: 1.6rem;
+    
+}
+
+/* AS MEDIDAS ESTÃO EM PX, OU SEJA, NÃO ESTÁ RESPONSIVO - LEMBRAR DE MUDAR DEPOIS */
+
+input {
+    /* depois por o tamnaho - "width" */
+    border: solid;
+    border-width: 2px;
+    border-radius: 14px;
+    border-color: var(--color-button);
+    padding: 1.5rem;
+    background: var(--background-campos);
+    outline: none;
+    box-sizing: border-box;
+}
+
+label {
+    color: var(--text-base-light);
+    
+}
+
+a{
+    color: var(--text-base-light);
+    text-decoration: none;
+}
+
+button, .bt-cadastre {
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: var(--color-button);
+    border: none;    
+    color: var(--text-base-light);
+    
 }

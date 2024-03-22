@@ -6,9 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
+    <script defer src="/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
 
     <link rel="stylesheet" href="../views/Css/variaveis.css">
-    <link rel="stylesheet" href="../views/Css/styleGlobal.css">
     <link rel="stylesheet" href="../views/Css/login.css">
 
     <title>Login</title>

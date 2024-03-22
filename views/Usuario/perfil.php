@@ -7,7 +7,8 @@
 
     <!-- ícone de menu  -->
     <link rel="stylesheet" href="../views/Css/variaveis.css">
-    <link rel="stylesheet" href="../views/Css/styleGlobal.css">
+    <script defer src="/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
+    
 
     <title>Perfil</title>
 </head>
