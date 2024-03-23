@@ -51,7 +51,7 @@
                             echo "<li><a href='/sistemackc/admtm85/menu'>Dashboard</a></li>";
                             echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
                         } else {
-                            echo "<a href='sistemackc/usuario/login'>Entrar</a>";
+                            echo "<a href='/sistemackc/usuario/login'>Entrar</a>";
                         }
                     ?>
                 </li>

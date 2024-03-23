@@ -342,9 +342,17 @@ class UsuarioController extends RenderView
         } 
         else
         {
+            if($usuarioDados == false)
+            {
+                $this->carregarViewComArgumentos('usuario/alterarSenha', [
+                    'feedback' => "Usuário com ID $id não encontrado",
+                    'status' => 'erro',
+                ]);
+            }
             $this->carregarViewComArgumentos('usuario/alterarSenha', [
                 'usuario'=> $usuarioDados
             ]);
         }
     }
+
 }
