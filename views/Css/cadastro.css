@@ -1,2 +1,24 @@
+.bt-voltar{
+    display: flex;
+    justify-content: space-between;
+}
 
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.titulo{    
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.container div{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
+}
 
