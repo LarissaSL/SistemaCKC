@@ -8,8 +8,8 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
     <script defer src="/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
 
-    <link rel="stylesheet" href="../views/Css/variaveis.css">
-    <link rel="stylesheet" href="../views/Css/cadastro.css">
+    <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
+    <link rel="stylesheet" href="/sistemackc/views/Css/cadastro.css">
 
     <title>Cadastro</title>
 </head>
@@ -35,13 +35,14 @@
                 <!-- Decidindo tipo de opções do Usuário Logado (COMUM ou ADM) -->
                 <li>
                     <?php
-                    session_start();
+                    if (!isset($_SESSION)) {
+                        session_start();
+                    }
                     if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Comum') {
                         echo "<p>Olá, " . $_SESSION['nome'] . "</p>";
                         echo "<ul class='drop-corrida'>";
                         echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
                         echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
-                        echo "</ul>";
                         
                     } elseif(isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
                         echo "<p>Olá, " . $_SESSION['nome'] . "</p>";
@@ -49,7 +50,6 @@
                         echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
                         echo "<li><a href='/sistemackc/admtm85/menu'>Dashboard</a></li>";
                         echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
-                        echo "</ul>";
                     } else {
                         echo "<a href='sistemackc/usuario/login'>Entrar</a>";
                     }
@@ -75,7 +75,7 @@
             <?php endif; ?>
 
 
-            <?php if (isset($_SESSION['username']) && $_SESSION['username'] == 'admtm85') {
+            <?php if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
                 echo "<form action='cadastrar' method='POST'>";
             } else {
                 echo "<form action='cadastro' method='POST'>";

@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
 
-    <link rel="stylesheet" href="../views/Css/variaveis.css">
-    <link rel="stylesheet" href="../views/Css/styleGlobal.css">
-    <link rel="stylesheet" href="../views/Css/login.css">
+    <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
+    <link rel="stylesheet" href="/sistemackc/views/Css/styleGlobal.css">
+    <link rel="stylesheet" href="/sistemackc/views/Css/login.css">
 
     <title>Menu</title>
 </head>
@@ -17,8 +17,12 @@
 <body>
     <header>
         <?php
-        session_start();
-        if (isset($_SESSION['username']) && $_SESSION['username'] === 'admtm85') {
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+        if (strpos($_SERVER['REQUEST_URI'], 'admtm85') !== false && (!isset($_SESSION['email']) || $_SESSION['email'] !== 'ckckart23@gmail.com')) {
+            echo "<h1>Acesso não autorizado</h1>";
+        } else {
         ?>
             <!-- Inicio do Conteúdo para o ADM -->
             <nav>
@@ -32,10 +36,12 @@
 
                     <li>
                         <?php
-                        if (isset($_SESSION['username'])) {
-                            echo "<p>Olá, " . $_SESSION['username'] . "</p>";
-                            echo "<ul><li><a href='/sistemackc/logout'>Logout</a></li>";
-                            echo "</ul>";
+                        if (isset($_SESSION['nome'])) {
+                            echo "<p>Olá, " . $_SESSION['nome'] . "</p>";
+                            echo "<ul class='drop-corrida'>";
+                            echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
+                            echo "<li><a href='/sistemackc/admtm85/menu'>Dashboard</a></li>";
+                            echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
                         } else {
                             echo "<a href='#'>Entrar</a>";
                         }
@@ -54,15 +60,7 @@
             </div>
 
     </main>
-    <!-- Fim do Conteúdo para o ADM -->
-
-    <!-- Caso um usuário normal tente entrar na rota do ADM -->
-        <?php
-            } else {
-                echo "<h1>Acesso não autorizado</h1>";
-            } 
-        ?>
-
+    <?php } ?>
     <footer>
         <p>© Manas code</p>
     </footer>

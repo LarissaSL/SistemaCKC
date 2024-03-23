@@ -7,9 +7,23 @@ require_once 'models/Email.php';
 class UsuarioController extends RenderView
 {
 
+    public function mostrarUsuarios()
+    {
+        $usuario = new Usuario();
+
+        $usuarios = $usuario->consultarTodosOsUsuarios();
+
+        $this->carregarViewComArgumentos('adm/crudUsuarios', [
+            'usuarios' => $usuarios
+        ]);
+    }
+
     public function mostrarPerfil($id)
     {
         $usuarioModel = new Usuario();
+        if (!isset($_SESSION)) {
+            session_start();
+        }
         // Carregar o perfil do usuário
         $usuario = $usuarioModel->consultarUsuarioPorId($id);
 
@@ -30,7 +44,7 @@ class UsuarioController extends RenderView
             } else {
                 $caminhoImg = $imagem->moverParaPasta($imagemDePerfil);
                 $usuarioModel->inserirFoto($caminhoImg, $id);
-                if ($_SESSION['tipo'] === 'Administrativo') {
+                if ($_SESSION['tipo'] == 'Administrador') {
                     header('Location: /sistemackc/admtm85/usuario/' . $id);
                 } else {
                     header('Location: /sistemackc/usuario/' . $id);
@@ -51,6 +65,7 @@ class UsuarioController extends RenderView
         }
     }
 
+    // Funciona pro usuário comum e pro adm cadastrar
     public function cadastrar()
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -93,7 +108,17 @@ class UsuarioController extends RenderView
                 $statusEnvioDoEmail = $emailBoasVindas->enviarEmail($email, 'Boas vindas ao CKC', $bodyDoEmail, $altDoBody);
 
                 if ($resultado && $statusEnvioDoEmail == "Sucesso") {
-                    $this->login($email, $senha);
+                    if (!isset($_SESSION)) {
+                        session_start();
+                    }
+                    if(isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador'){
+                        header('Location: /sistemackc/admtm85/usuario');
+                        exit();
+                    } 
+                    else
+                    {
+                        $this->login($email, $senha);
+                    }  
                 } else {
                     $this->carregarViewComArgumentos('usuario/cadastro', [
                         'feedback' => "Erro ao cadastrar, tente novamente.",
@@ -154,7 +179,13 @@ class UsuarioController extends RenderView
                 exit();
                 
             } else {
-                $viewParaRedirecionar = $usuario['Tipo'] == 'Comum' ? "usuario/loginUsuario" : "adm/loginAdm";
+                $urlAtual = $_SERVER['REQUEST_URI'];
+                if (strpos($urlAtual, 'admtm85') !== false) {
+                    $viewParaRedirecionar = "adm/loginAdm"; 
+                } else
+                {
+                    $viewParaRedirecionar = "usuario/loginUsuario";
+                }
                 $this->carregarViewComArgumentos($viewParaRedirecionar, [
                     'feedback' => $autenticacao,
                     'classe' => 'erro'
@@ -183,6 +214,7 @@ class UsuarioController extends RenderView
         exit();
     }
 
+    // Funciona pro usuário comum e pro adm atualizar
     public function atualizar($id)
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -197,6 +229,9 @@ class UsuarioController extends RenderView
 
             $atualizarUsuario = new Usuario();
 
+            if (!isset($_SESSION)) {
+                session_start();
+            }
             $feedbackDeAtualizacao = "";
 
             $statusDaValidacaoCpf = $atualizarUsuario->validarCpf($cpf, 'atualizar', $id);
@@ -209,11 +244,19 @@ class UsuarioController extends RenderView
                 $resultado = $atualizarUsuario->atualizarUsuario($id, $nome, $sobrenome, $cpf, $email, $peso, $dataFormatada, $genero, $telefoneFormatado);
 
                 if ($resultado == "atualizado") {
-                    session_start();
-                    $_SESSION['email'] = $email;
-                    $_SESSION['nome'] = $nome;
-                    header('Location: /sistemackc/usuario/' . $id);
-                    exit();
+                    if(isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador')
+                    {
+                        header('Location: /sistemackc/admtm85/usuario/' . $id);
+                        exit();
+                    } 
+                    else {
+                        $_SESSION['email'] = $email;
+                        $_SESSION['nome'] = $nome;
+                        header('Location: /sistemackc/usuario/' . $id);
+                        exit();
+                    } 
+
+                    
                 } else {
                     $feedbackDeAtualizacao = $resultado;
                 }
@@ -225,11 +268,36 @@ class UsuarioController extends RenderView
                     $feedbackDeAtualizacao = $statusDaValidacaoEmail;
                 }
             }
+            $UrlParaRedirecionar = $_SESSION['tipo'] == 'Administrador' ? '/sistemackc/admtm85/usuario/'.$id : '/sistemackc/usuario/'.$id;
             echo "<script>
-                      alert('$feedbackDeAtualizacao');
-                      window.location.href = '/sistemackc/usuario/$id'; 
+                    alert('$feedbackDeAtualizacao');
+                    window.location.href = '$UrlParaRedirecionar'; 
                   </script>";
-                exit();
+            exit();
+        }    
+    }
+
+    public function excluir($id)
+    {
+        if (!isset($_SESSION)) {
+            session_start();
         }
+        if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
+            $usuario = new Usuario();
+            $excluirFotoDePerfilDoServer = new Imagem();
+
+            // Pegando a info do Usuario para poder excluir a foto de perfil do Servidor
+            $infoExcluido = $usuario->consultarUsuarioPorId($id);
+            $nomeArquivo = basename($infoExcluido['Foto']);
+            $caminho = ".\\views\Img\ImgUsuario\\" . $nomeArquivo;
+            $excluirFotoDePerfilDoServer->excluirImagem($caminho);
+
+            //Excluindo o usuário do BD
+            $infoExcluido = $usuario->excluirUsuarioPorId($id);
+            echo $infoExcluido['Nome'];
+        }
+
+        header('Location: /sistemackc/admtm85/usuario');
+        exit();
     }
 }

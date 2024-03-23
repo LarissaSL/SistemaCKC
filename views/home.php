@@ -27,16 +27,22 @@
                 </li> 
                 <li>
                     <?php
-                    session_start();
-                    if(isset($_SESSION['nome'])) {
-                        echo "<p>Olá, " . $_SESSION['nome'] . "</p>";
-                        echo "<ul class='drop-corrida'>";
-                        echo "<li><a href='./usuario/{$_SESSION['id']}'>Perfil</a></li>";
-                        echo "<li><a href='./logout'>Logout</a></li>";
-                        echo "</ul>";
-                    } else {
-                        echo "<a href='./usuario/login'>Entrar</a>";
-                    }
+                        session_start();
+                        if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Comum') {
+                            echo "<p>Olá, " . $_SESSION['nome'] . "</p>";
+                            echo "<ul class='drop-corrida'>";
+                            echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
+                            echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
+                            
+                        } elseif(isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
+                            echo "<p>Olá, " . $_SESSION['nome'] . "</p>";
+                            echo "<ul class='drop-corrida'>";
+                            echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
+                            echo "<li><a href='/sistemackc/admtm85/menu'>Dashboard</a></li>";
+                            echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
+                        } else {
+                            echo "<a href='sistemackc/usuario/login'>Entrar</a>";
+                        }
                     ?>
                 </li>               
             </ul>

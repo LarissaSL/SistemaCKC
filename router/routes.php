@@ -1,7 +1,7 @@
 <?php
 
 $routes = [
-    //Toda Rota nova vai entrando aqui (pasta#Controller#função)
+    // Toda Rota nova vai entrando aqui (pasta#Controller#função)
     '/' => 'usuario#IndexUsuarioController#index',
     '/logout' => 'usuario#UsuarioController#logout',
     '/kartodromo' => 'usuario#KartodromoController#index',
@@ -12,15 +12,16 @@ $routes = [
     '/usuario/cadastro' => 'usuario#UsuarioController#cadastrar',
     '/usuario/atualizar/{id}' => 'usuario#UsuarioController#atualizar',
 
-    //Rotas ADM
-    '/admtm85/login' => 'adm#AdmController#login',
+    // Rotas ADM
+    '/admtm85/login' => 'usuario#UsuarioController#login',
     '/admtm85/menu' => 'adm#AdmController#index',
 
     // CRUD do Usuário
-    '/admtm85/usuario' => 'adm#UsuariosAdmController#mostrarUsuarios',
-    '/admtm85/usuario/cadastrar' => 'adm#UsuariosAdmController#cadastrar',
-    '/admtm85/usuario/{id}' => 'adm#UsuariosAdmController#atualizar',
-    '/admtm85/usuario/excluir/{id}' => 'adm#UsuariosAdmController#excluir',
+    '/admtm85/usuario' => 'usuario#UsuarioController#mostrarUsuarios',
+    '/admtm85/usuario/cadastrar' => 'usuario#UsuarioController#cadastrar',
+    '/admtm85/usuario/{id}' => 'usuario#UsuarioController#mostrarPerfil',
+    '/admtm85/usuario/atualizar/{id}' => 'usuario#UsuarioController#atualizar',
+    '/admtm85/usuario/excluir/{id}' => 'usuario#UsuarioController#excluir',
 
 
 ];

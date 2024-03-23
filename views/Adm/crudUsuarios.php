@@ -13,8 +13,10 @@
 <body>
     <header>
         <?php
-        session_start();
-        if (isset($_SESSION['username']) && $_SESSION['username'] === 'admtm85') {
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+        if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
         ?>
             <!-- Inicio do Conteúdo para o ADM -->
             <nav>
@@ -28,13 +30,15 @@
 
                     <li>
                         <?php
-                        if (isset($_SESSION['username'])) {
-                            echo "<p>Olá, " . $_SESSION['username'] . "</p>";
-                            echo "<ul><li><a href='/sistemackc/logout'>Logout</a></li>";
-                            echo "</ul>";
-                        } else {
-                            echo "<a href='#'>Entrar</a>";
-                        }
+                            if (isset($_SESSION['nome'])) {
+                                echo "<p>Olá, " . $_SESSION['nome'] . "</p>";
+                                echo "<ul class='drop-corrida'>";
+                                echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
+                                echo "<li><a href='/sistemackc/admtm85/menu'>Dashboard</a></li>";
+                                echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
+                            } else {
+                                echo "<a href='#'>Entrar</a>";
+                            }
                         ?>
                     </li>
                 </ul>
@@ -49,6 +53,7 @@
             <tr>
                 <th>Foto de Perfil</th>
                 <th>ID</th>
+                <th>Tipo</th>
                 <th>Nome</th>
                 <th>Sobrenome</th>
                 <th>CPF</th>
@@ -66,8 +71,9 @@
             <?php
             foreach ($usuarios as $usuario) {
                 echo "<tr>";
-                echo "<td><img style='width: 120px;' src='/sistemackc/views/Img/ImgUsuario/" . $usuario['Foto_perfil'] . "' alt='Imagem de " . $usuario['Nome'] . "'></td>";
+                echo "<td><img style='width: 120px;' src='/sistemackc/views/Img/ImgUsuario/" . $usuario['Foto'] . "' alt='Imagem de " . $usuario['Nome'] . "'></td>";
                 echo "<td>" . $usuario['Id'] . "</td>";
+                echo "<td>" . $usuario['Tipo'] . "</td>";
                 echo "<td>" . $usuario['Nome'] . "</td>";
                 echo "<td>" . $usuario['Sobrenome'] . "</td>";
                 echo "<td>" . $usuario['Cpf'] . "</td>";
@@ -101,6 +107,9 @@
             echo "<h1>Acesso não autorizado</h1>";
         }
         ?>
+        <footer>
+            <p>© Manas code</p>
+        </footer>
 </body>
 
 

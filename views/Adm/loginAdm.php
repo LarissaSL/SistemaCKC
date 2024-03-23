@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>  <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
 
-    <link rel="stylesheet" href="../views/Css/variaveis.css">
-    <link rel="stylesheet" href="../views/Css/styleGlobal.css">
-    <link rel="stylesheet" href="../views/Css/login.css">
+    <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
+    <link rel="stylesheet" href="/sistemackc/views/Css/styleGlobal.css">
+    <link rel="stylesheet" href="/sistemackc/views/Css/login.css">
 
     <title>Login</title>
 </head>
+
 <body>
     <header>
         <nav>
@@ -22,19 +24,28 @@
                 <li><a href="#">Corridas</a></li>
                 <li><a href="#">Kartodromos</a></li>
                 <li><a href="#">Resultados</a></li>
-            
+
                 <li>
                     <?php
-                    session_start();
-                    if(isset($_SESSION['username'])) {
-                        echo "<p>Olá, " . $_SESSION['username'] . "</p>";
-                        echo "<ul><li><a href='/sistemackc/logout'>Logout</a></li>";
-                        echo "</ul>";
+                    if (!isset($_SESSION)) {
+                        session_start();
+                    }
+                    if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Comum') {
+                        echo "<p>Olá, " . $_SESSION['nome'] . "</p>";
+                        echo "<ul class='drop-corrida'>";
+                        echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
+                        echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
+                    } elseif (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
+                        echo "<p>Olá, " . $_SESSION['nome'] . "</p>";
+                        echo "<ul class='drop-corrida'>";
+                        echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
+                        echo "<li><a href='/sistemackc/admtm85/menu'>Dashboard</a></li>";
+                        echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
                     } else {
-                        echo "<a href='#'>Entrar</a>";
+                        echo "<a href='sistemackc/usuario/login'>Entrar</a>";
                     }
                     ?>
-                </li>               
+                </li>
             </ul>
         </nav>
     </header>
@@ -42,13 +53,13 @@
     <main>
         <section class="container">
 
-        <!-- titulo e imagem principal -->
-        <div class="Image-Text">
-            <h2>Acesso administrativo</h2>
-            <img src="#" alt="piloto do ckc em seu kart">
-        </div>
+            <!-- titulo e imagem principal -->
+            <div class="Image-Text">
+                <h2>Acesso administrativo</h2>
+                <img src="#" alt="piloto do ckc em seu kart">
+            </div>
 
-            <?php if(isset($feedback)) : ?>
+            <?php if (isset($feedback)) : ?>
                 <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
             <?php endif ?>
 
@@ -56,10 +67,10 @@
             <form action="login" method="post">
                 <!--caixa de Email -->
                 <div class="emails">
-                    <label class="username" for="username">Username:</label>
-                    <input type="text" name="username">
+                    <label class="email" for="email">Email:</label>
+                    <input type="text" name="email">
                 </div>
-                
+
                 <!--caixa de Senha -->
                 <div class="passwords">
                     <label class="password" for="senha">Senha:</label>
@@ -71,10 +82,11 @@
                 <button class="bt-go-in">Entrar</button>
             </form>
         </section>
-    </main>    
+    </main>
 
     <footer>
         <p>© Manas code</p>
     </footer>
 </body>
+
 </html>
