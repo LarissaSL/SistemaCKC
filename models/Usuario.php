@@ -12,10 +12,12 @@ class Usuario
         $this->conexao = $bancoDeDados->getConexao();
     }
 
-    public function inserirUsuario($nome, $sobrenome, $cpf, $email, $senha, $peso, $dataNascimento, $genero, $telefone)
+    public function inserirUsuario($tipo, $nome, $sobrenome, $cpf, $email, $senha, $peso, $dataNascimento, $genero, $telefone)
     {
+        $tipoUsuario = ($tipo == 'Administrador') ? 'Administrador' : 'Comum';
         try {
-            $inserir = $this->conexao->prepare("INSERT INTO usuario (Nome, Sobrenome, Cpf, Email, Senha, Peso, Data_nascimento, Genero, Telefone) VALUES (:nome, :sobrenome, :cpf, :email, :senha, :peso, :data_nascimento, :genero, :telefone)");
+            $inserir = $this->conexao->prepare("INSERT INTO usuario (Tipo, Nome, Sobrenome, Cpf, Email, Senha, Peso, Data_nascimento, Genero, Telefone) VALUES (:tipo, :nome, :sobrenome, :cpf, :email, :senha, :peso, :data_nascimento, :genero, :telefone)");
+            $inserir->bindValue(':tipo', $tipoUsuario);
             $inserir->bindValue(':nome', $nome);
             $inserir->bindValue(':sobrenome', $sobrenome);
             $inserir->bindValue(':cpf', $cpf);
@@ -28,7 +30,7 @@ class Usuario
             $inserir->execute();
             return true; 
         } catch (PDOException $erro) {
-            echo "Erro na inserção: " . $erro->getMessage();
+            echo "Erro no cadastro: " . $erro->getMessage();
             return false; 
         }
     }

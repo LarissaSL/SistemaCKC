@@ -65,6 +65,11 @@ class UsuarioController extends RenderView
             $genero = $_POST['genero'];
             $telefone = $_POST['telefone'];
             $dataNascimento = $_POST['dataNascimento'];
+            $tipo = 'Comum';
+
+            $feedback = "";
+            $nomeDaClasseParaErro = "error";
+            $dataFormatada = date('Y-m-d', strtotime($dataNascimento));
 
             $novoUsuario = new Usuario();
 
@@ -72,16 +77,12 @@ class UsuarioController extends RenderView
             $statusDaValidacaoEmail = $novoUsuario->validarEmail($email, $confirmarEmail, 'cadastrar');
             $statusDaValidacaoSenha = $novoUsuario->validarSenha($senha, $confirmarSenha);
             $telefoneFormatado = $novoUsuario->formatarTelefone($telefone);
-            $dataFormatada = date('Y-m-d', strtotime($dataNascimento));
-
-            $feedback = "";
-            $nomeDaClasseParaErro = "error";
 
             if ($statusDaValidacaoCpf == "aceito" && $statusDaValidacaoEmail == "aceito" && $statusDaValidacaoSenha == "aceito") {
                 $senhaCriptografada = $novoUsuario->criptografarSenha($senha);
 
                 //Cadastrando no BD
-                $resultado = $novoUsuario->inserirUsuario($nome, $sobrenome, $cpf, $email, $senhaCriptografada, $peso, $dataFormatada, $genero, $telefoneFormatado);
+                $resultado = $novoUsuario->inserirUsuario($tipo, $nome, $sobrenome, $cpf, $email, $senhaCriptografada, $peso, $dataFormatada, $genero, $telefoneFormatado);
 
                 //Enviando o E-mail de Boas Vindas
                 $emailBoasVindas = new Email();
@@ -97,7 +98,6 @@ class UsuarioController extends RenderView
                     $this->carregarViewComArgumentos('usuario/cadastro', [
                         'feedback' => "Erro ao cadastrar, tente novamente.",
                         'status' => $nomeDaClasseParaErro,
-
                     ]);
                 }
                 // Erros e seus feedbacks

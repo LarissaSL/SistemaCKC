@@ -5,6 +5,8 @@ define('DATABASENAME', 'ckc_bd');
 define('USER', 'root');
 define('PASSWORD', '');
 
+require_once 'models/Usuario.php';
+
 class Conexao 
 {
     protected $conexao;
@@ -13,8 +15,6 @@ class Conexao
     {
         $this->conectarBancoDeDados();
         $this->criarTabelaUsuario();
-        $this->criarTabelaAdm();
-        $this->inserirAdm('admtm85', 'ckckart23@gmail.com', password_hash('crash', PASSWORD_DEFAULT),);
     }
 
     function conectarBancoDeDados()
@@ -32,16 +32,17 @@ class Conexao
         try {
             $query = "CREATE TABLE IF NOT EXISTS usuario (
                 Id INT AUTO_INCREMENT PRIMARY KEY,
-                Nome VARCHAR(100),
-                Sobrenome VARCHAR(50), 
+                Tipo VARCHAR(30) DEFAULT 'Comum',
+                Nome VARCHAR(25),
+                Sobrenome VARCHAR(30), 
                 Cpf CHAR(11) UNIQUE,
-                Email VARCHAR(100) UNIQUE,
-                Senha VARCHAR(100),
+                Email VARCHAR(50) UNIQUE,
+                Senha VARCHAR(60),
                 Peso DECIMAL(5,2),
                 Data_nascimento DATE,
                 Genero ENUM('Masculino', 'Feminino', 'Outro'),
-                Telefone VARCHAR(20),
-                Foto_perfil VARCHAR(60),
+                Telefone VARCHAR(15),
+                Foto VARCHAR(60),
                 Data_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )";
             $this->conexao->exec($query);
@@ -49,36 +50,6 @@ class Conexao
             echo "Erro ao criar tabela de usuário: " . $erro->getMessage();
         }
     }
-
-    function criarTabelaAdm()
-    {
-        try {
-            $query = "CREATE TABLE IF NOT EXISTS adm (
-                Id INT AUTO_INCREMENT PRIMARY KEY,
-                Username VARCHAR(50) NOT NULL,
-                Email VARCHAR(100) NOT NULL,
-                Senha VARCHAR(255) NOT NULL
-            )";
-            $this->conexao->exec($query);
-        } catch (PDOException $erro) {
-            echo "Erro ao criar tabela do adm: " . $erro->getMessage();
-        }
-    }
-
-    public function inserirAdm($username, $email, $senha)
-    {
-        try {
-            $inserir = $this->conexao->prepare("INSERT INTO adm (Username, Email, Senha) VALUES (:username, :email, :senha)");
-            $inserir->bindValue(':username', $username);
-            $inserir->bindValue(':email', $email);
-            $inserir->bindValue(':senha', $senha);
-            $inserir->execute();
-            return true; 
-        } catch (PDOException $erro) {
-            echo "Erro na inserção: " . $erro->getMessage();
-            return false; 
-        }
-    }  
 
     function getConexao()
     {
