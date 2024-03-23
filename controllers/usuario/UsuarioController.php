@@ -300,4 +300,51 @@ class UsuarioController extends RenderView
         header('Location: /sistemackc/admtm85/usuario');
         exit();
     }
+
+    // Funciona pro usuário comum
+    public function atualizarSenha($id)
+    {
+        $usuario = new Usuario();
+        $usuarioDados = $usuario->consultarUsuarioPorId($id); 
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $senha = $_POST['senha'];
+            $senhaConfirmacao = $_POST['confirmarSenha'];
+        
+            $feedbackDeSenha = $usuario->validarSenha($senha, $senhaConfirmacao);
+            
+            if ($feedbackDeSenha == "aceito") {
+                $feedbackDeAtualizacao = $usuario->trocarSenha($id, $senha);
+
+                if($feedbackDeAtualizacao == "Senha atualizada com sucesso")
+                {
+                    $this->carregarViewComArgumentos('usuario/alterarSenha', [
+                        'feedback' => $feedbackDeAtualizacao,
+                        'status' => 'sucesso',
+                        'usuario'=> $usuarioDados
+                    ]);
+                } 
+                else 
+                {
+                    $this->carregarViewComArgumentos('usuario/alterarSenha', [
+                        'feedback' => $feedbackDeAtualizacao,
+                        'status' => 'erro',
+                        'usuario'=> $usuarioDados
+                    ]);  
+                } 
+                
+            } else {
+                $this->carregarViewComArgumentos('usuario/alterarSenha', [
+                    'feedback' => $feedbackDeSenha,
+                    'status' => 'erro',
+                    'usuario'=> $usuarioDados
+                ]); 
+            }
+        } 
+        else
+        {
+            $this->carregarViewComArgumentos('usuario/alterarSenha', [
+                'usuario'=> $usuarioDados
+            ]);
+        }
+    }
 }

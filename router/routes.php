@@ -11,6 +11,7 @@ $routes = [
     '/usuario/login' => 'usuario#UsuarioController#login',
     '/usuario/cadastro' => 'usuario#UsuarioController#cadastrar',
     '/usuario/atualizar/{id}' => 'usuario#UsuarioController#atualizar',
+    '/usuario/atualizar/senha/{id}' => 'usuario#UsuarioController#atualizarSenha',
 
     // Rotas ADM
     '/admtm85/login' => 'usuario#UsuarioController#login',

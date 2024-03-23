@@ -277,6 +277,21 @@ class Usuario
             return "Email inválido";
         }
     }
+
+    public function trocarSenha($id, $senha)
+    {
+        try {
+            $senhaCriptografada = $this->criptografarSenha($senha);
+            $atualizarSenha = $this->conexao->prepare("UPDATE usuario SET Senha = :senha WHERE id = :id");
+            $atualizarSenha->bindValue(':senha', $senhaCriptografada);
+            $atualizarSenha->bindValue(':id', $id);
+            $atualizarSenha->execute();
+            return "Senha atualizada com sucesso";
+        } catch (PDOException $erro) {
+            return "Erro ao atualizar a senha: " . $erro->getMessage();
+        }
+    }
+
 }
 
 ?>

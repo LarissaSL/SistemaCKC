@@ -166,8 +166,11 @@
                 <label class="email" for="email">E-mail:</label>
                 <input type="text" name="email" value="<?php echo $usuario['Email'] ?>" <?php echo (isset($_SESSION['email']) && $_SESSION['email'] == $usuario['Email']) || (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') ? '' : 'readonly'; ?>>
             </div>
-            <?php if ((isset($_SESSION['email']) && $_SESSION['email'] == $usuario['Email']) || (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador')) : ?>
-                <a href="#">Alterar senha</a>
+            <?php if (isset($_SESSION['email']) && ($_SESSION['email'] == $usuario['Email'] || $_SESSION['tipo'] == 'Administrador')) : ?>
+                <?php $url = ($_SESSION['tipo'] == 'Administrador') ? '/sistemackc/admtm85/atualizar/senha/'.$usuario['Id'] : '/sistemackc/usuario/atualizar/senha/'.$usuario['Id']; ?>
+                
+                <!-- Gerando o link para alterar a senha -->
+                <a href="<?php echo $url; ?>">Alterar senha</a>
                 <button type="submit" class="bt-cadastrar">Atualizar</button>
             <?php endif; ?>
             </form>
