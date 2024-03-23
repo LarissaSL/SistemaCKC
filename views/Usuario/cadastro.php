@@ -9,7 +9,7 @@
     <script defer src="/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
 
     <link rel="stylesheet" href="../views/Css/variaveis.css">
-    <link rel="stylesheet" href="/views/Css/cadastro.css">
+    <link rel="stylesheet" href="../views/Css/cadastro.css">
 
     <title>Cadastro</title>
 </head>
@@ -51,14 +51,15 @@
     </header>
 
     <main>
-        <section class="container">
-            <div id="bt-voltar">
-                <a href="/sistemackc/"><i class="ph ph-caret-left"></i>Voltar</a>
-            </div>
+        <div id="bt-voltar">
+            <a href="/sistemackc/"><i class="ph ph-caret-left"></i>Voltar</a>
+        </div>
 
-            <div class="titulo">
-                <h1>Cadatro</h1>
-            </div>
+        <div class="titulo">
+            <h1>Cadatro</h1>
+        </div>
+
+        <section class="container">
 
             <?php if (isset($feedback)) : ?>
                 <p class="<?php echo $status ?>"><?php echo $feedback; ?></p>
@@ -87,6 +88,7 @@
             </div>
 
             <div class="genero">
+                <label class="genero" for="genero">Gênero:</label>
                 <input type="radio" value="Masculino" name="genero" <?php echo isset($dados) && $dados[8] == 'Masculino' ? 'checked' : ''; ?>>
                 <label class="homem" for="homem">Masculino</label>
 
