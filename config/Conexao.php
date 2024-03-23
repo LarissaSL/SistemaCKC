@@ -15,6 +15,7 @@ class Conexao
     {
         $this->conectarBancoDeDados();
         $this->criarTabelaUsuario();
+        $this->inserirAdmManualmente('Administrador', 'Thiago', 'Menezes', '11122233344', 'ckckart23@gmail.com', password_hash('crash', PASSWORD_DEFAULT), 70, '1990-03-12', 'Masculino', '(11) 91122-3344');
     }
 
     function conectarBancoDeDados()
@@ -51,6 +52,35 @@ class Conexao
         }
     }
 
+    public function inserirAdmManualmente($tipo, $nome, $sobrenome, $cpf, $email, $senha, $peso, $dataNascimento, $genero, $telefone)
+    {
+        try {
+            $consulta = $this->conexao->prepare("SELECT * FROM usuario WHERE Email = :email");
+            $consulta->bindValue(':email', $email);
+            $consulta->execute();
+            $usuarioExistente = $consulta->fetch();
+
+            // Se não houver usuário com o e-mail especificado, inserir o usuário administrador
+            if (!$usuarioExistente) {
+                $inserir = $this->conexao->prepare("INSERT INTO usuario (Tipo, Nome, Sobrenome, Cpf, Email, Senha, Peso, Data_nascimento, Genero, Telefone) VALUES (:tipo, :nome, :sobrenome, :cpf, :email, :senha, :peso, :data_nascimento, :genero, :telefone)");
+                $inserir->bindValue(':tipo', $tipo);
+                $inserir->bindValue(':nome', $nome);
+                $inserir->bindValue(':sobrenome', $sobrenome);
+                $inserir->bindValue(':cpf', $cpf);
+                $inserir->bindValue(':email', $email);
+                $inserir->bindValue(':senha', $senha);
+                $inserir->bindValue(':peso', $peso);
+                $inserir->bindValue(':data_nascimento', $dataNascimento);
+                $inserir->bindValue(':genero', $genero);
+                $inserir->bindValue(':telefone', $telefone);
+                $inserir->execute(); 
+            } 
+        } catch (PDOException $erro) {
+            echo "Erro no cadastro: " . $erro->getMessage();
+            return false; 
+        }
+    }
+    
     function getConexao()
     {
         return $this->conexao;

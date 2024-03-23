@@ -68,8 +68,8 @@
             <p>Foto:</p>
 
             <!-- Se o Usuário tiver foto ela irá aparecer -->
-            <?php if (isset($usuario['Foto_perfil'])) : ?>
-                <img src="/sistemackc/views/Img/ImgUsuario/<?php echo $usuario['Foto_perfil'] ?>" alt="Foto de <?php echo $usuario['Nome']; ?>">
+            <?php if (isset($usuario['Foto'])) : ?>
+                <img src="/sistemackc/views/Img/ImgUsuario/<?php echo $usuario['Foto'] ?>" alt="Foto de <?php echo $usuario['Nome']; ?>">
             <?php endif; ?>
 
             <!-- Se o Usuário Logado for o mesmo do ID ele pode trocar sua foto de perfil -->

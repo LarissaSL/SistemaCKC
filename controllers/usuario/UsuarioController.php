@@ -30,7 +30,7 @@ class UsuarioController extends RenderView
             } else {
                 $caminhoImg = $imagem->moverParaPasta($imagemDePerfil);
                 $usuarioModel->inserirFoto($caminhoImg, $id);
-                if ($_SESSION['username'] === 'admtm85') {
+                if ($_SESSION['tipo'] === 'Administrativo') {
                     header('Location: /sistemackc/admtm85/usuario/' . $id);
                 } else {
                     header('Location: /sistemackc/usuario/' . $id);
@@ -130,34 +130,43 @@ class UsuarioController extends RenderView
 
             $usuario = new Usuario();
             $autenticacao = $usuario->autentificar($email, $senha);
+            $usuario = $usuario->consultarUsuarioPorEmail($email);
 
             if ($autenticacao === "Sucesso") {
                 // Inicia a sessão se não estiver iniciada
                 if (!isset($_SESSION)) {
                     session_start();
-                    if (isset($_SESSION['username'])) {
+                    // Caso já tenha o nome na sessão, destroi ela e inicia novamente
+                    if (isset($_SESSION['nome'])) {
                         session_unset();
                         session_destroy();
                         session_start();
                     }
                 }
 
-                $usuarioAutenticado = $usuario->consultarUsuarioPorEmail($email);
+                $_SESSION['id'] = $usuario['Id'];
+                $_SESSION['nome'] = $usuario['Nome'];
+                $_SESSION['tipo'] = $usuario['Tipo'];
+                $_SESSION['email'] = $usuario['Email'];
 
-                $_SESSION['id'] = $usuarioAutenticado['Id'];
-                $_SESSION['nome'] = $usuarioAutenticado['Nome'];
-                $_SESSION['email'] = $usuarioAutenticado['Email'];
-
-                header('Location: /sistemackc/');
+                $rotaParaRedirecionar = $_SESSION['tipo'] == 'Comum' ? "/sistemackc/usuario/{$usuario['Id']}" : "/sistemackc/admtm85/menu";
+                header('Location:'.$rotaParaRedirecionar);
                 exit();
+                
             } else {
-                $this->carregarViewComArgumentos('usuario/loginUsuario', [
+                $viewParaRedirecionar = $usuario['Tipo'] == 'Comum' ? "usuario/loginUsuario" : "adm/loginAdm";
+                $this->carregarViewComArgumentos($viewParaRedirecionar, [
                     'feedback' => $autenticacao,
                     'classe' => 'erro'
                 ]);
             }
         } else {
-            $this->carregarView('usuario/loginUsuario');
+            $urlAtual = $_SERVER['REQUEST_URI'];
+            if (strpos($urlAtual, 'admtm85') !== false) {
+                $this->carregarView('adm/loginAdm');
+            } else {
+                $this->carregarView('usuario/loginUsuario');
+            }
         }
     }
 

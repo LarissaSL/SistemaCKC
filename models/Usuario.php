@@ -10,6 +10,7 @@ class Usuario
     {
         $bancoDeDados = new Conexao();
         $this->conexao = $bancoDeDados->getConexao();
+        
     }
 
     public function inserirUsuario($tipo, $nome, $sobrenome, $cpf, $email, $senha, $peso, $dataNascimento, $genero, $telefone)
@@ -73,16 +74,18 @@ class Usuario
             $imagem = new Imagem();
             $usuarioAntigo = $usuarioModel->consultarUsuarioPorId($id);
 
-            if ($usuarioAntigo && isset($usuarioAntigo['Foto_perfil'])) {
-                $nomeArquivoAntigo = basename($usuarioAntigo['Foto_perfil']);
+            if ($usuarioAntigo && isset($usuarioAntigo['Foto'])) {
+                $nomeArquivoAntigo = basename($usuarioAntigo['Foto']);
                 $imagem->excluirImagem($nomeArquivoAntigo);
+                var_dump($nomeArquivoAntigo);
             }
+            
 
             $novoNomeDaImagem = basename($foto);
 
             // Salvar o nome da imagem no banco de dados
-            $inserir = $this->conexao->prepare("UPDATE usuario SET Foto_perfil = :foto_perfil WHERE Id = :id");
-            $inserir->bindValue(':foto_perfil', $novoNomeDaImagem);
+            $inserir = $this->conexao->prepare("UPDATE usuario SET Foto = :foto WHERE Id = :id");
+            $inserir->bindValue(':foto', $novoNomeDaImagem);
             $inserir->bindValue(':id', $id);
             $inserir->execute();
 
