@@ -19,10 +19,8 @@
         session_start();
     }
 
-    if (strpos($_SERVER['REQUEST_URI'], 'admtm85') !== false && (!isset($_SESSION['email']) || $_SESSION['email'] !== 'ckckart23@gmail.com')) {
-        echo "<h1>Acesso não autorizado22</h1>";
-        var_dump($_SESSION['email']);
-        var_dump($_SESSION['tipo']);
+    if (strpos($_SERVER['REQUEST_URI'], 'admtm85') !== false && (!isset($_SESSION['email']) && $_SESSION['tipo'] !== 'Administrativo')) {
+        echo "<h1>Acesso não autorizado</h1>";
     } else {
     ?>
         <header>
@@ -49,6 +47,7 @@
                             echo "<ul class='drop-corrida'>";
                             echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
                             echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
+                            echo "</ul>";
                             
                         } elseif(isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
                             echo "<p>Olá, " . $_SESSION['nome'] . "</p>";
@@ -56,6 +55,7 @@
                             echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
                             echo "<li><a href='/sistemackc/admtm85/menu'>Dashboard</a></li>";
                             echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
+                            echo "</ul>";
                         } else {
                             echo "<a href='/sistemackc/usuario/login'>Entrar</a>";
                         }

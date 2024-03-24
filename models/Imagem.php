@@ -2,8 +2,8 @@
 
 class Imagem 
 {
-    public function moverParaPasta($imagem) {
-        $pasta = "./views/Img/ImgUsuario/";
+    public function moverParaPasta($imagem, $assunto) {
+        $pasta = $assunto == 'usuario' ? './views/Img/ImgUsuario/' : './views/Img/ImgSistema/';
         $extensaoImagem = strtolower (pathinfo($imagem['name'], PATHINFO_EXTENSION));
 
         // Trocar o nome da Imagem e colocar um nome unico
@@ -35,9 +35,9 @@ class Imagem
         return $statusDaValidacao;
     }
 
-    public function excluirImagem($nome) 
+    public function excluirImagem($nome, $assunto) 
     {
-        $caminho = "./views/Img/ImgUsuario/".$nome;
+        $caminho = $assunto == 'usuario' ? './views/Img/ImgUsuario/'.$nome : './views/Img/ImgSistema/'.$nome;
         if (file_exists($caminho)) {
             unlink($caminho);
         }

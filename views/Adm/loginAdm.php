@@ -22,7 +22,7 @@
                 <li><a href="/sistemackc/"><img src="../views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a></li>
                 <li><a href="#">Usuarios</a></li>
                 <li><a href="#">Corridas</a></li>
-                <li><a href="#">Kartodromos</a></li>
+                <li><a href="/sistemackc/admtm85/kartodromo">Kartodromos</a></li>
                 <li><a href="#">Resultados</a></li>
 
                 <li>
@@ -35,12 +35,14 @@
                         echo "<ul class='drop-corrida'>";
                         echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
                         echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
+                        echo "</ul>";
                     } elseif (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
                         echo "<p>Olá, " . $_SESSION['nome'] . "</p>";
                         echo "<ul class='drop-corrida'>";
                         echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
                         echo "<li><a href='/sistemackc/admtm85/menu'>Dashboard</a></li>";
                         echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
+                        echo "</ul>";
                     } else {
                         echo "<a href='sistemackc/usuario/login'>Entrar</a>";
                     }

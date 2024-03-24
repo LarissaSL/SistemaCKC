@@ -16,6 +16,7 @@ class Conexao
         $this->conectarBancoDeDados();
         $this->criarTabelaUsuario();
         $this->inserirAdmManualmente('Administrador', 'Thiago', 'Menezes', '11122233344', 'ckckart23@gmail.com', password_hash('crash', PASSWORD_DEFAULT), 70, '1990-03-12', 'Masculino', '(11) 91122-3344');
+        $this->criarTabelaKartodromo();
     }
 
     function conectarBancoDeDados()
@@ -78,6 +79,25 @@ class Conexao
         } catch (PDOException $erro) {
             echo "Erro no cadastro: " . $erro->getMessage();
             return false; 
+        }
+    }
+
+    function criarTabelaKartodromo()
+    {
+        try {
+            $query = "CREATE TABLE IF NOT EXISTS kartodromo (
+                Id INT AUTO_INCREMENT PRIMARY KEY,
+                Nome VARCHAR(30),
+                CEP VARCHAR(9),
+                Rua VARCHAR(50),
+                Bairro VARCHAR(50),
+                Numero INTEGER,
+                Site VARCHAR(50),
+                Foto VARCHAR(50)
+            )";
+            $this->conexao->exec($query);
+        } catch (PDOException $erro) {
+            echo "Erro ao criar tabela dos Kartodromos: " . $erro->getMessage();
         }
     }
     

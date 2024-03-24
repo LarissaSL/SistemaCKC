@@ -39,6 +39,7 @@
                             echo "<ul class='drop-corrida'>";
                             echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
                             echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
+                            echo "</ul>";
                             
                         } elseif(isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
                             echo "<p>Olá, " . $_SESSION['nome'] . "</p>";
@@ -46,6 +47,7 @@
                             echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
                             echo "<li><a href='/sistemackc/admtm85/menu'>Dashboard</a></li>";
                             echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
+                            echo "</ul>";
                         } else {
                             echo "<a href='/sistemackc/usuario/login'>Entrar</a>";
                         }
@@ -58,31 +60,23 @@
     <main>
         <section class="container">
             <h1>Kartódromos</h1>
-            <!-- Primeiro cartão -->
-            <article class="card-one">
-                <h2>Grande viana</h2>
-                <img src="#" alt="pista do Kartódromo de Grande viana">
-
-                <div class="address">
-                    <i class="ph ph-map-pin"></i> <!--icone de localização -->
-                    <strong> LOCALIZAÇÃO</strong>
-                </div>
-
-                <a href="#" class="bt-to-locate">Como chegar</a>
-            </article>
-            
-            <!-- Segundo cartão -->
-            <article class="card-two">
-                <h2>Nova Odessa</h2>
-                <img src="#" alt="pista do Kartódromo de Nova Odessas">
-
-                <div class="address">
-                    <i class="ph ph-map-pin"></i> <!--icone de localização -->
-                    <strong> LOCALIZAÇÃO</strong>
-                </div>
-
-                <a href="#" class="bt-to-locate">Como chegar</a>
-            </article>
+            <?php
+                foreach ($kartodromos as $kartodromo) 
+                {
+                    echo "<article class='card-one'>";
+                        echo "<h2>{$kartodromo['Nome']}</h2>";
+                        echo "<img src='/sistemackc/views/Img/ImgSistema/{$kartodromo['Foto']}' alt='pista do Kartódromo {$kartodromo['Nome']}'>";
+                        echo "<div class='address'>";
+                            echo "<i class='ph ph-map-pin'></i>";
+                            echo "<strong> LOCALIZAÇÃO</strong>";
+                            echo "<p>{$kartodromo['Rua']}, {$kartodromo['Numero']} - {$kartodromo['Bairro']} , {$kartodromo['CEP']} </p>";
+                            echo "<strong>SITE</strong>";
+                            echo "<a class='btn btn-primary' href='{$kartodromo['Site']}' target='_blank'>Visitar site</a>";
+                        echo "</div>";
+                        echo "<a href='#' class='bt-to-locate'>Como chegar</a>";
+                    echo "</article>";
+                }
+            ?>
         </section>
     </main>
     

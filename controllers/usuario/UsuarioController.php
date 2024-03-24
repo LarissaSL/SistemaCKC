@@ -42,7 +42,7 @@ class UsuarioController extends RenderView
                 ]);
                 exit();
             } else {
-                $caminhoImg = $imagem->moverParaPasta($imagemDePerfil);
+                $caminhoImg = $imagem->moverParaPasta($imagemDePerfil, 'usuario');
                 $usuarioModel->inserirFoto($caminhoImg, $id);
                 if ($_SESSION['tipo'] == 'Administrador') {
                     header('Location: /sistemackc/admtm85/usuario/' . $id);
@@ -290,7 +290,7 @@ class UsuarioController extends RenderView
             $infoExcluido = $usuario->consultarUsuarioPorId($id);
             $nomeArquivo = basename($infoExcluido['Foto']);
             $caminho = ".\\views\Img\ImgUsuario\\" . $nomeArquivo;
-            $excluirFotoDePerfilDoServer->excluirImagem($caminho);
+            $excluirFotoDePerfilDoServer->excluirImagem($caminho, 'usuario');
 
             //Excluindo o usuário do BD
             $infoExcluido = $usuario->excluirUsuarioPorId($id);

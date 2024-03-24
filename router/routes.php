@@ -4,7 +4,6 @@ $routes = [
     // Toda Rota nova vai entrando aqui (pasta#Controller#função)
     '/' => 'usuario#IndexUsuarioController#index',
     '/logout' => 'usuario#UsuarioController#logout',
-    '/kartodromo' => 'usuario#KartodromoController#index',
 
     //Rotas Usuario
     '/usuario/{id}' => 'usuario#UsuarioController#mostrarPerfil',
@@ -24,6 +23,12 @@ $routes = [
     '/admtm85/usuario/atualizar/{id}' => 'usuario#UsuarioController#atualizar',
     '/admtm85/usuario/atualizar/senha/{id}' => 'usuario#UsuarioController#atualizarSenha',
     '/admtm85/usuario/excluir/{id}' => 'usuario#UsuarioController#excluir',
+
+    // Rotas do Kartodromo
+    '/kartodromo' => 'adm#KartodromoController#index',
+    '/admtm85/kartodromo' => 'adm#KartodromoController#mostrarKartodromos',
+    '/admtm85/kartodromo/cadastrar' => 'adm#KartodromoController#cadastrar',
+    '/admtm85/kartodromo/excluir/{id}' => 'adm#KartodromoController#excluir',
 
 
 ];

@@ -1,7 +1,5 @@
 <?php
 
-require_once 'models/Adm.php';
-
 class AdmController extends RenderView
 {
 

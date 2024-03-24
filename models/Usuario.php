@@ -76,7 +76,7 @@ class Usuario
 
             if ($usuarioAntigo && isset($usuarioAntigo['Foto'])) {
                 $nomeArquivoAntigo = basename($usuarioAntigo['Foto']);
-                $imagem->excluirImagem($nomeArquivoAntigo);
+                $imagem->excluirImagem($nomeArquivoAntigo, 'usuario');
                 var_dump($nomeArquivoAntigo);
             }
             
