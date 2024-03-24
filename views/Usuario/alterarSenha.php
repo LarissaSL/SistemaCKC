@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script defer src="/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
+    <script defer src="/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script rode depois do HTML -->
 
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/cadastro.css">
@@ -46,33 +46,43 @@
                         echo "<li><a href='/sistemackc/admtm85/menu'>Dashboard</a></li>";
                         echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
                     } else {
-                        echo "<a href='sistemackc/usuario/login'>Entrar</a>";
+                        echo "<a href='/sistemackc/usuario/login'>Entrar</a>";
                     }
                     ?>
                 </li>
             </ul>
         </nav>
     </header>
+
+    <!-- Conteúdo da página -->
     <?php
-   if ((isset($_SESSION['email']) && $_SESSION['email'] !== $usuario['Email']) && $_SESSION['tipo'] !== 'Admistrador') {
-            echo "<h1>Acesso não autorizado</h1>";
-            echo $usuario['Email'];
-            echo $_SESSION['email'];
-        } else {
-        ?>
-
-    <h1>Alterar senha</h1>
-    <p>Por motivos de segurança, não exibimos a senha do usuário. Se deseja alterá-la, preencha o campo abaixo:</p>
-
-    <?php if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
-        echo "<form action='alterar' method='POST'>";
+      if (isset($_SESSION['tipo'])) {
+        $tipoUsuario = $_SESSION['tipo'];
     } else {
-        echo "<form action='/sistemackc/usuario/atualizar/senha/{$usuario['Id']}' method='POST'>";
-    } ?>
+        $tipoUsuario = null;
+    }
 
-    <?php if (isset($feedback)) {
-        echo "<span class=$status>$feedback</span>";
-    } ?>
+
+    if (!isset($usuario)) {
+        echo "<h1>Usuário não encontrado</h1>";
+        exit;
+    }
+    
+
+    if ((isset($_SESSION['email']) && $_SESSION['email'] == $usuario['Email']) || $tipoUsuario == 'Administrador') {
+    ?>
+        <h1>Alterar senha</h1>
+        <p>Por motivos de segurança, não exibimos a senha do usuário. Se deseja alterá-la, preencha o campo abaixo:</p>
+
+        <?php if (isset($_SESSION['tipo']) && $tipoUsuario == 'Administrador') {
+            echo "<form action='/sistemackc/admtm85/usuario/atualizar/senha/{$usuario['Id']}' method='POST'>";
+        } else {
+            echo "<form action='/sistemackc/usuario/atualizar/senha/{$usuario['Id']}' method='POST'>";
+        } ?>
+
+        <?php if (isset($feedback)) {
+            echo "<span class=$status>$feedback</span>";
+        } ?>
 
         <div class="senha">
             <label class="senha" for="senha">Senha:</label>
@@ -85,16 +95,18 @@
         </div>
 
         <button type="submit" class="bt-cadastrar">Alterar</button>
-    </form>
-    <?php } ?>
-    
+        </form>
+    <?php } else {
+        echo "<h1>Acesso não autorizado</h1>";
+    } ?>
+
     <div id="bt-go-back">
         <?php
-            if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
-                echo "<a href='/sistemackc/admtm85/usuario/{$usuario['Id']}'><i class='ph ph-caret-left'></i>Voltar</a>";
-            } else {
-                echo "<a href='/sistemackc/usuario/{$usuario['Id']}'><i class='ph ph-caret-left'></i>Voltar</a>";
-            }
+        if ($tipoUsuario == 'Administrador') {
+            echo "<a href='/sistemackc/admtm85/usuario/{$usuario['Id']}'><i class='ph ph-caret-left'></i>Voltar</a>";
+        } else {
+            echo "<a href='/sistemackc/usuario/{$usuario['Id']}'><i class='ph ph-caret-left'></i>Voltar</a>";
+        }
         ?>
     </div>
 

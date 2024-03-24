@@ -22,6 +22,7 @@ $routes = [
     '/admtm85/usuario/cadastrar' => 'usuario#UsuarioController#cadastrar',
     '/admtm85/usuario/{id}' => 'usuario#UsuarioController#mostrarPerfil',
     '/admtm85/usuario/atualizar/{id}' => 'usuario#UsuarioController#atualizar',
+    '/admtm85/usuario/atualizar/senha/{id}' => 'usuario#UsuarioController#atualizarSenha',
     '/admtm85/usuario/excluir/{id}' => 'usuario#UsuarioController#excluir',
 
 
