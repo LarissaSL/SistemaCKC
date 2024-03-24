@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- google fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+
     <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
     <script defer src="/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
 
@@ -17,7 +22,6 @@
 <body>
     <header>
         <nav>
-            <i class="ph ph-list"></i><!-- ícone de menu -->
             <ul>
                 <li><a href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a></li>
                 <li><a href="#">História</a></li>
@@ -64,13 +68,11 @@
     <main>
         <div id="bt-voltar">
             <a href="/sistemackc/"><i class="ph ph-caret-left"></i>Voltar</a>
-        </div>
-
-        <div class="titulo">
-            <h1>Cadatro</h1>
-        </div>
-
+        </div>        
         <section class="container">
+            <div class="titulo">
+                <h1>Cadatro</h1>
+            </div>
 
             <?php if (isset($feedback)) : ?>
                 <p class="<?php echo $status ?>"><?php echo $feedback; ?></p>
@@ -149,7 +151,8 @@
             </form>
         </section>
     </main>
-
+    <footer>
+        <p>© Manas code</p>
+    </footer>    
 </body>
-
 </html>

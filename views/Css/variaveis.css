@@ -12,18 +12,26 @@
     --background-principal:#fff ;/*COR CERTA -> #1E1A18*/
     --text-base-light: #000; /* COR CERTA -> #fff */
     --color-button: #0033C1;
-    --background-campos: #232121;
+    --background-campos:#fff ;/*COR CERTA -> #232121*/
+    --fonte-title: "Chakra Petch", sans-serif; 
 }
-
 
 body{
     background-color: var(--background-principal);
     color: var(--text-base-light);
     font-size: 1.6rem;
-    
+    font-family: var(--fonte-title);
+    font-weight: 300; 
 }
 
-/* AS MEDIDAS ESTÃO EM PX, OU SEJA, NÃO ESTÁ RESPONSIVO - LEMBRAR DE MUDAR DEPOIS */
+nav img{
+    max-width: 5.4rem;
+    height: auto;
+}
+
+h1,h2, button, .bt-cadastre{
+    font-weight: 700;
+}
 
 input {
     /* depois por o tamnaho - "width" */
@@ -31,15 +39,15 @@ input {
     border-width: 2px;
     border-radius: 14px;
     border-color: var(--color-button);
-    padding: 1.5rem;
+    width: 25rem;
+    padding: 1.3rem;
     background: var(--background-campos);
     outline: none;
     box-sizing: border-box;
 }
 
 label {
-    color: var(--text-base-light);
-    
+    color: var(--text-base-light);  
 }
 
 a{
@@ -48,11 +56,11 @@ a{
 }
 
 button, .bt-cadastre {
-    padding: 10px 24px;
+    padding: 1.3rem;
+    width: 25rem;
+    border: none;
     border-radius: 8px;
-    font-size: 16px;
-    background-color: var(--color-button);
-    border: none;    
+    font-size: 1.6rem;
+    background-color: var(--color-button);   
     color: var(--text-base-light);
-    
 }
