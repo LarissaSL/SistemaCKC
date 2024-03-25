@@ -11,7 +11,7 @@
     <!-- ícone de menu  -->
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
     <script defer src="/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
-    
+
 
     <title>Perfil</title>
 </head>
@@ -26,32 +26,35 @@
         echo "<h1>Acesso não autorizado</h1>";
     } else {
     ?>
-        <header>
-            <nav>
-                <ul>
-                    <li><a href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a></li>
+        <header class="header">
+            <nav class="nav">
+                <a class="logo" href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a>
+
+                <button class="hamburger"></button>
+                <ul class="nav-list">
                     <li><a href="#">História</a></li>
-                    <li>
-                        <a href="#">Corridas</a>
-                        <ul class="drop-corrida">
+
+                    <li class="drop-down">
+                        <a href="#" class="dropdown-toggle">Corridas<i class="ph ph-caret-down"></i></a>
+                        <ul class="dropdown-menu">
                             <li><a href="#">Etapas</a></li>
                             <li><a href="#">Classificação</a></li>
                             <li><a href="#">Galeria</a></li>
                             <li><a href="#">Inscrição</a></li>
                             <li><a href="#">Regulamento</a></li>
-                            <li><a href="/sistemackc/kartodromo">Kartódromo</a></li>
+                            <li><a href="#">Kartódromos</a></li>
                         </ul>
                     </li>
+
                     <li>
-                    <?php
+                        <?php
                         if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Comum') {
                             echo "<p>Olá, " . $_SESSION['nome'] . "</p>";
                             echo "<ul class='drop-corrida'>";
                             echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
                             echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
                             echo "</ul>";
-                            
-                        } elseif(isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
+                        } elseif (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
                             echo "<p>Olá, " . $_SESSION['nome'] . "</p>";
                             echo "<ul class='drop-corrida'>";
                             echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
@@ -85,38 +88,38 @@
                 <!-- Se o Usuário Logado for o mesmo do ID ele pode trocar sua foto de perfil -->
                 <?php if (isset($_SESSION['email']) && $_SESSION['email'] == $usuario['Email'] || isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
 
-                if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
-                    echo "<form action='/sistemackc/admtm85/usuario/{$usuario['Id']}' method='POST' enctype='multipart/form-data'>";
-                } else {
-                    echo "<form action='/sistemackc/usuario/{$usuario['Id']}' method='POST' enctype='multipart/form-data'>";
-                }
+                    if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
+                        echo "<form action='/sistemackc/admtm85/usuario/{$usuario['Id']}' method='POST' enctype='multipart/form-data'>";
+                    } else {
+                        echo "<form action='/sistemackc/usuario/{$usuario['Id']}' method='POST' enctype='multipart/form-data'>";
+                    }
                 ?>
-                <label for="fotoPerfil">
-                    <?php
+                    <label for="fotoPerfil">
+                        <?php
                         if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
                             echo "Atualizar foto de Perfil do Usuário";
                         } else {
                             echo "Atualizar sua foto de perfil:";
                         }
-                    ?>
-                </label><br>
-                <input type="file" id="fotoPerfil" name="fotoPerfil" required><br><br>
-                <input type="submit" value="Enviar Foto">
-                </form>
+                        ?>
+                    </label><br>
+                    <input type="file" id="fotoPerfil" name="fotoPerfil" required><br><br>
+                    <input type="submit" value="Enviar Foto">
+                    </form>
 
-                <!-- Aqui exibe o feedback da imagem CASO seja inválida -->
-                <?php if (isset($feedbackDaImagem)) {
-                echo "<span class='$classe'>$feedbackDaImagem</span>";
-                } ?>
+                    <!-- Aqui exibe o feedback da imagem CASO seja inválida -->
+                    <?php if (isset($feedbackDaImagem)) {
+                        echo "<span class='$classe'>$feedbackDaImagem</span>";
+                    } ?>
                 <?php } ?>
 
 
                 <?php
-                    if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
-                        echo "<form action='/sistemackc/admtm85/usuario/atualizar/{$usuario['Id']}' method='POST'>";
-                    } else {
-                        echo "<form action='/sistemackc/usuario/atualizar/{$usuario['Id']}' method='POST'>";
-                    }
+                if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
+                    echo "<form action='/sistemackc/admtm85/usuario/atualizar/{$usuario['Id']}' method='POST'>";
+                } else {
+                    echo "<form action='/sistemackc/usuario/atualizar/{$usuario['Id']}' method='POST'>";
+                }
                 ?>
 
                 <div class="nome">
@@ -170,8 +173,8 @@
                     <input type="text" name="email" value="<?php echo $usuario['Email'] ?>" <?php echo (isset($_SESSION['email']) && $_SESSION['email'] == $usuario['Email']) || (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') ? '' : 'readonly'; ?>>
                 </div>
                 <?php if (isset($_SESSION['email']) && ($_SESSION['email'] == $usuario['Email'] || $_SESSION['tipo'] == 'Administrador')) : ?>
-                    <?php $url = ($_SESSION['tipo'] == 'Administrador') ? '/sistemackc/admtm85/atualizar/senha/'.$usuario['Id'] : '/sistemackc/usuario/atualizar/senha/'.$usuario['Id']; ?>
-                    
+                    <?php $url = ($_SESSION['tipo'] == 'Administrador') ? '/sistemackc/admtm85/atualizar/senha/' . $usuario['Id'] : '/sistemackc/usuario/atualizar/senha/' . $usuario['Id']; ?>
+
                     <!-- Gerando o link para alterar a senha -->
                     <a href="<?php echo $url; ?>">Alterar senha</a>
                     <button type="submit" class="bt-cadastrar">Atualizar</button>
@@ -181,17 +184,18 @@
 
             <div id="bt-go-back">
                 <?php
-                    if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
-                        echo "<a href='/sistemackc/admtm85/usuario'><i class='ph ph-caret-left'></i>Voltar</a>";
-                    } else {
-                        echo "<a href='/sistemackc/'><i class='ph ph-caret-left'></i>Voltar</a>";
-                    }
+                if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
+                    echo "<a href='/sistemackc/admtm85/usuario'><i class='ph ph-caret-left'></i>Voltar</a>";
+                } else {
+                    echo "<a href='/sistemackc/'><i class='ph ph-caret-left'></i>Voltar</a>";
+                }
                 ?>
             </div>
         <?php } ?>
-    </main>
-    <footer>
-        <p>© Manas code</p>
-    </footer>    
+        </main>
+        <footer>
+            <p>© Manas code</p>
+        </footer>
 </body>
+
 </html>

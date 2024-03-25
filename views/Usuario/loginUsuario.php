@@ -18,45 +18,48 @@
 
     <title>Login</title>
 </head>
+
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a></li>
+    <header class="header">
+        <nav class="nav">
+            <a class="logo" href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a>
+
+            <button class="hamburger"></button>
+            <ul class="nav-list">
                 <li><a href="#">História</a></li>
-                <li>
-                    <a href="#">Corridas</a>
-                    <ul class="drop-corrida">
+
+                <li class="drop-down">
+                    <a href="#" class="dropdown-toggle">Corridas<i class="ph ph-caret-down"></i></a>
+                    <ul class="dropdown-menu">
                         <li><a href="#">Etapas</a></li>
                         <li><a href="#">Classificação</a></li>
                         <li><a href="#">Galeria</a></li>
                         <li><a href="#">Inscrição</a></li>
                         <li><a href="#">Regulamento</a></li>
-                        <li><a href="/sistemackc/kartodromo">Kartódromo</a></li>
+                        <li><a href="#">Kartódromos</a></li>
                     </ul>
                 </li>
                 <li>
                     <?php
-                        if (!isset($_SESSION)) {
-                            session_start();
-                        }
-                        if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Comum') {
-                            echo "<p>Olá, " . $_SESSION['nome'] . "</p>";
-                            echo "<ul class='drop-corrida'>";
-                            echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
-                            echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
-                            echo "</ul>";
-                            
-                        } elseif(isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
-                            echo "<p>Olá, " . $_SESSION['nome'] . "</p>";
-                            echo "<ul class='drop-corrida'>";
-                            echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
-                            echo "<li><a href='/sistemackc/admtm85/menu'>Dashboard</a></li>";
-                            echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
-                            echo "</ul>";
-                        } else {
-                            echo "<a href='/sistemackc/usuario/login'>Entrar</a>";
-                        }
+                    if (!isset($_SESSION)) {
+                        session_start();
+                    }
+                    if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Comum') {
+                        echo "<p>Olá, " . $_SESSION['nome'] . "</p>";
+                        echo "<ul class='drop-corrida'>";
+                        echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
+                        echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
+                        echo "</ul>";
+                    } elseif (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
+                        echo "<p>Olá, " . $_SESSION['nome'] . "</p>";
+                        echo "<ul class='drop-corrida'>";
+                        echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
+                        echo "<li><a href='/sistemackc/admtm85/menu'>Dashboard</a></li>";
+                        echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
+                        echo "</ul>";
+                    } else {
+                        echo "<a href='/sistemackc/usuario/login'>Entrar</a>";
+                    }
                     ?>
                 </li>
             </ul>
@@ -103,4 +106,5 @@
         <p>© Manas code</p>
     </footer>
 </body>
+
 </html>

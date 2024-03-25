@@ -13,22 +13,23 @@
 </head>
 
 <body>
-    <header>
-        <nav>
-            <i class="ph ph-list"></i><!-- ícone de menu -->
-            <ul>
-                <li><a href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a></li>
+    <header class="header">
+        <nav class="nav">
+            <a class="logo" href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a>
 
+            <button class="hamburger"></button>
+            <ul class="nav-list">
                 <li><a href="#">História</a></li>
-                <li>
-                    <a href="#">Corridas</a>
-                    <ul class="drop-corrida">
+
+                <li class="drop-down">
+                    <a href="#" class="dropdown-toggle">Corridas<i class="ph ph-caret-down"></i></a>
+                    <ul class="dropdown-menu">
                         <li><a href="#">Etapas</a></li>
                         <li><a href="#">Classificação</a></li>
                         <li><a href="#">Galeria</a></li>
                         <li><a href="#">Inscrição</a></li>
                         <li><a href="#">Regulamento</a></li>
-                        <li><a href="/sistemackc/kartodromo">Kartódromo</a></li>
+                        <li><a href="#">Kartódromos</a></li>
                     </ul>
                 </li>
                 <li>
@@ -58,7 +59,7 @@
 
     <!-- Conteúdo da página -->
     <?php
-      if (isset($_SESSION['tipo'])) {
+    if (isset($_SESSION['tipo'])) {
         $tipoUsuario = $_SESSION['tipo'];
     } else {
         $tipoUsuario = null;
@@ -69,7 +70,7 @@
         echo "<h1>Usuário não encontrado</h1>";
         exit;
     }
-    
+
 
     if ((isset($_SESSION['email']) && $_SESSION['email'] == $usuario['Email']) || $tipoUsuario == 'Administrador') {
     ?>

@@ -12,8 +12,10 @@
     --background-principal:#fff ;/*COR CERTA -> #1E1A18*/
     --text-base-light: #000; /* COR CERTA -> #fff */
     --color-button: #0033C1;
+    --background-navbar:#232121;
     --background-campos:#fff ;/*COR CERTA -> #232121*/
     --fonte-title: "Chakra Petch", sans-serif; 
+    --color-menu: #0033C1;
 }
 
 body{
@@ -50,6 +52,9 @@ label {
     color: var(--text-base-light);  
 }
 
+li{
+    list-style: none; /*tira a polinha do topico da 'li'*/  
+}
 a{
     color: var(--text-base-light);
     text-decoration: none;
@@ -63,4 +68,175 @@ button, .bt-cadastre {
     font-size: 1.6rem;
     background-color: var(--color-button);   
     color: var(--text-base-light);
+}
+
+.header {
+    background: var(--background-navbar);
+    padding-inline: 1rem; /*representa o lado direito e esquerdo*/
+}
+
+/* NAVBAR */
+.nav {
+    max-width: 1280px;
+    height: 5rem; /*altura*/
+    margin-inline: auto; /*representa o lado direito e esquerdo*/
+    display: flex; /*elemento fica um do lado do outro*/
+    justify-content: space-between; /*dá um espaço entre os elementos*/
+    align-items: center;/*alinhar os elementos horizontalmente ao centro*/
+}
+
+.nav-list {
+    display: inline-flex;
+    gap: 4rem;/*dá um espaçamento entre cada item flex*/
+    list-style: none; /*tira a polinha do topico da 'li'*/   
+}
+
+/* estamnos falando com cada link individualmente */
+.nav-list a {
+    padding: .5rem ;
+    font-size: 1.3rem;
+    color: #fff;/*por a variavel depois*/
+    padding-block: 16px; /*espaçamento entre o topo e em baixo*/
+    opacity: 1;
+}
+
+/* dropdown corrida */
+
+ul.dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: var(--background-navbar);
+    margin-block: 1rem;
+    width: 12.9rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 3.5rem;
+    border-radius: 0 0 14px 14px;
+    margin-inline: -3rem;
+}
+
+
+/* MENU HAMBURGER  */
+.hamburger {
+    display: none;
+    border: none;
+    background: none;
+    border-top: .3rem solid var(--color-menu);
+    font-size: 3rem;
+    cursor: pointer;
+    z-index: 1;
+}
+
+/* menu responsivo */
+@media(max-width: 750px) {
+    
+    .hamburger {
+        display: block;
+    }
+    
+    
+    /* TAG UL DA NAV */
+    .nav-list { 
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        list-style: none; /*tira a polinha do topico da 'li'*/  
+        background: var(--background-navbar) ;
+        transform: translateX(100%);
+        transition: transform 0.5s ease-out;/*transição de 4 segundo e ease-out para a animação  tenha uma saida suave*/
+        
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        pointer-events: none;
+    }
+   
+    
+    /* PARA FAZER OS DOIS TRAÇOS DO MENU */
+    .hamburger::after,
+    .hamburger::before {
+        content: " ";
+        display: block;
+        width: 30px; /*largura*/
+        height: 3px;
+        background:var(--color-menu);
+        margin-top: 5px;
+        position: relative;
+        transition: 0.3s;
+    }
+    
+        
+    /*Estilos ativos - aanimação que conecta com o js*/
+    .nav.active .nav-list{
+        transform: translateX(0%);
+    }
+    /* estamnos falando com cada link individualmente */
+    .nav-list a {
+        font-size: 2.3rem;
+        color: #fff;/*var(--text-base-light);*/
+        padding-inline: 5px; /*espaçamento entre o topo e em baixo*/
+        opacity: 0;
+    }
+    
+    /* animando as li's da nav */
+    .nav-list li:nth-child(1) a{
+        transition: 0.5s 0.2s;
+        transform: translateX(-100%); /* Movendo para a direita */
+    }
+    .nav-list li:nth-child(2) a{
+        transition: 0.5s 0.4s;
+        transform: translateX(-100%); /* Movendo para a direita */
+    }
+    .nav-list li:nth-child(3) a{
+        transition: 0.5s 0.6s;
+        transform: translateX(-100%); /* Movendo para a direita */
+    }
+    
+    .nav.active .nav-list a{
+        opacity: 1;
+        transform: translate(0%); /* Movendo de volta para a posição original */
+    }
+    
+    /* ANIMANDO MENU HAMBURGER PARA 'X' QUANDO ATIVO */
+    .nav.active .hamburger {
+        position: fixed;
+        top: 21px;
+        right: 10px;
+        border-top-color: transparent;
+    }
+    
+    .nav.active .hamburger::before {
+        transform: rotate(136deg);/*rotacionar o traço em 136 graus*/
+    }
+    
+    .nav.active .hamburger::after{
+        transform: rotate(-136deg);/*rotacionar o traço em 136 graus*/
+        top: -7px;
+        
+    }
+
+    ul.dropdown-menu {
+        /* display: none; */
+        position: absolute;
+    }
+    .drop-down{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .dropdown-menu a{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        height: 9.3rem;
+    }
+    
+
+
 }
