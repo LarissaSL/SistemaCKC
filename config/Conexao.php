@@ -87,7 +87,7 @@ class Conexao
         try {
             $query = "CREATE TABLE IF NOT EXISTS kartodromo (
                 Id INT AUTO_INCREMENT PRIMARY KEY,
-                Nome VARCHAR(30),
+                Nome VARCHAR(30) UNIQUE,
                 CEP VARCHAR(9),
                 Rua VARCHAR(50),
                 Bairro VARCHAR(50),

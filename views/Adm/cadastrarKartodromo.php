@@ -13,6 +13,9 @@
 <body>
     <header>
         <?php
+        if (!isset($_SESSION)) {
+            session_start();
+        }
         if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
         ?>
             <nav>
@@ -26,9 +29,6 @@
                     </li>
                     <li>
                         <?php
-                        if (!isset($_SESSION)) {
-                            session_start();
-                        }
                         if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
                             echo "<p>Olá, " . $_SESSION['nome'] . "</p>";
                             echo "<ul class='drop-corrida'>";
@@ -53,34 +53,37 @@
             }
     ?>
 
-    <form action='/sistemackc/admtm85/kartodromo/cadastrar' method='POST'>
+    <form action='/sistemackc/admtm85/kartodromo/cadastrar' method='POST' enctype='multipart/form-data'>
+        <label for="foto">Foto:</label><br>
+        <input type="file" id="foto" name="foto"><br><br>
+
         <label for="nome">Nome:</label><br>
-        <input type="text" id="nome" name="nome" required><br><br>
+        <input type="text" id="nome" name="nome" value="<?php echo isset($dados[0]) ? $dados[0] : ''; ?>" required><br><br>
 
         <label for="cep">CEP:</label><br>
-        <input type="text" id="cep" name="cep" required><br><br>
+        <input type="text" id="cep" name="cep" value="<?php echo isset($dados[1]) ? $dados[1] : ''; ?>" required><br><br>
 
         <label for="rua">Rua:</label><br>
-        <input type="text" id="rua" name="rua" required><br><br>
+        <input type="text" id="rua" name="rua" value="<?php echo isset($dados[2]) ? $dados[2] : ''; ?>" required><br><br>
 
         <label for="bairro">Bairro:</label><br>
-        <input type="text" id="bairro" name="bairro" required><br><br>
+        <input type="text" id="bairro" name="bairro" value="<?php echo isset($dados[3]) ? $dados[3] : ''; ?>" required><br><br>
 
         <label for="numero">Número:</label><br>
-        <input type="text" id="numero" name="numero" required><br><br>
+        <input type="text" id="numero" name="numero" value="<?php echo isset($dados[4]) ? $dados[4] : ''; ?>" required><br><br>
 
         <label for="site">Site:</label><br>
-        <input type="text" id="site" name="site"><br><br>
+        <input type="text" id="site" name="site" value="<?php echo isset($dados[5]) ? $dados[5] : ''; ?>" required><br><br>
 
         <button type="submit" class="bt-cadastrar">Cadastrar</button>
     </form>
     <a href='/sistemackc/admtm85/kartodromo/'><i class='ph ph-caret-left'></i>Voltar</a>
 
-<?php
+    <?php
         } else {
             echo "<h1>Acesso não autorizado</h1>";
         }
-?>
+    ?>
 </body>
 
 </html>

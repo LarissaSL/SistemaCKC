@@ -10,49 +10,57 @@ class Kartodromo
     {
         $bancoDeDados = new Conexao();
         $this->conexao = $bancoDeDados->getConexao();
-        $this->inserirKartodromoSeNaoExistir('Kartódromo Granja Viana', '06711-270', 'R. Tomás Sepé', 'Jardim da Gloria', 443, 'https://kartodromogranjaviana.com.br');
-        
+        $this->inserirKartodromo('Kartódromo Granja Viana', '06711-270', 'R. Tomás Sepé', 'Jardim da Gloria', 443, 'https://kartodromogranjaviana.com.br', 'kgv.png');
     }
 
-    public function inserirKartodromoSeNaoExistir($nome, $cep, $rua, $bairro, $numero, $site)
+    public function inserirKartodromo($nome, $cep, $rua, $bairro, $numero, $site, $foto)
     {
         try {
-            // Vendo se o Kartodromo já existe
-            $queryVerificar = "SELECT * FROM kartodromo WHERE Nome = :nome AND CEP = :cep AND Rua = :rua AND Bairro = :bairro AND Numero = :numero";
-            $verificar = $this->conexao->prepare($queryVerificar);
-            $verificar->bindParam(':nome', $nome);
-            $verificar->bindParam(':cep', $cep);
-            $verificar->bindParam(':rua', $rua);
-            $verificar->bindParam(':bairro', $bairro);
-            $verificar->bindParam(':numero', $numero);
-            $verificar->execute();
-            
-            $existe = $verificar->fetch(PDO::FETCH_ASSOC);
+            $queryInserir = "INSERT INTO kartodromo (Nome, CEP, Rua, Bairro, Numero, Site, Foto) VALUES (:nome, :cep, :rua, :bairro, :numero, :site, :foto)";
+            $inserir = $this->conexao->prepare($queryInserir);
+            $inserir->bindParam(':nome', $nome);
+            $inserir->bindParam(':cep', $cep);
+            $inserir->bindParam(':rua', $rua);
+            $inserir->bindParam(':bairro', $bairro);
+            $inserir->bindParam(':numero', $numero);
+            $inserir->bindParam(':site', $site);
+            $inserir->bindParam(':foto', $foto);
+            $inserir->execute();
 
-            if (!$existe) {
-                $queryInserir = "INSERT INTO kartodromo (Nome, CEP, Rua, Bairro, Numero, Site) VALUES (:nome, :cep, :rua, :bairro, :numero, :site)";
-                $inserir = $this->conexao->prepare($queryInserir);
-                $inserir->bindParam(':nome', $nome);
-                $inserir->bindParam(':cep', $cep);
-                $inserir->bindParam(':rua', $rua);
-                $inserir->bindParam(':bairro', $bairro);
-                $inserir->bindParam(':numero', $numero);
-                $inserir->bindParam(':site', $site);
-                $inserir->execute();
-                
-                return true;
-            } else {
-                return false;
-            }
+            return true;
         } catch (PDOException $erro) {
-            echo "Erro ao inserir kartódromo: " . $erro->getMessage();
-            return false;
+            return "Erro ao inserir kartódromo: " . $erro->getMessage();
         }
+    }
+
+    public function verificarNomeKartodromo($nome)
+    {
+        $consulta = $this->conexao->prepare("SELECT * FROM kartodromo WHERE Nome = :nome");
+        $consulta->bindParam(':nome', $nome);
+        $consulta->execute();
+        $kartodromoExistente = $consulta->fetch();
+        return $kartodromoExistente ? true : false;
+    }
+
+    public function verificarCep($cep)
+    {
+        $cepFormatado = $this->formatarCep($cep);
+        if (strlen($cepFormatado) !== 8) {
+            return 'Tamanho do CEP está incorreto';
+        } else {
+            return 'aceito';
+        }
+    }
+
+    public function formatarCep($cep)
+    {
+        $cepFormatado = preg_replace("/[^0-9]/", "", $cep);
+        return $cepFormatado; 
     }
 
     function adicionarPrefixoHttp($url)
     {
-        // Verificar se o URL não começa com http:// ou https://
+        // Verificar se o URL nao começa com http:// ou https://
         if (!preg_match("~^(?:f|ht)tps?://~i", $url)) {
             $url = 'https://' . $url;
         }
@@ -72,9 +80,9 @@ class Kartodromo
             $alterar->bindParam(':numero', $numero);
             $alterar->bindParam(':site', $site);
             $alterar->bindParam(':foto', $foto);
-            
+
             $alterar->execute();
-            
+
             return 'Kartodromo alterado com Sucesso!';
         } catch (PDOException $erro) {
             echo "Erro ao alterar kartódromo: " . $erro->getMessage();
@@ -89,8 +97,8 @@ class Kartodromo
             $excluir = $this->conexao->prepare($query);
             $excluir->bindParam(':id', $id);
             $excluir->execute();
-            
-            return 'Kartodromo excluido com Sucesso!';
+
+            return 'true';
         } catch (PDOException $erro) {
             echo "Erro ao excluir kartódromo: " . $erro->getMessage();
             return false;
@@ -104,7 +112,7 @@ class Kartodromo
             $selecionar = $this->conexao->prepare($query);
             $selecionar->bindParam(':id', $id);
             $selecionar->execute();
-            
+
             return $selecionar->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $erro) {
             echo "Erro ao selecionar kartodromo por ID: " . $erro->getMessage();
@@ -118,14 +126,14 @@ class Kartodromo
             $query = "SELECT * FROM kartodromo";
             $selecionar = $this->conexao->prepare($query);
             $selecionar->execute();
-            
+
             return $selecionar->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $erro) {
             echo "Erro ao selecionar todos os kartodromos: " . $erro->getMessage();
             return false;
         }
-    }  
-    
+    }
+
     public function pegarProximoId()
     {
         try {
@@ -136,7 +144,7 @@ class Kartodromo
             if ($result && isset($result['MaxId'])) {
                 return $result['MaxId'] + 1;
             } else {
-                return 1; 
+                return 1;
             }
         } catch (PDOException $erro) {
             echo "Erro ao obter o próximo ID: " . $erro->getMessage();
@@ -156,7 +164,7 @@ class Kartodromo
             $consulta = $this->conexao->prepare($sql);
 
             if (!empty($busca)) {
-                $buscaParam = "%{$busca}%"; 
+                $buscaParam = "%{$busca}%";
                 $consulta->bindValue(':busca', $buscaParam);
             }
 
@@ -167,9 +175,7 @@ class Kartodromo
                 'feedback' => 'Consulta realizada com sucesso.',
                 'classe' => 'alert alert-success'
             );
-        } 
-        catch (PDOException $erro) 
-        {
+        } catch (PDOException $erro) {
             return array(
                 'kartodromos' => array(),
                 'feedback' => "Erro na consulta: " . $erro->getMessage(),
@@ -177,8 +183,4 @@ class Kartodromo
             );
         }
     }
-
 }
-
-
-?>
