@@ -49,6 +49,33 @@
     <h1>CRUD dos Usuarios</h1>
     <a class='btn btn-primary' href='./usuario/cadastrar'>Cadastrar novo usuário</a>
 
+    <form method="get">
+        <div class="row my-4">
+            <div class="col">
+                <label>Buscar por Nome</label>
+                <input type="text" name="busca" class="form-control" value="<?php echo htmlspecialchars($busca); ?>">
+            </div>
+            <div class="col">
+                <label>Tipo de usuário</label>
+                <select name="tipo" class="form-control">
+                    <option value="">Comum/Administrador</option>
+                    <option value="comum" <?php echo $tipo == 'comum' ? 'selected' : ''; ?>>Comum</option>
+                    <option value="administrador" <?php echo $tipo == 'administrador' ? 'selected' : ''; ?>>Administrador</option>
+                </select>
+            </div>
+            <div class="col d-flex align-items-end">
+                <button type="submit" class="btn btn-primary">Filtrar</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- Só mostra feedback se a classe for a de erro -->
+    <?php 
+        if (isset($classe) && $classe == 'alert alert-danger') : ?>
+        <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
+    <?php endif ?>
+
+
     <table class='table table-striped table-bordered '>
         <thead class='thead-dark'>
             <tr>

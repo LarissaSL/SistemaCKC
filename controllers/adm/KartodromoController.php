@@ -25,12 +25,37 @@ class KartodromoController extends RenderView
 
     public function mostrarKartodromos()
     {
-        $kartodromoModel = new Kartodromo();
+        $kartodromo = new Kartodromo();
+        $kartodromos = [];
+        $feedback = '';
+        $classe = '';
 
-        $kartodromos = $kartodromoModel->selecionarTodosKartodromos();
+        // Verifica se tem uma requisição GET na pagina
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $busca = isset($_GET['busca']) ? $_GET['busca'] : '';
 
+            if(!empty($busca))
+            {
+                $consulta = $kartodromo->consultarKartodromoComFiltro($busca);
+
+                $kartodromos = $consulta['kartodromos'];
+                $feedback = $consulta['feedback'];
+                $classe = $consulta['classe'];
+            } else {
+                $kartodromos = $kartodromo->selecionarTodosKartodromos();
+            }
+            
+        } else {
+            // Se nao tiver requisição GET, mostra todos
+            $kartodromos = $kartodromo->selecionarTodosKartodromos();
+        }
+
+        // Carregamento da view
         $this->carregarViewComArgumentos('adm/crudKartodromos', [
-            'kartodromos' => $kartodromos
+            'kartodromos' => $kartodromos,
+            'busca' => $busca,
+            'feedback' => $feedback,
+            'classe' => $classe
         ]);
     }
 

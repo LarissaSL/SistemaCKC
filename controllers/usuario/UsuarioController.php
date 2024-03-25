@@ -10,11 +10,38 @@ class UsuarioController extends RenderView
     public function mostrarUsuarios()
     {
         $usuario = new Usuario();
+        $usuarios = [];
+        $feedback = '';
+        $classe = '';
 
-        $usuarios = $usuario->consultarTodosOsUsuarios();
+        // Verifica se tem uma requisição GET na pagina
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $busca = isset($_GET['busca']) ? $_GET['busca'] : '';
+            $tipo = isset($_GET['tipo']) ? $_GET['tipo'] : '';
 
+            if(!empty($busca) || !empty($tipo))
+            {
+                $consulta = $usuario->consultarUsuariosComFiltro($busca, $tipo);
+
+                $usuarios = $consulta['usuarios'];
+                $feedback = $consulta['feedback'];
+                $classe = $consulta['classe'];
+            } else {
+                $usuarios = $usuario->consultarTodosOsUsuarios();
+            }
+            
+        } else {
+            // Se nao tiver requisição GET, mostra todos
+            $usuarios = $usuario->consultarTodosOsUsuarios();
+        }
+
+        // Carregaento da view
         $this->carregarViewComArgumentos('adm/crudUsuarios', [
-            'usuarios' => $usuarios
+            'usuarios' => $usuarios,
+            'busca' => $busca,
+            'tipo' => $tipo,
+            'feedback' => $feedback,
+            'classe' => $classe
         ]);
     }
 

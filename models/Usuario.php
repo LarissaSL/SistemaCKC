@@ -292,6 +292,47 @@ class Usuario
         }
     }
 
+    public function consultarUsuariosComFiltro($busca, $tipo)
+    {
+        try {
+            $sql = "SELECT * FROM usuario WHERE 1";
+
+            if (!empty($busca)) {
+                $sql .= " AND (Nome LIKE :busca OR Sobrenome LIKE :busca)";
+            }
+
+            // Adicionado sobre o tipo do usuário (Comum ou ADM)
+            if (!empty($tipo)) {
+                $sql .= " AND Tipo = :tipo";
+            }
+
+            $consulta = $this->conexao->prepare($sql);
+
+            if (!empty($busca)) {
+                $buscaParam = "%{$busca}%"; 
+                $consulta->bindValue(':busca', $buscaParam);
+            }
+            if (!empty($tipo)) {
+                $consulta->bindValue(':tipo', $tipo);
+            }
+
+            $consulta->execute();
+
+            return array(
+                'usuarios' => $consulta->fetchAll(PDO::FETCH_ASSOC),
+                'feedback' => 'Consulta realizada com sucesso.',
+                'classe' => 'alert alert-success'
+            );
+        } 
+        catch (PDOException $erro) 
+        {
+            return array(
+                'usuarios' => array(),
+                'feedback' => "Erro na consulta: " . $erro->getMessage(),
+                'classe' => "alert alert-danger"
+            );
+        }
+    }
 }
 
 ?>

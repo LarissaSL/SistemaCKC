@@ -144,6 +144,40 @@ class Kartodromo
         }
     }
 
+    public function consultarKartodromoComFiltro($busca)
+    {
+        try {
+            $sql = "SELECT * FROM kartodromo WHERE 1";
+
+            if (!empty($busca)) {
+                $sql .= " AND (Nome LIKE :busca)";
+            }
+
+            $consulta = $this->conexao->prepare($sql);
+
+            if (!empty($busca)) {
+                $buscaParam = "%{$busca}%"; 
+                $consulta->bindValue(':busca', $buscaParam);
+            }
+
+            $consulta->execute();
+
+            return array(
+                'kartodromos' => $consulta->fetchAll(PDO::FETCH_ASSOC),
+                'feedback' => 'Consulta realizada com sucesso.',
+                'classe' => 'alert alert-success'
+            );
+        } 
+        catch (PDOException $erro) 
+        {
+            return array(
+                'kartodromos' => array(),
+                'feedback' => "Erro na consulta: " . $erro->getMessage(),
+                'classe' => "alert alert-danger"
+            );
+        }
+    }
+
 }
 
 
