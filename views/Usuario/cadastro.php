@@ -73,7 +73,7 @@
         </div>
         <section class="container">
             <div class="titulo">
-                <h1>Cadatro</h1>
+                <h1>Cadastro</h1>
             </div>
 
             <?php if (isset($feedback)) : ?>

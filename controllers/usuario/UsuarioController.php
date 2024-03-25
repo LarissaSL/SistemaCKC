@@ -317,11 +317,10 @@ class UsuarioController extends RenderView
             $infoExcluido = $usuario->consultarUsuarioPorId($id);
             $nomeArquivo = basename($infoExcluido['Foto']);
             $caminho = ".\\views\Img\ImgUsuario\\" . $nomeArquivo;
-            $excluirFotoDePerfilDoServer->excluirImagem($caminho, 'usuario');
+            $excluirFotoDePerfilDoServer->excluirImagem($caminho);
 
             //Excluindo o usuário do BD
             $infoExcluido = $usuario->excluirUsuarioPorId($id);
-            echo $infoExcluido['Nome'];
         }
 
         header('Location: /sistemackc/admtm85/usuario');
