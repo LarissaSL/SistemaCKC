@@ -114,9 +114,10 @@
                 echo "<td>" . $usuario['Telefone'] . "</td>";
                 echo "<td>" . $usuario['Data_registro'] . "</td>";
                 echo "<td>
-                <a class='btn btn-primary' href='./usuario/{$usuario["Id"]}'>Editar</a>
-                <button class='btn btn-danger' onclick='confirmarExclusao({$usuario["Id"]}, \"{$usuario["Nome"]}\", \"{$usuario["Sobrenome"]}\")'>Excluir</button>
-                </td>";
+                <a class='btn btn-primary' href='./usuario/{$usuario["Id"]}'>Editar</a>";
+                if ($usuario['Id'] != 1) {
+                    echo "<button class='btn btn-danger' onclick='confirmarExclusao({$usuario["Id"]}, \"{$usuario["Nome"]}\", \"{$usuario["Sobrenome"]}\")'>Excluir</button>";
+                }
                 echo "</tr>";
             }
             echo "</table>";

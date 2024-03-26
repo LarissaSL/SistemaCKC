@@ -76,10 +76,10 @@ class Usuario
 
             if ($usuarioAntigo && isset($usuarioAntigo['Foto'])) {
                 $nomeArquivoAntigo = basename($usuarioAntigo['Foto']);
-                $imagem->excluirImagem($nomeArquivoAntigo, 'usuario');
+                $caminho = "./views/Img/ImgUsuario/" . $nomeArquivoAntigo;
+                $imagem->excluirImagem($caminho);
             }
             
-
             $novoNomeDaImagem = basename($foto);
 
             // Salvar o nome da imagem no banco de dados

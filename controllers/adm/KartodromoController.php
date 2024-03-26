@@ -238,7 +238,7 @@ class KartodromoController extends RenderView
                     $kartodromoResultado = $kartodromoModel->selecionarKartodromoPorId($id);
                     $dados = [$kartodromoResultado['Foto'], $kartodromoResultado['Nome'], $kartodromoResultado['CEP'], $kartodromoResultado['Rua'], $kartodromoResultado['Bairro'], $kartodromoResultado['Numero'], $kartodromoResultado['Site']];
                 } else {
-                    $feedback = 'Erro ao alterar o kartódromo: ' . $resultado;
+                    $feedback = $resultado;
                     $classe = "erro";
                 }
             }

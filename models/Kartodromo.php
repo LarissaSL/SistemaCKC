@@ -83,7 +83,17 @@ class Kartodromo
 
             return true;
         } catch (PDOException $erro) {
-            return "Erro ao alterar kartódromo: " . $erro->getMessage();
+            $codigoDoErro = $erro->getCode();
+
+            switch($codigoDoErro)
+            {
+                case 23000:
+                    return "Ocorreu um erro. Este kartódromo já está registrado no sistema.";
+                    break;
+                default:
+                    return "Ocorreu um erro ao alterar o kartódromo: " . $erro->getMessage();
+                    break;
+            }     
         }
     }
 
