@@ -13,7 +13,6 @@ $routes = [
     '/usuario/atualizar/senha/{id}' => 'usuario#UsuarioController#atualizarSenha',
 
     // Rotas ADM
-    '/admtm85/login' => 'usuario#UsuarioController#login',
     '/admtm85/menu' => 'adm#AdmController#index',
 
     // CRUD do Usuário

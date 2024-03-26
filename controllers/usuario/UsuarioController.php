@@ -206,26 +206,16 @@ class UsuarioController extends RenderView
                 exit();
                 
             } else {
-                $urlAtual = $_SERVER['REQUEST_URI'];
-                if (strpos($urlAtual, 'admtm85') !== false) {
-                    $viewParaRedirecionar = "adm/loginAdm"; 
-                } else
-                {
-                    $viewParaRedirecionar = "usuario/loginUsuario";
-                }
-                $this->carregarViewComArgumentos($viewParaRedirecionar, [
+                $this->carregarViewComArgumentos('usuario/loginUsuario', [
                     'feedback' => $autenticacao,
-                    'classe' => 'erro'
+                    'classe' => 'erro',
+                    'email' => $email
                 ]);
             }
         } else {
-            $urlAtual = $_SERVER['REQUEST_URI'];
-            if (strpos($urlAtual, 'admtm85') !== false) {
-                $this->carregarView('adm/loginAdm');
-            } else {
-                $this->carregarView('usuario/loginUsuario');
-            }
+            $this->carregarView('usuario/loginUsuario');
         }
+        
     }
 
     public function logout()
