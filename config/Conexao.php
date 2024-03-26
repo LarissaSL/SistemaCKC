@@ -15,8 +15,10 @@ class Conexao
     {
         $this->conectarBancoDeDados();
         $this->criarTabelaUsuario();
-        $this->inserirAdmManualmente('Administrador', 'Thiago', 'Menezes', '11122233344', 'ckckart23@gmail.com', password_hash('crash', PASSWORD_DEFAULT), 70, '1990-03-12', 'Masculino', '(11) 91122-3344');
+        $this->inserirAdmManualmente('Administrador','fotoThiago.jpeg' ,'Thiago', 'Menezes', '32241247847', 'ckckart23@gmail.com', password_hash('crash', PASSWORD_DEFAULT), 74, '1985-03-12', 'Masculino', '(11) 98437-2045');
         $this->criarTabelaKartodromo();
+        $this->inserirKartodromoManualmente('Kartódromo Granja Viana', '06711270', 'R. Tomás Sepé', 'Jardim da Gloria', 443, 'https://kartodromogranjaviana.com.br', 'kgv.png');
+        $this->inserirKartodromoManualmente('Kartódromo Internacional Nova Odessa', '13460000', 'Rod. Anhanguera, KM 116 acesso via Marginal', 'Jardim das Palmeiras, Nova Odessa', 330, 'https://kartodromonovaodessa.com.br', 'kno.png');
     }
 
     function conectarBancoDeDados()
@@ -53,7 +55,7 @@ class Conexao
         }
     }
 
-    public function inserirAdmManualmente($tipo, $nome, $sobrenome, $cpf, $email, $senha, $peso, $dataNascimento, $genero, $telefone)
+    public function inserirAdmManualmente($tipo, $foto, $nome, $sobrenome, $cpf, $email, $senha, $peso, $dataNascimento, $genero, $telefone)
     {
         try {
             $consulta = $this->conexao->prepare("SELECT * FROM usuario WHERE Email = :email");
@@ -63,8 +65,9 @@ class Conexao
 
             // Se não houver usuário com o e-mail especificado, inserir o usuário administrador
             if (!$usuarioExistente) {
-                $inserir = $this->conexao->prepare("INSERT INTO usuario (Tipo, Nome, Sobrenome, Cpf, Email, Senha, Peso, Data_nascimento, Genero, Telefone) VALUES (:tipo, :nome, :sobrenome, :cpf, :email, :senha, :peso, :data_nascimento, :genero, :telefone)");
+                $inserir = $this->conexao->prepare("INSERT INTO usuario (Tipo, Foto, Nome, Sobrenome, Cpf, Email, Senha, Peso, Data_nascimento, Genero, Telefone) VALUES (:tipo, :foto, :nome, :sobrenome, :cpf, :email, :senha, :peso, :data_nascimento, :genero, :telefone)");
                 $inserir->bindValue(':tipo', $tipo);
+                $inserir->bindValue(':foto', $foto);
                 $inserir->bindValue(':nome', $nome);
                 $inserir->bindValue(':sobrenome', $sobrenome);
                 $inserir->bindValue(':cpf', $cpf);
@@ -87,7 +90,7 @@ class Conexao
         try {
             $query = "CREATE TABLE IF NOT EXISTS kartodromo (
                 Id INT AUTO_INCREMENT PRIMARY KEY,
-                Nome VARCHAR(30) UNIQUE,
+                Nome VARCHAR(50) UNIQUE,
                 CEP VARCHAR(9),
                 Rua VARCHAR(50),
                 Bairro VARCHAR(50),
@@ -99,6 +102,35 @@ class Conexao
         } catch (PDOException $erro) {
             echo "Erro ao criar tabela dos Kartodromos: " . $erro->getMessage();
         }
+    }
+
+    function inserirKartodromoManualmente($nome, $cep, $rua, $bairro, $numero, $site, $foto)
+    {
+        try {
+            $consulta = $this->conexao->prepare("SELECT * FROM kartodromo WHERE Nome = :nome");
+            $consulta->bindValue(':nome', $nome);
+            $consulta->execute();
+            $kartodromoExistente = $consulta->fetch();
+    
+            if ($kartodromoExistente) {
+                return "Já existe um kartódromo com o nome especificado.";
+            } else {
+                $queryInserir = "INSERT INTO kartodromo (Nome, CEP, Rua, Bairro, Numero, Site, Foto) VALUES (:nome, :cep, :rua, :bairro, :numero, :site, :foto)";
+                $inserir = $this->conexao->prepare($queryInserir);
+                $inserir->bindParam(':nome', $nome);
+                $inserir->bindParam(':cep', $cep);
+                $inserir->bindParam(':rua', $rua);
+                $inserir->bindParam(':bairro', $bairro);
+                $inserir->bindParam(':numero', $numero);
+                $inserir->bindParam(':site', $site);
+                $inserir->bindParam(':foto', $foto);
+                $inserir->execute();
+    
+                return true;
+            }
+        } catch (PDOException $erro) {
+            return "Erro ao inserir kartódromo: " . $erro->getMessage();
+        }  
     }
     
     function getConexao()

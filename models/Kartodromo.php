@@ -10,7 +10,6 @@ class Kartodromo
     {
         $bancoDeDados = new Conexao();
         $this->conexao = $bancoDeDados->getConexao();
-        $this->inserirKartodromo('Kartódromo Granja Viana', '06711-270', 'R. Tomás Sepé', 'Jardim da Gloria', 443, 'https://kartodromogranjaviana.com.br', 'kgv.png');
     }
 
     public function inserirKartodromo($nome, $cep, $rua, $bairro, $numero, $site, $foto)
@@ -44,9 +43,8 @@ class Kartodromo
 
     public function verificarCep($cep)
     {
-        $cepFormatado = $this->formatarCep($cep);
-        if (strlen($cepFormatado) !== 8) {
-            return 'Tamanho do CEP está incorreto';
+        if (strlen($cep) !== 8) {
+            return 'Tamanho do CEP está incorreto, por favor digite apenas 8 números';
         } else {
             return 'aceito';
         }
@@ -83,10 +81,9 @@ class Kartodromo
 
             $alterar->execute();
 
-            return 'Kartodromo alterado com Sucesso!';
+            return true;
         } catch (PDOException $erro) {
-            echo "Erro ao alterar kartódromo: " . $erro->getMessage();
-            return false;
+            return "Erro ao alterar kartódromo: " . $erro->getMessage();
         }
     }
 
