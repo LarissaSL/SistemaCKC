@@ -1,0 +1,70 @@
+/* CORPO DA PAG */
+main, footer{
+    display: block;
+    padding-block: 2rem;
+    margin-inline: 1.6rem;
+}
+
+/* bt de voltar */
+div#bt-go-back {
+    display: flex;
+    margin: .3em;
+    align-items: center;
+    justify-content: flex-start;
+   
+}
+
+/* seta do voltar */
+i.ph.ph-caret-left {
+    top: .1rem;
+    position: relative;
+}
+
+/* section */
+.container{
+    height: calc(100% - 5rem);
+    padding-block: 1.6rem;
+    text-align: center;
+
+}
+
+/* Mudando o tamanho da imagem */
+.Image-Text img {
+    max-width: 90vw;
+    height: auto;
+    z-index: -1;
+    position: relative;
+}
+
+/* Efeito Gradiente */
+.Image-Text {
+    max-width: 90vw; 
+    background-image: radial-gradient(transparent 29%, #1E1A18 69%, #1E1A18 73%);
+}
+
+/* titulo */
+h2{
+    text-align: -webkit-left;
+}
+
+/* formulario */
+form {
+    display: flex;
+    font-size: 1.7rem;
+    margin-block: 4rem;
+    padding-inline: 1.6rem;
+    flex-direction: column;
+    gap: 3.5rem;
+}
+
+.emails, .passwords {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.2rem;
+}
+
+.bt-cadastre{
+    margin-block: -2rem;
+    margin-inline: 1.5rem
+}

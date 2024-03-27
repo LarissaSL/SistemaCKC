@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
-    <script defer src="/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
+    <script defer src="/sistemackc/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
 
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/login.css">
@@ -73,9 +73,9 @@
         <section class="container">
             <!-- titulo e imagem principal -->
             <div class="Image-Text">
-                <h2>Cadastre-se e faça parte da comunidade CKC Kart</h2>
-                <img src="#" alt="piloto do ckc em seu kart">
+                <img src="/sistemackc/views/Img/ImgSistema/WhatsApp_Image.jpeg" alt="piloto do ckc em seu kart">
             </div>
+            <h2>Cadastre-se e faça parte da comunidade CKC Kart</h2>
 
             <?php if (isset($feedback)) : ?>
                 <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>

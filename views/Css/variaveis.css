@@ -9,11 +9,11 @@
 :root{
     font-size: 62.5%;
 
-    --background-principal:#fff ;/*COR CERTA -> #1E1A18*/
-    --text-base-light: #000; /* COR CERTA -> #fff */
+    --background-principal:#1E1A18 ;/*COR CERTA -> #1E1A18*/
+    --text-base-light: #fff; /* COR CERTA -> #fff */
     --color-button: #0033C1;
     --background-navbar:#232121;
-    --background-campos:#fff ;/*COR CERTA -> #232121*/
+    --background-campos:#232121;/*COR CERTA -> #232121*/
     --fonte-title: "Chakra Petch", sans-serif; 
     --color-menu: #0033C1;
 }
@@ -33,6 +33,7 @@ nav img{
 
 h1,h2, button, .bt-cadastre{
     font-weight: 700;
+    
 }
 
 input {
@@ -58,9 +59,11 @@ li{
 a{
     color: var(--text-base-light);
     text-decoration: none;
+    
 }
 
 button, .bt-cadastre {
+    display: block;
     padding: 1.3rem;
     width: 25rem;
     border: none;
@@ -68,6 +71,7 @@ button, .bt-cadastre {
     font-size: 1.6rem;
     background-color: var(--color-button);   
     color: var(--text-base-light);
+    font-family: var(--fonte-title);/*tive que colocar aqui também pq não estava pegando a fonte*/
 }
 
 .header {
@@ -121,8 +125,11 @@ ul.dropdown-menu {
 .hamburger {
     display: none;
     border: none;
+    width: 3rem;
+    padding: 0px;
     background: none;
     border-top: .3rem solid var(--color-menu);
+    border-radius: 0;
     font-size: 3rem;
     cursor: pointer;
     z-index: 1;
