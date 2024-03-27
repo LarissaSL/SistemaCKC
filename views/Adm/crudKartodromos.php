@@ -92,9 +92,9 @@
                     echo "<td>" . $kartodromo['Rua'] . "</td>";
                     echo "<td>" . $kartodromo['Bairro'] . "</td>";
                     echo "<td>" . $kartodromo['Numero'] . "</td>";
-                    echo "<td><a class='btn btn-primary' href='{$kartodromo['Site']}' target='_blank'>Visitar site " . $kartodromo['Nome'] . "</a></td>";
+                    echo "<td><a class='btn btn-primary' href='{$kartodromo['Site']}' target='_blank'>Visitar site</a></td>";
                     echo "<td>
-                            <a class='btn btn-primary' href='./kartodromo/editar/{$kartodromo["Id"]}'>Editar</a>
+                            <a class='btn btn-primary' href='/sistemackc/admtm85/kartodromo/atualizar/{$kartodromo["Id"]}'>Editar</a>
                             <button class='btn btn-danger' onclick='confirmarExclusao({$kartodromo["Id"]}, \"{$kartodromo["Nome"]}\")'>Excluir</button>
                         </td>";
                     echo "</tr>";

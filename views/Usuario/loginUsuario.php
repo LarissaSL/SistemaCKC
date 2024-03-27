@@ -85,7 +85,7 @@
                 <!--caixa de Email -->
                 <div class="emails">
                     <label class="email" for="email">E-mail:</label>
-                    <input type="text" name="email">
+                    <input type="text" name="email" value="<?php echo isset($email) ? $email : '' ?>">
                 </div>
 
                 <!--caixa de Senha -->
