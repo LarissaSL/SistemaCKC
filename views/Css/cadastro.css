@@ -16,9 +16,32 @@
     margin-bottom: 2rem;
 }
 
-.container div{
+.form{
     display: flex;
     flex-direction: column;
-    margin-bottom: 2rem;
+    align-items: center;
 }
 
+.nome,
+.sobrenome,
+.dataNascimento,
+.genero,
+.cpf,
+.telefone,
+.peso,
+.email,
+.confirmarEmail,
+.senha,
+.confirmarSenha{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+}
+
+.bt-cadastrar{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}

@@ -82,9 +82,9 @@
 
 
             <?php if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
-                echo "<form action='/sistemackc/admtm85/usuario/cadastrar' method='POST'>";
+                echo "<form action='/sistemackc/admtm85/usuario/cadastrar' class='form' method='POST'>";
             } else {
-                echo "<form action='/sistemackc/usuario/cadastro' method='POST'>";
+                echo "<form action='/sistemackc/usuario/cadastro' class='form' method='POST'>";
             } ?>
 
             <div class="nome">
