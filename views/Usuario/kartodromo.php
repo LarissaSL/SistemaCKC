@@ -14,6 +14,7 @@
     <script defer src="/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
 
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
+    <link rel="stylesheet" href="/sistemackc/views/Css/kartodromo.css">
 
     <title>Kartodromo</title>
 </head>
@@ -36,7 +37,7 @@
                         <li><a href="#">Galeria</a></li>
                         <li><a href="#">Inscrição</a></li>
                         <li><a href="#">Regulamento</a></li>
-                        <li><a href="#">Kartódromos</a></li>
+                        <li><a href="/sistemackc/kartodromo">Kartódromos</a></li>
                     </ul>
                 </li>
                 <li>
@@ -70,21 +71,27 @@
         <div id="bt-go-back">
             <a href="/sistemackc/"><i class="ph ph-caret-left"></i>Voltar</a> <!--tag 'a' com o icone de seta '<' -->
         </div>
+        <h1 class="titulo">Kartódromos</h1>
         <section class="container">
-            <h1>Kartódromos</h1>
+            
             <?php
             foreach ($kartodromos as $kartodromo) {
-                echo "<article class='card-one'>";
-                echo "<h2>{$kartodromo['Nome']}</h2>";
-                echo "<img src='/sistemackc/views/Img/ImgSistema/{$kartodromo['Foto']}' alt='pista do Kartódromo {$kartodromo['Nome']}'>";
-                echo "<div class='address'>";
-                echo "<i class='ph ph-map-pin'></i>";
-                echo "<strong> LOCALIZAÇÃO</strong>";
-                echo "<p>{$kartodromo['Rua']}, {$kartodromo['Numero']} - {$kartodromo['Bairro']} , {$kartodromo['CEP']} </p>";
-                echo "<strong>SITE</strong>";
-                echo "<a class='btn btn-primary' href='{$kartodromo['Site']}' target='_blank'>Visitar site</a>";
-                echo "</div>";
-                echo "<a href='#' class='bt-to-locate'>Como chegar</a>";
+                echo "<article class='card'>";
+                    echo "<h2 class='nomeKartodromo'>{$kartodromo['Nome']}</h2>";
+                    echo "<div class='fundoImg'>";
+                        echo "<img class='imgKartodromo' src='/sistemackc/views/Img/ImgSistema/{$kartodromo['Foto']}' alt='pista do Kartódromo {$kartodromo['Nome']}'>";
+                    echo "</div>";
+                    echo "<div class='infoKartodromo'>";
+                        echo "<div class='infoLocalizacao'>";
+                            echo "<i class='ph ph-map-pin'></i>";
+                            echo "<span class='subTitulo'><strong>Localização</strong></span>";
+                            echo "<p class='enderecoKartodromo'>{$kartodromo['Rua']}, {$kartodromo['Numero']} - {$kartodromo['Bairro']} , CEP: {$kartodromo['CEP']} </p>";
+                        echo "</div>";
+                        echo "<div class='botoes'>";
+                        echo "<a class='bt-siteKartodromo' href='{$kartodromo['Site']}' target='_blank'>Visitar site</a>";
+                        echo "<a href='#' class='bt-comoChegar'>Como chegar</a>";
+                    echo "</div>";
+                    echo "</div>";
                 echo "</article>";
             }
             ?>
