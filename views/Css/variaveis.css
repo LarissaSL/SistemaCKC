@@ -42,7 +42,7 @@ input {
     border-width: 2px;
     border-radius: 14px;
     border-color: var(--color-button);
-    width: 25rem;
+    width: 100%;
     padding: 1.3rem;
     background: var(--background-campos);
     outline: none;
@@ -69,7 +69,7 @@ a{
 button, .bt-cadastre {
     display: block;
     padding: 1.3rem;
-    width: 25rem;
+    width: 90%;
     border: none;
     border-radius: 8px;
     font-size: 1.6rem;
@@ -85,7 +85,7 @@ button, .bt-cadastre {
 
 /* NAVBAR */
 .nav {
-    max-width: 1280px;
+    max-width: 1280rem;
     height: 5rem; /*altura*/
     margin-inline: auto; /*representa o lado direito e esquerdo*/
     display: flex; /*elemento fica um do lado do outro*/
@@ -94,7 +94,7 @@ button, .bt-cadastre {
 }
 
 .nav-list {
-    display: inline-flex;
+    display: flex;
     gap: 4rem;/*dá um espaçamento entre cada item flex*/
     list-style: none; /*tira a polinha do topico da 'li'*/   
 }
