@@ -1,0 +1,121 @@
+
+
+/* bt de voltar */
+div#bt-go-back {
+    display: flex;
+    margin: .3em;
+    align-items: center;
+    justify-content: flex-start;
+   
+}
+
+/* seta do voltar */
+i.ph.ph-caret-left {
+    top: .1rem;
+    position: relative;
+}
+.chakra-petch-semibold {
+    font-family: "Chakra Petch", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+  }
+
+body{
+ 
+  padding: 25px;
+  background-color: #1E1A18;
+  font-size: 20px;
+  color: white;
+  
+}
+.title {
+	color: #ffffff;
+	text-align: center;
+
+}
+
+#corpo {
+    width: 250px;
+    height: 500px;
+    margin: auto;
+    border: 2px solid rgb(21, 37, 170);
+    border-radius: 15px;
+    background: rgb(35, 33, 33);
+}
+#dataNascimento {
+   background-color: rgb(16, 12, 12);
+    width: 190px;
+    height: 3px;
+    margin: auto;
+    border: 2px solid rgb(21, 37, 170);
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+}
+
+#genero {
+   background-color: rgb(16, 12, 12);
+    width: 190px;
+    height: 3px;
+    margin: auto;
+    border: 2px solid rgb(21, 37, 170);
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+}
+
+#peso {
+    background-color: rgb(16, 12, 12);
+    width: 190px;
+    height: 3px;
+    margin: auto;
+    border: 2px solid rgb(21, 37, 170);
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+}
+
+#telefone {
+    background-color: rgb(16, 12, 12);
+    width: 190px;
+    height: 3px;
+    margin: auto;
+    border: 2px solid rgb(21, 37, 170);
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+}
+
+#CPF {
+    background-color: rgb(16, 12, 12);
+    width: 190px;
+    height: 3px;
+    margin: auto;
+    border: 2px solid rgb(21, 37, 170);
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+}
+
+#email {
+    background-color: rgb(16, 12, 12);
+    width: 190px;
+    height: 3px;
+    margin: auto;
+    border: 2px solid rgb(21, 37, 170);
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+}
