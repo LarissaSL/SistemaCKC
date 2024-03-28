@@ -20,23 +20,33 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0 2rem;
 }
 
 .nome,
 .sobrenome,
 .dataNascimento,
-.genero,
 .cpf,
 .telefone,
 .peso,
 .email,
-.confirmarEmail,
+.confirmaEmail,
 .senha,
-.confirmarSenha{
+.confirmaSenha{
     width: 100%;
     display: flex;
     flex-direction: column;
     margin-top: 1rem;
+}
+
+.genero{
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.escolha{
+    display: flex;
+    flex-direction: row;
 }
 
 .bt-cadastrar{
@@ -44,4 +54,39 @@
     display: flex;
     justify-content: center;
     margin-top: 1rem;
+}
+
+@media screen and (min-width: 425px) {
+    .form{
+        width: 90%;
+    }
+
+    .genero{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .bt-cadastrar{
+        margin-top: 2rem;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .form{
+        width: 50%;
+    }
+
+    .genero{
+        width: 50%;
+    }
+
+    .bt-cadastrar{
+        margin-top: 2rem;
+    }
+   
+}
+
+@media screen and (min-width: 1024px) {
+    
 }

@@ -103,7 +103,7 @@
             </div>
 
             <div class="genero">
-                <label class="genero" for="genero">Gênero:</label>
+                <label class="escolha" for="genero">Gênero:</label>
                 <input type="radio" value="Masculino" name="genero" <?php echo isset($dados) && $dados[8] == 'Masculino' ? 'checked' : ''; ?>>
                 <label class="homem" for="homem">Masculino</label>
 
