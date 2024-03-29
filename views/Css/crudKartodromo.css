@@ -1,0 +1,243 @@
+.container-conteudo {
+    padding: 2rem;
+}
+
+.background-image,
+.background-imageAtualizar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 150vh;
+    background-image: url(/sistemackc/views/Img/ImgTelas/cadastroKartodromo.png);
+    background-repeat: no-repeat;
+    background-size: cover; 
+    background-position: center; 
+    opacity: 0.5; 
+    filter: grayscale(100%) brightness(10%);
+    z-index: -1;
+}
+
+.background-imageAtualizar {
+    height: 180vh;
+}
+
+.container-feedback {
+    text-align: center;
+    font-size: 2rem;
+}
+
+.ph-warning-circle,
+.ph-check-square {
+    margin: 0 .5rem;
+}
+
+.sucesso {
+    color: #00ff22b9;
+}
+
+.erro {
+    color: #ff0000b9;
+}
+
+.titulo {
+    margin: 3rem auto;
+    display: block; 
+    text-align: center;
+    position: relative; 
+}
+
+.container-form {
+    display: flex;
+    flex-flow: row;
+    position: relative; 
+}
+
+.campo-foto {
+    align-items: center;
+}
+
+.containerFotokartodromo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5rem;
+}
+
+.inputFotoComum {
+    width: 280px;
+    height: 45px;
+}
+
+.imagem {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+    margin: 2rem 0;
+    background-color: var(--text-base-light);
+    width: 280px; 
+    height: 280px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.fotoKartodromo {
+    width: 100%;
+}
+
+.container-foto {
+    position: relative;
+    width: 80%; 
+    height: 220px; 
+    border-radius: 50%; 
+    border: 2px solid var(--color-button);
+    background-color: var(--background-campos);
+    overflow: hidden;
+    justify-content: center; 
+    align-items: center;
+    cursor: pointer;
+}
+
+.input-foto {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.input-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.ph-upload-simple {
+    font-size: 3rem;
+    color: var(--text-base-light);
+}
+
+.chamada-foto {
+    font-size: 1.5rem;
+}
+
+.campo,
+.campo-foto {
+    display:flex;
+    flex-direction: column;
+    margin: 2rem 0;
+}
+
+.campo input {
+    color: var(--text-base-light);
+    width: 280px;
+    height: 45px;
+    margin: 1rem 0;
+}
+
+.botao {
+    display: flex;
+    justify-content: center; 
+    
+}
+
+.bt-atualizar{
+    width: 200px;
+}
+
+.bt-cadastrar,
+.bt-atualizar {
+    cursor: pointer;
+    margin: 2rem 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.bt-cadastrar:hover,
+.bt-atualizar:hover {
+    color: var(--background-campos);
+    background-color: var(--text-base-light);
+}
+
+@media (min-width: 375px) {
+    .container-form {
+        justify-content: center;
+    }
+
+    .container-foto {
+        height: 240px; 
+    }
+
+    .campo input {
+        width: 300px;
+    }
+
+    .background-imageAtualizar{
+        height: 170vh;
+    }
+
+}
+
+@media (min-width: 425px) {
+    .inputFotoComum {
+        width: 350px;
+    }
+
+    .background-imageAtualizar{
+        height: 150vh;
+    }
+}
+
+@media (min-width: 768px) {
+    .background-image{
+        height: 110vh;
+    }
+}
+
+@media (min-width: 1024px) {
+    .campos {
+        display: flex;
+        flex-direction: row;
+        gap: 70px;
+    }
+
+    .container-foto {
+        width: 40%; 
+        height: 260px; 
+    }
+
+    .bt-cadastrar {
+        margin: 2rem 0;
+        max-width: 270px;
+    }
+
+    .background-imageAtualizar{
+        height: 130vh;
+    }
+}
+
+@media (min-width: 1440px) {
+    .background-imageAtualizar{
+        height: 120vh;
+    }
+}
+
+
+@media (min-width: 1800px) {
+    .containerFotokartodromo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 5rem;
+    }
+    
+    .inputFotoComum {
+        width: 400px;
+        height: 45px;
+    }
+
+}

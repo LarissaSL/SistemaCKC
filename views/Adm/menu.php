@@ -7,6 +7,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
 
+     <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap"
+        rel="stylesheet">
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
+    <script defer src="/sistemackc/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
+
+
+
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/styleGlobal.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/login.css">
@@ -21,26 +32,27 @@
         if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
         ?>
             <!-- Inicio do Conteúdo para o ADM -->
-            <nav>
-                <i class="ph ph-list"></i><!-- ícone de menu -->
-                <ul>
-                    <li><a href="/sistemackc/admtm85/menu"><img src="../views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a></li>
+            <nav class="nav">
+                <a class="logo" href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a>
+
+                <button class="hamburger"></button>
+                <ul class="nav-list">
                     <li><a href="/sistemackc/admtm85/usuario">Usuarios</a></li>
                     <li><a href="#">Corridas</a></li>
                     <li><a href="/sistemackc/admtm85/kartodromo">Kartodromos</a></li>
                     <li><a href="#">Resultados</a></li>
-
-                    <li>
+                    
+                    <li class="drop-down">
                         <?php
-                        if (isset($_SESSION['nome'])) {
-                            echo "<p>Olá, " . $_SESSION['nome'] . "</p>";
-                            echo "<ul class='drop-corrida'>";
+                        if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
+                            echo "<a href='#' class='dropdown-toggle'>Olá, " . $_SESSION['nome'] . "<i class='ph ph-caret-down'></i></a>";
+                            echo "<ul class='dropdown-menu'>";
                             echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
                             echo "<li><a href='/sistemackc/admtm85/menu'>Dashboard</a></li>";
                             echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
-                            echo "</ul>";
+                            echo "</ul>"; 
                         } else {
-                            echo "<a href='#'>Entrar</a>";
+                            echo "<a href='/sistemackc/usuario/login'>Entrar</a>";
                         }
                         ?>
                     </li>

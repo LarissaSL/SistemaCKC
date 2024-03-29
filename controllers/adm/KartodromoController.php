@@ -67,7 +67,7 @@ class KartodromoController extends RenderView
             $kartodromoModel = new Kartodromo();
             $imagem = new Imagem();
 
-            // Dados do formulario
+            // Dados do formulário
             $nome = $_POST['nome'];
             $cep = $_POST['cep'];
             $rua = $_POST['rua'];
@@ -79,7 +79,7 @@ class KartodromoController extends RenderView
             $feedback = "";
             $classe = "";
 
-            // validacoes
+            // validações
             $validacaoDoNome = $kartodromoModel->verificarNomeKartodromo($nome);
             $validarTamanhoCep = $kartodromoModel->verificarCep($cep);
 
@@ -92,19 +92,28 @@ class KartodromoController extends RenderView
                 $classe = "erro";
             } else {
                 if (isset($_FILES['foto'])) {
-                    $validacaoDaImagem = $imagem->validarImagem($_FILES['foto']);
-                    $caminhoFoto = $imagem->moverParaPasta($_FILES['foto'], 'kartodromo');
-                    // Se uma imagem foi enviada e deu algo de errado ao mover para pasta
-                    if (!$caminhoFoto) {
-                        $feedback = 'Erro ao salvar foto';
-                        $classe = "erro";
-                    } elseif ($validacaoDaImagem !== 'aceito') {
-                        $feedback = $validacaoDaImagem;
-                        $classe = "erro";
+                    // Pra caso não envie a Imagem, define como NULL e salva no Banco
+                    if ($_FILES['foto']['error'] === UPLOAD_ERR_NO_FILE) {
+                        $nomeFoto = NULL;
                     } else {
-                        $nomeFoto = basename($caminhoFoto);
+                        $validacaoDaImagem = $imagem->validarImagem($_FILES['foto']);
+                        if ($validacaoDaImagem !== 'aceito') {
+                            $feedback = $validacaoDaImagem;
+                            $classe = "erro";
+                        } else {
+                            $caminhoFoto = $imagem->moverParaPasta($_FILES['foto'], 'kartodromo');
+                            // Se uma imagem foi enviada e deu algo de errado ao mover para a pasta
+                            if (!$caminhoFoto) {
+                                $feedback = 'Erro ao salvar foto';
+                                $classe = "erro";
+                            } else {
+                                $nomeFoto = basename($caminhoFoto);
+                            }
+                        }
+                    }
 
-                        // Inserir o kartódromo
+                    // Inserir o kartódromo se não houver erros
+                    if (!$feedback) {
                         $cepFormatado = $kartodromoModel->formatarCep($cep);
                         $resultado = $kartodromoModel->inserirKartodromo($nome, $cepFormatado, $rua, $bairro, $numero, $tratarURL, $nomeFoto);
 
@@ -187,6 +196,7 @@ class KartodromoController extends RenderView
             $site = $_POST['site'] ?? '';
             $tratarURL = $kartodromoModel->adicionarPrefixoHttp($site);
             $dados = [$infoKartodromo['Foto'], $nome, $cep, $rua, $bairro, $numero, $site];
+            $nomeFoto = "";
 
             // Verificar se uma nova imagem foi enviada
             if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
@@ -213,9 +223,10 @@ class KartodromoController extends RenderView
                         $nomeFoto = basename($caminhoFoto);
                     }
                 }
-            } else {
+            } elseif ($_FILES['foto']['error'] === UPLOAD_ERR_NO_FILE) {
                 // Se não houver uma nova imagem enviada, manter o nome da imagem antiga
                 $nomeFoto = $infoKartodromo['Foto'];
+                $validacaoDaImagem = 'aceito';
             }
 
             // Validacao do CEP
@@ -229,17 +240,20 @@ class KartodromoController extends RenderView
             {
                 // Atualizar os dados do kartódromo no banco de dados
                 $cepFormatado = $kartodromoModel->formatarCep($cep);
-                $resultado = $kartodromoModel->alterarKartodromo($id, $nome, $cepFormatado, $rua, $bairro, $numero, $tratarURL, $nomeFoto);
 
-                // Verificar se a alteração foi realizada com sucesso
-                if ($resultado === true) {
-                    $feedback = 'Kartódromo alterado com sucesso!';
-                    $classe = "sucesso";
-                    $kartodromoResultado = $kartodromoModel->selecionarKartodromoPorId($id);
-                    $dados = [$kartodromoResultado['Foto'], $kartodromoResultado['Nome'], $kartodromoResultado['CEP'], $kartodromoResultado['Rua'], $kartodromoResultado['Bairro'], $kartodromoResultado['Numero'], $kartodromoResultado['Site']];
-                } else {
-                    $feedback = $resultado;
-                    $classe = "erro";
+                if ($validacaoDaImagem == 'aceito' && $validarTamanhoCep == 'aceito' ) {
+                    $resultado = $kartodromoModel->alterarKartodromo($id, $nome, $cepFormatado, $rua, $bairro, $numero, $tratarURL, $nomeFoto);
+
+                    // Verificar se a alteração foi realizada com sucesso
+                    if ($resultado === true) {
+                        $feedback = 'Kartódromo alterado com sucesso!';
+                        $classe = "sucesso";
+                        $kartodromoResultado = $kartodromoModel->selecionarKartodromoPorId($id);
+                        $dados = [$kartodromoResultado['Foto'], $kartodromoResultado['Nome'], $kartodromoResultado['CEP'], $kartodromoResultado['Rua'], $kartodromoResultado['Bairro'], $kartodromoResultado['Numero'], $kartodromoResultado['Site']];
+                    } else {
+                        $feedback = $resultado;
+                        $classe = "erro";
+                    }
                 }
             }
             
