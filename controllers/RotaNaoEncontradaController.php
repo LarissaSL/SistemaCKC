@@ -1,10 +1,15 @@
 <?php
-class RotaNaoEncontradaController {
+
+class RotaNaoEncontradaController extends RenderView{
     
     public function index()
     {
-        echo "Rota não encontrada<br>";
-        echo $_SERVER['REQUEST_URI'];
+        $this->carregarViewComArgumentos('notFound', [
+            'feedback' => "A Rota não foi encontrada no nosso Servidor",
+            'classe' => "erro"
+        ]);
+        
+        
     }
 }
 ?>

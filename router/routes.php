@@ -29,6 +29,4 @@ $routes = [
     '/admtm85/kartodromo/cadastrar' => 'adm#KartodromoController#cadastrar',
     '/admtm85/kartodromo/atualizar/{id}' => 'adm#KartodromoController#atualizar',
     '/admtm85/kartodromo/excluir/{id}' => 'adm#KartodromoController#excluir',
-
-
 ];
