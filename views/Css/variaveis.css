@@ -109,6 +109,7 @@ button, .bt-cadastre {
 
 .nav-list {
     display: flex;
+    align-items: center;
     gap: 4rem;/*dá um espaçamento entre cada item flex*/
     list-style: none; /*tira a polinha do topico da 'li'*/   
 }

@@ -20,13 +20,13 @@
 </head>
 
 <body>
-    <?php 
-        if (!isset($_SESSION)) {
-            session_start();
-        }
+    <?php
+    if (!isset($_SESSION)) {
+        session_start();
+    }
     ?>
 
-<header class="header">
+    <header class="header">
         <nav class="nav">
             <a class="logo" href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a>
 
@@ -86,26 +86,38 @@
         </div>
         <h1 class="titulo">Kartódromos</h1>
         <section class="container">
-            
+
             <?php
-            foreach ($kartodromos as $kartodromo) {
-                echo "<article class='card'>";
+            if (empty($kartodromos)) {
+                if (isset($feedback) && $feedback != '') {
+                    echo "<div class='container-feedback'>";
+                    if ($classe == 'erro') {
+                        echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
+                    } else {
+                        echo "<span class='$classe'><i class='ph ph-check-square'></i><strong>$feedback</strong></span>";
+                    }
+                    echo "</div>";
+                }
+            } else {
+                foreach ($kartodromos as $kartodromo) {
+                    echo "<article class='card'>";
                     echo "<h2 class='nomeKartodromo'>{$kartodromo['Nome']}</h2>";
                     echo "<div class='fundoImg'>";
-                        echo "<img class='imgKartodromo' src='/sistemackc/views/Img/ImgSistema/{$kartodromo['Foto']}' alt='pista do Kartódromo {$kartodromo['Nome']}'>";
+                    echo "<img class='imgKartodromo' src='/sistemackc/views/Img/ImgSistema/{$kartodromo['Foto']}' alt='pista do Kartódromo {$kartodromo['Nome']}'>";
                     echo "</div>";
                     echo "<div class='infoKartodromo'>";
-                        echo "<div class='infoLocalizacao'>";
-                            echo "<i class='ph ph-map-pin'></i>";
-                            echo "<span class='subTitulo'><strong>Localização</strong></span>";
-                            echo "<p class='enderecoKartodromo'>{$kartodromo['Rua']}, {$kartodromo['Numero']} - {$kartodromo['Bairro']} , CEP: {$kartodromo['CEP']} </p>";
-                        echo "</div>";
-                        echo "<div class='botoes'>";
-                        echo "<a class='bt-siteKartodromo' href='{$kartodromo['Site']}' target='_blank'>Visitar site</a>";
-                        echo "<a href='#' class='bt-comoChegar'>Como chegar</a>";
+                    echo "<div class='infoLocalizacao'>";
+                    echo "<i class='ph ph-map-pin'></i>";
+                    echo "<span class='subTitulo'><strong>Localização</strong></span>";
+                    echo "<p class='enderecoKartodromo'>{$kartodromo['Rua']}, {$kartodromo['Numero']} - {$kartodromo['Bairro']} , CEP: {$kartodromo['CEP']} </p>";
+                    echo "</div>";
+                    echo "<div class='botoes'>";
+                    echo "<a class='bt-siteKartodromo' href='{$kartodromo['Site']}' target='_blank'>Visitar site</a>";
+                    echo "<a href='#' class='bt-comoChegar'>Como chegar</a>";
                     echo "</div>";
                     echo "</div>";
-                echo "</article>";
+                    echo "</article>";
+                }
             }
             ?>
         </section>
