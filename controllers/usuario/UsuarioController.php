@@ -286,10 +286,12 @@ class UsuarioController extends RenderView
                     if ($resultado == "atualizado") {
                         if(isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador')
                         {
-                            $feedback = "Atualizado com Sucesso!";
+                            $feedback = "Usuário atualizado com Sucesso!";
                             $classe = "sucesso";
                         } 
                         else {
+                            $feedback = "Alterações feitas com Sucesso!";
+                            $classe = "sucesso";
                             $_SESSION['email'] = $email;
                             $_SESSION['nome'] = $nome;
                         } 
@@ -341,7 +343,7 @@ class UsuarioController extends RenderView
         exit();
     }
 
-    // Funciona pro usuário comum
+    // Funciona pro usuário comum e pro adm atualizar
     public function atualizarSenha($id)
     {
         $usuario = new Usuario();

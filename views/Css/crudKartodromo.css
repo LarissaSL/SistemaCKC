@@ -188,13 +188,17 @@
     }
 
     .background-imageAtualizar{
-        height: 150vh;
+        height: 170vh;
     }
 }
 
 @media (min-width: 768px) {
     .background-image{
-        height: 110vh;
+        height: 150vh;
+    }
+
+    .background-imageAtualizar{
+        height: 170vh;
     }
 }
 
@@ -216,16 +220,19 @@
     }
 
     .background-imageAtualizar{
-        height: 130vh;
+        height: 140vh;
+    }
+
+    .background-image{
+        height: 120vh;
     }
 }
 
 @media (min-width: 1440px) {
     .background-imageAtualizar{
-        height: 120vh;
+        height: 140vh;
     }
 }
-
 
 @media (min-width: 1800px) {
     .containerFotokartodromo {
@@ -238,6 +245,10 @@
     .inputFotoComum {
         width: 400px;
         height: 45px;
+    }
+
+    .background-imageAtualizar{
+        height: 120vh;
     }
 
 }
