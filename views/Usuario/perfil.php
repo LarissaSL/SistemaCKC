@@ -10,8 +10,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <!-- ícone de menu  -->
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
-    <script defer src="/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
+    <link rel="stylesheet" href="/sistemackc/views/Css/perfil.css">
 
+    <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
+    <script defer src="/sistemackc/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
+    <script src="/sistemackc/views/Js/fotos.js"></script> 
 
     <title>Perfil</title>
 </head>
@@ -26,54 +29,65 @@
         echo "<h1>Acesso não autorizado</h1>";
     } else {
     ?>
-        <header class="header">
-            <nav class="nav">
+    <header class="header">
+        <nav class="nav">
                 <a class="logo" href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a>
 
                 <button class="hamburger"></button>
                 <ul class="nav-list">
-                    <li><a href="#">História</a></li>
-
-                    <li class="drop-down">
-                        <a href="#" class="dropdown-toggle">Corridas<i class="ph ph-caret-down"></i></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Etapas</a></li>
-                            <li><a href="#">Classificação</a></li>
-                            <li><a href="#">Galeria</a></li>
-                            <li><a href="#">Inscrição</a></li>
-                            <li><a href="#">Regulamento</a></li>
-                            <li><a href="/sistemackc/kartodromo">Kartódromos</a></li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <?php
+                    <?php
                         if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Comum') {
-                            echo "<p>Olá, " . $_SESSION['nome'] . "</p>";
-                            echo "<ul class='drop-corrida'>";
-                            echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
-                            echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
-                            echo "</ul>";
-                        } elseif (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
-                            echo "<p>Olá, " . $_SESSION['nome'] . "</p>";
-                            echo "<ul class='drop-corrida'>";
-                            echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
-                            echo "<li><a href='/sistemackc/admtm85/menu'>Dashboard</a></li>";
-                            echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
-                            echo "</ul>";
-                        } else {
+                            echo "<li><a href='#'>História</a></li>";
+                            ?>
+                            <li class="drop-down">
+                                <a href="#" class="dropdown-toggle">Corridas<i class="ph ph-caret-down"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Etapas</a></li>
+                                    <li><a href="#">Classificação</a></li>
+                                    <li><a href="#">Galeria</a></li>
+                                    <li><a href="#">Inscrição</a></li>
+                                    <li><a href="#">Regulamento</a></li>
+                                    <li><a href="/sistemackc/kartodromo">Kartódromos</a></li>
+                                </ul>
+                            </li>
+                        <?php } elseif (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
+                            echo "<li><a href='/sistemackc/admtm85/usuario'>Usuarios</a></li>";
+                            echo "<li><a href='#'>Corridas</a></li>";
+                            echo "<li><a href='/sistemackc/admtm85/kartodromo'>Kartodromos</a></li>";
+                            echo "<li><a href='#'>Resultados</a></li>";
+                        } ?>
+                    
+                        <?php
+                        if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Comum') { ?>
+                            <button class="hamburger"></button>
+                            <li class="drop-down">
+                                <?php echo "<a href='#' class='dropdown-toggle'>Olá, " . $_SESSION['nome'] . "<i class='ph ph-caret-down'></i></a>"; ?>
+                                <ul class="dropdown-menu">
+                                    <?php echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>"; ?>
+                                    <?php echo "<li><a href='/sistemackc/logout'>Logout</a></li>"; ?>
+                                </ul>
+                            </li>
+                        <?php } elseif (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') { ?>
+                            <li class='drop-down'>
+                                <?php echo "<a href='#' class='dropdown-toggle'>Olá, " . $_SESSION['nome'] . "<i class='ph ph-caret-down'></i></a>"; ?>
+                                <ul class='dropdown-menu'>
+                                    <?php echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>"; ?>
+                                    <li><a href='/sistemackc/admtm85/menu'>Dashboard</a></li>
+                                    <li><a href='/sistemackc/logout'>Logout</a></li>
+                                </ul>
+                            </li> 
+                        <?php } else {
                             echo "<a href='/sistemackc/usuario/login'>Entrar</a>";
                         }
-                        ?>
-                    </li>
+                    ?>
                 </ul>
             </nav>
-        </header>
+    </header>
         <main>
             <h1>Perfil</h1>
 
-            <?php if (isset($feedback)) : ?>
-                <p><?php echo $feedback; ?></p>
+            <?php if (isset($feedbackSobrePerfil)) : ?>
+                <p><?php echo $feedbackSobrePerfil; ?></p>
             <?php else : ?>
                 <h2>Perfil do Usuário ID: <?php echo $usuario['Id']; ?></h2>
                 <?php $dataFormatada = date('d-m-Y', strtotime($usuario['Data_nascimento'])); ?>
@@ -86,41 +100,40 @@
                 <?php endif; ?>
 
                 <!-- Se o Usuário Logado for o mesmo do ID ele pode trocar sua foto de perfil -->
-                <?php if (isset($_SESSION['email']) && $_SESSION['email'] == $usuario['Email'] || isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
-
-                    if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
-                        echo "<form action='/sistemackc/admtm85/usuario/{$usuario['Id']}' method='POST' enctype='multipart/form-data'>";
-                    } else {
-                        echo "<form action='/sistemackc/usuario/{$usuario['Id']}' method='POST' enctype='multipart/form-data'>";
-                    }
+                <?php 
+                    if (isset($_SESSION['email']) && $_SESSION['email'] == $usuario['Email'] || isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
+                        if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
+                            echo "<form action='/sistemackc/admtm85/usuario/atualizar/{$usuario['Id']}' method='POST' enctype='multipart/form-data'>";
+                        } else {
+                            echo "<form action='/sistemackc/usuario/atualizar/{$usuario['Id']}' method='POST' enctype='multipart/form-data'>";
+                        }
                 ?>
                     <label for="fotoPerfil">
                         <?php
-                        if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
-                            echo "Atualizar foto de Perfil do Usuário";
-                        } else {
-                            echo "Atualizar sua foto de perfil:";
-                        }
+                            if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
+                                echo "Atualizar foto de Perfil do Usuário";
+                            } else {
+                                echo "Atualizar sua foto de perfil:";
+                            }
                         ?>
                     </label><br>
-                    <input type="file" id="fotoPerfil" name="fotoPerfil" required><br><br>
+                    <input class="input-foto" type="file" id="foto" name="foto" ><br><br>
                     <input type="submit" value="Enviar Foto">
-                    </form>
 
-                    <!-- Aqui exibe o feedback da imagem CASO seja inválida -->
-                    <?php if (isset($feedbackDaImagem)) {
-                        echo "<span class='$classe'>$feedbackDaImagem</span>";
-                    } ?>
+                    <!-- Aqui exibe os feedbacks -->
+                    <?php
+                        if (isset($feedback) && $feedback != '') {
+                            echo "<div class='container-feedback'>";
+                            if($classe == 'erro'){
+                                echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
+                            } else {
+                                echo "<span class='$classe'><i class='ph ph-check-square'></i><strong>$feedback</strong></span>";
+                            }
+                            echo "</div>";
+                        }
+                    ?>
                 <?php } ?>
 
-
-                <?php
-                if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
-                    echo "<form action='/sistemackc/admtm85/usuario/atualizar/{$usuario['Id']}' method='POST'>";
-                } else {
-                    echo "<form action='/sistemackc/usuario/atualizar/{$usuario['Id']}' method='POST'>";
-                }
-                ?>
 
                 <div class="nome">
                     <label class="nome" for="nome">Nome:</label>
@@ -181,6 +194,7 @@
                 <?php endif; ?>
                 </form>
             <?php endif; ?>
+            
 
             <div id="bt-go-back">
                 <?php

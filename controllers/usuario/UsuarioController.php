@@ -54,40 +54,13 @@ class UsuarioController extends RenderView
         // Carregar o perfil do usuário
         $usuario = $usuarioModel->consultarUsuarioPorId($id);
 
-        // Verificar se foi feita uma requisição POST para atualizar a foto de perfil e verificar se ela passa nas validações
-        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['fotoPerfil'])) {
-            $imagemDePerfil = $_FILES['fotoPerfil'];
-            $imagem = new Imagem();
-
-            $statusFormatoDaImagem = $imagem->validarImagem($imagemDePerfil);
-
-            if ($statusFormatoDaImagem !== "aceito") {
-                $this->carregarViewComArgumentos('usuario/perfil', [
-                    'feedbackDaImagem' => $statusFormatoDaImagem,
-                    'usuario' => $usuario,
-                    'classe' => 'erro'
-                ]);
-                exit();
-            } else {
-                $caminhoImg = $imagem->moverParaPasta($imagemDePerfil, 'usuario');
-                $usuarioModel->inserirFoto($caminhoImg, $id);
-                if ($_SESSION['tipo'] == 'Administrador') {
-                    header('Location: /sistemackc/admtm85/usuario/' . $id);
-                } else {
-                    header('Location: /sistemackc/usuario/' . $id);
-                }
-                exit();
-            }
-        }
-
-        // Se não tiver requisição POST então só carrega o perfil
         if ($usuario) {
             $this->carregarViewComArgumentos('usuario/perfil', [
                 'usuario' => $usuario
             ]);
         } else {
             $this->carregarViewComArgumentos('usuario/perfil', [
-                'feedback' => "Nenhum usuário encontrado com o ID: " . $id
+                'feedbackSobrePerfil' => "Nenhum usuário encontrado com o ID: " . $id
             ]);
         }
     }
@@ -234,7 +207,31 @@ class UsuarioController extends RenderView
     // Funciona pro usuário comum e pro adm atualizar
     public function atualizar($id)
     {
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+
+        $usuarioModel = new Usuario();
+        $feedback = "";
+        $classe = "";
+        $infoUsuario = $usuarioModel->consultarUsuarioPorId($id);
+        $dados = [
+            $infoUsuario['Foto'],
+            $infoUsuario['Nome'],
+            $infoUsuario['Sobrenome'],
+            $infoUsuario['Cpf'],
+            $infoUsuario['Email'],
+            $infoUsuario['Peso'],
+            $infoUsuario['Data_nascimento'],
+            $infoUsuario['Genero'],
+            $infoUsuario['Telefone']
+        ];
+
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            
+            $imagem = new Imagem();
+
+            // Dados do formulario
             $nome = $_POST['nome'];
             $sobrenome = $_POST['sobrenome'];
             $cpf = $_POST['cpf'];
@@ -243,55 +240,82 @@ class UsuarioController extends RenderView
             $genero = $_POST['genero'];
             $telefone = $_POST['telefone'];
             $dataNascimento = $_POST['dataNascimento'];
+            $nomeFoto = "";
 
-            $atualizarUsuario = new Usuario();
-
-            if (!isset($_SESSION)) {
-                session_start();
-            }
-            $feedbackDeAtualizacao = "";
-
-            $statusDaValidacaoCpf = $atualizarUsuario->validarCpf($cpf, 'atualizar', $id);
-            $statusDaValidacaoEmail = $atualizarUsuario->validarEmail($email, $email, 'atualizar');
-            $telefoneFormatado = $atualizarUsuario->formatarTelefone($telefone);
-            $dataFormatada = date('Y-m-d', strtotime($dataNascimento));
-
-            if ($statusDaValidacaoCpf == "aceito" && $statusDaValidacaoEmail == "aceito") {
-                // Atualizando no BD
-                $resultado = $atualizarUsuario->atualizarUsuario($id, $nome, $sobrenome, $cpf, $email, $peso, $dataFormatada, $genero, $telefoneFormatado);
-
-                if ($resultado == "atualizado") {
-                    if(isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador')
-                    {
-                        header('Location: /sistemackc/admtm85/usuario/' . $id);
-                        exit();
-                    } 
-                    else {
-                        $_SESSION['email'] = $email;
-                        $_SESSION['nome'] = $nome;
-                        header('Location: /sistemackc/usuario/' . $id);
-                        exit();
-                    } 
-
-                    
+            // Verificações sobre a IMG
+            if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
+                $validacaoDaImagem = $imagem->validarImagem($_FILES['foto']);
+                if ($validacaoDaImagem !== 'aceito') {
+                    $feedback = $validacaoDaImagem;
+                    $classe = "erro";
                 } else {
-                    $feedbackDeAtualizacao = $resultado;
+                    $caminhoFoto = $imagem->moverParaPasta($_FILES['foto'], 'usuario');
+                    if (!$caminhoFoto) {
+                        $feedback = 'Erro ao salvar nova foto';
+                        $classe = "erro";
+                    } else {
+                        // Salvar a informação do Usuario sobre o nome da Imagem antiga
+                        $nomeDaFotoAntiga = $infoUsuario['Foto'];
+
+                        if (!empty($nomeDaFotoAntiga)) {
+                            // Excluir a imagem antiga do servidor
+                            $caminhoFotoAntiga = "./views/Img/ImgUsuario/" . $nomeDaFotoAntiga;
+                            $imagem->excluirImagem($caminhoFotoAntiga);
+                        }
+                        // Definir o nome da nova imagem
+                        $nomeFoto = basename($caminhoFoto);
+                    }
                 }
-            } else {
-                if ($statusDaValidacaoCpf !== "aceito") {
-                    $feedbackDeAtualizacao = $statusDaValidacaoCpf;
-                }
-                if ($statusDaValidacaoEmail !== "aceito") {
-                    $feedbackDeAtualizacao = $statusDaValidacaoEmail;
+            } elseif ($_FILES['foto']['error'] === UPLOAD_ERR_NO_FILE) {
+                // Se não houver uma nova imagem enviada, manter o nome da imagem antiga
+                $nomeFoto = $infoUsuario['Foto'];
+                $validacaoDaImagem = 'aceito';
+            }
+
+            if($validacaoDaImagem == 'aceito') {
+                // Validações e Formatação do restante de Dados
+                $statusDaValidacaoCpf = $usuarioModel->validarCpf($cpf, 'atualizar', $id);
+                $statusDaValidacaoEmail = $usuarioModel->validarEmail($email, $email, 'atualizar');
+                $telefoneFormatado = $usuarioModel->formatarTelefone($telefone);
+                $dataFormatada = date('Y-m-d', strtotime($dataNascimento));
+
+                if ($statusDaValidacaoCpf == "aceito" && $statusDaValidacaoEmail == "aceito") {
+                    // Atualizando no BD
+                    $resultado = $usuarioModel->atualizarUsuario($id, $nome, $sobrenome, $cpf, $email, $peso, $dataFormatada, $genero, $telefoneFormatado, $nomeFoto);
+
+                    if ($resultado == "atualizado") {
+                        if(isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador')
+                        {
+                            $feedback = "Atualizado com Sucesso!";
+                            $classe = "sucesso";
+                        } 
+                        else {
+                            $_SESSION['email'] = $email;
+                            $_SESSION['nome'] = $nome;
+                        } 
+    
+                    } else {
+                        $feedback = $resultado;
+                        $classe = "erro";
+                    }
+                } else {
+                    if ($statusDaValidacaoCpf !== "aceito") {
+                        $feedback = $statusDaValidacaoCpf;
+                    }
+                    if ($statusDaValidacaoEmail !== "aceito") {
+                        $feedback = $statusDaValidacaoEmail;
+                    }
                 }
             }
-            $UrlParaRedirecionar = $_SESSION['tipo'] == 'Administrador' ? '/sistemackc/admtm85/usuario/'.$id : '/sistemackc/usuario/'.$id;
-            echo "<script>
-                    alert('$feedbackDeAtualizacao');
-                    window.location.href = '$UrlParaRedirecionar'; 
-                  </script>";
-            exit();
-        }    
+            // Carregar a view com os dados do Usuário para e pós edição
+            $usuario = $usuarioModel->consultarUsuarioPorId($id);
+            $this->carregarViewComArgumentos('usuario/perfil', [
+                'feedback' => $feedback,
+                'classe' => $classe,
+                'dados' => $dados,
+                'usuario' => $usuario
+            ]);
+        }   
     }
 
     public function excluir($id)

@@ -17,21 +17,20 @@
     <script defer src="/sistemackc/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
 
 
-
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
-    <link rel="stylesheet" href="/sistemackc/views/Css/styleGlobal.css">
-    <link rel="stylesheet" href="/sistemackc/views/Css/login.css">
 
     <title>Menu</title>
 </head>
 
 <body>
-    <header>
+    <header class="header">
         <?php
-        session_start();
+        if (!isset($_SESSION)) {
+            session_start();
+        }
         if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
         ?>
-            <!-- Inicio do Conteúdo para o ADM -->
             <nav class="nav">
                 <a class="logo" href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a>
 

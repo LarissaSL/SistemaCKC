@@ -36,10 +36,10 @@ class Usuario
         }
     }
 
-    public function atualizarUsuario($id, $nome, $sobrenome, $cpf, $email, $peso, $dataNascimento, $genero, $telefone)
+    public function atualizarUsuario($id, $nome, $sobrenome, $cpf, $email, $peso, $dataNascimento, $genero, $telefone, $foto)
     {
         try {
-            $atualizar = $this->conexao->prepare("UPDATE usuario SET Nome = :nome, Sobrenome = :sobrenome, Cpf = :cpf, Email = :email, Peso = :peso, Data_nascimento = :data_nascimento, Genero = :genero, Telefone = :telefone WHERE id = :id");
+            $atualizar = $this->conexao->prepare("UPDATE usuario SET Nome = :nome, Sobrenome = :sobrenome, Cpf = :cpf, Email = :email, Peso = :peso, Data_nascimento = :data_nascimento, Genero = :genero, Telefone = :telefone, Foto = :foto  WHERE id = :id");
             $atualizar->bindValue(':nome', $nome);
             $atualizar->bindValue(':sobrenome', $sobrenome);
             $atualizar->bindValue(':cpf', $cpf);
@@ -49,6 +49,7 @@ class Usuario
             $atualizar->bindValue(':genero', $genero);
             $atualizar->bindValue(':telefone', $telefone);
             $atualizar->bindValue(':id', $id);
+            $atualizar->bindValue(':foto', $foto);
             $atualizar->execute();
             return "atualizado"; 
         } catch (PDOException $erro) {
@@ -63,41 +64,6 @@ class Usuario
                     return $erro;
                     break;
             }     
-        }
-    }
-
-    public function inserirFoto($foto, $id)
-    {
-        try {
-            //Ver se o usuario já tem uma foto de perfil , se sim excluir ela no if
-            $usuarioModel = new Usuario();
-            $imagem = new Imagem();
-            $usuarioAntigo = $usuarioModel->consultarUsuarioPorId($id);
-
-            if ($usuarioAntigo && isset($usuarioAntigo['Foto'])) {
-                $nomeArquivoAntigo = basename($usuarioAntigo['Foto']);
-                $caminho = "./views/Img/ImgUsuario/" . $nomeArquivoAntigo;
-                $imagem->excluirImagem($caminho);
-            }
-            
-            $novoNomeDaImagem = basename($foto);
-
-            // Salvar o nome da imagem no banco de dados
-            $inserir = $this->conexao->prepare("UPDATE usuario SET Foto = :foto WHERE Id = :id");
-            $inserir->bindValue(':foto', $novoNomeDaImagem);
-            $inserir->bindValue(':id', $id);
-            $inserir->execute();
-
-            // Mover a imagem para a pasta de destino (Views, Img, ImgUsuario)
-            $caminhoCompleto = "./views/Img/ImgUsuario/" . $novoNomeDaImagem;
-            if (move_uploaded_file($foto, $caminhoCompleto)) {
-                return true; 
-            } else {
-                return false; 
-            }
-        } catch (PDOException $erro) {
-            echo "Erro na inserção: " . $erro->getMessage();
-            return false; 
         }
     }
 
