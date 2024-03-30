@@ -361,7 +361,7 @@ class UsuarioController extends RenderView
                 {
                     $this->carregarViewComArgumentos('usuario/alterarSenha', [
                         'feedback' => $feedbackDeAtualizacao,
-                        'status' => 'sucesso',
+                        'classe' => 'sucesso',
                         'usuario'=> $usuarioDados
                     ]);
                 } 
@@ -369,7 +369,7 @@ class UsuarioController extends RenderView
                 {
                     $this->carregarViewComArgumentos('usuario/alterarSenha', [
                         'feedback' => $feedbackDeAtualizacao,
-                        'status' => 'erro',
+                        'classe' => 'erro',
                         'usuario'=> $usuarioDados
                     ]);  
                 } 
@@ -377,7 +377,7 @@ class UsuarioController extends RenderView
             } else {
                 $this->carregarViewComArgumentos('usuario/alterarSenha', [
                     'feedback' => $feedbackDeSenha,
-                    'status' => 'erro',
+                    'classe' => 'erro',
                     'usuario'=> $usuarioDados
                 ]); 
             }

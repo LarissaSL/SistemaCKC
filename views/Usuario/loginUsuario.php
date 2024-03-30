@@ -20,6 +20,10 @@
 </head>
 
 <body>
+    <?php 
+        if (!isset($_SESSION)) {
+            session_start();
+    }?>
     <header class="header">
         <nav class="nav">
             <a class="logo" href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a>
@@ -41,9 +45,6 @@
                 </li>
                 <li>
                     <?php
-                    if (!isset($_SESSION)) {
-                        session_start();
-                    }
                     if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Comum') {
                         echo "<p>Olá, " . $_SESSION['nome'] . "</p>";
                         echo "<ul class='drop-corrida'>";
