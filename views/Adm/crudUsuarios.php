@@ -22,7 +22,7 @@
             <nav>
                 <i class="ph ph-list"></i><!-- ícone de menu -->
                 <ul>
-                    <li><a href="/sistemackc/admtm85/menu"><img src="../views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a></li>
+                    <!--<li><a href="/sistemackc/admtm85/menu"><img src="../views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a></li> -->
                     <li><a href="/sistemackc/admtm85/usuario">Usuarios</a></li>
                     <li><a href="#">Corridas</a></li>
                     <li><a href="/sistemackc/admtm85/kartodromo">Kartodromos</a></li>

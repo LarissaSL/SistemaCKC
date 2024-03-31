@@ -47,6 +47,7 @@ input {
     background: var(--background-campos);
     outline: none;
     box-sizing: border-box;
+    color: var(--text-base-light);
 }
 
 input[type="radio"] {
