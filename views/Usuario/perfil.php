@@ -138,15 +138,15 @@
 
                 <!-- Aqui exibe os feedbacks -->
                 <?php
-                            if (isset($feedback) && $feedback != '') {
-                                echo "<div class='container-feedback'>";
-                                if ($classe == 'erro') {
-                                    echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
-                                } else {
-                                    echo "<span class='$classe'><i class='ph ph-check-square'></i><strong>$feedback</strong></span>";
-                                }
-                                echo "</div>";
-                            }
+                    if (isset($feedback) && $feedback != '') {
+                        echo "<div class='container-feedback'>";
+                        if ($classe == 'erro') {
+                            echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
+                        } else {
+                            echo "<span class='$classe'><i class='ph ph-check-square'></i><strong>$feedback</strong></span>";
+                        }
+                            echo "</div>";
+                    }
                 ?>
             <?php } ?>
 
