@@ -160,6 +160,15 @@ ul.dropdown-menu {
     z-index: 1;
 }
 
+footer {
+    display: flex;
+    justify-content: center;
+    background: var(--background-navbar);
+    color: var(--text-base-light);
+    padding: 1rem;
+    text-align: center;
+}
+
 /* menu responsivo */
 @media(max-width: 700px) {
     

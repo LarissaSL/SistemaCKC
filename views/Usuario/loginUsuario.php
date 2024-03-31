@@ -104,7 +104,13 @@
         </section>
     </main>
     <footer>
-        <p>© Manas code</p>
+        <div>
+            <span class="copyright">© 2024 Copyright: ManasCode</span>
+            <div>
+                <img src="/sistemackc/views/Img/ImgIcones/github.png">
+                <a target="_blank" href="https://github.com/LarissaSL/SistemaCKC_MVC">Repositório do Projeto</a>
+            </div>
+        </div>
     </footer>
 </body>
 

@@ -78,9 +78,28 @@
     </header>
     <main>
         <h1>Landing Page</h1>
+        <div>
+            <p>Seja bem-vindo ao CKC, o Campeonato de Kart da Capital. Aqui você encontra todas as informações sobre as corridas, etapas, classificação, galeria, inscrição e regulamento. Além disso, você pode conferir os kartódromos disponíveis para treino e corrida. Aproveite!</p>
+
+            <p>Se você é um administrador, acesse o menu para gerenciar usuários, corridas, kartódromos e resultados. Aproveite!</p>
+
+            <p>Se você é um usuário comum, acesse o menu para conferir a história do CKC, as corridas, etapas, classificação, galeria, inscrição e regulamento. Além disso, você pode conferir os kartódromos disponíveis para treino e corrida. Aproveite!</p>
+
+            <p>Se você ainda não é cadastrado, clique em "Entrar" para se cadastrar e aproveitar todas as funcionalidades do CKC. Aproveite!</p>
+
+            <p>Se você já é cadastrado, clique em "Entrar" para acessar o CKC. Aproveite!</p>
+            
+
+        </div>
     </main>
     <footer>
-        <p>© Manas code</p>
+        <div>
+            <span class="copyright">© 2024 Copyright: ManasCode</span>
+            <div>
+                <img src="/sistemackc/views/Img/ImgIcones/github.png">
+                <a target="_blank" href="https://github.com/LarissaSL/SistemaCKC_MVC">Repositório do Projeto</a>
+            </div>
+        </div>
     </footer>
 </body>
 

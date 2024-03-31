@@ -140,8 +140,15 @@
             </form>
         </section>
     </main>
-
-
+    <footer>
+        <div>
+            <span class="copyright">© 2024 Copyright: ManasCode</span>
+            <div>
+                <img src="/sistemackc/views/Img/ImgIcones/github.png">
+                <a target="_blank" href="https://github.com/LarissaSL/SistemaCKC_MVC">Repositório do Projeto</a>
+            </div>
+        </div>
+    </footer>
     <?php
         } else {
             echo "<h1>Acesso não autorizado</h1>";
