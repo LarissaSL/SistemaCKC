@@ -8,7 +8,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 150vh;
+    height: 80em;
     background-image: url(/sistemackc/views/Img/ImgTelas/cadastroKartodromo.png);
     background-repeat: no-repeat;
     background-size: cover; 
@@ -19,7 +19,7 @@
 }
 
 .background-imageAtualizar {
-    height: 180vh;
+    height: 94em;
 }
 
 .container-feedback {
@@ -177,7 +177,11 @@
     }
 
     .background-imageAtualizar{
-        height: 170vh;
+        height: 92em;
+    }
+
+    .background-image{
+        height: 80em;
     }
 
 }
@@ -188,18 +192,16 @@
     }
 
     .background-imageAtualizar{
-        height: 170vh;
+        height: 90em;
     }
 }
 
 @media (min-width: 768px) {
     .background-image{
-        height: 150vh;
+        height: 79em;
     }
 
-    .background-imageAtualizar{
-        height: 170vh;
-    }
+    
 }
 
 @media (min-width: 1024px) {
@@ -220,17 +222,17 @@
     }
 
     .background-imageAtualizar{
-        height: 140vh;
+        height: 70em;
     }
 
     .background-image{
-        height: 120vh;
+        height: 62em;
     }
 }
 
 @media (min-width: 1440px) {
     .background-imageAtualizar{
-        height: 140vh;
+        height: 70em;
     }
 }
 

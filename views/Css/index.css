@@ -1,6 +1,6 @@
 .containerPrincipal {
     margin-top: 5rem;
-    height: 90vh;
+    height: 50em;
 }
 
 .containerConteudo {
@@ -90,7 +90,7 @@
 
 .containerSecundario {
     background-color: #e0e0e0;
-    height: 260vh;
+    height: 140em;
     color: var(--background-principal);
 }
 
@@ -118,7 +118,7 @@
 .ph-map-pin,
 .ph-flag-checkered,
 .ph-panorama {
-    font-size: 6vh;
+    font-size: 40px;
 }
 
 .funcionalidade {
@@ -195,7 +195,7 @@
     }
 
     .containerSecundario {
-        height: 250vh;
+        height: 135em;
     }
     
     .containerFuncionalidades {
@@ -232,8 +232,16 @@
         font-size: 3rem;
     }
 
+    .containerPrincipal {
+        height: 45em;
+    }
+
     .containerSecundario {
-        height: 255vh;
+        height: 130em;
+    }
+
+    .containerTextos {
+        margin-top: 5rem;
     }
     
     .containerFuncionalidades {
@@ -297,7 +305,7 @@
     }
     
     .containerSecundario {
-        height: 115vh;
+        height: 65em;
     }
     
     .containerTextos {
@@ -317,7 +325,7 @@
     .ph-map-pin,
     .ph-flag-checkered,
     .ph-panorama {
-        font-size: 8vh;
+        font-size: 60px;
     }
     
     .funcionalidade {
@@ -351,7 +359,7 @@
     }
 
     .containerSecundario {
-        height: 105vh;
+        height: 60em;
     }
 
     .containerFuncionalidades {
