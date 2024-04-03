@@ -82,25 +82,26 @@
                 <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
             <?php endif ?>
             <!-- formulario -->
-            <form action="login" method="post">
-                <!--caixa de Email -->
-                <div class="emails">
-                    <label class="email" for="email">E-mail:</label>
-                    <input type="text" name="email" value="<?php echo isset($email) ? $email : '' ?>">
-                </div>
-
-                <!--caixa de Senha -->
-                <div class="passwords">
-                    <label class="password" for="senha">Senha:</label>
-                    <input type="password" name="senha">
-
-                    <a href="#">Esqueci minha senha</a>
-                </div>
-
-                <button class="bt-go-in">Entrar</button>
-            </form>
-
-            <a href="./cadastro" class="bt-cadastre">Cadastrar</a>
+            <section class="formulario">
+                <form action="login" method="post">
+                    <!--caixa de Email -->
+                    <div class="emails">
+                        <label class="email" for="email">E-mail:</label>
+                        <input type="text" name="email" value="<?php echo isset($email) ? $email : '' ?>">
+                    </div> 
+                    <!--caixa de Senha -->
+                    <div class="passwords">
+                        <label class="password" for="senha">Senha:</label>
+                        <input type="password" name="senha">
+                        <!-- link de esqueci minha senha-->
+                        <a href="#">Esqueci minha senha</a>
+                    </div>
+                    <!-- botão de entrar -->
+                    <button class="bt-go-in">Entrar</button>
+                </form>
+                <!-- botão de cadastrar -->
+                <a href="./cadastro" class="bt-cadastre">Cadastrar</a>
+            </section>
         </section>
     </main>
     <footer>
