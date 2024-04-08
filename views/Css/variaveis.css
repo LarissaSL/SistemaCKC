@@ -106,6 +106,7 @@ button, .bt-cadastre {
     display: flex; /*elemento fica um do lado do outro*/
     justify-content: space-between; /*dá um espaço entre os elementos*/
     align-items: center;/*alinhar os elementos horizontalmente ao centro*/
+    z-index: 9;
 }
 
 .nav-list {
@@ -125,14 +126,12 @@ button, .bt-cadastre {
 }
 
 /* dropdown corrida */
-
 ul.dropdown-menu {
     display: none;
     position: absolute;
     background-color: var(--background-navbar);
     margin-block: 1rem;
     width: 12.9rem;
-    display: none;
     flex-direction: column;
     align-items: center;
     font-size: 3.5rem;
@@ -157,7 +156,7 @@ ul.dropdown-menu {
     border-radius: 0;
     font-size: 3rem;
     cursor: pointer;
-    z-index: 1;
+    z-index: 10;
 }
 
 footer {
@@ -171,12 +170,14 @@ footer {
 
 /* menu responsivo */
 @media(max-width: 700px) {
-    
+    i.ph.ph-caret-left {
+        display: none;
+    }
+
     .hamburger {
         display: block;
     }
-    
-    
+        
     /* TAG UL DA NAV */
     .nav-list { 
         position: fixed;
@@ -193,7 +194,8 @@ footer {
         justify-content: center;
         align-items: center;
         gap: 1rem;
-        pointer-events: none;
+        overflow-y: auto;
+        z-index: 9;
     }
    
     
@@ -256,28 +258,36 @@ footer {
     
     .nav.active .hamburger::after{
         transform: rotate(-136deg);/*rotacionar o traço em 136 graus*/
-        top: -7px;
-        
+        top: -7px;  
     }
 
     ul.dropdown-menu {
-        /* display: none; */
-        position: absolute;
+        width: 15.9rem;
+        position: static;
+        margin-inline: 1rem;
+        border-radius: 14px;
+        background: none;
     }
     .drop-down{
         display: flex;
+        align-items: center;
         flex-direction: column;
         justify-content: space-between;
-        align-items: center;
+        cursor: pointer;
     }
     
     .dropdown-menu a{
         display: flex;
-        justify-content: space-around;
+        height: 4rem;
         align-items: center;
-        height: 9.3rem;
+        justify-content: space-around;
+    }
+
+    .drop-down.active .dropdown-toggle {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center
     }
     
-
-
 }

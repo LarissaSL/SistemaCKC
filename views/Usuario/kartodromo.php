@@ -41,9 +41,6 @@
                         <ul class="dropdown-menu">
                             <li><a href="#">Etapas</a></li>
                             <li><a href="#">Classificação</a></li>
-                            <li><a href="#">Galeria</a></li>
-                            <li><a href="#">Inscrição</a></li>
-                            <li><a href="#">Regulamento</a></li>
                             <li><a href="/sistemackc/kartodromo">Kartódromos</a></li>
                         </ul>
                     </li>
