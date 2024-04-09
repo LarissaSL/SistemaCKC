@@ -84,7 +84,7 @@
                 if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
                     echo "<a href='/sistemackc/admtm85/usuario'><i class='ph ph-caret-left'></i>Voltar</a>";
                 } else {
-                    echo "<a href='/sistemackc/'><i class='ph ph-caret-left'></i>Voltar</a>";
+                    echo "<a href='/sistemackc/'><i class='ph ph-caret-left'></i></a>";
                 }
                 ?>
             </div>

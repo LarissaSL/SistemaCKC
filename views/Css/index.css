@@ -117,9 +117,10 @@
 
 .ph-map-pin,
 .ph-flag-checkered,
-.ph-panorama {
+.ph-broadcast {
     font-size: 40px;
 }
+
 
 .funcionalidade {
     width: 260px;
@@ -324,7 +325,7 @@
     
     .ph-map-pin,
     .ph-flag-checkered,
-    .ph-panorama {
+    .ph-broadcast {
         font-size: 60px;
     }
     

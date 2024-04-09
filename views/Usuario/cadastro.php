@@ -77,7 +77,7 @@
 
     <main>
         <div id="bt-voltar">
-            <a href="/sistemackc/"><i class="ph ph-caret-left"></i>Voltar</a>
+            <a href="/sistemackc/"><i class="ph ph-caret-left"></i></a>
         </div>
         <section class="container">
             <div class="titulo">

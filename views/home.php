@@ -79,7 +79,7 @@
             <div class="containerConteudo">
                 <div class="conteudo">
                     <h1 class="titulo">Bem-vindo ao CKC</h1>
-                    <h2 class="subtitulo">o Campeonato de Kart da Capital!</h2>
+                    <h2 class="subtitulo">o melhor Campeonato de Kart de São-Paulo!</h2>
                     <p class="textoChamada">
                         Se você é daqueles que sonham com <strong>curvas perfeitas em alta velocidade e sentem a emoção pulsar a cada acelerada</strong>, você está no lugar certo! Seja você um piloto experiente ou um novato ansioso para arrancar, temos uma corrida para todos os gostos.
                     </p>
@@ -112,7 +112,7 @@
             <div class="containerTextos">
                 <h2 class="subtitulo">Queremos que você conheça todas as emoções que o CKC tem a oferecer!</h2>
                 <p class="textoChamada">
-                    Aqui, você não apenas participa das corridas, mas também <strong>mergulha em uma experiência única de kartismo</strong>. Vamos dar uma olhada em nossas incríveis funcionalidades:
+                    Aqui, você não apenas participa das corridas, mas também <strong>acelera em uma experiência única de kartismo</strong>. Vamos dar uma olhada em nossas incríveis funcionalidades:
                 </p>
             </div>
             <div class="containerFuncionalidades">
@@ -124,7 +124,7 @@
 
                     <div class="chamadaFuncionalidade">
                         <p class="texto">
-                            Para os experientes, temos o prestigiado <strong>Campeonato de Kart da Capital</strong>, onde os pilotos mais habilidosos competem pela glória nas pistas mais desafiadoras.
+                            Para os experientes, temos o prestigiado <strong>Campeonato de Kart CKC</strong>, onde os pilotos mais habilidosos competem pela glória nas pistas mais desafiadoras.
                         </p>
                         <p class="texto">
                             E para os iniciantes, apresentamos o <strong> DDL (Desafio dos Loucos)</strong>, uma oportunidade perfeita para começar sua jornada no mundo das corridas e sentir a emoção de acelerar pela primeira vez!
@@ -142,7 +142,7 @@
                     </div>
                     <div class="chamadaFuncionalidade">
                         <p class="texto">
-                            Nossos kartódromos não são apenas locais de competição, mas também <strong>espaços de treinamento e diversão.</strong> Disponíveis para treinos regulares, você pode aprimorar suas habilidades e preparar-se para os desafios das corridas.
+                            Os kartódromos não são apenas locais de competição, mas também <strong>espaços de treinamento e diversão.</strong> Disponíveis para treinos regulares, você pode aprimorar suas habilidades e preparar-se para os desafios das corridas.
                         </p>
                         <p class="texto">
                             <strong>E lembre-se, é nos kartódromos que a magia das corridas acontece!</strong>
@@ -155,15 +155,15 @@
 
                 <div class="funcionalidade">
                     <div class="textoDestaque">
-                        <i class="ph ph-panorama"></i>
-                        <h3 class="tituloFuncionalidade">Galeria de Fotos Eletrizante</h3>
+                        <i class="ph ph-broadcast"></i>
+                        <h3 class="tituloFuncionalidade">Transmissões</h3>
                     </div>
                     <div class="chamadaFuncionalidade">
                         <p class="texto">
-                            Reviva os momentos mais emocionantes do CKC através de <strong>nossa galeria de fotos.</strong>
+                            Reviva os momentos mais emocionantes do CKC através das <strong>transmissões.</strong>
                         </p>
                         <p class="texto">
-                            Capturamos cada curva, ultrapassagem e vitória para que você possa sentir a adrenalina como se estivesse lá. Além disso, não perca nossa <strong>transmissão ao vivo das corridas,</strong> trazendo toda a ação direto para a tela do seu dispositivo!
+                            Capturamos cada curva, ultrapassagem e vitória para que você possa sentir a adrenalina como se estivesse lá. Não perca a <strong>transmissão ao vivo das corridas,</strong> trazendo toda a ação direto para a tela do seu dispositivo!
                         </p>
                     </div>
                     <div class="botao">

@@ -66,7 +66,7 @@
     <main>
         <!-- botão de voltar -->
         <div id="bt-go-back">
-            <a href="/sistemackc/"><i class="ph ph-caret-left"></i>Voltar</a> <!--tag 'a' com o icone de seta '<' -->
+            <a href="/sistemackc/"><i class="ph ph-caret-left"></i></a> <!--tag 'a' com o icone de seta '<' -->
         </div>
         <section class="container">
             <!-- titulo e imagem principal -->

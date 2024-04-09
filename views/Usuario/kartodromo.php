@@ -79,7 +79,7 @@
     <main>
         <!-- botão de voltar -->
         <div id="bt-go-back">
-            <a href="/sistemackc/"><i class="ph ph-caret-left"></i>Voltar</a> <!--tag 'a' com o icone de seta '<' -->
+            <a href="/sistemackc/"><i class="ph ph-caret-left"></i></a> <!--tag 'a' com o icone de seta '<' -->
         </div>
         <h1 class="titulo">Kartódromos</h1>
         <section class="container">
@@ -110,7 +110,6 @@
                     echo "</div>";
                     echo "<div class='botoes'>";
                     echo "<a class='bt-siteKartodromo' href='{$kartodromo['Site']}' target='_blank'>Visitar site</a>";
-                    echo "<a href='#' class='bt-comoChegar'>Como chegar</a>";
                     echo "</div>";
                     echo "</div>";
                     echo "</article>";

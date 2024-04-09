@@ -98,9 +98,9 @@
             <div id="bt-go-back">
                 <?php
                 if ($tipoUsuario == 'Administrador') {
-                    echo "<a href='/sistemackc/admtm85/usuario/{$usuario['Id']}'><i class='ph ph-caret-left'></i>Voltar</a>";
+                    echo "<a href='/sistemackc/admtm85/usuario/{$usuario['Id']}'><i class='ph ph-caret-left'></i></a>";
                 } else {
-                    echo "<a href='/sistemackc/usuario/{$usuario['Id']}'><i class='ph ph-caret-left'></i>Voltar</a>";
+                    echo "<a href='/sistemackc/usuario/{$usuario['Id']}'><i class='ph ph-caret-left'></i></a>";
                 }
                 ?>
             </div>
