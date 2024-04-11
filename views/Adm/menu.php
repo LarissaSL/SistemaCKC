@@ -37,6 +37,7 @@
                 <button class="hamburger"></button>
                 <ul class="nav-list">
                     <li><a href="/sistemackc/admtm85/usuario">Usuarios</a></li>
+                    <li><a href="/sistemackc/admtm85/campeonato">Campeonatos</a></li>
                     <li><a href="#">Corridas</a></li>
                     <li><a href="/sistemackc/admtm85/kartodromo">Kartodromos</a></li>
                     <li><a href="#">Resultados</a></li>

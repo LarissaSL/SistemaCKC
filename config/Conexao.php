@@ -16,6 +16,7 @@ class Conexao
         $this->conectarBancoDeDados();
         $this->criarTabelaUsuario();
         $this->criarTabelaKartodromo();
+        $this->criarTabelaCampeonato();
     }
 
     function conectarBancoDeDados()
@@ -68,6 +69,21 @@ class Conexao
             $this->conexao->exec($query);
         } catch (PDOException $erro) {
             echo "Erro ao criar tabela dos Kartodromos: " . $erro->getMessage();
+        }
+    }
+
+    function criarTabelaCampeonato()
+    {
+        try {
+            $query = "CREATE TABLE IF NOT EXISTS campeonato (
+                Id INT AUTO_INCREMENT PRIMARY KEY,
+                Nome VARCHAR(50) UNIQUE,
+                Data_inicio DATE,
+                Data_termino DATE
+            )";
+            $this->conexao->exec($query);
+        } catch (PDOException $erro) {
+            echo "Erro ao criar tabela dos Campeonatos: " . $erro->getMessage();
         }
     }
     

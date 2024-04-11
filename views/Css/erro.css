@@ -34,9 +34,17 @@
     border-radius: 14px;
     border-color: var(--color-button);
     width: 280px;
+    overflow-x: auto;
+    white-space: nowrap;
     margin: 2rem 0;
     padding: 1.3rem;
     background: var(--background-campos);
     outline: none;
     box-sizing: border-box;
+}
+
+@media (min-width: 425px) {
+    .rotaDestaque {
+        width: auto;
+    }
 }
