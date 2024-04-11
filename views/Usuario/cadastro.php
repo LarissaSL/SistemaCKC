@@ -76,6 +76,7 @@
     </header>
 
     <main>
+        <div class="background-image"></div>
         <div id="bt-voltar">
             <a href="/sistemackc/"><i class="ph ph-caret-left"></i></a>
         </div>

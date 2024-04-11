@@ -1,5 +1,4 @@
 
-
 /* bt de voltar */
 div#bt-go-back {
     display: flex;
@@ -23,11 +22,11 @@ i.ph.ph-caret-left {
 body{
  
   padding: 25px;
-  background-color: #1E1A18;
   font-size: 20px;
   color: white;
   
 }
+
 .title {
 	color: #ffffff;
 	text-align: center;

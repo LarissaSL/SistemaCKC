@@ -79,6 +79,7 @@
             </nav>
         </header>
         <main class="container-conteudo">
+            <div class="background-imagePerfilUser"></div>
             <div id="bt-go-back">
                 <?php
                 if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {

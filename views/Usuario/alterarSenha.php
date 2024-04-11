@@ -95,6 +95,7 @@
     if ((isset($_SESSION['email']) && $_SESSION['email'] == $usuario['Email']) || $tipoUsuario == 'Administrador') {
     ?>
         <main class="container-conteudo">
+            <div class="background-image"></div>
             <div id="bt-go-back">
                 <?php
                 if ($tipoUsuario == 'Administrador') {
