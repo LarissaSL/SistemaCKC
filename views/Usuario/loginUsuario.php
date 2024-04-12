@@ -30,7 +30,7 @@
 
             <button class="hamburger"></button>
             <ul class="nav-list">
-                <li><a href="#">História</a></li>
+                <li><a href="/sistemackc/historia">História</a></li>
 
                 <li class="drop-down">
                     <a href="#" class="dropdown-toggle">Corridas<i class="ph ph-caret-down"></i></a>

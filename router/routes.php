@@ -2,8 +2,9 @@
 
 $routes = [
     // Toda Rota nova vai entrando aqui (pasta#Controller#função)
-    '/' => 'usuario#IndexUsuarioController#index',
+    '/' => 'usuario#SiteUsuarioController#index',
     '/logout' => 'usuario#UsuarioController#logout',
+    '/historia' => 'usuario#SiteUsuarioController#historia',
 
     //Rotas Usuario
     '/usuario/{id}' => 'usuario#UsuarioController#mostrarPerfil',

@@ -36,7 +36,7 @@
                 <ul class="nav-list">
                     <?php
                     if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Comum' || !isset($_SESSION['tipo'])) {
-                        echo "<li><a href='#'>História</a></li>";
+                        echo "<li><a href='/sistemackc/historia'>História</a></li>";
                     ?>
                         <li class="drop-down">
                             <a href="#" class="dropdown-toggle">Corridas<i class="ph ph-caret-down"></i></a>
