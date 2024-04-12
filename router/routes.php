@@ -29,4 +29,10 @@ $routes = [
     '/admtm85/kartodromo/cadastrar' => 'adm#KartodromoController#cadastrar',
     '/admtm85/kartodromo/atualizar/{id}' => 'adm#KartodromoController#atualizar',
     '/admtm85/kartodromo/excluir/{id}' => 'adm#KartodromoController#excluir',
+
+    // Rotas do Campeonato
+    '/admtm85/campeonato' => 'adm#CampeonatoController#mostrarCampeonatos',
+    '/admtm85/campeonato/cadastrar' => 'adm#CampeonatoController#cadastrar',
+    '/admtm85/campeonato/atualizar/{id}' => 'adm#CampeonatoController#atualizar',
+    '/admtm85/campeonato/excluir/{id}' => 'adm#CampeonatoController#excluir',
 ];

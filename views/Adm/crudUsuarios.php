@@ -48,7 +48,7 @@
     </header>
     <!-- Inicio do Conteúdo para o ADM -->
     <h1>CRUD dos Usuarios</h1>
-    <a class='btn btn-primary' href='./usuario/cadastrar'>Cadastrar novo usuário</a>
+    <a class='btn btn-primary' href='/sistemackc/admtm85/usuario/cadastrar'>Cadastrar novo usuário</a>
 
     <form method="get">
         <div class="row my-4">

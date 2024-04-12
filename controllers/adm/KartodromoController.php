@@ -31,7 +31,7 @@ class KartodromoController extends RenderView
         $feedback = '';
         $classe = '';
 
-        // Verifica se tem uma requisição GET na pagina
+        // Ver se tem requisicao GET, por conta do Filtro
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $busca = isset($_GET['busca']) ? $_GET['busca'] : '';
 
