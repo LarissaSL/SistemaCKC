@@ -85,9 +85,17 @@
                 <h1>Cadastro</h1>
             </div>
 
-            <?php if (isset($feedback)) : ?>
-                <p class="<?php echo $status ?>"><?php echo $feedback; ?></p>
-            <?php endif; ?>
+            <?php
+                if (isset($feedback) && $feedback != '') {
+                    echo "<div class='container-feedback'>";
+                    if($classe == 'erro'){
+                        echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
+                    } else {
+                        echo "<span class='$classe'><i class='ph ph-check-square'></i><strong>$feedback</strong></span>";
+                    }
+                    echo "</div>";
+                }
+            ?>
 
 
             <?php if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
@@ -108,54 +116,54 @@
 
             <div class="dataNascimento">
                 <label class="dataNascimento" for="dataNascimento">Data de Nascimento:</label>
-                <input type="date" name="dataNascimento" required>
+                <input type="date" name="dataNascimento" value="<?php echo isset($dados) ? $dados[2] : ''; ?>" required>
             </div>
 
             <div class="genero">
                 <label class="escolha" for="genero">Gênero:</label>
-                <input type="radio" value="Masculino" name="genero" <?php echo isset($dados) && $dados[8] == 'Masculino' ? 'checked' : ''; ?>>
+                <input type="radio" value="Masculino" name="genero" <?php echo isset($dados) && $dados[9] == 'Masculino' ? 'checked' : ''; ?>>
                 <label class="homem" for="homem">Masculino</label>
 
-                <input type="radio" value="Feminino" name="genero" <?php echo isset($dados) && $dados[8] == 'Feminino' ? 'checked' : ''; ?>>
+                <input type="radio" value="Feminino" name="genero" <?php echo isset($dados) && $dados[9] == 'Feminino' ? 'checked' : ''; ?>>
                 <label class="mulher" for="mulher">Feminino</label>
 
-                <input type="radio" value="Outro" name="genero" <?php echo isset($dados) && $dados[8] == 'Outro' ? 'checked' : ''; ?>>
+                <input type="radio" value="Outro" name="genero" <?php echo isset($dados) && $dados[9] == 'Outro' ? 'checked' : ''; ?>>
                 <label class="outro" for="outro">Outro</label>
             </div>
 
             <div class="cpf">
                 <label class="cpf" for="cpf">CPF:</label>
-                <input type="text" name="cpf" value="<?php echo isset($dados) ? $dados[2] : ''; ?>" required>
+                <input type="text" name="cpf" value="<?php echo isset($dados) ? $dados[3] : ''; ?>" required>
             </div>
 
             <div class="telefone">
                 <label class="telefone" for="telefone">Celular:</label>
-                <input type="text" name="telefone" value="<?php echo isset($dados) ? $dados[9] : ''; ?>" required>
+                <input type="text" name="telefone" value="<?php echo isset($dados) ? $dados[10] : ''; ?>" required>
             </div>
 
             <div class="peso">
                 <label class="peso" for="peso">Peso:</label>
-                <input type="number" name="peso" value="<?php echo isset($dados) ? $dados[7] : ''; ?>" required>
+                <input type="number" name="peso" value="<?php echo isset($dados) ? $dados[8] : ''; ?>" required>
             </div>
 
             <div class="email">
                 <label class="email" for="email">E-mail:</label>
-                <input type="text" name="email" value="<?php echo isset($dados) ? $dados[3] : ''; ?>" required>
+                <input type="text" name="email" value="<?php echo isset($dados) ? $dados[4] : ''; ?>" required>
             </div>
 
             <div class="confirmaEmail">
                 <label class="email" for="email">Confirmação de E-mail:</label>
-                <input type="text" name="confirmarEmail" value="<?php echo isset($dados) ? $dados[4] : ''; ?>" required>
+                <input type="text" name="confirmarEmail" value="<?php echo isset($dados) ? $dados[5] : ''; ?>" required>
             </div>
 
             <div class="senha">
                 <label class="senha" for="senha">Senha:</label>
-                <input type="password" name="senha" value="<?php echo isset($dados) ? $dados[5] : ''; ?>" required>
+                <input type="password" name="senha" value="<?php echo isset($dados) ? $dados[6] : ''; ?>" required>
             </div>
 
             <div class="confirmaSenha">
                 <label class="senha" for="senha">Confirmação de Senha:</label>
-                <input type="password" name="confirmarSenha" value="<?php echo isset($dados) ? $dados[6] : ''; ?>" required>
+                <input type="password" name="confirmarSenha" value="<?php echo isset($dados) ? $dados[7] : ''; ?>" required>
             </div>
 
             <button type="submit" class="bt-cadastrar">Cadastrar</button>

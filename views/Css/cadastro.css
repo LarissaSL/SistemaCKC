@@ -40,6 +40,24 @@
     margin: 0 2rem;
 }
 
+.container-feedback {
+    text-align: center;
+    font-size: 2rem;
+}
+
+.ph-warning-circle,
+.ph-check-square {
+    margin: 0 .5rem;
+}
+
+.sucesso {
+    color: #00ff22b9;
+}
+
+.erro {
+    color: #ff0000b9;
+}
+
 .nome,
 .sobrenome,
 .dataNascimento,

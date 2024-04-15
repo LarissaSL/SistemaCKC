@@ -83,7 +83,7 @@ class UsuarioController extends RenderView
             $tipo = 'Comum';
 
             $feedback = "";
-            $nomeDaClasseParaErro = "error";
+            $nomeDaClasseParaErro = "erro";
             $dataFormatada = date('Y-m-d', strtotime($dataNascimento));
 
             $novoUsuario = new Usuario();
@@ -127,7 +127,7 @@ class UsuarioController extends RenderView
                 }
                 // Erros e seus feedbacks
             } else {
-                $dadosPreenchidos = [$nome, $sobrenome, $cpf, $email, $confirmarEmail, $senha, $confirmarSenha, $peso, $genero, $telefone, $dataNascimento];
+                $dadosPreenchidos = [$nome, $sobrenome, $dataNascimento, $cpf, $email, $confirmarEmail, $senha, $confirmarSenha, $peso, $genero, $telefone, $dataNascimento];
                 if ($statusDaValidacaoCpf !== "aceito") {
                     $feedback = $statusDaValidacaoCpf;
                 } elseif ($statusDaValidacaoEmail !== "aceito") {
@@ -138,7 +138,7 @@ class UsuarioController extends RenderView
                 // Devolve a view com o Erro
                 $this->carregarViewComArgumentos('usuario/cadastro', [
                     'feedback' => $feedback,
-                    'status' => $nomeDaClasseParaErro,
+                    'classe' => $nomeDaClasseParaErro,
                     'dados' => $dadosPreenchidos
                 ]);
             }

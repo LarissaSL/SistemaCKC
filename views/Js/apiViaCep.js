@@ -4,8 +4,12 @@ document.getElementById('cep').addEventListener('blur', function () {
         fetch(`https://viacep.com.br/ws/${cep}/json/`)
             .then(response => response.json())
             .then(data => {
-                document.getElementById('bairro').value = data.bairro;
-                document.getElementById('rua').value = data.logradouro;
+                if(data.bairro) {
+                    document.getElementById('bairro').value = data.bairro;
+                }
+                if(data.logradouro) {
+                    document.getElementById('rua').value = data.logradouro;
+                }
             })
             .catch(error => {
                 console.error(error);
