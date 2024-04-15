@@ -38,7 +38,7 @@ class Campeonato
         }
     }
 
-    function alterarCampeonato($id, $nome, $dataInicio, $dataTermino)
+    public function alterarCampeonato($id, $nome, $dataInicio, $dataTermino)
     {
         try {
             $query = "UPDATE campeonato SET Nome = :nome, Data_inicio = :dataInicio, Data_termino = :dataTermino  WHERE Id = :id";
@@ -66,7 +66,7 @@ class Campeonato
         }
     }
 
-    function excluirCampeonato($id)
+    public function excluirCampeonato($id)
     {
         try {
             $query = "DELETE FROM campeonato WHERE Id = :id";
@@ -93,7 +93,7 @@ class Campeonato
         }
     }
 
-    function selecionarCampeonatoPorId($id)
+    public function selecionarCampeonatoPorId($id)
     {
         try {
             $query = "SELECT * FROM campeonato WHERE Id = :id";

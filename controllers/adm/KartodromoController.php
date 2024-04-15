@@ -118,7 +118,7 @@ class KartodromoController extends RenderView
                         $resultado = $kartodromoModel->inserirKartodromo($nome, $cepFormatado, $rua, $bairro, $numero, $tratarURL, $nomeFoto);
 
                         // Verificar se o cadastro foi realizado com sucesso
-                        if ($resultado === true) {
+                        if ($resultado == "Sucesso") {
                             $feedback = 'Kartódromo cadastrado com sucesso!';
                             $classe = "sucesso";
                         } else {
@@ -245,7 +245,7 @@ class KartodromoController extends RenderView
                     $resultado = $kartodromoModel->alterarKartodromo($id, $nome, $cepFormatado, $rua, $bairro, $numero, $tratarURL, $nomeFoto);
 
                     // Verificar se a alteração foi realizada com sucesso
-                    if ($resultado === true) {
+                    if ($resultado == "Sucesso") {
                         $feedback = 'Kartódromo alterado com sucesso!';
                         $classe = "sucesso";
                         $kartodromoResultado = $kartodromoModel->selecionarKartodromoPorId($id);

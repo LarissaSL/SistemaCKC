@@ -26,7 +26,7 @@ class Kartodromo
             $inserir->bindParam(':foto', $foto);
             $inserir->execute();
 
-            return true;
+            return "Sucesso";
         } catch (PDOException $erro) {
             return "Erro ao inserir kartódromo: " . $erro->getMessage();
         }
@@ -56,7 +56,7 @@ class Kartodromo
         return $cepFormatado; 
     }
 
-    function adicionarPrefixoHttp($url)
+    public function adicionarPrefixoHttp($url)
     {
         // Verificar se o URL nao começa com http:// ou https://
         if (!preg_match("~^(?:f|ht)tps?://~i", $url)) {
@@ -65,7 +65,7 @@ class Kartodromo
         return $url;
     }
 
-    function alterarKartodromo($id, $nome, $cep, $rua, $bairro, $numero, $site, $foto)
+    public function alterarKartodromo($id, $nome, $cep, $rua, $bairro, $numero, $site, $foto)
     {
         try {
             $query = "UPDATE kartodromo SET Nome = :nome, CEP = :cep, Rua = :rua, Bairro = :bairro, Numero = :numero, Site = :site, Foto = :foto WHERE Id = :id";
@@ -81,7 +81,7 @@ class Kartodromo
 
             $alterar->execute();
 
-            return true;
+            return "Sucesso";
         } catch (PDOException $erro) {
             $codigoDoErro = $erro->getCode();
 
@@ -97,7 +97,7 @@ class Kartodromo
         }
     }
 
-    function excluirKartodromo($id)
+    public function excluirKartodromo($id)
     {
         try {
             $query = "DELETE FROM kartodromo WHERE Id = :id";
@@ -105,14 +105,13 @@ class Kartodromo
             $excluir->bindParam(':id', $id);
             $excluir->execute();
 
-            return 'true';
+            return "Sucesso";
         } catch (PDOException $erro) {
-            echo "Erro ao excluir kartódromo: " . $erro->getMessage();
-            return false;
+            return "Erro ao excluir kartódromo: " . $erro->getMessage();
         }
     }
 
-    function selecionarKartodromoPorId($id)
+    public function selecionarKartodromoPorId($id)
     {
         try {
             $query = "SELECT * FROM kartodromo WHERE Id = :id";

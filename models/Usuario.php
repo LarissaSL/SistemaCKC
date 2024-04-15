@@ -214,7 +214,7 @@ class Usuario
         return $senhaCriptografada = password_hash($senha, PASSWORD_DEFAULT);
     }
 
-    function formatarTelefone($telefone) 
+    public function formatarTelefone($telefone) 
     {
         // Deixando apenas os números
         $telefone = preg_replace('/\D/', '', $telefone);
