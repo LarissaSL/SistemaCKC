@@ -17,6 +17,8 @@ class Conexao
         $this->criarTabelaUsuario();
         $this->criarTabelaKartodromo();
         $this->criarTabelaCampeonato();
+        $this->criarTabelaCorrida();
+        $this->criarTabelaResultado();
     }
 
     function conectarBancoDeDados()
@@ -84,6 +86,47 @@ class Conexao
             $this->conexao->exec($query);
         } catch (PDOException $erro) {
             echo "Erro ao criar tabela dos Campeonatos: " . $erro->getMessage();
+        }
+    }
+
+    public function criarTabelaCorrida() {
+        try {
+            $query = "CREATE TABLE IF NOT EXISTS corrida (
+                Id INT AUTO_INCREMENT,
+                Campeonato_id INT,
+                Kartodromo_id INT,
+                Nome VARCHAR(20),
+                Categoria VARCHAR(20),
+                Data_corrida DATE,
+                Horario TIME,
+                Tempo_corrida TIME,
+                PRIMARY KEY(Id),
+                FOREIGN KEY(Kartodromo_id) REFERENCES Kartodromo(id),
+                FOREIGN KEY(Campeonato_id) REFERENCES Campeonato(id)
+            )";
+            $this->conexao->exec($query);
+        } catch (PDOException $erro) {
+            echo "Erro ao criar tabela das Corridas: " . $erro->getMessage();
+        }
+    }
+
+    public function criarTabelaResultado() {
+        try {
+            $query = "CREATE TABLE IF NOT EXISTS resultado (
+                Usuario_id INTEGER NOT NULL,
+                Corrida_id INTEGER NOT NULL,
+                Quantidade_volta INTEGER,
+                Tempo_volta TIME,
+                Advertencia INTEGER,
+                Pontuacao INTEGER,
+                Pontuacao_total INTEGER,
+                PRIMARY KEY(usuario_id, Corrida_id),
+                FOREIGN KEY(usuario_id) REFERENCES usuario(id),
+                FOREIGN KEY(Corrida_id) REFERENCES Corrida(id)
+            )";
+            $this->conexao->exec($query);
+        } catch (PDOException $erro) {
+            echo "Erro ao criar tabela dos Resultados: " . $erro->getMessage();
         }
     }
     
