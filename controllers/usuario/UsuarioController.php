@@ -80,7 +80,7 @@ class UsuarioController extends RenderView
             $genero = $_POST['genero'];
             $telefone = $_POST['telefone'];
             $dataNascimento = $_POST['dataNascimento'];
-            $tipo = 'Comum';
+            $tipo = $_POST['tipo'];
 
             $feedback = "";
             $nomeDaClasseParaErro = "erro";
@@ -240,6 +240,7 @@ class UsuarioController extends RenderView
             $genero = $_POST['genero'];
             $telefone = $_POST['telefone'];
             $dataNascimento = $_POST['dataNascimento'];
+            $tipo = $_POST['tipo'];
             $nomeFoto = "";
 
             // Verificações sobre a IMG
@@ -281,7 +282,7 @@ class UsuarioController extends RenderView
 
                 if ($statusDaValidacaoCpf == "aceito" && $statusDaValidacaoEmail == "aceito") {
                     // Atualizando no BD
-                    $resultado = $usuarioModel->atualizarUsuario($id, $nome, $sobrenome, $cpf, $email, $peso, $dataFormatada, $genero, $telefoneFormatado, $nomeFoto);
+                    $resultado = $usuarioModel->atualizarUsuario($id, $tipo, $nome, $sobrenome, $cpf, $email, $peso, $dataFormatada, $genero, $telefoneFormatado, $nomeFoto);
 
                     if ($resultado == "atualizado") {
                         if(isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador')
@@ -309,14 +310,21 @@ class UsuarioController extends RenderView
                     }
                 }
             }
-            // Carregar a view com os dados do Usuário para e pós edição
-            $usuario = $usuarioModel->consultarUsuarioPorId($id);
-            $this->carregarViewComArgumentos('usuario/perfil', [
-                'feedback' => $feedback,
-                'classe' => $classe,
-                'dados' => $dados,
-                'usuario' => $usuario
-            ]);
+            if ($classe == 'erro') {
+                // Carregar a view com os dados do Usuário para e pós edição
+                $usuario = $usuarioModel->consultarUsuarioPorId($id);
+                $this->carregarViewComArgumentos('usuario/perfil', [
+                    'feedback' => $feedback,
+                    'classe' => $classe,
+                    'dados' => $dados,
+                    'usuario' => $usuario
+                ]);
+            } else {
+                $rotaParaRedirecionar = $_SESSION['tipo'] == 'Comum' ? "/sistemackc//" : "/sistemackc/admtm85/usuario";
+                header('Location:'.$rotaParaRedirecionar);
+                exit();
+            }
+            
         }   
     }
 
@@ -346,55 +354,50 @@ class UsuarioController extends RenderView
     // Funciona pro usuário comum e pro adm atualizar
     public function atualizarSenha($id)
     {
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+
         $usuario = new Usuario();
         $usuarioDados = $usuario->consultarUsuarioPorId($id); 
+        $feedback = "";
+        $classe = "";
+
+        // Ver se o Usuário existe
+        if (!$usuarioDados) {
+            $feedback = "Usuário com ID $id não encontrado";
+            $classe = 'erro';
+        }
+
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $senha = $_POST['senha'];
             $senhaConfirmacao = $_POST['confirmarSenha'];
-        
+
+            // Valida a senha
             $feedbackDeSenha = $usuario->validarSenha($senha, $senhaConfirmacao);
-            
+
+            // Se a senha for aceita, tenta atualizar
             if ($feedbackDeSenha == "aceito") {
                 $feedbackDeAtualizacao = $usuario->trocarSenha($id, $senha);
 
-                if($feedbackDeAtualizacao == "Senha atualizada com sucesso")
-                {
-                    $this->carregarViewComArgumentos('usuario/alterarSenha', [
-                        'feedback' => $feedbackDeAtualizacao,
-                        'classe' => 'sucesso',
-                        'usuario'=> $usuarioDados
-                    ]);
+                // Se a senha for atualizada com sucesso, redireciona
+                if ($feedbackDeAtualizacao == "Senha atualizada com sucesso") {
+                    $rotaParaRedirecionar = $_SESSION['tipo'] == 'Comum' ? "/sistemackc//" : "/sistemackc/admtm85/usuario";
+                    header('Location:'.$rotaParaRedirecionar);
+                    exit();
                 } 
-                else 
-                {
-                    $this->carregarViewComArgumentos('usuario/alterarSenha', [
-                        'feedback' => $feedbackDeAtualizacao,
-                        'classe' => 'erro',
-                        'usuario'=> $usuarioDados
-                    ]);  
-                } 
-                
             } else {
-                $this->carregarViewComArgumentos('usuario/alterarSenha', [
-                    'feedback' => $feedbackDeSenha,
-                    'classe' => 'erro',
-                    'usuario'=> $usuarioDados
-                ]); 
+                $feedback = $feedbackDeSenha;
+                $classe = 'erro';
             }
         } 
-        else
-        {
-            if($usuarioDados == false)
-            {
-                $this->carregarViewComArgumentos('usuario/alterarSenha', [
-                    'feedback' => "Usuário com ID $id não encontrado",
-                    'status' => 'erro',
-                ]);
-            }
-            $this->carregarViewComArgumentos('usuario/alterarSenha', [
-                'usuario'=> $usuarioDados
-            ]);
-        }
+
+        // Carrega a view com os argumentos preparados
+        $this->carregarViewComArgumentos('usuario/alterarSenha', [
+            'feedback' => $feedback,
+            'classe' => $classe,
+            'usuario' => $usuarioDados
+        ]);
     }
 
 }

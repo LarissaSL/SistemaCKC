@@ -36,10 +36,11 @@ class Usuario
         }
     }
 
-    public function atualizarUsuario($id, $nome, $sobrenome, $cpf, $email, $peso, $dataNascimento, $genero, $telefone, $foto)
+    public function atualizarUsuario($id, $tipo, $nome, $sobrenome, $cpf, $email, $peso, $dataNascimento, $genero, $telefone, $foto)
     {
         try {
-            $atualizar = $this->conexao->prepare("UPDATE usuario SET Nome = :nome, Sobrenome = :sobrenome, Cpf = :cpf, Email = :email, Peso = :peso, Data_nascimento = :data_nascimento, Genero = :genero, Telefone = :telefone, Foto = :foto  WHERE id = :id");
+            $atualizar = $this->conexao->prepare("UPDATE usuario SET Tipo = :tipo, Nome = :nome, Sobrenome = :sobrenome, Cpf = :cpf, Email = :email, Peso = :peso, Data_nascimento = :data_nascimento, Genero = :genero, Telefone = :telefone, Foto = :foto  WHERE id = :id");
+            $atualizar->bindValue(':tipo', $tipo);
             $atualizar->bindValue(':nome', $nome);
             $atualizar->bindValue(':sobrenome', $sobrenome);
             $atualizar->bindValue(':cpf', $cpf);

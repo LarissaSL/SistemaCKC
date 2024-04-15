@@ -119,6 +119,17 @@
                 <input type="date" name="dataNascimento" value="<?php echo isset($dados[2]) ? $dados[2] : ''; ?>" required>
             </div>
 
+
+            <!-- FALTA ESTILO NESSE AQUI, Parte que o ADM escolhe o tipo de Usuário  -->
+            <?php if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') : ?>
+            <div class="dataNascimento">
+                <select name="tipo" id="tipo">
+                    <option value="Comum" selected>Comum</option>
+                    <option value="Administrador">Administrador</option>
+                </select>
+            </div>
+            <?php endif ?>
+
             <div class="genero">
                 <label class="escolha" for="genero">Gênero:</label>
                 <input type="radio" value="Masculino" name="genero" <?php echo isset($dados[9]) && $dados[9] == 'Masculino' ? 'checked' : ''; ?>>

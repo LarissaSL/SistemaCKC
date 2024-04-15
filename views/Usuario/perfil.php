@@ -182,6 +182,16 @@
                                 <input type="text" value="<?php echo $usuario['Genero']; ?> " name="genero" <?php echo (isset($_SESSION['email']) && $_SESSION['email'] == $usuario['Email']) || (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') ? '' : 'readonly'; ?>>
                             <?php endif; ?>
                             </div>
+                            
+                            <!-- FALTA ESTILO NESSE AQUI, Parte que o ADM escolhe o tipo de Usuário  -->
+                            <?php if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') : ?>
+                                <div class="dataNascimento">
+                                    <select name="tipo" id="tipo">
+                                        <option value="Comum" <?php echo $usuario['Tipo'] == 'Comum' ? 'selected' : ''; ?>>Comum</option>
+                                        <option value="Administrador" <?php echo $usuario['Tipo'] == 'Administrador' ? 'selected' : ''; ?>>Administrador</option>
+                                    </select>
+                                </div>
+                            <?php endif ?>
                         </div>
 
                         <div class="divisao">
