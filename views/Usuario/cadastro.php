@@ -106,64 +106,64 @@
 
             <div class="nome">
                 <label class="nome" for="nome">Nome:</label>
-                <input type="text" name="nome" value="<?php echo isset($dados) ? $dados[0] : ''; ?>" required>
+                <input type="text" name="nome" value="<?php echo isset($dados[0]) ? $dados[0] : ''; ?>" required>
             </div>
 
             <div class="sobrenome">
                 <label class="sobrenome" for="sobrenome">Sobrenome:</label>
-                <input type="text" name="sobrenome" value="<?php echo isset($dados) ? $dados[1] : ''; ?>" required>
+                <input type="text" name="sobrenome" value="<?php echo isset($dados[1]) ? $dados[1] : ''; ?>" required>
             </div>
 
             <div class="dataNascimento">
                 <label class="dataNascimento" for="dataNascimento">Data de Nascimento:</label>
-                <input type="date" name="dataNascimento" value="<?php echo isset($dados) ? $dados[2] : ''; ?>" required>
+                <input type="date" name="dataNascimento" value="<?php echo isset($dados[2]) ? $dados[2] : ''; ?>" required>
             </div>
 
             <div class="genero">
                 <label class="escolha" for="genero">Gênero:</label>
-                <input type="radio" value="Masculino" name="genero" <?php echo isset($dados) && $dados[9] == 'Masculino' ? 'checked' : ''; ?>>
+                <input type="radio" value="Masculino" name="genero" <?php echo isset($dados[9]) && $dados[9] == 'Masculino' ? 'checked' : ''; ?>>
                 <label class="homem" for="homem">Masculino</label>
 
-                <input type="radio" value="Feminino" name="genero" <?php echo isset($dados) && $dados[9] == 'Feminino' ? 'checked' : ''; ?>>
+                <input type="radio" value="Feminino" name="genero" <?php echo isset($dados[9]) && $dados[9] == 'Feminino' ? 'checked' : ''; ?>>
                 <label class="mulher" for="mulher">Feminino</label>
 
-                <input type="radio" value="Outro" name="genero" <?php echo isset($dados) && $dados[9] == 'Outro' ? 'checked' : ''; ?>>
+                <input type="radio" value="Outro" name="genero" <?php echo isset($dados[9]) && $dados[9] == 'Outro' ? 'checked' : ''; ?>>
                 <label class="outro" for="outro">Outro</label>
             </div>
 
             <div class="cpf">
                 <label class="cpf" for="cpf">CPF:</label>
-                <input type="text" name="cpf" value="<?php echo isset($dados) ? $dados[3] : ''; ?>" required>
+                <input type="text" name="cpf" value="<?php echo isset($dados[3]) ? $dados[3] : ''; ?>" required>
             </div>
 
             <div class="telefone">
                 <label class="telefone" for="telefone">Celular:</label>
-                <input type="text" name="telefone" value="<?php echo isset($dados) ? $dados[10] : ''; ?>" required>
+                <input type="text" name="telefone" value="<?php echo isset($dados[10]) ? $dados[10] : ''; ?>" required>
             </div>
 
             <div class="peso">
                 <label class="peso" for="peso">Peso:</label>
-                <input type="number" name="peso" value="<?php echo isset($dados) ? $dados[8] : ''; ?>" required>
+                <input type="number" name="peso" value="<?php echo isset($dados[8]) ? $dados[8] : ''; ?>" required>
             </div>
 
             <div class="email">
                 <label class="email" for="email">E-mail:</label>
-                <input type="text" name="email" value="<?php echo isset($dados) ? $dados[4] : ''; ?>" required>
+                <input type="text" name="email" value="<?php echo isset($dados[4]) ? $dados[4] : ''; ?>" required>
             </div>
 
             <div class="confirmaEmail">
                 <label class="email" for="email">Confirmação de E-mail:</label>
-                <input type="text" name="confirmarEmail" value="<?php echo isset($dados) ? $dados[5] : ''; ?>" required>
+                <input type="text" name="confirmarEmail" value="<?php echo isset($dados[5]) ? $dados[5] : ''; ?>" required>
             </div>
 
             <div class="senha">
                 <label class="senha" for="senha">Senha:</label>
-                <input type="password" name="senha" value="<?php echo isset($dados) ? $dados[6] : ''; ?>" required>
+                <input type="password" name="senha" value="<?php echo isset($dados[6]) ? $dados[6] : ''; ?>" required>
             </div>
 
             <div class="confirmaSenha">
                 <label class="senha" for="senha">Confirmação de Senha:</label>
-                <input type="password" name="confirmarSenha" value="<?php echo isset($dados) ? $dados[7] : ''; ?>" required>
+                <input type="password" name="confirmarSenha" value="<?php echo isset($dados[7]) ? $dados[7] : ''; ?>" required>
             </div>
 
             <button type="submit" class="bt-cadastrar">Cadastrar</button>
