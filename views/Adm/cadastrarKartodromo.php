@@ -99,20 +99,22 @@
                         </div>
 
                         <div class="campo">
+                            <label for="cep">CEP:</label>
+                            <input type="text" id="cep" name="cep" value="<?php echo isset($dados[1]) ? $dados[1] : ''; ?>" required>
+                        </div>
+
+                        <div class="campo">
                             <label for="rua">Rua:</label>
                             <input type="text" id="rua" name="rua" value="<?php echo isset($dados[2]) ? $dados[2] : ''; ?>" required>
                         </div>
 
-                        <div class="campo">
-                            <label for="bairro">Bairro:</label>
-                            <input type="text" id="bairro" name="bairro" value="<?php echo isset($dados[3]) ? $dados[3] : ''; ?>" required>
-                        </div>
+                        
                     </div>
 
                     <div class="divisao">
-                        <div class="campo">
-                            <label for="cep">CEP:</label>
-                            <input type="text" id="cep" name="cep" value="<?php echo isset($dados[1]) ? $dados[1] : ''; ?>" required>
+                    <div class="campo">
+                            <label for="bairro">Bairro:</label>
+                            <input type="text" id="bairro" name="bairro" value="<?php echo isset($dados[3]) ? $dados[3] : ''; ?>" required>
                         </div>
 
                         <div class="campo">
@@ -141,6 +143,8 @@
             </div>
         </div>
     </footer>
+    <script src="/sistemackc/views/Js/apiViaCep.js"></script>
+    
     <?php
         } else {
             echo "<h1>Acesso não autorizado</h1>";
