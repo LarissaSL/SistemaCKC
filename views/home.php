@@ -133,7 +133,7 @@
                         </p>
                     </div>
                     <div class="botao">
-                        <a class="bt-redirecionar" href="#">Vamos nessa!</a>
+                        <a class="bt-redirecionar" href="/sistemackc/etapas">Vamos nessa!</a>
                     </div>
                 </div>
 
