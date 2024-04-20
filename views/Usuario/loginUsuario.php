@@ -24,6 +24,14 @@
         if (!isset($_SESSION)) {
             session_start();
     }?>
+
+    <?php 
+        if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Comum') : ?>
+            <script>
+                 window.location.href = '/sistemackc/usuario/<?php echo $_SESSION['id']; ?>';
+            </script>
+    <?php endif ?>
+
     <header class="header">
         <nav class="nav">
             <a class="logo" href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a>

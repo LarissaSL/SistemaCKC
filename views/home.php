@@ -86,11 +86,13 @@
                     <p class="textoChamada">
                         Então, venha fazer parte dessa família onde a única regra é: <strong>Velocidade, emoção e, é claro, uma pitada de loucura!</strong>
                     </p>
-                    <div class="botoes">
-                        <a class="bt-redirecionar" href="/sistemackc/usuario/login">Entrar</a>
-                        <a class="bt-redirecionar" href="/sistemackc/usuario/cadastro">Cadastrar</a>
-
-                    </div>
+                    <?php 
+                    if (!isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Comum') : ?>
+                        <div class="botoes">
+                            <a class="bt-redirecionar" href="/sistemackc/usuario/login">Entrar</a>
+                            <a class="bt-redirecionar" href="/sistemackc/usuario/cadastro">Cadastrar</a>
+                        </div>
+                    <?php endif ?>
 
                 </div>
 
