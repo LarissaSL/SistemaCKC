@@ -140,6 +140,19 @@ class Kartodromo
         }
     }
 
+    public function selecionarNomesEIdsDosKartodromos()
+    {
+        try {
+            $query = "SELECT Id, Nome FROM kartodromo";
+            $selecionar = $this->conexao->prepare($query);
+            $selecionar->execute();
+
+            return $selecionar->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $erro) {
+            return "Erro ao selecionar os nomes dos kartodromos: " . $erro->getMessage();
+        }
+    }
+
     public function pegarProximoId()
     {
         try {

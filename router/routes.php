@@ -5,6 +5,8 @@ $routes = [
     '/' => 'usuario#SiteUsuarioController#index',
     '/logout' => 'usuario#UsuarioController#logout',
     '/historia' => 'usuario#SiteUsuarioController#historia',
+    '/etapas' => 'usuario#SiteUsuarioController#etapas',
+
 
     //Rotas Usuario
     '/usuario/{id}' => 'usuario#UsuarioController#mostrarPerfil',
@@ -36,4 +38,10 @@ $routes = [
     '/admtm85/campeonato/cadastrar' => 'adm#CampeonatoController#cadastrar',
     '/admtm85/campeonato/atualizar/{id}' => 'adm#CampeonatoController#atualizar',
     '/admtm85/campeonato/excluir/{id}' => 'adm#CampeonatoController#excluir',
+
+    // Rotas das Corridas
+    '/admtm85/corrida' => 'adm#CorridaController#mostrarCorridas',
+    '/admtm85/corrida/cadastrar' => 'adm#CorridaController#cadastrar',
+    '/admtm85/corrida/atualizar/{id}' => 'adm#CorridaController#atualizar',
+    '/admtm85/corrida/excluir/{id}' => 'adm#CorridaController#excluir',
 ];

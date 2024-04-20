@@ -3,20 +3,19 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- google fontes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <!-- ícone de menu  -->
+    <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
+    <link rel="stylesheet" href="/sistemackc/views/Css/index.css">
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
     <script defer src="/sistemackc/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
 
-    <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
-    <link rel="stylesheet" href="/sistemackc/views/Css/kartodromo.css">
-
-    <title>Kartodromo</title>
+    <title>Historia</title>
 </head>
 
 <body>
@@ -25,7 +24,6 @@
         session_start();
     }
     ?>
-
     <header class="header">
         <nav class="nav">
             <a class="logo" href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a>
@@ -77,47 +75,7 @@
         </nav>
     </header>
     <main>
-        <div class="background-image"></div>
-        <!-- botão de voltar -->
-        <div id="bt-go-back">
-            <a href="/sistemackc/"><i class="ph ph-caret-left"></i></a> <!--tag 'a' com o icone de seta '<' -->
-        </div>
-        <h1 class="titulo">Kartódromos</h1>
-        <section class="container">
-
-            <?php
-            if (empty($kartodromos)) {
-                if (isset($feedback) && $feedback != '') {
-                    echo "<div class='container-feedback'>";
-                    if ($classe == 'erro') {
-                        echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
-                    } else {
-                        echo "<span class='$classe'><i class='ph ph-check-square'></i><strong>$feedback</strong></span>";
-                    }
-                    echo "</div>";
-                }
-            } else {
-                foreach ($kartodromos as $kartodromo) {
-                    echo "<article class='card'>";
-                    echo "<h2 class='nomeKartodromo'>{$kartodromo['Nome']}</h2>";
-                    echo "<div class='fundoImg'>";
-                    echo "<img class='imgKartodromo' src='/sistemackc/views/Img/ImgSistema/{$kartodromo['Foto']}' alt='pista do Kartódromo {$kartodromo['Nome']}'>";
-                    echo "</div>";
-                    echo "<div class='infoKartodromo'>";
-                    echo "<div class='infoLocalizacao'>";
-                    echo "<i class='ph ph-map-pin'></i>";
-                    echo "<span class='subTitulo'><strong>Localização</strong></span>";
-                    echo "<p class='enderecoKartodromo'>{$kartodromo['Rua']}, {$kartodromo['Numero']} - {$kartodromo['Bairro']} , CEP: {$kartodromo['CEP']} </p>";
-                    echo "</div>";
-                    echo "<div class='botoes'>";
-                    echo "<a class='bt-siteKartodromo' href='{$kartodromo['Site']}' target='_blank'>Visitar site</a>";
-                    echo "</div>";
-                    echo "</div>";
-                    echo "</article>";
-                }
-            }
-            ?>
-        </section>
+        <h1>PAGINA DAS ETAPAS</h1>
     </main>
     <footer>
         <div>

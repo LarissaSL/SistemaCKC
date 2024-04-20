@@ -41,14 +41,14 @@
                         <li class="drop-down">
                             <a href="#" class="dropdown-toggle">Corridas<i class="ph ph-caret-down"></i></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Etapas</a></li>
+                                <li><a href="/sistemackc/etapas">Etapas</a></li>
                                 <li><a href="#">Classificação</a></li>
                                 <li><a href="/sistemackc/kartodromo">Kartódromos</a></li>
                             </ul>
                         </li>
                     <?php } elseif (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
                         echo "<li><a href='/sistemackc/admtm85/usuario'>Usuarios</a></li>";
-                        echo "<li><a href='#'>Corridas</a></li>";
+                        echo "<li><a href='/sistemackc/admtm85/corrida'>Corridas</a></li>";
                         echo "<li><a href='/sistemackc/admtm85/kartodromo'>Kartodromos</a></li>";
                         echo "<li><a href='#'>Resultados</a></li>";
                     } ?>

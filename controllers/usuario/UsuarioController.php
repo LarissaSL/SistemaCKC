@@ -9,8 +9,8 @@ class UsuarioController extends RenderView
 
     public function mostrarUsuarios()
     {
-        $usuario = new Usuario();
-        $usuarios = [];
+        $usuarioModel = new Usuario();
+        $usuarios = $usuarioModel->consultarTodosOsUsuarios();
         $feedback = '';
         $classe = '';
 
@@ -21,18 +21,18 @@ class UsuarioController extends RenderView
 
             if(!empty($busca) || !empty($tipo))
             {
-                $consulta = $usuario->consultarUsuariosComFiltro($busca, $tipo);
+                $consulta = $usuarioModel->consultarUsuariosComFiltro($busca, $tipo);
 
                 $usuarios = $consulta['usuarios'];
                 $feedback = $consulta['feedback'];
                 $classe = $consulta['classe'];
             } else {
-                $usuarios = $usuario->consultarTodosOsUsuarios();
+                $usuarios = $usuarioModel->consultarTodosOsUsuarios();
             }
             
         } else {
             // Se nao tiver requisição GET, mostra todos
-            $usuarios = $usuario->consultarTodosOsUsuarios();
+            $usuarios = $usuarioModel->consultarTodosOsUsuarios();
         }
 
         // Carregaento da view

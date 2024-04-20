@@ -83,7 +83,7 @@ class Campeonato
                 case 42000:
                     return "Erro de sintaxe SQL, por favor verificar com o Desenvolvedor.";
                     break;
-                case 1452:
+                case 23000:
                     return "Ocorreu um erro. Não é possivel excluir o Campeonato pois existem corridas dele no Sistema";
                     break;
                 default:
@@ -117,6 +117,19 @@ class Campeonato
             return $selecionar->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $erro) {
             return "Erro ao selecionar todos os kartodromos: " . $erro->getMessage();
+        }
+    }
+
+    public function selecionarNomesEIdsDosCampeonatos()
+    {
+        try {
+            $query = "SELECT Id, Nome FROM campeonato";
+            $selecionar = $this->conexao->prepare($query);
+            $selecionar->execute();
+
+            return $selecionar->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $erro) {
+            return "Erro ao selecionar os nomes dos campeonatos: " . $erro->getMessage();
         }
     }
 

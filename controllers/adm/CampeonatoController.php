@@ -6,7 +6,7 @@ class CampeonatoController extends RenderView
 {
     public function mostrarCampeonatos() {
         $campeonatoModel = new Campeonato();
-        $campeonatos = [];
+        $campeonatos = $campeonatoModel->selecionarTodosOsCampeonatos();
         $feedback = '';
         $classe = '';
     

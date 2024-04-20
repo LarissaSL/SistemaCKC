@@ -4,7 +4,7 @@
 <head>
     <meta charset=UTF-8>
     <meta name=viewport content="width=device-width" , initial-scale="1.0">
-    <title>Campeonatos</title>
+    <title>Corridas</title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -47,8 +47,8 @@
             </nav>
     </header>
     <!-- Inicio do Conteúdo para o ADM -->
-    <h1>CRUD dos Campeonatos</h1>
-    <a class='btn btn-primary' href='/sistemackc/admtm85/campeonato/cadastrar'>Cadastrar novo Campeonato</a>
+    <h1>CRUD das Corridas</h1>
+    <a class='btn btn-primary' href='/sistemackc/admtm85/corrida/cadastrar'>Cadastrar nova Corrida</a>
 
     <!-- Só mostra feedback se a classe for a de erro -->
     <?php
@@ -63,12 +63,12 @@
                     <input type="text" class="form-control" id="filtroNome" name="filtroNome" value="<?php echo isset($_GET['filtroNome']) ? htmlspecialchars($_GET['filtroNome']) : ''; ?>">
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="filtroDataInicio">Filtrar por Data de Início</label>
-                    <input type="date" class="form-control" id="filtroDataInicio" name="filtroDataInicio" value="<?php echo isset($_GET['filtroDataInicio']) ? htmlspecialchars($_GET['filtroDataInicio']) : ''; ?>">
+                    <label for="filtroCampeonato">Filtrar por Campeonato</label>
+                    <input type="text" class="form-control" id="filtroCampeonato" name="filtroCampeonato" value="<?php echo isset($_GET['filtroCampeonato']) ? htmlspecialchars($_GET['filtroCampeonato']) : ''; ?>">
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="filtroDataTermino">Filtrar por Data de Término</label>
-                    <input type="date" class="form-control" id="filtroDataTermino" name="filtroDataTermino" value="<?php echo isset($_GET['filtroDataTermino']) ? htmlspecialchars($_GET['filtroDataTermino']) : ''; ?>">
+                    <label for="filtroData">Filtrar por Data</label>
+                    <input type="date" class="form-control" id="filtroData" name="filtroData" value="<?php echo isset($_GET['filtroData']) ? htmlspecialchars($_GET['filtroData']) : ''; ?>">
                 </div>
                 <div class="form-group col-md-3 d-flex align-items-end">
                     <button type="submit" class="btn btn-primary">Filtrar</button>
@@ -76,7 +76,7 @@
             </div>
         </form>
 
-        <?php 
+        <?php
             if (isset($classe) && $classe == 'erro') : ?>
                 <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
         <?php endif ?>
@@ -85,25 +85,32 @@
             <thead class='thead-dark'>
                 <tr>
                     <th>ID</th>
+                    <th>Nome Campeonato</th>
+                    <th>Nome Kartodromo</th>
                     <th>Nome</th>
-                    <th>Data de Inicio</th>
-                    <th>Data de Termino</th>
+                    <th>Categoria</th>
+                    <th>Data da Corrida</th>
+                    <th>Horário</th>
+                    <th>Tempo da Corrida</th>
                     <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                foreach ($campeonatos as $campeonato) {
+                foreach ($corridas as $corrida) {
                     echo "<tr>";
-                    echo "<td>" . $campeonato['Id'] . "</td>";
-                    echo "<td>" . $campeonato['Nome'] . "</td>";
-                    $dataInicio = new DateTime($campeonato['Data_inicio']);
-                    $dataTermino = new DateTime($campeonato['Data_termino']);
-                    echo "<td>" . $dataInicio->format('d/m/Y') . "</td>";
-                    echo "<td>" . $dataTermino->format('d/m/Y') . "</td>";
+                    echo "<td>" . $corrida['Id'] . "</td>";
+                    echo "<td>" . $corrida['Nome_Campeonato'] . "</td>";
+                    echo "<td>" . $corrida['Nome_Kartodromo'] . "</td>";
+                    echo "<td>" . $corrida['Nome'] . "</td>";
+                    echo "<td>" . $corrida['Categoria'] . "</td>";
+                    $dataCorrida = new DateTime($corrida['Data_corrida']);
+                    echo "<td>" . $dataCorrida->format('d/m/Y') . "</td>";
+                    echo "<td>" . $corrida['Horario'] . "</td>";
+                    echo "<td>" . $corrida['Tempo_corrida'] . "</td>";
                     echo "<td>
-                <a class='btn btn-primary' href='/sistemackc/admtm85/campeonato/atualizar/{$campeonato["Id"]}'>Editar</a>";
-                    echo "<button class='btn btn-danger' onclick='confirmarExclusao({$campeonato["Id"]},\"{$campeonato["Nome"]}\")'>Excluir</button>";
+                <a class='btn btn-primary' href='/sistemackc/admtm85/corrida/atualizar/{$corrida["Id"]}'>Editar</a>";
+                    echo "<button class='btn btn-danger' onclick='confirmarExclusao({$corrida["Id"]},\"{$corrida["Nome"]}\")'>Excluir</button>";
                     echo "</tr>";
                 }
                 echo "</table>";
@@ -112,8 +119,8 @@
 
                 <script>
                     function confirmarExclusao(id, nome) {
-                        if (confirm(`Tem certeza que deseja excluir:\nID: ${id}  |  ${nome} \n\nOBS.: Essa ação é irreversivel.`)) {
-                            window.location.href = '/sistemackc/admtm85/campeonato/excluir/' + id;
+                        if (confirm(`Tem certeza que deseja excluir:\nID: ${id}  |  ${nome} \n\nOBS.: Essa ação é irreversível.`)) {
+                            window.location.href = '/sistemackc/admtm85/corrida/excluir/' + id;
                         }
                     }
                 </script>

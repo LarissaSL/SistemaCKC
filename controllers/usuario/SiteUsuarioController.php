@@ -11,4 +11,9 @@ class SiteUsuarioController extends RenderView
     {
         $this->carregarView('historia');
     }
+
+    public function etapas()
+    {
+        $this->carregarView('etapas');
+    }
 }
