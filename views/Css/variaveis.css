@@ -106,7 +106,8 @@ button, .bt-cadastre {
     display: flex; /*elemento fica um do lado do outro*/
     justify-content: space-between; /*dá um espaço entre os elementos*/
     align-items: center;/*alinhar os elementos horizontalmente ao centro*/
-    z-index: 9;
+    position: relative;
+    z-index: 5555;
 }
 
 .nav-list {
@@ -195,7 +196,7 @@ footer {
         align-items: center;
         gap: 1rem;
         overflow-y: auto;
-        z-index: 9;
+        z-index: 5555;
     }
    
     

@@ -15,12 +15,13 @@ class Conexao
     {
         $this->conectarBancoDeDados();
         $this->criarTabelaUsuario();
+        $this->inserirAdmManualmente('Administrador','fotoThiago.jpeg' ,'Thiago', 'Menezes', '32241247847', 'ckckart23@gmail.com', password_hash('crash', PASSWORD_DEFAULT), 74, '1985-03-12', 'Masculino', '(11) 98437-2045');
         $this->criarTabelaKartodromo();
         $this->criarTabelaCampeonato();
         $this->criarTabelaCorrida();
         $this->criarTabelaResultado();
     }
-
+    
     function conectarBancoDeDados()
     {
         try {
@@ -28,6 +29,36 @@ class Conexao
             $this->conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $erro) {
             echo "Error! " . $erro->getMessage();
+        }
+    }
+
+    public function inserirAdmManualmente($tipo, $foto, $nome, $sobrenome, $cpf, $email, $senha, $peso, $dataNascimento, $genero, $telefone)
+    {
+        try {
+            $consulta = $this->conexao->prepare("SELECT * FROM usuario WHERE Email = :email");
+            $consulta->bindValue(':email', $email);
+            $consulta->execute();
+            $usuarioExistente = $consulta->fetch();
+
+            // Se não houver usuário com o e-mail especificado, inserir o usuário administrador
+            if (!$usuarioExistente) {
+                $inserir = $this->conexao->prepare("INSERT INTO usuario (Tipo, Foto, Nome, Sobrenome, Cpf, Email, Senha, Peso, Data_nascimento, Genero, Telefone) VALUES (:tipo, :foto, :nome, :sobrenome, :cpf, :email, :senha, :peso, :data_nascimento, :genero, :telefone)");
+                $inserir->bindValue(':tipo', $tipo);
+                $inserir->bindValue(':foto', $foto);
+                $inserir->bindValue(':nome', $nome);
+                $inserir->bindValue(':sobrenome', $sobrenome);
+                $inserir->bindValue(':cpf', $cpf);
+                $inserir->bindValue(':email', $email);
+                $inserir->bindValue(':senha', $senha);
+                $inserir->bindValue(':peso', $peso);
+                $inserir->bindValue(':data_nascimento', $dataNascimento);
+                $inserir->bindValue(':genero', $genero);
+                $inserir->bindValue(':telefone', $telefone);
+                $inserir->execute(); 
+            } 
+        } catch (PDOException $erro) {
+            echo "Erro no cadastro: " . $erro->getMessage();
+            return false; 
         }
     }
 

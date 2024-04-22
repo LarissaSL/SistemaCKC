@@ -7,7 +7,7 @@
     <!-- google fontes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet"> 
     <!-- ícone de menu  -->
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/index.css">
@@ -87,7 +87,7 @@
                         Então, venha fazer parte dessa família onde a única regra é: <strong>Velocidade, emoção e, é claro, uma pitada de loucura!</strong>
                     </p>
                     <?php 
-                    if (!isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Comum') : ?>
+                    if (!isset($_SESSION['tipo']) || $_SESSION['tipo'] != 'Comum') : ?>
                         <div class="botoes">
                             <a class="bt-redirecionar" href="/sistemackc/usuario/login">Entrar</a>
                             <a class="bt-redirecionar" href="/sistemackc/usuario/cadastro">Cadastrar</a>
@@ -97,8 +97,8 @@
                 </div>
 
                 <div class="containerImagem">
-                    <img class="fundoImg" src="/sistemackc/Views/Img/ImgTelas/fundo.png" alt="imagem do Crash">
-                    <img class="imagem" src="/sistemackc/Views/Img/ImgTelas/crash.png" alt="imagem do Crash">
+                    <img class="fundoImg" src="/sistemackc/Views/Img/ImgTelas/fundo.png" alt=" fundo da foto do Crash">
+                    <img class="imagem" src="/sistemackc/Views/Img/ImgTelas/crash.png" alt="foto do Crash">
                 </div>
             </div>
         </section>
@@ -214,7 +214,7 @@
         <div>
             <span class="copyright">© 2024 Copyright: ManasCode</span>
             <div>
-                <img src="/sistemackc/views/Img/ImgIcones/github.png">
+                <img src="/sistemackc/views/Img/ImgIcones/github.png" alt="logo github">
                 <a target="_blank" href="https://github.com/LarissaSL/SistemaCKC_MVC">Repositório do Projeto</a>
             </div>
         </div>
