@@ -2,7 +2,7 @@
 
 1. **Passo a Passo**
     - Primeiro abra seu Xampp e inicie o MySQL e o Apache
-    - Crie um banco de dados cujo nome é `ckc_bd`
+    - Crie um banco de dados cujo nome precisa ser `ckc_bd`
 
 
 2. **Entrando no Sistema**
@@ -11,7 +11,7 @@
     - Agora é só digitar na URL `localhost/sistemackc`
     - Verifique abaixo as rotas disponives
   
-OBS.: Não precisa se preocupar em Inserir o SQL da Tabela Usuário, nosso sistema ta com o Procedure disso, então só precisa mesmo criar o Banco de Dados ok?
+OBS.: Não precisa se preocupar em Inserir o SQL das Tabelas, nosso sistema esta cuidando disso.
    
 
 ## Rotas Disponiveis
