@@ -1,0 +1,124 @@
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3rem;
+}
+
+article.card_dll, 
+article.card_ckc95, 
+article.card_ckc110 {
+    display: flex;
+    width: 300px;
+    padding: 3rem;
+    margin: .7rem;
+    height: auto;
+    margin-bottom: 3rem;
+    border: solid;
+    border-radius: 20px;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    border-color: var(--color-button);
+    background-color: var(--background-cards);
+    gap: 3rem;
+}
+
+.title {
+    font-size: 3.4rem;
+}
+
+/* titulos dos cards */
+strong.ddlTitle {
+    color: var(--categoria-ddl-livre);
+}
+strong.ckcTitle {
+    color: var(--categoria-ckc-95);
+}
+strong.ckcTitle110 {
+    color: var(--categoria-ckc-110);
+}
+
+article.card2{
+    border-color: var(--card-ckc);
+}
+
+
+.titleCard_dll h2, 
+.titleCadCkc h2{
+    font-size: 2.5rem;
+}
+.titleCard_dll span, 
+.titleCadCkc span{
+    font-size: 1.7rem;
+    font-weight: 500;
+}
+
+.titleCard_dll, 
+.dateDll, 
+.address,
+.titleCadCkc, 
+.dateCkc, 
+.addressCkc{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* fundo das categorias */
+.categoriaDllLivre, 
+.categoriaCkc95, 
+.categoriaCkc110 {
+    padding: .4em;
+    width: 100px;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    border-radius: 17px;
+}
+
+/* cor de fundo das categorias */
+.categoriaDllLivre {
+    background: var(  --categoria-ddl-livre);
+}
+.categoriaCkc95 {
+    color: var(--background-principal);
+    background: var(--categoria-ckc-95);
+}
+.categoriaCkc110 {
+    color: var(--background-principal);
+    background: var(--categoria-ckc-110);
+}
+
+.dateDll span, 
+.dateCkc span{
+    font-size: 2.4rem;
+    font-weight: 700;
+}
+.timeDll, 
+.timeCkc {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+.address, 
+.addressCkc{
+    gap: .9rem;
+}
+.locale strong, 
+.localeCkc strong {
+    text-decoration: underline;
+    font-weight: normal;
+}
+
+
+@media(min-width: 750px){
+    
+    section.cards {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}

@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <!-- ícone de menu  -->
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
-    <link rel="stylesheet" href="/sistemackc/views/Css/index.css">
+    <link rel="stylesheet" href="/sistemackc/views/Css/historia.css">
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
     <script defer src="/sistemackc/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
@@ -75,7 +75,32 @@
         </nav>
     </header>
     <main>
-        <h1>PAGINA DA HISTORIA</h1>
+        <section class="container">
+            <h1 class="title">História do CKC</h1>
+            <section class="text">
+                <div class="history">
+                    <p>
+                        <strong>Fundado em 2022</strong> pelos pilotos Thiago Menezes e Diego Rico, o <strong>CKC - Crash Kart Championship</strong> surgiu da necessidade de evolução do grupo de amigos que se reuniam para correr de kart, na época chamado Desafio dos Loucos.
+                    </p>
+                    <p>
+                        Eles queriam um <strong>campeonato onde pudessem competir e ganhar troféus, sem perder a resenha e a diversão entre amigos</strong>, por isso, decidiram transformar o <strong>DDL - Desafio dos Loucos em uma categoria de base</strong> e criaram o CKC, promovendo um maior alcance de  pessoas e deixando o campeonato ainda mais competitivo.
+                    </p>
+                    <p>
+                        Acesse nosso Regulamento, saiba mais e Junte-se a nós!
+                    </p>
+
+                    <div class="buttonRegulaion">
+                        <button class="regulation">Baixe o regulamento</button>
+                    </div>
+                </div>
+
+                <div class="img">
+                    <img src="/sistemackc/Views/Img/ImgTelas/historia.png" alt="fundadores do campeonato ckc">
+                </div>
+
+            </section>
+        </section>
+
     </main>
     <footer>
         <div>

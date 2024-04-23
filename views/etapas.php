@@ -10,12 +10,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <!-- ícone de menu  -->
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
-    <link rel="stylesheet" href="/sistemackc/views/Css/index.css">
+    <link rel="stylesheet" href="/sistemackc/views/Css/etapas.css">
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
     <script defer src="/sistemackc/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
 
-    <title>Historia</title>
+    <title>Etapas</title>
 </head>
 
 <body>
@@ -75,7 +75,95 @@
         </nav>
     </header>
     <main>
-        <h1>PAGINA DAS ETAPAS</h1>
+        <section class="container">
+            <h1 class="title">Etapas</h1>
+            <a href="/sistemackc/views/Docs/Regulamento CKC 2024.pdf" download="RegulamentoCKC_2024">Baixe o regulamento</a>
+            <section class="cards">
+                <article class="card_dll">
+                    <div class="titleCard_dll">
+                        <h2><strong class="ddlTitle">DLL</strong> Etapa 1</h2>
+                        <span>Desafio dos loucos</span>
+                    </div>
+                    <div class="categoriaDllLivre">
+                        <span>Livre</span>
+                    </div>
+                    <div class="dateDll">
+                        <span>26/07/24</span>
+                        <div class="timeDll">
+                            <i class="ph ph-timer"></i>
+                            <p>16h 30min</p>
+                        </div>
+                    </div>
+                    <div class="address">
+                        <div class="kart">
+                            <i class="ph ph-map-pin"></i>
+                            <span class="kartodromo"> Kartódroma Granja viana</span>
+                        </div>
+                        <p class="locale">
+                            <strong>Endereço:</strong> R. Tomás Sepé, 443 - Jardim da Gloria, Cotia - SP, 06711-270
+                        </p>
+                    </div>
+
+                    <button class="inscrevase">Inscreva-se</button>
+                </article>
+                <!-- CARD 2  -->
+                <article class="card_ckc95">
+                    <div class="titleCadCkc">
+                        <h2><strong class="ckcTitle">CKC</strong> Etapa 1</h2>
+                        <span>Crash kart championship</span>
+                    </div>
+                    <div class="categoriaCkc95">
+                        <span>95 Kg</span>
+                    </div>
+                    <div class="dateCkc">
+                        <span>26/07/24</span>
+                        <div class="timeCkc">
+                            <i class="ph ph-timer"></i>
+                            <p>16h 30min</p>
+                        </div>
+                    </div>
+                    <div class="addressCkc">
+                        <div class="kart">
+                            <i class="ph ph-map-pin"></i>
+                            <span class="kartodromo"> Kartódroma Granja viana</span>
+                        </div>
+                        <p class="localeCkc">
+                            <strong>Endereço:</strong> R. Tomás Sepé, 443 - Jardim da Gloria, Cotia - SP, 06711-270
+                        </p>
+                    </div>
+
+                    <button class="inscrevaseCkc">Inscreva-se</button>
+                </article>
+
+                <!-- CARD 3  -->
+                <article class="card_ckc110">
+                    <div class="titleCadCkc">
+                        <h2><strong class="ckcTitle110">CKC</strong> Etapa 1</h2>
+                        <span>Crash kart championship</span>
+                    </div>
+                    <div class="categoriaCkc110">
+                        <span>110 Kg</span>
+                    </div>
+                    <div class="dateCkc">
+                        <span>26/07/24</span>
+                        <div class="timeCkc">
+                            <i class="ph ph-timer"></i>
+                            <p>16h 30min</p>
+                        </div>
+                    </div>
+                    <div class="addressCkc">
+                        <div class="kart">
+                            <i class="ph ph-map-pin"></i>
+                            <span class="kartodromo"> Kartódroma Granja viana</span>
+                        </div>
+                        <p class="localeCkc">
+                            <strong>Endereço:</strong> R. Tomás Sepé, 443 - Jardim da Gloria, Cotia - SP, 06711-270
+                        </p>
+                    </div>
+
+                    <button class="inscrevaseCkc">Inscreva-se</button>
+                </article>
+            </section>
     </main>
     <footer>
         <div>

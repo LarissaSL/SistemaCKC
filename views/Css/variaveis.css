@@ -16,6 +16,11 @@
     --background-campos:#232121;/*COR CERTA -> #232121*/
     --fonte-title: "Chakra Petch", sans-serif; 
     --color-menu: #0033C1;
+
+    --categoria-ddl-livre: #069B0C;
+    --categoria-ckc-95:#B5CC18;
+    --categoria-ckc-110:#CC5918;
+    --background-cards:rgba(192, 192, 192, 0.15);
 }
 
 body{
