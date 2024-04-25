@@ -50,34 +50,36 @@ button.regulation{
 
 
 @media(min-width: 750px){
-
+    
     section.text {
         display: flex;
-        margin: 1rem;
+        margin: 4rem;
         text-align: center;
-        align-items: center;
         flex-direction: row;
-        gap: 3rem;
+        align-items: flex-start;
+        gap: 1rem;
     }
-    .history{
-        margin-left: 8rem;
-        margin-right: 4rem;
-    }
+   
 
     /* tamanho da imagem */
     img {
-        max-width: 26.4em;
+        max-width: 17.4em;
     }
 
     /* fundo da imagem */
     .img{
-        width: 51rem;
-        height: 51rem;
-        margin-right: 8rem;
-        padding: 5rem;
+        width: 34rem;
+        height: 32rem;
+        padding: 2rem;
     }
 
     .buttonRegulaion{
         margin-top: 3rem;
     }
+}
+@media(min-width: 1024px){
+    section.text {
+        align-items: center;
+    }
+
 }

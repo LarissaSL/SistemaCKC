@@ -1,44 +1,56 @@
-*{/*todos os elenentos da pagina(zerando as medidas padrão do navegador)*/
-    margin: 0; /*espaço a redor 'margem' das caixas*/
-    padding: 0; /*preenchimento interno das caixas*/
-    box-sizing: border-box; /*resetar a caixa para que ela possa fazer calculos da borda*/
-    -webkit-font-smoothing: antialiased; /*serve para deixar a fonte menos groceira no navegador chrome esafari*/
-    -moz-osx-font-smoothing:grayscale; /*serve para deixar a fonte menos groceira no navegador firefox*/
+* {
+    /*todos os elenentos da pagina(zerando as medidas padrão do navegador)*/
+    margin: 0;
+    /*espaço a redor 'margem' das caixas*/
+    padding: 0;
+    /*preenchimento interno das caixas*/
+    box-sizing: border-box;
+    /*resetar a caixa para que ela possa fazer calculos da borda*/
+    -webkit-font-smoothing: antialiased;
+    /*serve para deixar a fonte menos groceira no navegador chrome esafari*/
+    -moz-osx-font-smoothing: grayscale;
+    /*serve para deixar a fonte menos groceira no navegador firefox*/
 }
 
-:root{
+:root {
     font-size: 62.5%;
 
-    --background-principal:#1E1A18 ;/*COR CERTA -> #1E1A18*/
-    --text-base-light: #fff; /* COR CERTA -> #fff */
+    --background-principal: #1E1A18;
+    /*COR CERTA -> #1E1A18*/
+    --text-base-light: #fff;
+    /* COR CERTA -> #fff */
     --color-button: #0033C1;
-    --background-navbar:#232121;
-    --background-campos:#232121;/*COR CERTA -> #232121*/
-    --fonte-title: "Chakra Petch", sans-serif; 
+    --background-navbar: #232121;
+    --background-campos: #232121;
+    /*COR CERTA -> #232121*/
+    --fonte-title: "Chakra Petch", sans-serif;
     --color-menu: #0033C1;
 
     --categoria-ddl-livre: #069B0C;
-    --categoria-ckc-95:#B5CC18;
-    --categoria-ckc-110:#CC5918;
-    --background-cards:rgba(192, 192, 192, 0.15);
+    --categoria-ckc-95: #B5CC18;
+    --categoria-ckc-110: #CC5918;
+    --background-cards: rgba(192, 192, 192, 0.15);
 }
 
-body{
+body {
     background-color: var(--background-principal);
     color: var(--text-base-light);
     font-size: 1.6rem;
     font-family: var(--fonte-title);
-    font-weight: 300; 
+    font-weight: 300;
 }
 
-nav img{
+nav img {
     max-width: 5.4rem;
     height: auto;
 }
 
-h1,h2, button, .bt-cadastre{
+h1,
+h2,
+button,
+.bt-cadastre {
     font-weight: 700;
-    
+
 }
 
 input {
@@ -60,7 +72,7 @@ input[type="radio"] {
     width: 1rem;
     height: 1rem;
     border-radius: 50%;
-    border: 1px solid var(--color-button); 
+    border: 1px solid var(--color-button);
 }
 
 input[type="radio"]:checked::before {
@@ -70,47 +82,57 @@ input[type="radio"]:checked::before {
     height: 2rem;
     border-radius: 50%;
     background-color: var(--color-button);
-    margin:-1rem;
+    margin: -1rem;
 }
 
 label {
-    color: var(--text-base-light);  
+    color: var(--text-base-light);
 }
 
-li{
-    list-style: none; /*tira a polinha do topico da 'li'*/  
+li {
+    list-style: none;
+    /*tira a polinha do topico da 'li'*/
 }
-a{
+
+a {
     color: var(--text-base-light);
     text-decoration: none;
-    
+
 }
 
-button, .bt-cadastre {
+button,
+.bt-cadastre {
     display: block;
     padding: 1.3rem;
     width: 24rem;
     border: none;
     border-radius: 8px;
     font-size: 1.6rem;
-    background-color: var(--color-button);   
+    background-color: var(--color-button);
     color: var(--text-base-light);
-    font-family: var(--fonte-title);/*tive que colocar aqui também pq não estava pegando a fonte*/
+    font-family: var(--fonte-title);
+    /*tive que colocar aqui também pq não estava pegando a fonte*/
 }
 
 .header {
     background: var(--background-navbar);
-    padding-inline: 1rem; /*representa o lado direito e esquerdo*/
+    padding-inline: 1rem;
+    /*representa o lado direito e esquerdo*/
 }
 
 /* NAVBAR */
 .nav {
     max-width: 1280rem;
-    height: 5rem; /*altura*/
-    margin-inline: auto; /*representa o lado direito e esquerdo*/
-    display: flex; /*elemento fica um do lado do outro*/
-    justify-content: space-between; /*dá um espaço entre os elementos*/
-    align-items: center;/*alinhar os elementos horizontalmente ao centro*/
+    height: 5rem;
+    /*altura*/
+    margin-inline: auto;
+    /*representa o lado direito e esquerdo*/
+    display: flex;
+    /*elemento fica um do lado do outro*/
+    justify-content: space-between;
+    /*dá um espaço entre os elementos*/
+    align-items: center;
+    /*alinhar os elementos horizontalmente ao centro*/
     position: relative;
     z-index: 5555;
 }
@@ -118,16 +140,20 @@ button, .bt-cadastre {
 .nav-list {
     display: flex;
     align-items: center;
-    gap: 4rem;/*dá um espaçamento entre cada item flex*/
-    list-style: none; /*tira a polinha do topico da 'li'*/   
+    gap: 4rem;
+    /*dá um espaçamento entre cada item flex*/
+    list-style: none;
+    /*tira a polinha do topico da 'li'*/
 }
 
 /* estamnos falando com cada link individualmente */
 .nav-list a {
-    padding: .5rem ;
+    padding: .5rem;
     font-size: 1.3rem;
-    color: #fff;/*por a variavel depois*/
-    padding-block: 16px; /*espaçamento entre o topo e em baixo*/
+    color: #fff;
+    /*por a variavel depois*/
+    padding-block: 16px;
+    /*espaçamento entre o topo e em baixo*/
     opacity: 1;
 }
 
@@ -146,7 +172,7 @@ ul.dropdown-menu {
 }
 
 /* quando a corrida estiver ativa -> js */
-.drop-down.active ul.dropdown-menu{
+.drop-down.active ul.dropdown-menu {
     display: flex;
 
 }
@@ -165,6 +191,10 @@ ul.dropdown-menu {
     z-index: 10;
 }
 
+div#bt-go-back {
+    display: none;
+}
+
 footer {
     display: flex;
     justify-content: center;
@@ -174,28 +204,35 @@ footer {
     text-align: center;
 }
 
+
 /* menu responsivo */
 @media(max-width: 700px) {
-    i.ph.ph-caret-left {
-        display: none;
+
+
+    div#bt-go-back {
+        display: flex;
+        font-size: 2rem;
+        padding: 1rem;
     }
 
     .hamburger {
         display: block;
     }
-        
+
     /* TAG UL DA NAV */
-    .nav-list { 
+    .nav-list {
         position: fixed;
         top: 0;
         left: 0;
         width: 100vw;
         height: 100vh;
-        list-style: none; /*tira a polinha do topico da 'li'*/  
-        background: var(--background-navbar) ;
+        list-style: none;
+        /*tira a polinha do topico da 'li'*/
+        background: var(--background-navbar);
         transform: translateX(100%);
-        transition: transform 0.5s ease-out;/*transição de 4 segundo e ease-out para a animação  tenha uma saida suave*/
-        
+        transition: transform 0.5s ease-out;
+        /*transição de 4 segundo e ease-out para a animação  tenha uma saida suave*/
+
         flex-direction: column;
         justify-content: center;
         align-items: center;
@@ -203,53 +240,63 @@ footer {
         overflow-y: auto;
         z-index: 5555;
     }
-   
-    
+
+
     /* PARA FAZER OS DOIS TRAÇOS DO MENU */
     .hamburger::after,
     .hamburger::before {
         content: " ";
         display: block;
-        width: 30px; /*largura*/
+        width: 30px;
+        /*largura*/
         height: 3px;
-        background:var(--color-menu);
+        background: var(--color-menu);
         margin-top: 5px;
         position: relative;
         transition: 0.3s;
     }
-    
-        
+
+
     /*Estilos ativos - aanimação que conecta com o js*/
-    .nav.active .nav-list{
+    .nav.active .nav-list {
         transform: translateX(0%);
     }
+
     /* estamnos falando com cada link individualmente */
     .nav-list a {
         font-size: 2.3rem;
-        color: #fff;/*var(--text-base-light);*/
-        padding-inline: 5px; /*espaçamento entre o topo e em baixo*/
+        color: #fff;
+        /*var(--text-base-light);*/
+        padding-inline: 5px;
+        /*espaçamento entre o topo e em baixo*/
         opacity: 0;
     }
-    
+
     /* animando as li's da nav */
-    .nav-list li:nth-child(1) a{
+    .nav-list li:nth-child(1) a {
         transition: 0.5s 0.2s;
-        transform: translateX(-100%); /* Movendo para a direita */
+        transform: translateX(-100%);
+        /* Movendo para a direita */
     }
-    .nav-list li:nth-child(2) a{
+
+    .nav-list li:nth-child(2) a {
         transition: 0.5s 0.4s;
-        transform: translateX(-100%); /* Movendo para a direita */
+        transform: translateX(-100%);
+        /* Movendo para a direita */
     }
-    .nav-list li:nth-child(3) a{
+
+    .nav-list li:nth-child(3) a {
         transition: 0.5s 0.6s;
-        transform: translateX(-100%); /* Movendo para a direita */
+        transform: translateX(-100%);
+        /* Movendo para a direita */
     }
-    
-    .nav.active .nav-list a{
+
+    .nav.active .nav-list a {
         opacity: 1;
-        transform: translate(0%); /* Movendo de volta para a posição original */
+        transform: translate(0%);
+        /* Movendo de volta para a posição original */
     }
-    
+
     /* ANIMANDO MENU HAMBURGER PARA 'X' QUANDO ATIVO */
     .nav.active .hamburger {
         position: fixed;
@@ -257,14 +304,16 @@ footer {
         right: 10px;
         border-top-color: transparent;
     }
-    
+
     .nav.active .hamburger::before {
-        transform: rotate(136deg);/*rotacionar o traço em 136 graus*/
+        transform: rotate(136deg);
+        /*rotacionar o traço em 136 graus*/
     }
-    
-    .nav.active .hamburger::after{
-        transform: rotate(-136deg);/*rotacionar o traço em 136 graus*/
-        top: -7px;  
+
+    .nav.active .hamburger::after {
+        transform: rotate(-136deg);
+        /*rotacionar o traço em 136 graus*/
+        top: -7px;
     }
 
     ul.dropdown-menu {
@@ -274,15 +323,16 @@ footer {
         border-radius: 14px;
         background: none;
     }
-    .drop-down{
+
+    .drop-down {
         display: flex;
         align-items: center;
         flex-direction: column;
         justify-content: space-between;
         cursor: pointer;
     }
-    
-    .dropdown-menu a{
+
+    .dropdown-menu a {
         display: flex;
         height: 4rem;
         align-items: center;
@@ -295,5 +345,5 @@ footer {
         align-items: center;
         justify-content: center
     }
-    
+
 }

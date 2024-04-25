@@ -38,12 +38,18 @@ i.ph.ph-caret-left {
 
 /* Efeito Gradiente */
 .Image-Text {
-    max-width: 90vw; 
+    display: flex;
+    height: auto;
+    padding: 1rem;
+    max-width: 100vw; 
+    justify-content: center;
     background-image: radial-gradient(transparent 29%, #1E1A18 69%, #1E1A18 73%);
 }
 
 /* titulo */
-h2{
+.subTitle{
+    font-size: 3rem;
+    z-index: 1;
     text-align: -webkit-left;
 }
 
@@ -56,12 +62,8 @@ h2{
     align-items: center;
     gap: 3.5rem;
 }
-
-/* input's e label's */
 .emails, .passwords {
     display: flex;
-    width: 80%; /* Largura do formulário */
-    max-width: 400px;
     flex-direction: column;
     align-items: center;
     gap: 1.2rem;
@@ -76,4 +78,56 @@ h2{
 /* Ajuste da largura dos inputs dentro das divs .emails e .passwords */
 .emails input, .passwords input {
     width:24rem; /* Ajusta a largura para considerar a margem esquerda do rótulo e a largura do link "Esqueci minha senha" */
+}
+
+
+@media(min-width:768px){
+
+    section.container {
+        display: flex;
+        align-items: center;
+        gap: 3rem;
+    }
+
+    .subTitle {
+        order: -1;
+    }
+
+    .subTitleImg {
+        display: flex;
+        flex-direction: column;
+        gap: 1.8rem;
+    }
+    .Image-Text img {
+        max-width: 59vw;
+    }
+        
+}
+
+@media(min-width:900px){
+    
+    .Image-Text img {
+        max-width: 66vw;
+    }
+
+}
+
+@media(min-width:1080px){
+    
+    section.container {
+        gap: 7rem;
+    }
+
+    .Image-Text img {
+        max-width: 60vw;
+    }
+
+}
+
+@media(min-width:1200px){
+    
+    section.container {
+        gap: 9rem;
+    }
+
 }

@@ -5,7 +5,41 @@
     justify-content: center;
     gap: 3rem;
 }
-
+/* titulo da pag */
+.title {
+    font-size: 3.4rem;
+}
+/*baixar o regulamento */
+.downloads{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .6rem;
+}
+.iconDownload{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: .5rem;
+}
+/* icone do pdf */
+i.ph.ph-file-pdf {
+    color: #eb3a3a;
+}
+/* linhas do "baixe o regulamento" */
+.lineDownload, .lineDownload::after {
+    content: " ";
+    display: block;
+    width: 174px;
+    /*largura*/
+    height: 1px;
+    background: var(--text-base-light)
+}
+.lineDownload::after{
+    top: 119px;
+    position: absolute;
+}
+/* estrurura dos cards */
 article.card_dll, 
 article.card_ckc95, 
 article.card_ckc110 {
@@ -25,12 +59,11 @@ article.card_ckc110 {
     background-color: var(--background-cards);
     gap: 3rem;
 }
-
-.title {
-    font-size: 3.4rem;
-}
-
 /* titulos dos cards */
+.titleCard_dll h2, 
+.titleCadCkc h2{
+    font-size: 2.5rem;
+}
 strong.ddlTitle {
     color: var(--categoria-ddl-livre);
 }
@@ -40,22 +73,13 @@ strong.ckcTitle {
 strong.ckcTitle110 {
     color: var(--categoria-ckc-110);
 }
-
-article.card2{
-    border-color: var(--card-ckc);
-}
-
-
-.titleCard_dll h2, 
-.titleCadCkc h2{
-    font-size: 2.5rem;
-}
+/* subtitulo dos cards */
 .titleCard_dll span, 
 .titleCadCkc span{
     font-size: 1.7rem;
     font-weight: 500;
 }
-
+/* elementos interno do card */
 .titleCard_dll, 
 .dateDll, 
 .address,
@@ -119,6 +143,7 @@ article.card2{
     section.cards {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
+        flex-wrap: wrap;
     }
 }

@@ -76,10 +76,12 @@
         </div>
         <section class="container">
             <!-- titulo e imagem principal -->
-            <div class="Image-Text">
-                <img src="/sistemackc/views/Img/ImgSistema/WhatsApp_Image.jpeg" alt="piloto do ckc em seu kart">
+            <div class="subTitleImg">
+                <div class="Image-Text">
+                    <img src="/sistemackc/views/Img/ImgSistema/WhatsApp_Image.jpeg" alt="piloto do ckc em seu kart">
+                </div>
+                <h2 class="subTitle">Cadastre-se e faça parte da comunidade CKC Kart</h2>
             </div>
-            <h2>Cadastre-se e faça parte da comunidade CKC Kart</h2>
 
             <?php if (isset($feedback)) : ?>
                 <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>

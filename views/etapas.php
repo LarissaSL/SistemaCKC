@@ -76,9 +76,21 @@
     </header>
     <main>
         <section class="container">
+            <!--TITULO DA PAG  -->
             <h1 class="title">Etapas</h1>
-            <a href="/sistemackc/views/Docs/Regulamento CKC 2024.pdf" download="RegulamentoCKC_2024">Baixe o regulamento</a>
+
+            <!--LINK PARA DOWNLOAD  -->
+            <div class="downloads">
+                <div class="iconDownload">
+                    <i class="ph ph-file-pdf"></i>
+                    <a class="download" href="sistemackc/views/Docs/Regulamento CKC 2024.pdf" download="RegulamentoCKC">Baixe o regulamento</a>
+                </div>
+                <span class="lineDownload"></span>
+            </div>
+
             <section class="cards">
+
+                <!-- CARD DDL LIVRE  -->
                 <article class="card_dll">
                     <div class="titleCard_dll">
                         <h2><strong class="ddlTitle">DLL</strong> Etapa 1</h2>
@@ -106,7 +118,8 @@
 
                     <button class="inscrevase">Inscreva-se</button>
                 </article>
-                <!-- CARD 2  -->
+
+                <!-- CARD CKC 95  -->
                 <article class="card_ckc95">
                     <div class="titleCadCkc">
                         <h2><strong class="ckcTitle">CKC</strong> Etapa 1</h2>
@@ -135,7 +148,7 @@
                     <button class="inscrevaseCkc">Inscreva-se</button>
                 </article>
 
-                <!-- CARD 3  -->
+                <!-- CARD CKC 110  -->
                 <article class="card_ckc110">
                     <div class="titleCadCkc">
                         <h2><strong class="ckcTitle110">CKC</strong> Etapa 1</h2>
