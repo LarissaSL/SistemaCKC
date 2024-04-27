@@ -52,7 +52,7 @@ class CampeonatoController extends RenderView
             $dadosPreenchidos = [$nome, $dataInicio, $dataTermino];
 
             $novoCampeonato = new Campeonato();
-            $validarData = $novoCampeonato->validarDataTermino($dataInicioFormatada, $dataTerminoFormatada); 
+            $validarData = $novoCampeonato->validarData($dataInicioFormatada, $dataTerminoFormatada); 
 
             if($validarData == "aceito") {
                 //Cadastrando no BD
@@ -100,7 +100,7 @@ class CampeonatoController extends RenderView
             $dataInicioFormatada = date('Y-m-d', strtotime($dataInicio));
             $dataTerminoFormatada = date('Y-m-d', strtotime($dataTermino));
 
-            $validarData = $campeonatoModel->validarDataTermino($dataInicioFormatada, $dataTerminoFormatada); 
+            $validarData = $campeonatoModel->validarData($dataInicioFormatada, $dataTerminoFormatada); 
 
             if($validarData == "aceito") {
                 //Alterar no BD

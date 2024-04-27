@@ -136,7 +136,7 @@
 
             <div>
                 <label for="tempo_corrida">Tempo da corrida:</label>
-                <input type="time" id="tempo_corrida" name="tempoCorrida" value="<?php echo isset($dados[8]) ? $dados[8] : ''; ?>" required>
+                <input type="time" id="tempo_corrida" name="tempoCorrida" value="<?php echo isset($dados[8]) ? $dados[8] : '00:25'; ?>" required>
             </div>
 
             <div>

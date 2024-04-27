@@ -133,12 +133,47 @@ class Campeonato
         }
     }
 
-    public function validarDataTermino($dataInicio, $dataTermino)
+    public function validarData($dataInicio, $dataTermino)
     {
-        if ($dataInicio <= $dataTermino) {
-            return "aceito";
-        } else {
-            return "A data de término precisa ser igual ou posterior a data de início do Campeonato";
+        $ano = date('Y', strtotime($dataInicio));
+
+        if ($ano >= 2024) {
+            if ($dataInicio <= $dataTermino) {
+                return "aceito";
+            } else {
+                return "A data de término precisa ser igual ou posterior a data de início do Campeonato";
+            }
+        }  else {
+            return "A data do campeonato precisa ser igual ou posterior ao ano de 2024";
+        }  
+    }
+
+    public function selecionarCampeonatosPorCategoriaHorarioData($categoria, $horario, $data)
+    {
+        try {
+            $query = "SELECT campeonato.* 
+                    FROM campeonato 
+                    INNER JOIN corrida ON campeonato.Id = corrida.Campeonato_id 
+                    WHERE corrida.Categoria = :categoria 
+                    AND corrida.Horario = :horario 
+                    AND DATE(corrida.Data_corrida) = :data 
+                    GROUP BY campeonato.Id";
+
+            $selecionar = $this->conexao->prepare($query);
+            $selecionar->bindParam(':categoria', $categoria);
+            $selecionar->bindParam(':horario', $horario);
+            $selecionar->bindParam(':data', $data);
+            $selecionar->execute();
+
+            $resultados = $selecionar->fetchAll(PDO::FETCH_ASSOC);
+
+            if (empty($resultados)) {
+                return [];
+            }
+
+            return $resultados;
+        } catch (PDOException $erro) {
+            return "Erro ao selecionar campeonatos por categoria, horário e data: " . $erro->getMessage();
         }
     }
 

@@ -51,7 +51,7 @@ class Corrida
 
             return "Sucesso";
         } catch (PDOException $erro) {
-            return "Ocorreu um erro ao alterar a Corrida: " . $erro->getMessage();   
+            return "Ocorreu um erro ao alterar a Corrida: " . $erro->getMessage();
         }
     }
 
@@ -108,7 +108,8 @@ class Corrida
         }
     }
 
-    public function selecionarTodasAsCorridasComNomes() {
+    public function selecionarTodasAsCorridasComNomes()
+    {
         try {
             $query = "SELECT infoCorrida.*, campe.Nome AS Nome_Campeonato, karto.Nome AS Nome_Kartodromo 
                       FROM corrida infoCorrida 
@@ -116,7 +117,7 @@ class Corrida
                       INNER JOIN kartodromo karto ON infoCorrida.Kartodromo_id = karto.Id";
             $selecionar = $this->conexao->prepare($query);
             $selecionar->execute();
-    
+
             return $selecionar->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $erro) {
             return "Erro ao selecionar todas as corridas com nomes: " . $erro->getMessage();
@@ -128,11 +129,11 @@ class Corrida
         try {
             $campeonatoModel = new Campeonato();
             $dadosCampeonato = $campeonatoModel->selecionarCampeonatoPorId($idCampeonato);
-    
+
             if ($dadosCampeonato) {
                 $dataInicioCampeonato = $dadosCampeonato['Data_inicio'];
                 $dataTerminoCampeonato = $dadosCampeonato['Data_termino'];
-    
+
                 if ($dataCorrida >= $dataInicioCampeonato && $dataCorrida <= $dataTerminoCampeonato) {
                     return "Sucesso";
                 } else {
@@ -141,12 +142,98 @@ class Corrida
                         'classe' => "erro"
                     );
                 }
-            } 
+            }
         } catch (PDOException $erro) {
             return array(
                 'feedback' => "Erro na validação da data da corrida: " . $erro->getMessage(),
                 'classe' => "erro"
             );
+        }
+    }
+
+    public function validarCategoria($nomeCampeonato, $categoria)
+    {
+        $nomeCampeonatoMinusculo = strtolower($nomeCampeonato);
+        $feedbackErro = "Esse campeonato não permite essa categoria";
+
+        if (strpos('crash kart championship', $nomeCampeonatoMinusculo) !== false) {
+            if ($categoria == "Livre") {
+                return $feedbackErro;
+            } else {
+                return "Sucesso";
+            }
+        } elseif (strpos('desafio dos loucos', $nomeCampeonatoMinusculo) !== false) {
+            if ($categoria == "Livre") {
+                return "Sucesso";
+            } else {
+                return $feedbackErro;
+            }
+        } else {
+            return "Sucesso";
+        }
+    }
+
+    public function validarDuracao($duracao)
+    {
+        list($horas, $minutos) = explode(':', $duracao);
+        $duracao_em_minutos = ($horas * 60) + $minutos;
+
+        if($duracao_em_minutos == 25) {
+            return "Sucesso";
+        } else {
+            return "As corridas precisam ter a duração de 25 minutos";
+        }
+    }
+
+    public function validarHorario($campeonato_id, $categoria, $horario, $data)
+    {
+        try {
+            $campeonatoModel = new Campeonato();
+            $dadosCampeonato = $campeonatoModel->selecionarCampeonatoPorId($campeonato_id);
+            
+            $categoriaDeBusca = $categoria == "95" ? "110" : "95";
+            $outrasCorridasCkc = $campeonatoModel->selecionarCampeonatosPorCategoriaHorarioData($categoriaDeBusca, $horario, $data);
+            $outrasCorridasDdl = $campeonatoModel->selecionarCampeonatosPorCategoriaHorarioData('Livre', $horario, $data);
+
+            
+            // Verificações pro DDL
+            if (stripos($dadosCampeonato['Nome'], 'Desafio dos Loucos') !== false) {
+                $outrasCorridasCkc = $campeonatoModel->selecionarCampeonatosPorCategoriaHorarioData("95", $horario, $data);
+                if ($outrasCorridasCkc) {
+                    return "Não é possivel cadastrar a corrida pois, ela não pode acontecer no mesmo dia e horário que uma do Crash Kart Championship categoria 95"; 
+                } else {
+                    if($outrasCorridasDdl) {
+                        return "Não é possivel cadastrar a corrida, pois já existe uma com mesma data e horário";
+                    }
+                }
+                return "Sucesso";
+                 
+            // Verificações pro CKC
+            } elseif (stripos($dadosCampeonato['Nome'], 'Crash Kart Championship') !== false) {
+                if ($categoria == "95") {
+                    $corridaJaExiste = $campeonatoModel->selecionarCampeonatosPorCategoriaHorarioData("95", $horario, $data);
+                    if ($outrasCorridasCkc) {
+                        return "Não é possível cadastrar a corrida, pois ela não pode acontecer no mesmo dia e horário que uma da categoria 110";
+                    } elseif ($outrasCorridasDdl) {
+                        return "Não é possivel cadastrar a corrida, pois ela não pode acontecer no mesmo dia e horário que uma do Desafio dos Loucos";
+                    } elseif ($corridaJaExiste) {
+                        return "Não é possivel cadastrar a corrida, pois já existe uma com mesma data e horário";
+                    }
+                }
+                if ($categoria == "110") {
+                    $corridaJaExiste = $campeonatoModel->selecionarCampeonatosPorCategoriaHorarioData("110", $horario, $data);
+                    if ($outrasCorridasCkc) {
+                        return "Não é possível cadastrar a corrida, pois ela não pode acontecer no mesmo dia e horário que uma da categoria 95";
+                    } elseif ($corridaJaExiste){
+                        return "Não é possivel cadastrar a corrida, pois já existe uma com mesma data e horário";
+                    }
+                }
+                return "Sucesso"; 
+            } else {
+                return "Sucesso";
+            }
+        } catch (PDOException $erro) {
+            return "Erro ao validar o horário da corrida: " . $erro->getMessage();
         }
     }
 
@@ -198,5 +285,4 @@ class Corrida
             );
         }
     }
-
 }
