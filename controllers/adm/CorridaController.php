@@ -9,18 +9,21 @@ class CorridaController extends RenderView
 {
     public function mostrarCorridas() {
         $corridaModel = new Corrida();
+        $campeonatoModel = new Campeonato();
+
         $corridas = $corridaModel->selecionarTodasAsCorridasComNomes();
+        $campeonatos = $campeonatoModel->selecionarNomesEIdsDosCampeonatos();
         $feedback = '';
         $classe = '';
     
         // Verifica se tem requisição GET, por conta do filtro
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $filtroNome = isset($_GET['filtroNome']) ? $_GET['filtroNome'] : '';
-            $filtroDataInicio = isset($_GET['filtroDataInicio']) ? $_GET['filtroDataInicio'] : '';
+            $filtroCampeonato = isset($_GET['filtroCampeonato']) ? $_GET['filtroCampeonato'] : '';
             $filtroData = isset($_GET['filtroData']) ? $_GET['filtroData'] : '';
     
-            if (!empty($filtroNome) || !empty($filtroDataInicio) || !empty($filtroData)) {
-                $consulta = $corridaModel->consultarCorridaPorFiltro($filtroNome, $filtroDataInicio, $filtroData);
+            if (!empty($filtroNome) || !empty($filtroCampeonato) || !empty($filtroData)) {
+                $consulta = $corridaModel->consultarCorridaPorFiltro($filtroNome, $filtroCampeonato, $filtroData);
     
                 $corridas = $consulta['corridas'];
                 $feedback = $consulta['feedback'];
@@ -38,7 +41,8 @@ class CorridaController extends RenderView
         $this->carregarViewComArgumentos('adm/crudCorridas', [
             'corridas' => $corridas,
             'feedback' => $feedback,
-            'classe' => $classe
+            'classe' => $classe,
+            'campeonatos' => $campeonatos
         ]);
     }
 

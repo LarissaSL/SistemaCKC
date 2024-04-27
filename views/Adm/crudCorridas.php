@@ -64,7 +64,15 @@
                 </div>
                 <div class="form-group col-md-3">
                     <label for="filtroCampeonato">Filtrar por Campeonato</label>
-                    <input type="text" class="form-control" id="filtroCampeonato" name="filtroCampeonato" value="<?php echo isset($_GET['filtroCampeonato']) ? htmlspecialchars($_GET['filtroCampeonato']) : ''; ?>">
+                    <select class="form-control" id="filtroCampeonato" name="filtroCampeonato">
+                        <option value="">Selecione um Campeonato</option>
+                        <?php 
+                        foreach ($campeonatos as $campeonato) {
+                            $selected = isset($_GET['filtroCampeonato']) && $_GET['filtroCampeonato'] == $campeonato['Id'] ? 'selected' : '';
+                            echo "<option value='" . $campeonato['Id'] . "' $selected>" . $campeonato['Nome'] . "</option>";
+                        }
+                        ?>
+                    </select>
                 </div>
                 <div class="form-group col-md-3">
                     <label for="filtroData">Filtrar por Data</label>
@@ -75,6 +83,7 @@
                 </div>
             </div>
         </form>
+
 
         <?php
             if (isset($classe) && $classe == 'erro') : ?>

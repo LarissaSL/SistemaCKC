@@ -237,22 +237,25 @@ class Corrida
         }
     }
 
-    //Ver o filtro de NomeDoCampeonato
-    public function consultarCorridaPorFiltro($filtroNome, $filtroDataInicio, $filtroData)
+    public function consultarCorridaPorFiltro($filtroNome, $filtroCampeonatoId, $filtroData)
     {
         try {
-            $sql = "SELECT * FROM corrida WHERE 1";
+            $sql = "SELECT corrida.*, campe.Nome AS Nome_Campeonato, karto.Nome AS Nome_Kartodromo 
+                    FROM corrida 
+                    INNER JOIN campeonato campe ON corrida.Campeonato_id = campe.Id 
+                    INNER JOIN kartodromo karto ON corrida.Kartodromo_id = karto.Id 
+                    WHERE 1";
 
             if (!empty($filtroNome)) {
-                $sql .= " AND Nome LIKE :filtroNome";
+                $sql .= " AND corrida.Nome LIKE :filtroNome";
             }
 
-            if (!empty($filtroDataInicio)) {
-                $sql .= " AND Data_corrida >= :filtroDataInicio";
+            if (!empty($filtroCampeonatoId)) {
+                $sql .= " AND corrida.Campeonato_id = :filtroCampeonatoId";
             }
 
             if (!empty($filtroData)) {
-                $sql .= " AND Data_corrida = :filtroData";
+                $sql .= " AND corrida.Data_corrida = :filtroData";
             }
 
             $consulta = $this->conexao->prepare($sql);
@@ -262,8 +265,8 @@ class Corrida
                 $consulta->bindParam(':filtroNome', $filtroNome);
             }
 
-            if (!empty($filtroDataInicio)) {
-                $consulta->bindParam(':filtroDataInicio', $filtroDataInicio);
+            if (!empty($filtroCampeonatoId)) {
+                $consulta->bindParam(':filtroCampeonatoId', $filtroCampeonatoId);
             }
 
             if (!empty($filtroData)) {
