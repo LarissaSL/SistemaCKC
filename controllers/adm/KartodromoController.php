@@ -119,8 +119,8 @@ class KartodromoController extends RenderView
 
                         // Verificar se o cadastro foi realizado com sucesso
                         if ($resultado == "Sucesso") {
-                            $feedback = 'Kartódromo cadastrado com sucesso!';
-                            $classe = "sucesso";
+                            header('Location: /sistemackc/admtm85/kartodromo');
+                            exit();
                         } else {
                             $feedback = 'Erro ao cadastrar o kartódromo: ' . $resultado;
                             $classe = "erro";
@@ -246,10 +246,8 @@ class KartodromoController extends RenderView
 
                     // Verificar se a alteração foi realizada com sucesso
                     if ($resultado == "Sucesso") {
-                        $feedback = 'Kartódromo alterado com sucesso!';
-                        $classe = "sucesso";
-                        $kartodromoResultado = $kartodromoModel->selecionarKartodromoPorId($id);
-                        $dados = [$kartodromoResultado['Foto'], $kartodromoResultado['Nome'], $kartodromoResultado['CEP'], $kartodromoResultado['Rua'], $kartodromoResultado['Bairro'], $kartodromoResultado['Numero'], $kartodromoResultado['Site']];
+                        header('Location: /sistemackc/admtm85/kartodromo');
+                        exit();
                     } else {
                         $feedback = $resultado;
                         $classe = "erro";
