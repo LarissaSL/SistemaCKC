@@ -121,18 +121,18 @@ class CorridaController extends RenderView
         }
         $corridaModel = new Corrida();
         $infoCorrida = $corridaModel->selecionarCorridaPorId($id);
-
+    
         $feedback = "";
         $classe = "";
-
+    
         $campeonatoModel = new Campeonato();
         $kartodromoModel = new Kartodromo();
         $dadosCampeonatos = $campeonatoModel->selecionarNomesEIdsDosCampeonatos();
         $dadosKartodromos = $kartodromoModel->selecionarNomesEIdsDosKartodromos();
-
+    
         $nomeCampeonatoSelecionado = $campeonatoModel->selecionarCampeonatoPorId($infoCorrida['Campeonato_id']);
         $nomeKartodromoSelecionado = $kartodromoModel->selecionarKartodromoPorId($infoCorrida['Kartodromo_id']);
-
+    
         $dados = [
             $infoCorrida['Nome'],
             $infoCorrida['Campeonato_id'],
@@ -144,7 +144,7 @@ class CorridaController extends RenderView
             $infoCorrida['Horario'],
             $infoCorrida['Tempo_corrida']
         ];
-
+    
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             $campeonato_id = $_POST['campeonato_id'];
@@ -154,6 +154,10 @@ class CorridaController extends RenderView
             $dataCorrida = $_POST['dataCorrida'];
             $horario = $_POST['horario'];
             $tempoCorrida = $_POST['tempoCorrida'];
+
+            $nomeCampeonatoSelecionado = $campeonatoModel->selecionarCampeonatoPorId($campeonato_id);
+            $nomeKartodromoSelecionado = $kartodromoModel->selecionarKartodromoPorId($infoCorrida['Kartodromo_id']);
+
             /* Se quiser que retorne no formulário os dados antigos e já salvos do sistema, retirar a linha de código abaixo */
             $dados = [
                 $nome,
@@ -166,15 +170,18 @@ class CorridaController extends RenderView
                 $horario,
                 $tempoCorrida
             ];
-
+    
             $dataCorridaFormatada = date('Y-m-d', strtotime($dataCorrida));
             $tempoCorridaFormatada = date('H:i:s', strtotime($tempoCorrida));
-
+    
             // Alterar no BD
             $corridaModel = new Corrida();
             $validacaoDataCorrida = $corridaModel->validarDataCorrida($campeonato_id, $dataCorrida);
-
-            if($validacaoDataCorrida == "Sucesso") {
+            $validarCategoria = $corridaModel->validarCategoria($nomeCampeonatoSelecionado['Nome'], $categoria);
+            $validarHorario = $corridaModel->validarHorario($campeonato_id, $categoria, $horario, $dataCorrida);
+            $validarDuracao = $corridaModel->validarDuracao($tempoCorrida);
+    
+            if($validacaoDataCorrida == "Sucesso" && $validarCategoria == "Sucesso" && $validarHorario == "Sucesso" && $validarDuracao == "Sucesso") {
                 $resultado = $corridaModel->alterarCorrida($id, $campeonato_id, $kartodromo_id, $nome, $categoria, $dataCorridaFormatada, $horario, $tempoCorridaFormatada);
                 if ($resultado == "Sucesso") {
                     header('Location: /sistemackc/admtm85/corrida');
@@ -184,17 +191,34 @@ class CorridaController extends RenderView
                     $classe = "erro";
                 }
             } else {
-                $feedback = $validacaoDataCorrida['feedback'];
-                $classe = $validacaoDataCorrida['classe'];
+                $classe = "erro";
+                if($validarCategoria != "Sucesso") {
+                    $feedback = $validarCategoria;
+    
+                } elseif ($validacaoDataCorrida != "Sucesso") {
+                    $feedback = $validacaoDataCorrida['feedback'];
+                } elseif ($validarHorario != "Sucesso") {
+                    $feedback = $validarHorario;
+                } else {
+                    $feedback = $validarDuracao;
+                }
+    
+                $this->carregarViewComArgumentos('adm/atualizarCorrida', [
+                    'feedback' => $feedback,
+                    'classe' => $classe,
+                    'dados' => $dados,
+                    'dadosCampeonatos' => $dadosCampeonatos,
+                    'dadosKartodromos' => $dadosKartodromos
+                ]);
             }
+            
+        } else {
+            $this->carregarViewComArgumentos('adm/atualizarCorrida' , [
+                'dadosCampeonatos' => $dadosCampeonatos, 
+                'dadosKartodromos' => $dadosKartodromos,
+                'dados' => $dados
+            ]);
         }
-        $this->carregarViewComArgumentos('adm/atualizarCorrida', [
-            'feedback' => $feedback,
-            'classe' => $classe,
-            'dados' => $dados,
-            'dadosCampeonatos' => $dadosCampeonatos,
-            'dadosKartodromos' => $dadosKartodromos
-        ]);
     }
 
     public function excluir($id) {

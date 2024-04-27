@@ -200,10 +200,10 @@ class Corrida
             if (stripos($dadosCampeonato['Nome'], 'Desafio dos Loucos') !== false) {
                 $outrasCorridasCkc = $campeonatoModel->selecionarCampeonatosPorCategoriaHorarioData("95", $horario, $data);
                 if ($outrasCorridasCkc) {
-                    return "Não é possivel cadastrar a corrida pois, ela não pode acontecer no mesmo dia e horário que uma do Crash Kart Championship categoria 95"; 
+                    return "Não é possível realizar a operação, pois ela não pode acontecer no mesmo dia e horário que uma do Crash Kart Championship categoria 95"; 
                 } else {
                     if($outrasCorridasDdl) {
-                        return "Não é possivel cadastrar a corrida, pois já existe uma com mesma data e horário";
+                        return "Não é possível realizar a operação, pois já existe uma com mesma data e horário";
                     }
                 }
                 return "Sucesso";
@@ -213,19 +213,19 @@ class Corrida
                 if ($categoria == "95") {
                     $corridaJaExiste = $campeonatoModel->selecionarCampeonatosPorCategoriaHorarioData("95", $horario, $data);
                     if ($outrasCorridasCkc) {
-                        return "Não é possível cadastrar a corrida, pois ela não pode acontecer no mesmo dia e horário que uma da categoria 110";
+                        return "Não é possível realizar a operação, pois ela não pode acontecer no mesmo dia e horário que uma da categoria 110";
                     } elseif ($outrasCorridasDdl) {
-                        return "Não é possivel cadastrar a corrida, pois ela não pode acontecer no mesmo dia e horário que uma do Desafio dos Loucos";
+                        return "Não é possível realizar a operação, pois ela não pode acontecer no mesmo dia e horário que uma do Desafio dos Loucos";
                     } elseif ($corridaJaExiste) {
-                        return "Não é possivel cadastrar a corrida, pois já existe uma com mesma data e horário";
+                        return "Não é possível realizar a operação, pois já existe uma com mesma data e horário";
                     }
                 }
                 if ($categoria == "110") {
                     $corridaJaExiste = $campeonatoModel->selecionarCampeonatosPorCategoriaHorarioData("110", $horario, $data);
                     if ($outrasCorridasCkc) {
-                        return "Não é possível cadastrar a corrida, pois ela não pode acontecer no mesmo dia e horário que uma da categoria 95";
+                        return "Não é possível realizar a operação, pois ela não pode acontecer no mesmo dia e horário que uma da categoria 95";
                     } elseif ($corridaJaExiste){
-                        return "Não é possivel cadastrar a corrida, pois já existe uma com mesma data e horário";
+                        return "Não é possível realizar a operação, pois já existe uma com mesma data e horário";
                     }
                 }
                 return "Sucesso"; 
