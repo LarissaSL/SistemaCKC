@@ -5,7 +5,7 @@ $routes = [
     '/' => 'usuario#SiteUsuarioController#index',
     '/logout' => 'usuario#UsuarioController#logout',
     '/historia' => 'usuario#SiteUsuarioController#historia',
-    '/etapas' => 'usuario#SiteUsuarioController#etapas',
+    '/etapas' => 'adm#CorridaController#mostrarCorridasUsuario',
 
 
     //Rotas Usuario

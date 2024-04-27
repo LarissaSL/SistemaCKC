@@ -48,6 +48,7 @@
                         </li>
                     <?php } elseif (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
                         echo "<li><a href='/sistemackc/admtm85/usuario'>Usuarios</a></li>";
+                        echo "<li><a href='/sistemackc/admtm85/campeonato'>Campeonatos</a></li>";
                         echo "<li><a href='/sistemackc/admtm85/corrida'>Corridas</a></li>";
                         echo "<li><a href='/sistemackc/admtm85/kartodromo'>Kartodromos</a></li>";
                         echo "<li><a href='#'>Resultados</a></li>";

@@ -46,6 +46,17 @@ class CorridaController extends RenderView
         ]);
     }
 
+    public function mostrarCorridasUsuario() {
+        
+        $corridaModel = new Corrida();
+
+        $corridas = $corridaModel->construirHtml();
+        $this->carregarViewComArgumentos('etapas', [
+            'corridas' => $corridas
+        ]);
+
+    }
+
     public function cadastrar()
     {
         $campeonatoModel = new Campeonato();

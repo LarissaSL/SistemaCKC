@@ -237,6 +237,59 @@ class Corrida
         }
     }
 
+    public function selecionarTodasAsCorridasComNomesEEnderecos()
+    {
+        try {
+            $query = "SELECT corrida.*, campe.Nome AS Nome_Campeonato, karto.Nome AS Nome_Kartodromo, CONCAT(karto.Rua, ', ', karto.Bairro, ', CEP: ', karto.CEP, ', ', karto.Numero) AS Endereco_Kartodromo
+                    FROM corrida 
+                    INNER JOIN campeonato campe ON corrida.Campeonato_id = campe.Id 
+                    INNER JOIN kartodromo karto ON corrida.Kartodromo_id = karto.Id";
+            $selecionar = $this->conexao->prepare($query);
+            $selecionar->execute();
+
+            return $selecionar->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $erro) {
+            throw new Exception("Erro ao selecionar todas as corridas com nomes e endereços: " . $erro->getMessage());
+        }
+    }
+
+    public function construirHtml() {
+        $infoCorridas = $this->selecionarTodasAsCorridasComNomesEEnderecos();
+    
+        $corridasFormatadas = array();
+    
+        foreach ($infoCorridas as $corrida) {
+            // Formataçoes de Data e Horario
+            $data = date('d/m/Y', strtotime($corrida['Data_corrida']));
+            
+            $horaFormatada = date('H:i:s', strtotime($corrida['Horario']));
+            $partesHora = explode(":", $horaFormatada);
+            $horas = $partesHora[0];
+            $minutos = $partesHora[1]; 
+
+            if (stripos($corrida['Nome_Campeonato'], 'Crash Kart Championship') !== false) {
+                $nomeAbreviado = 'ckc';
+            } else {
+                $nomeAbreviado = 'ddl'; 
+            }
+    
+            // Retornos pra view
+            $corridasFormatadas[] = array(
+                'nome' => $corrida['Nome'],
+                'categoria' => $corrida['Categoria'],
+                'nomeDoCampeonato' => $corrida['Nome_Campeonato'],
+                'nomeDoKartodromo' => $corrida['Nome_Kartodromo'],
+                'nomeAbreviado' => $nomeAbreviado,
+                'enderecoDoKartodromo' => $corrida['Endereco_Kartodromo'],
+                'data' => $data,
+                'hora' => $horas,
+                'minuto' => $minutos
+            );
+        }
+    
+        return $corridasFormatadas;
+    }
+
     public function consultarCorridaPorFiltro($filtroNome, $filtroCampeonatoId, $filtroData)
     {
         try {
