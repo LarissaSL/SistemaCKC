@@ -140,7 +140,7 @@
             </div>
 
             <div>
-                <button type="submit">Enviar</button>
+                <button type="submit">Cadastrar</button>
             </div>
         </form>
     </section>

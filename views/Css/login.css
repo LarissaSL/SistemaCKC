@@ -5,21 +5,6 @@ main, footer{
     margin-inline: 1.6rem;
 }
 
-/* bt de voltar */
-div#bt-go-back {
-    display: flex;
-    margin: .3em;
-    align-items: center;
-    justify-content: flex-start;
-   
-}
-
-/* seta do voltar */
-i.ph.ph-caret-left {
-    top: .1rem;
-    position: relative;
-}
-
 /* section */
 .container{
     height: calc(100% - 5rem);
