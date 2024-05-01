@@ -53,7 +53,7 @@
     <form method="get">
         <div class="row my-4">
             <div class="col">
-                <label>Buscar por Nome</label>
+                <label>Filtrar por Nome</label>
                 <input type="text" name="busca" class="form-control" value="<?php echo htmlspecialchars($busca); ?>">
             </div>
             <div class="col">

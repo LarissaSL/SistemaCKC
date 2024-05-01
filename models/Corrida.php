@@ -156,13 +156,13 @@ class Corrida
         $nomeCampeonatoMinusculo = strtolower($nomeCampeonato);
         $feedbackErro = "Esse campeonato não permite essa categoria";
 
-        if (strpos('crash kart championship', $nomeCampeonatoMinusculo) !== false) {
+        if (stripos($nomeCampeonatoMinusculo, 'Crash Kart Championship') !== false || stripos($nomeCampeonatoMinusculo, 'ckc') !== false) {
             if ($categoria == "Livre") {
                 return $feedbackErro;
             } else {
                 return "Sucesso";
             }
-        } elseif (strpos('desafio dos loucos', $nomeCampeonatoMinusculo) !== false) {
+        } elseif (stripos($nomeCampeonatoMinusculo, 'Desafio dos Loucos') !== false || stripos($nomeCampeonatoMinusculo, 'ddl') !== false) {
             if ($categoria == "Livre") {
                 return "Sucesso";
             } else {
@@ -185,20 +185,20 @@ class Corrida
         }
     }
 
-    public function validarHorario($campeonato_id, $categoria, $horario, $data)
+    public function validarHorario($campeonato_id, $categoria, $horario, $data, $nome)
     {
         try {
             $campeonatoModel = new Campeonato();
             $dadosCampeonato = $campeonatoModel->selecionarCampeonatoPorId($campeonato_id);
             
             $categoriaDeBusca = $categoria == "95" ? "110" : "95";
-            $outrasCorridasCkc = $campeonatoModel->selecionarCampeonatosPorCategoriaHorarioData($categoriaDeBusca, $horario, $data);
-            $outrasCorridasDdl = $campeonatoModel->selecionarCampeonatosPorCategoriaHorarioData('Livre', $horario, $data);
+            $outrasCorridasCkc = $campeonatoModel->selecionarCampeonatosPorCategoriaHorarioData($categoriaDeBusca, $horario, $data, $nome);
+            $outrasCorridasDdl = $campeonatoModel->selecionarCampeonatosPorCategoriaHorarioData('Livre', $horario, $data, $nome);
 
             
             // Verificações pro DDL
-            if (stripos($dadosCampeonato['Nome'], 'Desafio dos Loucos') !== false) {
-                $outrasCorridasCkc = $campeonatoModel->selecionarCampeonatosPorCategoriaHorarioData("95", $horario, $data);
+            if (stripos($dadosCampeonato['Nome'], 'Desafio dos Loucos') !== false || stripos($dadosCampeonato['Nome'], 'ddl') !== false) {
+                $outrasCorridasCkc = $campeonatoModel->selecionarCampeonatosPorCategoriaHorarioData("95", $horario, $data, $nome);
                 if ($outrasCorridasCkc) {
                     return "Não é possível realizar a operação, pois ela não pode acontecer no mesmo dia e horário que uma do Crash Kart Championship categoria 95"; 
                 } else {
@@ -209,9 +209,9 @@ class Corrida
                 return "Sucesso";
                  
             // Verificações pro CKC
-            } elseif (stripos($dadosCampeonato['Nome'], 'Crash Kart Championship') !== false) {
+            } elseif (stripos($dadosCampeonato['Nome'], 'Crash Kart Championship') !== false || stripos($dadosCampeonato['Nome'], 'ckc') !== false) {
                 if ($categoria == "95") {
-                    $corridaJaExiste = $campeonatoModel->selecionarCampeonatosPorCategoriaHorarioData("95", $horario, $data);
+                    $corridaJaExiste = $campeonatoModel->selecionarCampeonatosPorCategoriaHorarioData("95", $horario, $data, $nome);
                     if ($outrasCorridasCkc) {
                         return "Não é possível realizar a operação, pois ela não pode acontecer no mesmo dia e horário que uma da categoria 110";
                     } elseif ($outrasCorridasDdl) {
@@ -221,7 +221,7 @@ class Corrida
                     }
                 }
                 if ($categoria == "110") {
-                    $corridaJaExiste = $campeonatoModel->selecionarCampeonatosPorCategoriaHorarioData("110", $horario, $data);
+                    $corridaJaExiste = $campeonatoModel->selecionarCampeonatosPorCategoriaHorarioData("110", $horario, $data, $nome);
                     if ($outrasCorridasCkc) {
                         return "Não é possível realizar a operação, pois ela não pode acontecer no mesmo dia e horário que uma da categoria 95";
                     } elseif ($corridaJaExiste){
@@ -256,38 +256,39 @@ class Corrida
     public function construirHtml() {
         $infoCorridas = $this->selecionarTodasAsCorridasComNomesEEnderecos();
     
-        $corridasFormatadas = array();
+        if (!empty($infoCorridas)) {
+            $corridasFormatadas = array();
     
-        foreach ($infoCorridas as $corrida) {
-            // Formataçoes de Data e Horario
-            $data = date('d/m/Y', strtotime($corrida['Data_corrida']));
-            
-            $horaFormatada = date('H:i:s', strtotime($corrida['Horario']));
-            $partesHora = explode(":", $horaFormatada);
-            $horas = $partesHora[0];
-            $minutos = $partesHora[1]; 
+            foreach ($infoCorridas as $corrida) {
+                // Formataçoes de Data e Horario
+                $data = date('d/m/Y', strtotime($corrida['Data_corrida']));
+                
+                $horaFormatada = date('H:i:s', strtotime($corrida['Horario']));
+                $partesHora = explode(":", $horaFormatada);
+                $horas = $partesHora[0];
+                $minutos = $partesHora[1]; 
 
-            if (stripos($corrida['Nome_Campeonato'], 'Crash Kart Championship') !== false) {
-                $nomeAbreviado = 'ckc';
-            } else {
-                $nomeAbreviado = 'ddl'; 
+                if (stripos($corrida['Nome_Campeonato'], 'Crash Kart Championship') !== false || stripos($corrida['Nome_Campeonato'], 'ckc') !== false) {
+                    $nomeAbreviado = 'ckc';
+                } else {
+                    $nomeAbreviado = 'ddl'; 
+                }
+        
+                // Retornos pra view
+                $corridasFormatadas[] = array(
+                    'nome' => $corrida['Nome'],
+                    'categoria' => $corrida['Categoria'],
+                    'nomeDoCampeonato' => $corrida['Nome_Campeonato'],
+                    'nomeDoKartodromo' => $corrida['Nome_Kartodromo'],
+                    'nomeAbreviado' => $nomeAbreviado,
+                    'enderecoDoKartodromo' => $corrida['Endereco_Kartodromo'],
+                    'data' => $data,
+                    'hora' => $horas,
+                    'minuto' => $minutos
+                );
             }
-    
-            // Retornos pra view
-            $corridasFormatadas[] = array(
-                'nome' => $corrida['Nome'],
-                'categoria' => $corrida['Categoria'],
-                'nomeDoCampeonato' => $corrida['Nome_Campeonato'],
-                'nomeDoKartodromo' => $corrida['Nome_Kartodromo'],
-                'nomeAbreviado' => $nomeAbreviado,
-                'enderecoDoKartodromo' => $corrida['Endereco_Kartodromo'],
-                'data' => $data,
-                'hora' => $horas,
-                'minuto' => $minutos
-            );
-        }
-    
-        return $corridasFormatadas;
+            return $corridasFormatadas;
+        } 
     }
 
     public function consultarCorridaPorFiltro($filtroNome, $filtroCampeonatoId, $filtroData)
@@ -328,11 +329,21 @@ class Corrida
 
             $consulta->execute();
 
-            return array(
-                'corridas' => $consulta->fetchAll(PDO::FETCH_ASSOC),
-                'feedback' => "Sucesso",
-                'classe' => "Sucesso"
-            );
+            $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
+
+            if (empty($resultados)) {
+                return array( 
+                    'corridas' => $resultados,
+                    'feedback' => "Nenhuma corrida encontrada",
+                    'classe' => "erro"
+                );
+            } else {
+                return array(
+                    'corridas' => $resultados,
+                    'feedback' => "Sucesso",
+                    'classe' => "Sucesso"
+                );
+            } 
         } catch (PDOException $erro) {
             return array(
                 'corridas' => array(),

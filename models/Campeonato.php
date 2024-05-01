@@ -148,7 +148,7 @@ class Campeonato
         }  
     }
 
-    public function selecionarCampeonatosPorCategoriaHorarioData($categoria, $horario, $data)
+    public function selecionarCampeonatosPorCategoriaHorarioData($categoria, $horario, $data, $nome)
     {
         try {
             $query = "SELECT campeonato.* 
@@ -156,12 +156,14 @@ class Campeonato
                     INNER JOIN corrida ON campeonato.Id = corrida.Campeonato_id 
                     WHERE corrida.Categoria = :categoria 
                     AND corrida.Horario = :horario 
+                    AND corrida.Nome = :nome
                     AND DATE(corrida.Data_corrida) = :data 
                     GROUP BY campeonato.Id";
 
             $selecionar = $this->conexao->prepare($query);
             $selecionar->bindParam(':categoria', $categoria);
             $selecionar->bindParam(':horario', $horario);
+            $selecionar->bindParam(':nome', $nome);
             $selecionar->bindParam(':data', $data);
             $selecionar->execute();
 
@@ -213,11 +215,21 @@ class Campeonato
 
             $consulta->execute();
 
-            return array(
-                'campeonatos' => $consulta->fetchAll(PDO::FETCH_ASSOC),
-                'feedback' => "Sucesso",
-                'classe' => "Sucesso"
-            );
+            $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
+
+            if (empty($resultados)) {
+                return array( 
+                    'campeonatos' => $resultados,
+                    'feedback' => "Nenhum campeonato encontrado",
+                    'classe' => "erro"
+                );
+            } else {
+                return array(
+                    'campeonatos' => $resultados,
+                    'feedback' => "Sucesso",
+                    'classe' => "Sucesso"
+                );
+            } 
         } catch (PDOException $erro) {
             return array(
                 'campeonatos' => array(),

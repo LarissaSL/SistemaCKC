@@ -43,11 +43,14 @@ class Kartodromo
 
     public function verificarCep($cep)
     {
+        if (preg_match('/[a-zA-Z]/', $cep)) {
+            return 'Digite apenas números no CEP, por favor';
+        }
+        
         if (strlen($cep) !== 8) {
             return 'Tamanho do CEP está incorreto, por favor digite apenas 8 números';
-        } else {
-            return 'aceito';
         }
+        return 'aceito';
     }
 
     public function formatarCep($cep)
@@ -189,11 +192,21 @@ class Kartodromo
 
             $consulta->execute();
 
-            return array(
-                'kartodromos' => $consulta->fetchAll(PDO::FETCH_ASSOC),
-                'feedback' => 'Consulta realizada com sucesso.',
-                'classe' => 'alert alert-success'
-            );
+            $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
+
+            if (empty($resultados)) {
+                return array( 
+                    'kartodromos' => $resultados,
+                    'feedback' => "Nenhum Kartódromo encontrado",
+                    'classe' => "alert alert-danger"
+                );
+            } else {
+                return array(
+                    'kartodromos' => $resultados,
+                    'feedback' => "Sucesso",
+                    'classe' => "Sucesso"
+                );
+            } 
         } catch (PDOException $erro) {
             return array(
                 'kartodromos' => array(),

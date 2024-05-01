@@ -51,10 +51,18 @@ class CorridaController extends RenderView
         $corridaModel = new Corrida();
 
         $corridas = $corridaModel->construirHtml();
-        $this->carregarViewComArgumentos('etapas', [
-            'corridas' => $corridas
-        ]);
 
+        if (empty($corridas)) {
+            $this->carregarViewComArgumentos('etapas', [
+                'feedback' => 'Nenhuma corrida Cadastrada',
+                'classe' => 'erro'
+            ]);
+        } else {
+            $this->carregarViewComArgumentos('etapas', [
+                'corridas' => $corridas,
+                'classe' => 'Sucesso'
+            ]);
+        }
     }
 
     public function cadastrar()
@@ -64,7 +72,6 @@ class CorridaController extends RenderView
 
         $dadosCampeonatos = $campeonatoModel->selecionarNomesEIdsDosCampeonatos();
         $dadosKartodromos = $kartodromoModel->selecionarNomesEIdsDosKartodromos();
-
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $campeonato_id = $_POST['campeonato_id'];
@@ -79,6 +86,30 @@ class CorridaController extends RenderView
             $dataCorridaFormatada = date('Y-m-d', strtotime($dataCorrida));
             $tempoCorridaFormatada = date('H:i:s', strtotime($tempoCorrida));
 
+            if ($campeonato_id == "" || $kartodromo_id == "") {
+                $mensagem = "";
+                $dados = [$nome, $campeonato_id, "", $kartodromo_id, "",  $categoria, $dataCorrida, $horario, $tempoCorrida];
+                
+                if ($campeonato_id == "" && $kartodromo_id == "") {
+                    $mensagem = "Selecione um Campeonato e Kartódromo, por favor. ";
+                } elseif ($campeonato_id == "") {
+                    $mensagem = "Selecione um Campeonato, por favor.";
+                    $dados[4] = $nomeKartodromoSelecionado = $kartodromoModel->selecionarKartodromoPorId($kartodromo_id)['Nome'];
+                } else {
+                    $mensagem = "Selecione um Kartódromo, por favor.";
+                    $dados[2] = $nomeCampeonatoSelecionado = $campeonatoModel->selecionarCampeonatoPorId($campeonato_id)['Nome'];
+                }
+                
+                $this->carregarViewComArgumentos('adm/cadastrarCorrida', [
+                    'feedback' => $mensagem,
+                    'classe' => "erro",
+                    'dados' => $dados,
+                    'dadosCampeonatos' => $dadosCampeonatos,
+                    'dadosKartodromos' => $dadosKartodromos
+                ]);
+                return;
+            }
+
             $nomeCampeonatoSelecionado = $campeonatoModel->selecionarCampeonatoPorId($campeonato_id);
             $nomeKartodromoSelecionado = $kartodromoModel->selecionarKartodromoPorId($kartodromo_id);
 
@@ -88,7 +119,7 @@ class CorridaController extends RenderView
             $validarCategoria = $corridaModel->validarCategoria($nomeCampeonatoSelecionado['Nome'], $categoria);
             $validarDataCorrida = $corridaModel->validarDataCorrida($campeonato_id, $dataCorrida);
             $validarDuracao = $corridaModel->validarDuracao($tempoCorrida);
-            $validarHorario = $corridaModel->validarHorario($campeonato_id, $categoria, $horario, $dataCorrida);
+            $validarHorario = $corridaModel->validarHorario($campeonato_id, $categoria, $horario, $dataCorrida, $nome);
 
             if($validarDataCorrida == "Sucesso" && $validarCategoria == "Sucesso" && $validarDuracao == "Sucesso" && $validarHorario == "Sucesso") {
                 $resultado = $corridaModel->inserirCorrida($campeonato_id, $kartodromo_id, $nome, $categoria, $dataCorridaFormatada, $horario, $tempoCorridaFormatada);
@@ -102,25 +133,22 @@ class CorridaController extends RenderView
             } else {
                 if($validarCategoria != "Sucesso") {
                     $feedback = $validarCategoria;
-
                 } elseif ($validarDataCorrida != "Sucesso") {
                     $feedback = $validarDataCorrida['feedback'];
                 } elseif ($validarHorario != "Sucesso") {
                     $feedback = $validarHorario;
-                }
-                else {
+                } else {
                     $feedback = $validarDuracao;
                 }
-
-                $this->carregarViewComArgumentos('adm/cadastrarCorrida', [
-                    'feedback' => $feedback,
-                    'classe' => "erro",
-                    'dados' => $dadosPreenchidos,
-                    'dadosCampeonatos' => $dadosCampeonatos,
-                    'dadosKartodromos' => $dadosKartodromos
-                ]);
             }
-            
+
+            $this->carregarViewComArgumentos('adm/cadastrarCorrida', [
+                'feedback' => $feedback,
+                'classe' => "erro",
+                'dados' => $dadosPreenchidos,
+                'dadosCampeonatos' => $dadosCampeonatos,
+                'dadosKartodromos' => $dadosKartodromos
+            ]);
         } else {
             $this->carregarViewComArgumentos('adm/cadastrarCorrida' , [
                 'dadosCampeonatos' => $dadosCampeonatos, 
@@ -193,7 +221,7 @@ class CorridaController extends RenderView
             $corridaModel = new Corrida();
             $validacaoDataCorrida = $corridaModel->validarDataCorrida($campeonato_id, $dataCorrida);
             $validarCategoria = $corridaModel->validarCategoria($nomeCampeonatoSelecionado['Nome'], $categoria);
-            $validarHorario = $corridaModel->validarHorario($campeonato_id, $categoria, $horario, $dataCorrida);
+            $validarHorario = $corridaModel->validarHorario($campeonato_id, $categoria, $horario, $dataCorrida, $nome);
             $validarDuracao = $corridaModel->validarDuracao($tempoCorrida);
     
             if($validacaoDataCorrida == "Sucesso" && $validarCategoria == "Sucesso" && $validarHorario == "Sucesso" && $validarDuracao == "Sucesso") {

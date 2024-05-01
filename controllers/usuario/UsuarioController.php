@@ -21,11 +21,18 @@ class UsuarioController extends RenderView
 
             if(!empty($busca) || !empty($tipo))
             {
-                $consulta = $usuarioModel->consultarUsuariosComFiltro($busca, $tipo);
+                if (!preg_match('/\d/', $busca)) {
+                    $consulta = $usuarioModel->consultarUsuariosComFiltro($busca, $tipo);
 
-                $usuarios = $consulta['usuarios'];
-                $feedback = $consulta['feedback'];
-                $classe = $consulta['classe'];
+                    $usuarios = $consulta['usuarios'];
+                    $feedback = $consulta['feedback'];
+                    $classe = $consulta['classe'];
+                } else {
+                    $feedback = 'Digite apenas letras por favor';
+                    $classe = 'alert alert-danger';
+                }
+
+                
             } else {
                 $usuarios = $usuarioModel->consultarTodosOsUsuarios();
             }

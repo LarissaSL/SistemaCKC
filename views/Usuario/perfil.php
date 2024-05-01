@@ -199,7 +199,7 @@
                             <?php if ((isset($_SESSION['email']) && $_SESSION['email'] == $usuario['Email']) || (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador')) : ?>
                                 <div class="campo">
                                     <label class="cpf" for="cpf">CPF:</label>
-                                    <input type="text" name="cpf" value="<?php echo $usuario['Cpf'] ?>" <?php echo (isset($_SESSION['email']) && $_SESSION['email'] == $usuario['Email']) || (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') ? '' : 'readonly'; ?>>
+                                    <input type="text" name="cpf" value="<?php echo $usuario['Cpf'] ?>" readonly>
                                 </div>
                             <?php endif ?>
 

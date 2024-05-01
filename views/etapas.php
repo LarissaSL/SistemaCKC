@@ -77,6 +77,7 @@
     </header>
     <main>
         <?php 
+        if(isset($corridas) && $classe != 'erro') {
             $corrida = $corridas[0];
             echo "Nome da Corrida: " . $corrida['nome'] . "<br>";
             echo "Categoria: " . $corrida['categoria'] . "<br>";
@@ -86,7 +87,9 @@
             echo "Endereço do Kartódromo: " . $corrida['enderecoDoKartodromo'] . "<br>";
             echo "Data: " . $corrida['data'] . "<br>";
             echo "Horario: " . $corrida['hora'] . "h " . $corrida['minuto'] . "min " . "<br><br>";
+        }
         ?>
+        
         <section class="container">
             <!--TITULO DA PAG  -->
             <h1 class="title">Etapas</h1>
@@ -102,34 +105,50 @@
 
             <section class="cards">
                 <!-- CARD CKC 95  -->
-                <?php foreach ($corridas as $corrida){ 
-                    echo "<article class='card_" . $corrida['nomeAbreviado'] . $corrida['categoria'] . "'>";
-                    echo "<div class='titleCad" . $corrida['nomeAbreviado'] . "'>";
-                    echo "<h2><strong class='" . strtolower($corrida['nomeAbreviado']) . "Title'>" . $corrida['nomeAbreviado'] . "</strong> " . $corrida['nome'] . "</h2>";
-                    echo "<span>" . $corrida['nomeDoCampeonato'] . "</span>";
-                    echo "</div>";
-                    echo "<div class='categoria" . $corrida['nomeAbreviado'] . $corrida['categoria'] . "'>";
-                    echo "<span>" . $corrida['categoria'] . " kg</span>";
-                    echo "</div>";
-                    echo "<div class='date" . $corrida['nomeAbreviado'] . "'>";
-                    echo "<span>" . $corrida['data'] . "</span>";
-                    echo "<div class='time" . $corrida['nomeAbreviado'] . "'>";
-                    echo "<i class='ph ph-timer'></i>";
-                    echo "<p>" . $corrida['hora'] . "h " . $corrida['minuto'] . "min</p>";
-                    echo "</div>";
-                    echo "</div>";
-                    echo "<div class='address" . $corrida['nomeAbreviado'] . "'>";
-                    echo "<div class='kart'>";
-                    echo "<i class='ph ph-map-pin'></i>";
-                    echo "<span class='kartodromo'>" . $corrida['nomeDoKartodromo'] . "</span>";
-                    echo "</div>";
-                    echo "<p class='locale" . $corrida['nomeAbreviado'] . "'>";
-                    echo "<strong>Endereço:</strong> " . $corrida['enderecoDoKartodromo'];
-                    echo "</p>";
-                    echo "</div>";
-                    echo "<button class='inscrevase" . $corrida['nomeAbreviado'] . "'>Inscreva-se</button>";
-                    echo "</article>";
-                } ?>
+                <?php 
+
+                if (empty($corridas)) {
+                    if (isset($feedback) && $feedback != '') {
+                        echo "<div class='container-feedback'>";
+                        if ($classe == 'erro') {
+                            echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
+                        } else {
+                            echo "<span class='$classe'><i class='ph ph-check-square'></i><strong>$feedback</strong></span>";
+                        }
+                        echo "</div>";
+                    }
+                } else {
+                    foreach ($corridas as $corrida){ 
+                        echo "<article class='card_" . $corrida['nomeAbreviado'] . $corrida['categoria'] . "'>";
+                        echo "<div class='titleCad" . $corrida['nomeAbreviado'] . "'>";
+                        echo "<h2><strong class='" . strtolower($corrida['nomeAbreviado']) . "Title'>" . $corrida['nomeAbreviado'] . "</strong> " . $corrida['nome'] . "</h2>";
+                        echo "<span>" . $corrida['nomeDoCampeonato'] . "</span>";
+                        echo "</div>";
+                        echo "<div class='categoria" . $corrida['nomeAbreviado'] . $corrida['categoria'] . "'>";
+                        echo "<span>" . $corrida['categoria'] . " kg</span>";
+                        echo "</div>";
+                        echo "<div class='date" . $corrida['nomeAbreviado'] . "'>";
+                        echo "<span>" . $corrida['data'] . "</span>";
+                        echo "<div class='time" . $corrida['nomeAbreviado'] . "'>";
+                        echo "<i class='ph ph-timer'></i>";
+                        echo "<p>" . $corrida['hora'] . "h " . $corrida['minuto'] . "min</p>";
+                        echo "</div>";
+                        echo "</div>";
+                        echo "<div class='address" . $corrida['nomeAbreviado'] . "'>";
+                        echo "<div class='kart'>";
+                        echo "<i class='ph ph-map-pin'></i>";
+                        echo "<span class='kartodromo'>" . $corrida['nomeDoKartodromo'] . "</span>";
+                        echo "</div>";
+                        echo "<p class='locale" . $corrida['nomeAbreviado'] . "'>";
+                        echo "<strong>Endereço:</strong> " . $corrida['enderecoDoKartodromo'];
+                        echo "</p>";
+                        echo "</div>";
+                        echo "<button class='inscrevase" . $corrida['nomeAbreviado'] . "'>Inscreva-se</button>";
+                        echo "</article>";
+                    } 
+                }
+                ?>
+                
 
                 <!--
                 <article class="card_ckc95">

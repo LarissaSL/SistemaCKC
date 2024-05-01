@@ -77,16 +77,13 @@
             <div>
                 <label for="campeonato">Campeonato:</label>
                 <select id="campeonato" name="campeonato_id">
-                    <?php
-                        if(isset($dados[1]) && $dados[1] != "") {
-                            echo "<option value=" . $dados[1] . " selected>" . $dados[2] . "</option>";
-                            foreach ($dadosCampeonatos as $campeonato) {
-                                if ($dados[1] != $campeonato['Id']) {
-                                    echo "<option value=" . $campeonato['Id'] . ">" . $campeonato['Nome'] . "</option>";
-                                }
-                            }
-                        } else {
-                            foreach ($dadosCampeonatos as $campeonato) {
+                    <?php if (!empty($dados[1])) { ?>
+                        <option value="<?php echo $dados[1]; ?>" selected><?php echo $dados[2]; ?></option>
+                    <?php } else { ?>
+                        <option value="" selected>Selecione um Campeonato</option>
+                    <?php }
+                        foreach ($dadosCampeonatos as $campeonato) {
+                            if ($dados[1] != $campeonato['Id']) {
                                 echo "<option value=" . $campeonato['Id'] . ">" . $campeonato['Nome'] . "</option>";
                             }
                         }
@@ -97,16 +94,13 @@
             <div>
                 <label for="kartodromo">Kartódromo:</label>
                 <select id="kartodromo" name="kartodromo_id">
-                    <?php
-                        if(isset($dados[3]) && $dados[3] != "") {
-                            echo "<option value=" . $dados[3] . " selected>" . $dados[4] . "</option>";
-                            foreach ($dadosKartodromos as $kartodromo) {
-                                if ($dados[3] != $kartodromo['Id']) {
-                                    echo "<option value=" . $kartodromo['Id'] . ">" . $kartodromo['Nome'] . "</option>";
-                                }
-                            }
-                        } else {
-                            foreach ($dadosKartodromos as $kartodromo) {
+                    <?php if (!empty($dados[3])) { ?>
+                        <option value="<?php echo $dados[3]; ?>" selected><?php echo $dados[4]; ?></option>
+                    <?php } else { ?>
+                        <option value="" selected>Selecione um Kartodromo</option>
+                    <?php } 
+                        foreach ($dadosKartodromos as $kartodromo) {
+                            if ($dados[3] != $kartodromo['Id']) {
                                 echo "<option value=" . $kartodromo['Id'] . ">" . $kartodromo['Nome'] . "</option>";
                             }
                         }

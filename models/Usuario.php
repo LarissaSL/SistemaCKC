@@ -231,16 +231,24 @@ class Usuario
 
     public function autentificar($email, $senha) 
     {
-        $usuario = $this->consultarUsuarioPorEmail($email);
-
-        if($usuario !== null) {
-            if(password_verify($senha, $usuario['Senha'])){
-                return "Sucesso";
-            } else {
-                return "Senha inválida";
-            }
+        if ($email == null && $senha == null) {
+            return "Preencha os campos para entrar";
+        } elseif ($email == null) {
+            return "Preencha o campo de e-mail";
+        } elseif ($senha == null) {
+            return "Preencha o campo de senha";
         } else {
-            return "Email inválido";
+            $usuario = $this->consultarUsuarioPorEmail($email);
+
+            if($usuario !== null) {
+                if(password_verify($senha, $usuario['Senha'])){
+                    return "Sucesso";
+                } else {
+                    return "Senha inválida";
+                }
+            } else {
+                return "Email inválido";
+            }
         }
     }
 
@@ -284,11 +292,21 @@ class Usuario
 
             $consulta->execute();
 
-            return array(
-                'usuarios' => $consulta->fetchAll(PDO::FETCH_ASSOC),
-                'feedback' => 'Consulta realizada com sucesso.',
-                'classe' => 'alert alert-success'
-            );
+            $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
+
+            if (empty($resultados)) {
+                return array( 
+                    'usuarios' => [],
+                    'feedback' => "Nenhum usuário encontrado",
+                    'classe' => "alert alert-danger"
+                );
+            } else {
+                return array(
+                    'campeonatos' => $consulta->fetchAll(PDO::FETCH_ASSOC),
+                    'feedback' => "Sucesso",
+                    'classe' => "Sucesso"
+                );
+            }
         } 
         catch (PDOException $erro) 
         {
