@@ -13,11 +13,9 @@ class CampeonatoController extends RenderView
         // Verifica se tem requisição GET, por conta do filtro
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $filtroNome = isset($_GET['filtroNome']) ? $_GET['filtroNome'] : '';
-            $filtroDataInicio = isset($_GET['filtroDataInicio']) ? $_GET['filtroDataInicio'] : '';
-            $filtroDataTermino = isset($_GET['filtroDataTermino']) ? $_GET['filtroDataTermino'] : '';
     
-            if (!empty($filtroNome) || !empty($filtroDataInicio) || !empty($filtroDataTermino)) {
-                $consulta = $campeonatoModel->consultarCampeonatoPorFiltro($filtroNome, $filtroDataInicio, $filtroDataTermino);
+            if (!empty($filtroNome)) {
+                $consulta = $campeonatoModel->consultarCampeonatoPorFiltro($filtroNome);
     
                 $campeonatos = $consulta['campeonatos'];
                 $feedback = $consulta['feedback'];

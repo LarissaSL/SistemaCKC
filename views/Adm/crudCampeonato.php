@@ -62,14 +62,6 @@
                     <label for="filtroNome">Filtrar por Nome</label>
                     <input type="text" class="form-control" id="filtroNome" name="filtroNome" value="<?php echo isset($_GET['filtroNome']) ? htmlspecialchars($_GET['filtroNome']) : ''; ?>">
                 </div>
-                <div class="form-group col-md-3">
-                    <label for="filtroDataInicio">Filtrar por Data de Início</label>
-                    <input type="date" class="form-control" id="filtroDataInicio" name="filtroDataInicio" value="<?php echo isset($_GET['filtroDataInicio']) ? htmlspecialchars($_GET['filtroDataInicio']) : ''; ?>">
-                </div>
-                <div class="form-group col-md-3">
-                    <label for="filtroDataTermino">Filtrar por Data de Término</label>
-                    <input type="date" class="form-control" id="filtroDataTermino" name="filtroDataTermino" value="<?php echo isset($_GET['filtroDataTermino']) ? htmlspecialchars($_GET['filtroDataTermino']) : ''; ?>">
-                </div>
                 <div class="form-group col-md-3 d-flex align-items-end">
                     <button type="submit" class="btn btn-primary">Filtrar</button>
                 </div>

@@ -179,23 +179,15 @@ class Campeonato
         }
     }
 
-    public function consultarCampeonatoPorFiltro($filtroNome, $filtroDataInicio, $filtroDataTermino)
+    public function consultarCampeonatoPorFiltro($filtroNome)
     {
         try {
             $sql = "SELECT * FROM campeonato WHERE 1";
 
-            // Adiciona as condições de filtro apenas se os parâmetros não estiverem vazios
             if (!empty($filtroNome)) {
                 $sql .= " AND Nome LIKE :filtroNome";
             }
 
-            if (!empty($filtroDataInicio)) {
-                $sql .= " AND Data_inicio >= :filtroDataInicio";
-            }
-
-            if (!empty($filtroDataTermino)) {
-                $sql .= " AND Data_termino <= :filtroDataTermino";
-            }
 
             $consulta = $this->conexao->prepare($sql);
 
@@ -203,14 +195,6 @@ class Campeonato
             if (!empty($filtroNome)) {
                 $filtroNome = "%{$filtroNome}%";
                 $consulta->bindParam(':filtroNome', $filtroNome);
-            }
-
-            if (!empty($filtroDataInicio)) {
-                $consulta->bindParam(':filtroDataInicio', $filtroDataInicio);
-            }
-
-            if (!empty($filtroDataTermino)) {
-                $consulta->bindParam(':filtroDataTermino', $filtroDataTermino);
             }
 
             $consulta->execute();
