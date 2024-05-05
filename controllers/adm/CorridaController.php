@@ -8,6 +8,10 @@ require_once 'models/Kartodromo.php';
 class CorridaController extends RenderView
 {
     public function mostrarCorridas() {
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+
         $corridaModel = new Corrida();
         $campeonatoModel = new Campeonato();
 
@@ -67,6 +71,10 @@ class CorridaController extends RenderView
 
     public function cadastrar()
     {
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+
         $campeonatoModel = new Campeonato();
         $kartodromoModel = new Kartodromo();
 
@@ -150,7 +158,26 @@ class CorridaController extends RenderView
                 'dadosKartodromos' => $dadosKartodromos
             ]);
         } else {
+            $mostrarBotaoCampeonato =  false;
+            $mostrarBotaoKartodromo = false;
+            $mensagemDeFeedback = empty($dadosCampeonatos) || empty($dadosKartodromos) ? "Olá, " . $_SESSION['nome'] . ", para registrar corridas é preciso que: <br>" : '';
+            
+            if(empty($dadosCampeonatos)) {
+                $mensagemDeFeedback .= "- Tenha ao menos um Campeonato registrado no sistema.<br>"; 
+                $mostrarBotaoCampeonato = true;
+            }
+            if(empty($dadosKartodromos)) {
+                $mensagemDeFeedback .= "- Tenha ao menos um Kartódromo registrado no sistema.<br>"; 
+                $mostrarBotaoKartodromo = true;
+            }
+            
+            $classe = empty($mensagemDeFeedback) ? '' : 'erro';
+
             $this->carregarViewComArgumentos('adm/cadastrarCorrida' , [
+                'feedback' => $mensagemDeFeedback,
+                'classe' => $classe,
+                'mostrarBotaoCampeonato' => $mostrarBotaoCampeonato,
+                'mostrarBotaoKartodromo' => $mostrarBotaoKartodromo,
                 'dadosCampeonatos' => $dadosCampeonatos, 
                 'dadosKartodromos' => $dadosKartodromos
             ]);

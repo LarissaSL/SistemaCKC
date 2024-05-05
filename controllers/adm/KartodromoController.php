@@ -24,41 +24,47 @@ class KartodromoController extends RenderView
         }  
     }
 
-    public function mostrarKartodromos()
+    public function mostrarKartodromos() 
     {
-        $kartodromo = new Kartodromo();
-        $kartodromos = [];
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+
+        $kartodromoModel = new Kartodromo();
+
+        $kartodromos = $kartodromoModel->selecionarTodosKartodromos();
         $feedback = '';
         $classe = '';
+        $busca = '';
 
-        // Ver se tem requisicao GET, por conta do Filtro
+        // Verifica se tem requisição GET, por conta do filtro
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $busca = isset($_GET['busca']) ? $_GET['busca'] : '';
 
-            if(!empty($busca))
-            {
-                $consulta = $kartodromo->consultarKartodromoComFiltro($busca);
+            if (!empty($filtroNome)) {
+                $consulta = $kartodromoModel->consultarKartodromoComFiltro($filtroNome);
 
                 $kartodromos = $consulta['kartodromos'];
                 $feedback = $consulta['feedback'];
                 $classe = $consulta['classe'];
+
             } else {
-                $kartodromos = $kartodromo->selecionarTodosKartodromos();
+                $kartodromos = $kartodromoModel->selecionarTodosKartodromos();
+                if (empty($kartodromos)) {
+                    $feedback = 'Nenhum Kartódromo cadastrado.';
+                    $classe = 'alert alert-danger';
+                }
             }
-            
-        } else {
-            // Se nao tiver requisição GET, mostra todos
-            $kartodromos = $kartodromo->selecionarTodosKartodromos();
         }
 
-        // Carregamento da view
         $this->carregarViewComArgumentos('adm/crudKartodromos', [
             'kartodromos' => $kartodromos,
-            'busca' => $busca,
             'feedback' => $feedback,
-            'classe' => $classe
+            'classe' => $classe,
+            'busca' => $busca
         ]);
     }
+
 
     public function cadastrar()
     {

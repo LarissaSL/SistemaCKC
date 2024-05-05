@@ -68,11 +68,6 @@
             </div>
         </form>
 
-        <?php 
-            if (isset($classe) && $classe == 'erro') : ?>
-                <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
-        <?php endif ?>
-
         <table class='table table-striped table-bordered '>
             <thead class='thead-dark'>
                 <tr>

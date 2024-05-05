@@ -58,13 +58,19 @@
 
     <h1>Cadastro de Corridas</h1>
     <?php
-        if (isset($feedback)) {
+        if (isset($feedback) && !empty($feedback)) {
             echo "<div class='container-feedback'>";
             if($classe == 'erro'){
                 echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
             }
+            if(isset($mostrarBotaoCampeonato) && $mostrarBotaoCampeonato) {
+                echo "<a class='bt-redirecionar' href='/sistemackc/admtm85/campeonato'>Cadastrar campeonato</a><br>";
+            }
+            if(isset($mostrarBotaoKartodromo) && $mostrarBotaoKartodromo) {
+                echo "<a class='bt-redirecionar' href='/sistemackc/admtm85/kartodromo'>Cadastrar kartodromo</a>";
+            }
             echo "</div>";
-        }
+        } else {
     ?>
 
     <section class="container">
@@ -138,6 +144,7 @@
             </div>
         </form>
     </section>
+    <?php } ?>
     <footer>
         <div>
             <span class="copyright">© 2024 Copyright: ManasCode</span>
