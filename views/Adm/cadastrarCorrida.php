@@ -58,9 +58,9 @@
 
     <h1>Cadastro de Corridas</h1>
     <?php
-        if (isset($feedback) && !empty($feedback)) {
+        if (isset($feedback) && !empty($feedback) && $classe == "semCadastro") {
             echo "<div class='container-feedback'>";
-            if($classe == 'erro'){
+            if($classe == 'semCadastro'){
                 echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
             }
             if(isset($mostrarBotaoCampeonato) && $mostrarBotaoCampeonato) {
@@ -71,6 +71,16 @@
             }
             echo "</div>";
         } else {
+    ?>
+
+    <?php
+        if (isset($feedback) && !empty($feedback)) {
+            echo "<div class='container-feedback'>";
+            if($classe == 'erro'){
+                echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
+            }
+            echo "</div>";
+        }
     ?>
 
     <section class="container">
@@ -116,11 +126,11 @@
 
             <div>
                 <label for="categoria">Categoria:</label><br>
-                <input type="radio" id="categoria95" name="categoria" value="95" <?php echo (isset($dados[5]) && $dados[5] == '95') ? 'checked' : ''; ?>>
+                <input type="radio" id="categoria95" name="categoria" value="95" <?php echo (isset($dados[5]) && $dados[5] == '95') ? 'checked' : ''; ?> required>
                 <label for="categoria95">95kg</label><br>
-                <input type="radio" id="categoria110" name="categoria" value="110" <?php echo (isset($dados[5]) && $dados[5] == '110') ? 'checked' : ''; ?>>
+                <input type="radio" id="categoria110" name="categoria" value="110" <?php echo (isset($dados[5]) && $dados[5] == '110') ? 'checked' : ''; ?> required>
                 <label for="categoria110">110kg</label><br>
-                <input type="radio" id="categoriaLivre" name="categoria" value="Livre" <?php echo (isset($dados[5]) && $dados[5] == 'Livre') ? 'checked' : ''; ?>>
+                <input type="radio" id="categoriaLivre" name="categoria" value="Livre" <?php echo (isset($dados[5]) && $dados[5] == 'Livre') ? 'checked' : ''; ?> required>
                 <label for="categoria110">Livre</label><br>
             </div>
 

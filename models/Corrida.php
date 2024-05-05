@@ -124,6 +124,36 @@ class Corrida
         }
     }
 
+    public function verificarSeCorridaJaExiste($campeonato_id, $kartodromo_id, $nome, $categoria, $dataCorrida, $horario, $tempoCorrida)
+    {
+        try {
+            $query = "SELECT COUNT(*) AS total FROM corrida 
+                    WHERE Campeonato_id = :campeonato_id 
+                    AND Kartodromo_id = :kartodromo_id 
+                    AND Nome = :nome 
+                    AND Categoria = :categoria 
+                    AND DATE(Data_corrida) = :dataCorrida 
+                    AND Horario = :horario 
+                    AND Tempo_corrida = :tempoCorrida";
+
+            $selecionar = $this->conexao->prepare($query);
+            $selecionar->bindParam(':campeonato_id', $campeonato_id);
+            $selecionar->bindParam(':kartodromo_id', $kartodromo_id);
+            $selecionar->bindParam(':nome', $nome);
+            $selecionar->bindParam(':categoria', $categoria);
+            $selecionar->bindParam(':dataCorrida', $dataCorrida);
+            $selecionar->bindParam(':horario', $horario);
+            $selecionar->bindParam(':tempoCorrida', $tempoCorrida);
+            $selecionar->execute();
+
+            $resultado = $selecionar->fetch(PDO::FETCH_ASSOC);
+
+            return $resultado;
+        } catch (PDOException $erro) {
+            throw new Exception("Erro ao verificar se a corrida já existe: " . $erro->getMessage());
+        }
+    }
+
     public function validarDataCorrida($idCampeonato, $dataCorrida)
     {
         try {
@@ -185,57 +215,88 @@ class Corrida
         }
     }
 
-    public function validarHorario($campeonato_id, $categoria, $horario, $data, $nome)
+    public function validarHorario($campeonato_id, $kartodromo_id, $nome, $categoria, $dataCorrida, $horario, $tempoCorrida, $corrida_id = null)
     {
         try {
             $campeonatoModel = new Campeonato();
             $dadosCampeonato = $campeonatoModel->selecionarCampeonatoPorId($campeonato_id);
             
-            $categoriaDeBusca = $categoria == "95" ? "110" : "95";
-            $outrasCorridasCkc = $campeonatoModel->selecionarCampeonatosPorCategoriaHorarioData($categoriaDeBusca, $horario, $data, $nome);
-            $outrasCorridasDdl = $campeonatoModel->selecionarCampeonatosPorCategoriaHorarioData('Livre', $horario, $data, $nome);
+            $outrasCorridasCkc95 = $campeonatoModel->selecionarCampeonatosPorCategoriaHorarioData("95", $horario, $dataCorrida, $corrida_id);
+            $outrasCorridasCkc110 = $campeonatoModel->selecionarCampeonatosPorCategoriaHorarioData("110", $horario, $dataCorrida, $corrida_id);
+            $outrasCorridasDdl = $campeonatoModel->selecionarCampeonatosPorCategoriaHorarioData('Livre', $horario, $dataCorrida, $corrida_id);
 
-            
             // Verificações pro DDL
             if (stripos($dadosCampeonato['Nome'], 'Desafio dos Loucos') !== false || stripos($dadosCampeonato['Nome'], 'ddl') !== false) {
-                $outrasCorridasCkc = $campeonatoModel->selecionarCampeonatosPorCategoriaHorarioData("95", $horario, $data, $nome);
-                if ($outrasCorridasCkc) {
-                    return "Não é possível realizar a operação, pois ela não pode acontecer no mesmo dia e horário que uma do Crash Kart Championship categoria 95"; 
-                } else {
-                    if($outrasCorridasDdl) {
-                        return "Não é possível realizar a operação, pois já existe uma com mesma data e horário";
+                $corridaJaExiste = $this->verificarSeCorridaJaExiste($campeonato_id, $kartodromo_id, $nome, $categoria, $dataCorrida, $horario, $tempoCorrida, $corrida_id);
+                if ($corridaJaExiste) {
+                    if($corrida_id == null && $corridaJaExiste['total'] > 0) {
+                        return "Não é possível realizar a operação, pois já existe uma com mesma data, horário e nome";
+                    } 
+                } 
+                    if($outrasCorridasCkc95) {
+                        return "Não é possível realizar a operação, pois ela não pode acontecer no mesmo dia e horário que uma do Crash Kart Championship categoria 95"; 
+                    } elseif($outrasCorridasDdl) {
+                        return "Não é possível realizar a operação, pois já existe uma corrida do Desafio dos Loucos, na mesma data e horário";
                     }
-                }
+                    
                 return "Sucesso";
-                 
+                
             // Verificações pro CKC
             } elseif (stripos($dadosCampeonato['Nome'], 'Crash Kart Championship') !== false || stripos($dadosCampeonato['Nome'], 'ckc') !== false) {
                 if ($categoria == "95") {
-                    $corridaJaExiste = $campeonatoModel->selecionarCampeonatosPorCategoriaHorarioData("95", $horario, $data, $nome);
-                    if ($outrasCorridasCkc) {
-                        return "Não é possível realizar a operação, pois ela não pode acontecer no mesmo dia e horário que uma da categoria 110";
+                    $corridaJaExiste = $this->verificarSeCorridaJaExiste($campeonato_id, $kartodromo_id, $nome, $categoria, $dataCorrida, $horario, $tempoCorrida, $corrida_id);
+                    if ($corridaJaExiste) {
+                        if($corrida_id == null && $corridaJaExiste['total'] > 0) {
+                            return "Não é possível realizar a operação, pois já existe uma com mesma data, horário e nome";
+                        } 
+                    }
+                     
+                    if ($outrasCorridasCkc95) {
+                        return "Não é possível realizar a operação, pois já existe uma corrida da categoria 95, na mesma data e horário";
+                    } elseif ($outrasCorridasCkc110) {
+                        return "Não é possível realizar a operação, pois ela não pode acontecer no mesmo dia e horário que uma da categoria 110"; 
                     } elseif ($outrasCorridasDdl) {
                         return "Não é possível realizar a operação, pois ela não pode acontecer no mesmo dia e horário que uma do Desafio dos Loucos";
-                    } elseif ($corridaJaExiste) {
-                        return "Não é possível realizar a operação, pois já existe uma com mesma data e horário";
                     }
                 }
+
                 if ($categoria == "110") {
-                    $corridaJaExiste = $campeonatoModel->selecionarCampeonatosPorCategoriaHorarioData("110", $horario, $data, $nome);
-                    if ($outrasCorridasCkc) {
+                    $corridaJaExiste = $this->verificarSeCorridaJaExiste($campeonato_id, $kartodromo_id, $nome, $categoria, $dataCorrida, $horario, $tempoCorrida, $corrida_id);
+                    if ($corridaJaExiste) {
+                        if($corrida_id == null && $corridaJaExiste['total'] > 0) {
+                            return "Não é possível realizar a operação, pois já existe uma com mesma data, horário e nome";
+                        }
+                    } 
+                    
+                    if ($outrasCorridasCkc110){
+                        return "Não é possível realizar a operação, pois já existe uma corrida da categoria 110, na mesma data e horário";
+                    } elseif ($outrasCorridasCkc95){
                         return "Não é possível realizar a operação, pois ela não pode acontecer no mesmo dia e horário que uma da categoria 95";
-                    } elseif ($corridaJaExiste){
-                        return "Não é possível realizar a operação, pois já existe uma com mesma data e horário";
                     }
                 }
                 return "Sucesso"; 
             } else {
+                $corridaJaExiste = $this->verificarSeCorridaJaExiste($campeonato_id, $kartodromo_id, $nome, $categoria, $dataCorrida, $horario, $tempoCorrida, $corrida_id);
+                if ($corridaJaExiste) {
+                    if($corrida_id == null && $corridaJaExiste['total'] > 0) {
+                        return "Não é possível realizar a operação, pois já existe uma com mesma data, horário e nome";
+                    }
+                } 
+                
+                if ($outrasCorridasCkc110){
+                    return "Não é possível realizar a operação, pois já existe uma corrida da categoria 110, na mesma data e horário";
+                } elseif ($outrasCorridasCkc95){
+                    return "Não é possível realizar a operação, pois ela não pode acontecer no mesmo dia e horário que uma da categoria 95";
+                } elseif ($outrasCorridasDdl) {
+                    return "Não é possível realizar a operação, pois ela não pode acontecer no mesmo dia e horário que uma do Desafio dos Loucos";
+                }
                 return "Sucesso";
             }
         } catch (PDOException $erro) {
             return "Erro ao validar o horário da corrida: " . $erro->getMessage();
         }
     }
+
 
     public function selecionarTodasAsCorridasComNomesEEnderecos()
     {
@@ -270,8 +331,10 @@ class Corrida
 
                 if (stripos($corrida['Nome_Campeonato'], 'Crash Kart Championship') !== false || stripos($corrida['Nome_Campeonato'], 'ckc') !== false) {
                     $nomeAbreviado = 'ckc';
-                } else {
+                } elseif (stripos($corrida['Nome_Campeonato'], 'Desafio dos Loucos') !== false || stripos($corrida['Nome_Campeonato'], 'ddl') !== false) {
                     $nomeAbreviado = 'ddl'; 
+                } else {
+                    $nomeAbreviado = 'cmp';
                 }
         
                 // Retornos pra view

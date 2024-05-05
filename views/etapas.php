@@ -77,6 +77,7 @@
     </header>
     <main>
         <?php 
+        /* Usar pra ver quais variaveis estou mandando pra View
         if(isset($corridas) && $classe != 'erro') {
             $corrida = $corridas[0];
             echo "Nome da Corrida: " . $corrida['nome'] . "<br>";
@@ -88,6 +89,7 @@
             echo "Data: " . $corrida['data'] . "<br>";
             echo "Horario: " . $corrida['hora'] . "h " . $corrida['minuto'] . "min " . "<br><br>";
         }
+        */
         ?>
         
         <section class="container">

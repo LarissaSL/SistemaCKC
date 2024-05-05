@@ -127,7 +127,7 @@ class CorridaController extends RenderView
             $validarCategoria = $corridaModel->validarCategoria($nomeCampeonatoSelecionado['Nome'], $categoria);
             $validarDataCorrida = $corridaModel->validarDataCorrida($campeonato_id, $dataCorrida);
             $validarDuracao = $corridaModel->validarDuracao($tempoCorrida);
-            $validarHorario = $corridaModel->validarHorario($campeonato_id, $categoria, $horario, $dataCorrida, $nome);
+            $validarHorario = $corridaModel->validarHorario($campeonato_id, $kartodromo_id, $nome, $categoria, $dataCorrida, $horario, $tempoCorrida);
 
             if($validarDataCorrida == "Sucesso" && $validarCategoria == "Sucesso" && $validarDuracao == "Sucesso" && $validarHorario == "Sucesso") {
                 $resultado = $corridaModel->inserirCorrida($campeonato_id, $kartodromo_id, $nome, $categoria, $dataCorridaFormatada, $horario, $tempoCorridaFormatada);
@@ -157,6 +157,7 @@ class CorridaController extends RenderView
                 'dadosCampeonatos' => $dadosCampeonatos,
                 'dadosKartodromos' => $dadosKartodromos
             ]);
+            
         } else {
             $mostrarBotaoCampeonato =  false;
             $mostrarBotaoKartodromo = false;
@@ -170,8 +171,8 @@ class CorridaController extends RenderView
                 $mensagemDeFeedback .= "- Tenha ao menos um Kartódromo registrado no sistema.<br>"; 
                 $mostrarBotaoKartodromo = true;
             }
-            
-            $classe = empty($mensagemDeFeedback) ? '' : 'erro';
+
+            $classe = empty($mensagemDeFeedback) ? '' : 'semCadastro';
 
             $this->carregarViewComArgumentos('adm/cadastrarCorrida' , [
                 'feedback' => $mensagemDeFeedback,
@@ -248,7 +249,7 @@ class CorridaController extends RenderView
             $corridaModel = new Corrida();
             $validacaoDataCorrida = $corridaModel->validarDataCorrida($campeonato_id, $dataCorrida);
             $validarCategoria = $corridaModel->validarCategoria($nomeCampeonatoSelecionado['Nome'], $categoria);
-            $validarHorario = $corridaModel->validarHorario($campeonato_id, $categoria, $horario, $dataCorrida, $nome);
+            $validarHorario = $corridaModel->validarHorario($campeonato_id, $kartodromo_id, $nome, $categoria, $dataCorrida, $horario, $tempoCorrida, $id);
             $validarDuracao = $corridaModel->validarDuracao($tempoCorrida);
     
             if($validacaoDataCorrida == "Sucesso" && $validarCategoria == "Sucesso" && $validarHorario == "Sucesso" && $validarDuracao == "Sucesso") {
