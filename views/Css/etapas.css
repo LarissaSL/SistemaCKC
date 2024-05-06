@@ -40,14 +40,17 @@ i.ph.ph-file-pdf {
     position: absolute;
 }
 /* estrurura dos cards */
-article.card_dll, 
 article.card_ckc95, 
-article.card_ckc110 {
+article.card_ckc110,
+article.card_ddlLivre,
+article.card_cmp110,
+article.card_cmp95,
+article.card_cmpLivre{ 
     display: flex;
     width: 300px;
     padding: 3rem;
     margin: .7rem;
-    height: auto;
+    height: 530px;
     margin-bottom: 3rem;
     border: solid;
     border-radius: 20px;
@@ -60,41 +63,56 @@ article.card_ckc110 {
     gap: 3rem;
 }
 /* titulos dos cards */
-.titleCard_dll h2, 
-.titleCadCkc h2{
+.titleCard_ckc95 h2,
+.titleCard_ckc110 h2,
+.titleCard_ddlLivre h2,
+.titleCadcmp h2{ 
     font-size: 2.5rem;
 }
-strong.ddlTitle {
-    color: var(--categoria-ddl-livre);
-}
-strong.ckcTitle {
+strong.title_ckc95 {
+    text-transform: uppercase;
     color: var(--categoria-ckc-95);
 }
-strong.ckcTitle110 {
+strong.title_ckc110 {
+    text-transform: uppercase;
     color: var(--categoria-ckc-110);
 }
+
+strong.title_ddlLivre {
+    text-transform: uppercase;
+    color: var(--categoria-ddl-livre);
+}
+strong.title_cmp95,
+strong.title_cmp110,
+strong.title_cmpLivre {
+    text-transform: uppercase;
+    color: var(--color-cmp)
+}
 /* subtitulo dos cards */
-.titleCard_dll span, 
-.titleCadCkc span{
+.titleCard_ckc span,
+.titleCard_ddl span,
+.titleCard_cmp span {
     font-size: 1.7rem;
     font-weight: 500;
 }
 /* elementos interno do card */
-.titleCard_dll, 
-.dateDll, 
-.address,
-.titleCadCkc, 
-.dateCkc, 
-.addressCkc{
+.titleCard_ckc95,
+.titleCard_ckc110,
+.titleCard_ddlLivre, 
+.date,
+.address{
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 /* fundo das categorias */
-.categoriaDllLivre, 
-.categoriaCkc95, 
-.categoriaCkc110 {
+.categoria_cmpLivre,
+.categoria_cmp95,
+.categoria_cmp110,
+.categoria_ckc95, 
+.categoria_ckc110,
+.categoria_ddlLivre{
     padding: .4em;
     width: 100px;
     font-weight: 700;
@@ -103,36 +121,34 @@ strong.ckcTitle110 {
 }
 
 /* cor de fundo das categorias */
-.categoriaDllLivre {
-    background: var(  --categoria-ddl-livre);
-}
-.categoriaCkc95 {
+.categoria_cmp95,
+.categoria_ckc95 {
     color: var(--background-principal);
     background: var(--categoria-ckc-95);
 }
-.categoriaCkc110 {
+.categoria_cmp110,
+.categoria_ckc110 {
     color: var(--background-principal);
     background: var(--categoria-ckc-110);
 }
 
-.dateDll span, 
-.dateCkc span{
+.categoria_cmpLivre,
+.categoria_ddlLivre{
+    background: var(  --categoria-ddl-livre);
+}
+.date span { 
     font-size: 2.4rem;
     font-weight: 700;
 }
-.timeDll, 
-.timeCkc {
+.time{ 
     display: flex;
     align-items: center;
     font-size: 1.5rem;
 }
-
-.address, 
-.addressCkc{
+.address{
     gap: .9rem;
 }
-.locale strong, 
-.localeCkc strong {
+.locale strong {
     text-decoration: underline;
     font-weight: normal;
 }
