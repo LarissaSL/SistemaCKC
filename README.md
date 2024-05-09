@@ -45,6 +45,10 @@ OBS.: Não precisa se preocupar em Inserir o SQL das Tabelas, nosso sistema esta
 | `sistemackc/admtm85/corrida/cadastrar` | Esta rota cadastra uma nova corrida no painel administrativo.                                      |
 | `sistemackc/admtm85/corrida/atualizar/{id}` | Esta rota atualiza as informações de uma corrida no painel administrativo de acordo com o ID passado. |
 | `sistemackc/admtm85/corrida/excluir/{id}` | Esta rota exclui uma corrida do sistema no painel administrativo de acordo com o ID passado.     |
+| `sistemackc/admtm85/resultado` | Esta rota da acesso ao crud de resultados.                                       |
+| `sistemackc/admtm85/resultado/cadastrar` | Esta rota cadastra um novo resultado no painel administrativo.                                      |
+| `sistemackc/admtm85/resultado/atualizar/{id}` | Esta rota atualiza as informações de um resulatdo no painel administrativo de acordo com o ID passado. |
+| `sistemackc/admtm85/resultado/excluir/{id}` | Esta rota exclui um resultado do sistema no painel administrativo de acordo com o ID passado.     |
 
 
 ## Criando novo arquivo HTML
