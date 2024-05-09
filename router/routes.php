@@ -44,4 +44,10 @@ $routes = [
     '/admtm85/corrida/cadastrar' => 'adm#CorridaController#cadastrar',
     '/admtm85/corrida/atualizar/{id}' => 'adm#CorridaController#atualizar',
     '/admtm85/corrida/excluir/{id}' => 'adm#CorridaController#excluir',
+
+    // Rotas das Resultados
+    '/admtm85/resultado' => 'adm#ClassificacaoController#mostrarResultados',
+    '/admtm85/resultado/cadastrar' => 'adm#ClassificacaoController#cadastrar',
+    '/admtm85/resultado/atualizar/{id}' => 'adm#ClassificacaoController#atualizar',
+    '/admtm85/resultado/excluir/{id}' => 'adm#ClassificacaoController#excluir',
 ];
