@@ -14,7 +14,7 @@
     <script defer src="/sistemackc/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
     <script defer src="/sistemackc/views/Js/scriptResultados.js"></script>
 
-    <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
+   <!-- <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css"> -->
 
     <title>Cadastrar Resultados</title>
 </head>
@@ -28,7 +28,7 @@
         if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
         ?>
             <nav class="nav">
-                <a class="logo" href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a>
+               <!-- <a class="logo" href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a> -->
 
                 <button class="hamburger"></button>
                 <ul class="nav-list">
@@ -36,7 +36,7 @@
                     <li><a href="/sistemackc/admtm85/campeonato">Campeonatos</a></li>
                     <li><a href="/sistemackc/admtm85/corrida">Corridas</a></li>
                     <li><a href="/sistemackc/admtm85/kartodromo">Kartodromos</a></li>
-                    <li><a href="#">Resultados</a></li>
+                    <li><a href="/sistemackc/admtm85/resultado">Resultados</a></li>
                     
                     <li class="drop-down">
                         <?php
@@ -96,17 +96,17 @@
                 <input type="text" name="melhor_tempo[]" id="melhor_tempo">
             </div>
             <div class="adv">
-                <label for="adv">ADV:</label>
-                <input type="checkbox" name="adv[]" id="adv" value="cortar caminho">
-                <label for="adv">cortar caminho</label>
-                <input type="checkbox" name="adv[]" id="adv" value="bandeira de advertência">
-                <label for="adv">bandeira de advertência</label>
-                <input type="checkbox" name="adv[]" id="adv" value="queimar largada">
-                <label for="adv">queimar largada</label>
+                <label>ADV:</label>
+                <input type="checkbox" name="adv[]" id="adv_cortar" value="cortar caminho">
+                <label for="adv_cortar">cortar caminho</label>
+                <input type="checkbox" name="adv[]" id="adv_bandeira" value="bandeira de advertência">
+                <label for="adv_bandeira">bandeira de advertência</label>
+                <input type="checkbox" name="adv[]" id="adv_queimar" value="queimar largada">
+                <label for="adv_queimar">queimar largada</label>
             </div>
             <div class="pontuacao">
-                <label for="score1">Pontuação:</label>
-                <input type="number" name="pontuacao[]" id="pontuacao">
+                <label for="pontuacao">Pontuação:</label>
+                <input type="number" name="pontuacao[]" id="pontuacao" readonly>
             </div>
             <div class="botoes">        
                 <button type="button" class="btn_gerarPontuacao">Gerar pontuacão</button>

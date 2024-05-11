@@ -9,17 +9,18 @@ function popularPosicoesSelect(select) {
     ];
 
     // Adiciona as opções ao select
-    opcoesPosicao.forEach(function(opcao, index) {
-        var option = document.createElement('option');
-        option.value = index + 1;
-        option.textContent = opcao;
-        select.appendChild(option);
+    opcoesPosicao.forEach(function(valor, index) {
+        var opcao = document.createElement('option');
+        opcao.value = index + 1;
+        opcao.textContent = valor;
+        select.appendChild(opcao);
     });
 }
 
 document.getElementById("addPiloto").addEventListener("click", function() {
     var contagemPilotos = document.querySelectorAll(".piloto").length;
-    if (contagemPilotos < 15) { 
+    if (contagemPilotos < 15) {
+
         var novoPiloto = document.createElement("div");
         novoPiloto.classList.add("piloto");
 
@@ -59,26 +60,50 @@ document.getElementById("addPiloto").addEventListener("click", function() {
         novoPiloto.appendChild(melhorTempoLabel);
 
         var melhor_tempoInput = document.createElement("input");
-        melhor_tempoInput.type = "text";
+        melhor_tempoInput.type = "time";
         melhor_tempoInput.name = "melhor_tempo[]";
         melhor_tempoInput.id = "melhor_tempo" + (contagemPilotos + 1);
         novoPiloto.appendChild(melhor_tempoInput);
 
-        var advLabel = document.createElement("label");
-        advLabel.textContent = "ADV:";
-        novoPiloto.appendChild(advLabel);
+        var advCortarCaminho = document.createElement("input");
+        advCortarCaminho.type = "checkbox";
+        advCortarCaminho.name = "adv[]";
+        advCortarCaminho.id = "adv_cortar" + (contagemPilotos + 1);
+        novoPiloto.appendChild(advCortarCaminho);
 
-        var advInput = document.createElement("input");
-        advInput.type = "number";
-        advInput.name = "adv[]";
-        advInput.id = "adv" + (contagemPilotos + 1);
-        novoPiloto.appendChild(advInput);
+        var labelCortarCaminho = document.createElement("label");
+        labelCortarCaminho.textContent = "cortar caminho";
+        labelCortarCaminho.setAttribute("for", "adv_cortar" + (contagemPilotos + 1));
+        novoPiloto.appendChild(labelCortarCaminho);
+
+        var advBandeiraAdvertencia = document.createElement("input");
+        advBandeiraAdvertencia.type = "checkbox";
+        advBandeiraAdvertencia.name = "adv[]";
+        advBandeiraAdvertencia.id = "adv_bandeira" + (contagemPilotos + 1);
+        novoPiloto.appendChild(advBandeiraAdvertencia);
+
+        var labelBandeiraAdvertencia = document.createElement("label");
+        labelBandeiraAdvertencia.textContent = "bandeira de advertência";
+        labelBandeiraAdvertencia.setAttribute("for", "adv_bandeira" + (contagemPilotos + 1));
+        novoPiloto.appendChild(labelBandeiraAdvertencia);
+
+        var advQueimarLargada = document.createElement("input");
+        advQueimarLargada.type = "checkbox";
+        advQueimarLargada.name = "adv[]";
+        advQueimarLargada.id = "adv_queimar" + (contagemPilotos + 1);
+        novoPiloto.appendChild(advQueimarLargada);
+
+        var labelQueimarLargada = document.createElement("label");
+        labelQueimarLargada.textContent = "queimar largada";
+        labelQueimarLargada.setAttribute("for", "adv_queimar" + (contagemPilotos + 1));
+        novoPiloto.appendChild(labelQueimarLargada);
 
         var pontuacaoLabel = document.createElement("label");
         pontuacaoLabel.textContent = "Pontuação:";
         novoPiloto.appendChild(pontuacaoLabel);
 
         var pontuacaoInput = document.createElement("input");
+        pontuacaoInput.readOnly = true;
         pontuacaoInput.type = "number";
         pontuacaoInput.name = "pontuacao[]";
         pontuacaoInput.id = "pontuacao" + (contagemPilotos + 1);
@@ -100,9 +125,7 @@ document.addEventListener("click", function(event) {
     if (event.target.classList.contains("btn_gerarPontuacao")) {
         var piloto = event.target.parentElement;
         var posicao = parseInt(piloto.querySelector("select[name='posicoes[]']").value);
-        var qtd_voltas = parseInt(piloto.querySelector("input[name='qtd_voltas[]']").value);
-        var melhor_tempo = parseInt(piloto.querySelector("input[name='melhor_tempo[]']").value);
-        var adv = piloto.querySelector("input[name='adv[]']:checked");
+        var adv = piloto.querySelectorAll("input[name='adv[]']");
         var pontuacao = parseInt(piloto.querySelector("input[name='pontuacao[]']").value);
 
         // Calcula a pontuação baseada na posição
@@ -158,23 +181,18 @@ document.addEventListener("click", function(event) {
         }
 
         // Calcula a pontuação final considerando as advertências
-        var pontuacaoFinal = pontuacaoPosicao;
-        if (adv) {
-            var advValor = adv.value;
-            switch (advValor) {
-                case "cortar caminho":
-                    pontuacaoFinal -= 2;
-                    break;
-                case "bandeira de advertência":
-                    pontuacaoFinal -= 3;
-                    break;
-                case "queimar largada":
-                    pontuacaoFinal -= 5;
-                    break;
-            }
+        var pontuacao = pontuacaoPosicao;
+        if (adv[0].checked) {
+            pontuacao -= 2;
+        }
+        if (adv[1].checked) {
+            pontuacao -= 3;
+        }
+        if (adv[2].checked) {
+            pontuacao -= 5;
         }
 
         // Atualiza o valor do campo de pontuação com a pontuação final
-        piloto.querySelector("input[name='pontuacao[]']").value = pontuacaoFinal;
+        piloto.querySelector("input[name='pontuacao[]']").value = pontuacao;
     }
 });
