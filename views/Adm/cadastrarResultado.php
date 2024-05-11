@@ -12,7 +12,7 @@
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
     <script defer src="/sistemackc/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
-    <script defer src="/scriptResultados.js"></script>
+    <script defer src="/sistemackc/views/Js/scriptResultados.js"></script>
 
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
 
