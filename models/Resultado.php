@@ -170,7 +170,10 @@ class Resultado
     }
 
     public function teste() {
-        return "Entrei aqui";
+        return array(
+            'feedback' => "Erro fake para treinar o Alert da Giu",
+            'classe' => "erro"
+        );
     }
 }
 

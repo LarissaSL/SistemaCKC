@@ -50,4 +50,7 @@ $routes = [
     '/admtm85/resultado/cadastrar/{id}' => 'adm#ClassificacaoController#cadastrar',
     '/admtm85/resultado/atualizar/{id}' => 'adm#ClassificacaoController#atualizar',
     '/admtm85/resultado/excluir/{id}' => 'adm#ClassificacaoController#excluir',
+
+    //Rota para testar Alertas
+    '/teste' => 'adm#ClassificacaoController#teste',
 ];

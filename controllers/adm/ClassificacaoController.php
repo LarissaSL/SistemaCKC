@@ -101,6 +101,18 @@ class ClassificacaoController extends RenderView {
         $this->carregarView('adm/atualizarResultado');
     }
 
+    public function teste() {
+        $resultado = new Resultado();
+        $resultado = $resultado->teste();
+
+        $this->carregarViewComArgumentos('teste', [
+            'feedback' => $resultado['feedback'],
+            'classe' => $resultado['classe'],
+            'classe2' => 'semCadastro'
+
+        ]);
+    }
+
     
 }
 ?>
