@@ -14,7 +14,7 @@
     <script defer src="/sistemackc/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
     <script defer src="/sistemackc/views/Js/scriptResultados.js"></script>
 
-   <!-- <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css"> -->
+    <!-- <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css"> -->
 
     <title>Cadastrar Resultados</title>
 </head>
@@ -28,7 +28,7 @@
         if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
         ?>
             <nav class="nav">
-               <!-- <a class="logo" href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a> -->
+                <!-- <a class="logo" href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a> -->
 
                 <button class="hamburger"></button>
                 <ul class="nav-list">
@@ -37,7 +37,7 @@
                     <li><a href="/sistemackc/admtm85/corrida">Corridas</a></li>
                     <li><a href="/sistemackc/admtm85/kartodromo">Kartodromos</a></li>
                     <li><a href="/sistemackc/admtm85/resultado">Resultados</a></li>
-                    
+
                     <li class="drop-down">
                         <?php
                         if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
@@ -46,7 +46,7 @@
                             echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
                             echo "<li><a href='/sistemackc/admtm85/menu'>Menu</a></li>";
                             echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
-                            echo "</ul>"; 
+                            echo "</ul>";
                         } else {
                             echo "<a href='/sistemackc/usuario/login'>Entrar</a>";
                         }
@@ -54,6 +54,7 @@
                     </li>
                 </ul>
             </nav>
+        <?php } ?>
     </header>
 
     <h1 class="title">Cadastro de Resultado</h1>
@@ -64,75 +65,66 @@
     </div>
     <div class="date">
         <?php
-            $dataCorrida = new DateTime($dadosCorrida['Data_corrida']);
-            echo "<span>" . $dataCorrida->format('d/m/Y') . "</span>";
+        $dataCorrida = new DateTime($dadosCorrida['Data_corrida']);
+        echo "<span>" . $dataCorrida->format('d/m/Y') . "</span>";
         ?>
     </div>
-    <?php 
-        $nomeCompleto = strtoupper($nomeAbreviado) . " " . $dadosCorrida['Nome'];
-        echo "<h2><strong class='title_'>" . $nomeCompleto . "</strong></h2>";
+    <?php
+    $nomeCompleto = strtoupper($nomeAbreviado) . " " . $dadosCorrida['Nome'];
+    echo "<h2><strong class='title_'>" . $nomeCompleto . "</strong></h2>";
     ?>
-    
+
     <div class="categoria_">
         <?php
-            $categoriaFormatada = $dadosCorrida['Categoria'] == "Livre" ? $dadosCorrida['Categoria'] : $dadosCorrida['Categoria'] . " kg";
-            echo "<span>" . $categoriaFormatada . "</span>";
+        $categoriaFormatada = $dadosCorrida['Categoria'] == "Livre" ? $dadosCorrida['Categoria'] : $dadosCorrida['Categoria'] . " kg";
+        echo "<span>" . $categoriaFormatada . "</span>";
         ?>
     </div>
 
 
     <?php
-        if (isset($feedback) && !empty($feedback)) {
-            echo "<div class='container-feedback'>";
-            if($classe == 'erro'){
-                echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
-            }
-            echo "</div>";
+    if (isset($feedback) && !empty($feedback)) {
+        echo "<div class='container-feedback'>";
+        if ($classe == 'erro') {
+            echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
         }
-    ?>  
+        echo "</div>";
+    }
+    ?>
 
     <section class="container">
-        <form action='/sistemackc/admtm85/resultado/cadastrar' method="POST">
-        <div class="posicao">
-                <label for="posicao">Posição:</label>
-                <select name="posicoes[]" id="posicao"></select>
-            </div>
-            <div class="piloto">
-                <label for="piloto">Piloto:</label>
-                <select name="pilotos[]" id="piloto"></select>
-            </div>
-            <div class="qtd_voltas">
-                <label for="qtd_voltas">Qtd. de voltas:</label>
-                <input type="number" name="qtd_voltas[]" id="qtd_voltas">
-            </div>
-            <div class="melhor_tempo">
-                <label for="melhor_tempo">Melhor tempo:</label>
-                <input type="text" name="melhor_tempo[]" id="melhor_tempo">
-            </div>
-            <div class="adv">
-                <label>ADV:</label>
-                <input type="checkbox" name="adv[]" id="adv_cortar" value="cortar caminho">
-                <label for="adv_cortar">cortar caminho</label>
-                <input type="checkbox" name="adv[]" id="adv_bandeira" value="bandeira de advertência">
-                <label for="adv_bandeira">bandeira de advertência</label>
-                <input type="checkbox" name="adv[]" id="adv_queimar" value="queimar largada">
-                <label for="adv_queimar">queimar largada</label>
-            </div>
-            <div class="pontuacao">
-                <label for="pontuacao">Pontuação:</label>
-                <input type="number" name="pontuacao[]" id="pontuacao" readonly>
-            </div>
-            <div class="botoes">        
-                <button type="button" class="btn_gerarPontuacao">Gerar pontuacão</button>
-            </div>
-            <div class="botoes">        
-                <button type="button" class="btn_excluirRegistro">Excluir registro</button>
+        <form action="/sistemackc/admtm85/resultado/cadastrar/<?php echo $dadosCorrida['Id']; ?>" method="POST" id="formResultados">
+            <div id="pilotosContainer">
+                
             </div>
             <button type="button" id="addPiloto">Adicionar piloto</button>
-            <button type="submit">Cadastrar</button>
+            <button type="submit" id="bt-Cadastrar">Cadastrar</button>
         </form>
     </section>
-    <?php } ?>
+
+    <script>
+        //Passando os dados do array de $usuarios pro JS conseguir popular
+        var usuarios = <?php echo json_encode($usuarios); ?>;
+    </script>
+
+    <?php
+        if(isset($dados) &&  $dados != NULL) {
+            echo "Dados que estou recebendo deste formulário: <br>";
+            
+            foreach ($dados as $dadosItem) {
+                echo "Id Corrida: " . $dadosCorrida['Id'] . "<br>";
+                echo "Posição: " . $dadosItem[0] . "<br>";
+                echo "Usuario_ID: " . $dadosItem[1] . "<br>";
+                echo "Qtd. Volta: " . $dadosItem[2] . "<br>";
+                echo "Melhor Tempo: " . $dadosItem[3] . "<br>";
+                echo "Advs: " . $dadosItem[4] . "<br>";
+                echo "Pontuação: " . $dadosItem[5] . "<br>";
+                echo "<br>";
+            }
+        }
+        
+    ?>
+
     <footer>
         <div>
             <span class="copyright">© 2024 Copyright: ManasCode</span>
@@ -141,6 +133,7 @@
                 <a target="_blank" href="https://github.com/LarissaSL/SistemaCKC_MVC">Repositório do Projeto</a>
             </div>
         </div>
-    </footer>    
+    </footer>
 </body>
+
 </html>

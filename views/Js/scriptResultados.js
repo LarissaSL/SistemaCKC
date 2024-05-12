@@ -9,7 +9,7 @@ function popularPosicoesSelect(select) {
     ];
 
     // Adiciona as opções ao select
-    opcoesPosicao.forEach(function(valor, index) {
+    opcoesPosicao.forEach(function (valor, index) {
         var opcao = document.createElement('option');
         opcao.value = index + 1;
         opcao.textContent = valor;
@@ -17,7 +17,42 @@ function popularPosicoesSelect(select) {
     });
 }
 
-document.getElementById("addPiloto").addEventListener("click", function() {
+// Função para popular o select de pilotos
+function popularPilotosSelect(select, usuarios) {
+    // Limpa todas as opções existentes no select
+    select.innerHTML = '';
+
+    // Adiciona uma opção padrão
+    var defaultOption = document.createElement('option');
+    defaultOption.text = 'Selecione um piloto';
+    defaultOption.value = '';
+    select.appendChild(defaultOption);
+
+    // Adiciona as opções de pilotos
+    usuarios.forEach(function (usuario) {
+        var option = document.createElement('option');
+        option.text = usuario.nome + ' ' + usuario.sobrenome;
+        option.value = usuario.id;
+        select.appendChild(option);
+    });
+}
+
+// Função para atualizar o estado do botão "Cadastrar"
+function atualizarBotaoCadastrar() {
+    var contagemPilotos = document.querySelectorAll(".piloto").length;
+    var cadastrarButton = document.getElementById("bt-Cadastrar");
+    cadastrarButton.disabled = contagemPilotos === 0;
+}
+
+// Botao cadastrar ja vem desabilitado
+atualizarBotaoCadastrar();
+
+// Caso adicione pilotos, ai atualiza o botao de Cadastrar , permitindo um novo Registro
+document.querySelector("#formResultados").addEventListener("change", function () {
+    atualizarBotaoCadastrar();
+});
+
+document.getElementById("addPiloto").addEventListener("click", function () {
     var contagemPilotos = document.querySelectorAll(".piloto").length;
     if (contagemPilotos < 15) {
 
@@ -44,6 +79,8 @@ document.getElementById("addPiloto").addEventListener("click", function() {
         select.name = "pilotos[]";
         select.id = "piloto" + (contagemPilotos + 1);
         novoPiloto.appendChild(select);
+
+        popularPilotosSelect(select, usuarios);
 
         var qtd_voltas = document.createElement("label");
         qtd_voltas.textContent = "Qtd. de voltas:";
@@ -87,6 +124,13 @@ document.getElementById("addPiloto").addEventListener("click", function() {
         labelBandeiraAdvertencia.setAttribute("for", "adv_bandeira" + (contagemPilotos + 1));
         novoPiloto.appendChild(labelBandeiraAdvertencia);
 
+         // Adicionar campo oculto advTotal
+         var advTotalInput = document.createElement("input");
+         advTotalInput.type = "hidden";
+         advTotalInput.name = "advTotal[]";
+         advTotalInput.value = "";
+         novoPiloto.appendChild(advTotalInput);
+
         var advQueimarLargada = document.createElement("input");
         advQueimarLargada.type = "checkbox";
         advQueimarLargada.name = "adv[]";
@@ -107,7 +151,7 @@ document.getElementById("addPiloto").addEventListener("click", function() {
         pontuacaoInput.type = "number";
         pontuacaoInput.name = "pontuacao[]";
         pontuacaoInput.id = "pontuacao" + (contagemPilotos + 1);
-        novoPiloto.appendChild(pontuacaoInput);        
+        novoPiloto.appendChild(pontuacaoInput);
 
         var btn_gerarPontuacaoButton = document.createElement("button");
         btn_gerarPontuacaoButton.type = "button";
@@ -115,18 +159,32 @@ document.getElementById("addPiloto").addEventListener("click", function() {
         btn_gerarPontuacaoButton.classList.add("btn_gerarPontuacao");
         novoPiloto.appendChild(btn_gerarPontuacaoButton);
 
+        var btn_excluirRegistroButton = document.createElement("button");
+        btn_excluirRegistroButton.type = "button";
+        btn_excluirRegistroButton.textContent = "Excluir registro";
+        btn_excluirRegistroButton.classList.add("btn_excluirRegistro");
+        novoPiloto.appendChild(btn_excluirRegistroButton);
+
         document.querySelector("form").appendChild(novoPiloto);
+
+        // Atualizar o estado do botão "Cadastrar"
+        atualizarBotaoCadastrar();
     } else {
         alert("Limite de 15 pilotos atingido.");
     }
 });
 
-document.addEventListener("click", function(event) {
+document.addEventListener("click", function (event) {
     if (event.target.classList.contains("btn_gerarPontuacao")) {
         var piloto = event.target.parentElement;
         var posicao = parseInt(piloto.querySelector("select[name='posicoes[]']").value);
         var adv = piloto.querySelectorAll("input[name='adv[]']");
         var pontuacao = parseInt(piloto.querySelector("input[name='pontuacao[]']").value);
+
+        // Obtém o nome e o ID do piloto selecionado
+        var pilotoSelect = piloto.querySelector("select[name='pilotos[]']");
+        var nomePiloto = pilotoSelect.options[pilotoSelect.selectedIndex].text;
+        var idPiloto = pilotoSelect.value;
 
         // Calcula a pontuação baseada na posição
         var pontuacaoPosicao;
@@ -182,17 +240,42 @@ document.addEventListener("click", function(event) {
 
         // Calcula a pontuação final considerando as advertências
         var pontuacao = pontuacaoPosicao;
+        var advTotal = 0;
         if (adv[0].checked) {
             pontuacao -= 2;
+            advTotal += 2;
         }
         if (adv[1].checked) {
             pontuacao -= 3;
+            advTotal += 3;
         }
         if (adv[2].checked) {
             pontuacao -= 5;
+            advTotal += 5;
         }
 
-        // Atualiza o valor do campo de pontuação com a pontuação final
         piloto.querySelector("input[name='pontuacao[]']").value = pontuacao;
+        piloto.querySelector("input[name='advTotal[]']").value = advTotal;
+
+        // Exibe a pontuação e o nome do piloto
+        alert("Pontuação calculada para " + nomePiloto + ": " + pontuacao);
+
+        // Atualizar o estado do botão "Cadastrar"
+        atualizarBotaoCadastrar();
     }
+});
+
+document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("btn_excluirRegistro")) {
+        var piloto = event.target.parentElement;
+        piloto.remove();
+
+        // Atualizar o estado do botão "Cadastrar"
+        atualizarBotaoCadastrar();
+    }
+});
+
+// Verificar mudanças nos pilotos para atualizar o estado do botão "Cadastrar"
+document.querySelector("#formResultados").addEventListener("change", function () {
+    atualizarBotaoCadastrar();
 });

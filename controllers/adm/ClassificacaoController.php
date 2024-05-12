@@ -56,18 +56,44 @@ class ClassificacaoController extends RenderView {
             session_start();
         }
 
+        $dadosVerComoTa = [];
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        //Lógica do Envio dos Dados
-        } else {
-            $corridaModel = new Corrida();
-            $dadosCorrida = $corridaModel->selecionarCorridaPorIdComNomeDoCamp($id);
-            $nomeAbreviado = $corridaModel->definirAbreviacao($dadosCorrida['Nome_Campeonato']);
+            $posicoes = $_POST['posicoes'];
+            $pilotos = $_POST['pilotos'];
+            $qtd_voltas = $_POST['qtd_voltas'];
+            $melhor_tempo = $_POST['melhor_tempo'];
+            $advs = $_POST['advTotal'];
+            $pontuacoes = $_POST['pontuacao'];
+        
+            $dadosVerComoTa = array();
+
+            for ($i = 0; $i < count($posicoes); $i++) {
+                $posicao = $posicoes[$i];
+                $piloto = $pilotos[$i];
+                $qtd_volta = $qtd_voltas[$i];
+                $melhorTempo = $melhor_tempo[$i];
+                $advs_piloto = $advs[$i];
+                $pontuacao = $pontuacoes[$i];
+
+                $dadosVerComoTa[] = array($posicao, $piloto, $qtd_volta, $melhorTempo, $advs_piloto, $pontuacao);
+            }
         }
+
+        $corridaModel = new Corrida();
+        $usuarioModel = new Usuario();
+
+        $dadosCorrida = $corridaModel->selecionarCorridaPorIdComNomeDoCamp($id);
+        $nomeAbreviado = $corridaModel->definirAbreviacao($dadosCorrida['Nome_Campeonato']);
+        $dadosUsuarios = $usuarioModel->obterNomeESobrenomeDosUsuarios();
+        
 
 
         $this->carregarViewComArgumentos('adm/cadastrarResultado', [
             'dadosCorrida' => $dadosCorrida,
-            'nomeAbreviado' => $nomeAbreviado
+            'usuarios' => $dadosUsuarios,
+            'nomeAbreviado' => $nomeAbreviado,
+            'dados' => $dadosVerComoTa
         ]);
     }
 

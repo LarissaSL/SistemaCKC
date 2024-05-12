@@ -100,6 +100,30 @@ class Usuario
         }
     }
 
+    public function obterNomeESobrenomeDosUsuarios() {
+        try {
+            $consulta = $this->conexao->prepare("SELECT * FROM usuario");
+            $consulta->execute();
+            $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
+    
+            $usuarios = array();
+    
+            foreach ($resultados as $resultado) {
+                $usuario = array(
+                    'id' => $resultado['Id'],
+                    'nome' => $resultado['Nome'],
+                    'sobrenome' => $resultado['Sobrenome']
+                );
+                $usuarios[] = $usuario;
+            }
+    
+            return $usuarios;
+        } catch (PDOException $erro) {
+            echo "Erro na consulta: " . $erro->getMessage();
+            return false;
+        }
+    }
+
     public function excluirUsuarioPorId($id)
     {
         try {
