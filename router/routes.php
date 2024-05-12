@@ -47,7 +47,7 @@ $routes = [
 
     // Rotas das Resultados
     '/admtm85/resultado' => 'adm#ClassificacaoController#mostrarResultados',
-    '/admtm85/resultado/cadastrar' => 'adm#ClassificacaoController#cadastrar',
+    '/admtm85/resultado/cadastrar/{id}' => 'adm#ClassificacaoController#cadastrar',
     '/admtm85/resultado/atualizar/{id}' => 'adm#ClassificacaoController#atualizar',
     '/admtm85/resultado/excluir/{id}' => 'adm#ClassificacaoController#excluir',
 ];

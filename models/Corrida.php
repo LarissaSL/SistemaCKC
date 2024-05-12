@@ -95,6 +95,23 @@ class Corrida
         }
     }
 
+    public function selecionarCorridaPorIdComNomeDoCamp($id)
+    {
+        try {
+            $query = "SELECT corrida.*, campe.Nome AS Nome_Campeonato
+                    FROM corrida
+                    INNER JOIN campeonato campe ON corrida.Campeonato_id = campe.Id
+                    WHERE corrida.Id = :id";
+            $selecionar = $this->conexao->prepare($query);
+            $selecionar->bindParam(':id', $id);
+            $selecionar->execute();
+
+            return $selecionar->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $erro) {
+            return "Erro ao selecionar corrida por ID: " . $erro->getMessage();
+        }
+    }
+
     public function selecionarTodasAsCorridas()
     {
         try {
@@ -314,6 +331,16 @@ class Corrida
         }
     }
 
+    public function definirAbreviacao($nomeCampeonato) {
+        if (stripos($nomeCampeonato, 'Crash Kart Championship') !== false || stripos($nomeCampeonato, 'ckc') !== false) {
+            return 'ckc';
+        } elseif (stripos($nomeCampeonato, 'Desafio dos Loucos') !== false || stripos($nomeCampeonato, 'ddl') !== false) {
+            return 'ddl'; 
+        } else {
+            return 'cmp';
+        }
+    }
+
     public function construirHtml() {
         $infoCorridas = $this->selecionarTodasAsCorridasComNomesEEnderecos();
     
@@ -329,13 +356,7 @@ class Corrida
                 $horas = $partesHora[0];
                 $minutos = $partesHora[1]; 
 
-                if (stripos($corrida['Nome_Campeonato'], 'Crash Kart Championship') !== false || stripos($corrida['Nome_Campeonato'], 'ckc') !== false) {
-                    $nomeAbreviado = 'ckc';
-                } elseif (stripos($corrida['Nome_Campeonato'], 'Desafio dos Loucos') !== false || stripos($corrida['Nome_Campeonato'], 'ddl') !== false) {
-                    $nomeAbreviado = 'ddl'; 
-                } else {
-                    $nomeAbreviado = 'cmp';
-                }
+                $nomeAbreviado = $this->definirAbreviacao($corrida['Nome_Campeonato']);
         
                 // Retornos pra view
                 $corridasFormatadas[] = array(

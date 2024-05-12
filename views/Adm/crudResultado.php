@@ -123,32 +123,40 @@
             </thead>
             <tbody>
                 <?php
-                foreach ($corridas as $corrida) {
-                    echo "<tr>";
-                    echo "<td>";
-                    echo "<a class='btn btn-primary' href='/sistemackc/admtm85/resultado/cadastrar/{$corrida["Id"]}'>Cadastrar</a>";
-                    echo "<a class='btn btn-primary' href='/sistemackc/admtm85/corrida/atualizar/{$corrida["Id"]}'>Editar</a>";
-                    echo "<button class='btn btn-danger' onclick='confirmarExclusao({$corrida["Id"]},\"{$corrida["Nome"]}\")'>Excluir</button>";
-                    echo "</td>";
-                    echo "<td>" . $corrida['Nome_Campeonato'] . "</td>";
-                    echo "<td>" . $corrida['Nome_Kartodromo'] . "</td>";
-                    echo "<td>" . $corrida['Nome'] . "</td>";
-                    echo "<td>" . $corrida['Categoria'] . "</td>";
-                    $dataCorrida = new DateTime($corrida['Data_corrida']);
-                    echo "<td>" . $dataCorrida->format('d/m/Y') . "</td>";
+                    foreach ($corridas as $corrida) {
+                        echo "<tr>";
+                        echo "<td>";
+                       
+                        // Verifica se existe resultado para essa corrida
+                        $resultadoModel = new Resultado();
+                        $resultado = $resultadoModel->selecionarResultadoPorCorridaId($corrida['Id']);
+                    
+                        // Se nao tiver resultado, desativa os botoes de cadastrar, editar e excluir
+                        $disabled = !$resultado ? "disabled" : "";
+                        $disabledCadastrar = $resultado ? "disabled" : "";
 
-                    // Verifica se existe resultado para essa corrida
-                    $resultadoModel = new Resultado();
-                    $resultado = $resultadoModel->selecionarResultadoPorCorridaId($corrida['Id']);
-                    if ($resultado) {
-                        echo "<td>" . $resultado['Status'] . "</td>";
-                    } else {
-                        echo "<td>Não cadastrado</td>";
+                        echo "<a class='btn btn-primary' $disabledCadastrar href='/sistemackc/admtm85/resultado/cadastrar/{$corrida["Id"]}'>Cadastrar</a>";
+                        echo "<a class='btn btn-primary $disabled' href='/sistemackc/admtm85/corrida/atualizar/{$corrida["Id"]}'>Editar</a>";
+                        echo "<button class='btn btn-danger $disabled' onclick='confirmarExclusao({$corrida["Id"]},\"{$corrida["Nome"]}\")' $disabled>Excluir</button>";
+                        echo "</td>";
+                    
+                        echo "<td>" . $corrida['Nome_Campeonato'] . "</td>";
+                        echo "<td>" . $corrida['Nome_Kartodromo'] . "</td>";
+                        echo "<td>" . $corrida['Nome'] . "</td>";
+                        echo "<td>" . $corrida['Categoria'] . "</td>";
+                    
+                        $dataCorrida = new DateTime($corrida['Data_corrida']);
+                        echo "<td>" . $dataCorrida->format('d/m/Y') . "</td>";
+                    
+                        if ($resultado) {
+                            echo "<td>" . $resultado['Status'] . "</td>";
+                        } else {
+                            echo "<td>Não cadastrado</td>";
+                        }
+                    
+                        echo "</tr>";
                     }
-
-                    echo "</tr>";
-                }
-                echo "</table>";
+                    echo "</table>";
                 ?>
 
 

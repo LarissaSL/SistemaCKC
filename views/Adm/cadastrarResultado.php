@@ -56,15 +56,29 @@
             </nav>
     </header>
 
-    <h1 class="title">Cadastrar Resultados</h1>
-    <div class=" title_">
-        <span>Crash Kart Championship</span>
+    <h1 class="title">Cadastro de Resultado</h1>
+
+    <!-- Dados da Corrida que recebera o Cadastro de Resultado -->
+    <div class="title_">
+        <?php echo "<span>" . $dadosCorrida['Nome_Campeonato'] . "</span>" ?>
     </div>
     <div class="date">
-        <span>26/07/24</span>
+        <?php
+            $dataCorrida = new DateTime($dadosCorrida['Data_corrida']);
+            echo "<span>" . $dataCorrida->format('d/m/Y') . "</span>";
+        ?>
     </div>
-    <h2><strong class="title_">CKC Etapa 1</strong></h2>
-    <div class="categoria_">110kg</div> 
+    <?php 
+        $nomeCompleto = strtoupper($nomeAbreviado) . " " . $dadosCorrida['Nome'];
+        echo "<h2><strong class='title_'>" . $nomeCompleto . "</strong></h2>";
+    ?>
+    
+    <div class="categoria_">
+        <?php
+            $categoriaFormatada = $dadosCorrida['Categoria'] == "Livre" ? $dadosCorrida['Categoria'] : $dadosCorrida['Categoria'] . " kg";
+            echo "<span>" . $categoriaFormatada . "</span>";
+        ?>
+    </div>
 
 
     <?php

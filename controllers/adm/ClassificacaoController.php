@@ -51,8 +51,24 @@ class ClassificacaoController extends RenderView {
         ]);
     }
 
-    public function cadastrar() {
-        $this->carregarView('adm/cadastrarResultado');
+    public function cadastrar($id) {
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        //Lógica do Envio dos Dados
+        } else {
+            $corridaModel = new Corrida();
+            $dadosCorrida = $corridaModel->selecionarCorridaPorIdComNomeDoCamp($id);
+            $nomeAbreviado = $corridaModel->definirAbreviacao($dadosCorrida['Nome_Campeonato']);
+        }
+
+
+        $this->carregarViewComArgumentos('adm/cadastrarResultado', [
+            'dadosCorrida' => $dadosCorrida,
+            'nomeAbreviado' => $nomeAbreviado
+        ]);
     }
 
     public function atualizar() {
