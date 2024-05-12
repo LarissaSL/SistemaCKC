@@ -36,7 +36,7 @@ class Resultado
 
 
 
-    public function alterarResultado($usuario_id, $corrida_id, $quantidade_volta, $melhor_tempo, $adv, $posicao, $pontuacao_total, $status )
+    public function alterarResultado($id, $usuario_id, $corrida_id, $quantidade_volta, $melhor_tempo, $adv, $posicao, $pontuacao_total, $status )
     {
         try {
             $query = "UPDATE Resultado SET Usuario_id = :usuario_id, Corrida_id = :corrida_id, Quantidade_volta = :quantidade_volta, Tempo_volta = :tempo_volta, Advertencia = :adv, Pontuacao = :pontuacao, Pontuacao_total = :pontuacao_total Staus = :status WHERE Id = :id  ";
@@ -49,7 +49,7 @@ class Resultado
             $alterar->bindParam(':adv', $adv);
             $alterar->bindParam(':posicao', $posicao);
             $alterar->bindParam(':pontuacao_total', $pontuacao_total);
-            $inserir->bindParam(':status', $status);
+            $alterar->bindParam(':status', $status);
             $alterar->execute();
 
             return "Sucesso";
@@ -111,6 +111,21 @@ class Resultado
         }
     }
 
+    public function selecionarResultadoPorCorridaId($corrida_id)
+    {
+        try {
+            $query = "SELECT * FROM resultado WHERE Corrida_id = :corrida_id";
+            $selecionar = $this->conexao->prepare($query);
+            $selecionar->bindParam(':corrida_id', $corrida_id);
+            $selecionar->execute();
+
+            return $selecionar->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $erro) {
+            echo "Erro ao selecionar resultado por corrida ID: " . $erro->getMessage();
+            return false;
+        }
+    }
+
 
     public function consultarResultadoComFiltro($busca)
     {
@@ -134,20 +149,20 @@ class Resultado
 
             if (empty($resultados)) {
                 return array( 
-                    'Resultado' => $resultados,
+                    'Resultados' => $resultados,
                     'feedback' => "Nenhum resultado encontrado",
                     'classe' => "alert alert-danger"
                 );
             } else {
                 return array(
-                    'Resultado' => $resultados,
+                    'Resultados' => $resultados,
                     'feedback' => "Sucesso",
-                    'classe' => "Sucesso"
+                    'classe' => "alert alert-success"
                 );
             } 
         } catch (PDOException $erro) {
             return array(
-                'Resultado' => array(),
+                'Resultados' => array(),
                 'feedback' => "Erro na consulta: " . $erro->getMessage(),
                 'classe' => "alert alert-danger"
             );

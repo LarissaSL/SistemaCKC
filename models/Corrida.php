@@ -415,4 +415,78 @@ class Corrida
             );
         }
     }
+
+    public function consultarCorridaPorFiltroParaResultado($filtroCampeonato, $filtroMes, $filtroAno, $filtroDia)
+    {
+        try {
+            $sql = "SELECT corrida.*, campe.Nome AS Nome_Campeonato, karto.Nome AS Nome_Kartodromo, 
+                            DAY(corrida.Data_corrida) AS Dia, 
+                            MONTH(corrida.Data_corrida) AS Mes, 
+                            YEAR(corrida.Data_corrida) AS Ano
+                    FROM corrida 
+                    INNER JOIN campeonato campe ON corrida.Campeonato_id = campe.Id 
+                    INNER JOIN kartodromo karto ON corrida.Kartodromo_id = karto.Id
+                    WHERE 1";
+
+            // Verificacao de quais filtros foram passados
+            if (!empty($filtroCampeonato)) {
+                $sql .= " AND corrida.Campeonato_id = :filtroCampeonato";
+            }
+
+            if (!empty($filtroMes)) {
+                $sql .= " AND MONTH(corrida.Data_corrida) = :filtroMes";
+            }
+
+            if (!empty($filtroAno)) {
+                $sql .= " AND YEAR(corrida.Data_corrida) = :filtroAno";
+            }
+
+            if (!empty($filtroDia)) {
+                $sql .= " AND DAY(corrida.Data_corrida) = :filtroDia";
+            }
+
+            $consulta = $this->conexao->prepare($sql);
+
+            // Bindando os valores a serem passados
+            if (!empty($filtroCampeonato)) {
+                $consulta->bindValue(':filtroCampeonato', $filtroCampeonato);
+            }
+
+            if (!empty($filtroMes)) {
+                $consulta->bindValue(':filtroMes', $filtroMes);
+            }
+
+            if (!empty($filtroAno)) {
+                $consulta->bindValue(':filtroAno', $filtroAno);
+            }
+
+            if (!empty($filtroDia)) {
+                $consulta->bindValue(':filtroDia', $filtroDia);
+            }
+
+            $consulta->execute();
+
+            $corridas = $consulta->fetchAll(PDO::FETCH_ASSOC);
+
+            if (empty($corridas)) {
+                return array( 
+                    'corridas' => $corridas,
+                    'feedback' => "Nenhuma corrida encontrada",
+                    'classe' => "alert alert-danger"
+                );
+            } else {
+                return array(
+                    'corridas' => $corridas,
+                    'feedback' => "Sucesso",
+                    'classe' => "alert alert-success"
+                );
+            } 
+        } catch (PDOException $erro) {
+            return array(
+                'corridas' => array(),
+                'feedback' => "Erro na consulta: " . $erro->getMessage(),
+                'classe' => "alert alert-danger"
+            );
+        }
+    }
 }
