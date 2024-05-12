@@ -90,6 +90,11 @@
         }
         echo "</div>";
     }
+
+    if (isset($usuarios) && $usuarios == []) {
+        echo "<p>É necessário ter ao menos 1 usuário cadastrado no sistema, para registrar um resultado</p>";
+        echo "<a class='bt-redirecionar' href='/sistemackc/admtm85/usuario/cadastrar'>Cadastrar usuario</a><br>";
+    } else {
     ?>
 
     <section class="container">
@@ -123,7 +128,8 @@
             }
         }
         
-    ?>
+    }?>
+
 
     <footer>
         <div>
