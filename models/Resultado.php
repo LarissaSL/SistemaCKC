@@ -130,7 +130,7 @@ class Resultado
         $usuarioModel = new Usuario();
         $pilotosVerificados = [];
         $dadosParaInserir = [];
-        $feedbackInsercaoErro = "Erro ao inserir essa posição: <br>";
+        $feedbackInsercaoErro = "Erro ao inserir: <br>";
         $houveErro = false;
         $classe = 'erro';
 
@@ -142,9 +142,26 @@ class Resultado
             $advsPiloto = $advs[$i];
             $pontuacaoPiloto = $pontuacoes[$i];
 
+            // Verifica se a posicao se repete
+            if (in_array($posicaoPiloto, $pilotosVerificados)) {
+                $feedbackInsercaoErro .= "Posição duplicada: " . $posicaoPiloto . "º<br>";
+                $houveErro = true;
+            } else {
+                $pilotosVerificados[] = $posicaoPiloto;
+            }
+
+            // Verifica se o piloto já foi verificado e vê se ele se o Piloto se repete
             if (in_array($idPiloto, $pilotosVerificados)) {
+                $posicoesRepetidas = [];
+                foreach ($dadosParaInserir as $dados) {
+                    if ($dados['idPiloto'] == $idPiloto) {
+                        $posicoesRepetidas[] = $dados['posicaoPiloto'];
+                    }
+                }
+                
+                // Escrevendo o nome do piloto
                 $piloto = $usuarioModel->consultarUsuarioPorId($idPiloto);
-                $feedbackInsercaoErro .= "Piloto duplicado na posição: " . $posicaoPiloto . "º | Nome do Piloto: " . $piloto['Nome'] . " " . $piloto['Sobrenome'] ."<br>";
+                $feedbackInsercaoErro .= "Piloto duplicado na posição: " . $posicaoPiloto . "º | Nome do Piloto: " . $piloto['Nome'] . " " . $piloto['Sobrenome'] . "<br>";
                 $houveErro = true;
             } else {
                 $pilotosVerificados[] = $idPiloto;
