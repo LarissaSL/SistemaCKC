@@ -135,7 +135,7 @@
                         $disabled = !$resultado ? "disabled" : "";
                         $disabledCadastrar = $resultado ? "disabled" : "";
 
-                        echo "<a class='btn btn-primary' $disabledCadastrar href='/sistemackc/admtm85/resultado/cadastrar/{$corrida["Id"]}'>Cadastrar</a>";
+                        echo "<a class='btn btn-primary $disabledCadastrar' href='/sistemackc/admtm85/resultado/cadastrar/{$corrida["Id"]}'>Cadastrar</a>";
                         echo "<a class='btn btn-primary $disabled' href='/sistemackc/admtm85/corrida/atualizar/{$corrida["Id"]}'>Editar</a>";
                         echo "<button class='btn btn-danger $disabled' onclick='confirmarExclusao({$corrida["Id"]},\"{$corrida["Nome"]}\")' $disabled>Excluir</button>";
                         echo "</td>";
@@ -149,7 +149,7 @@
                         echo "<td>" . $dataCorrida->format('d/m/Y') . "</td>";
                     
                         if ($resultado) {
-                            echo "<td>" . $resultado['Status'] . "</td>";
+                            echo "<td>Cadastrado</td>";
                         } else {
                             echo "<td>Não cadastrado</td>";
                         }

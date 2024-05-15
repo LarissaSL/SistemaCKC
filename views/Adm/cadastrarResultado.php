@@ -97,39 +97,62 @@
     } else {
     ?>
 
-    <section class="container">
-        <form action="/sistemackc/admtm85/resultado/cadastrar/<?php echo $dadosCorrida['Id']; ?>" method="POST" id="formResultados">
-            <div id="pilotosContainer">
-                
-            </div>
-            <button type="button" id="addPiloto">Adicionar piloto</button>
-            <button type="submit" id="bt-Cadastrar">Cadastrar</button>
-        </form>
-    </section>
+        <section class="container">
+            <form action='' method="POST" id="formResultados">
+                <div id="pilotosContainer">
+                    <?php
+                    // Caso dê erro recarrega a página com os dados colocados antes, sinalizando onde esta o erro
+                    if (isset($dados) && $dados != NULL) {
+                        foreach ($dados as $dadosItem) { ?>
+                            <div class="piloto">
+                                <label>Posição:</label>
+                                <select name="posicoes[]" required>
+                                    <?php
+                                    $posicoes = array("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15");
+                                    foreach ($posicoes as $posicao) {
+                                        echo "<option value='$posicao' " . (stripos($dadosItem[0], $posicao) !== false ? 'selected' : '') . ">$posicao º</option>";
+                                    }
+                                    ?>
+                                </select>
+                                <label>Piloto:</label>
+                                <select name="pilotos[]" required>
+                                    <?php foreach ($usuarios as $usuario) { ?>
+                                        <option value="<?php echo $usuario['id']; ?>" <?php echo $usuario['id'] == $dadosItem[1] ? 'selected' : ''; ?>>
+                                            <?php echo $usuario['nome'] . ' ' . $usuario['sobrenome']; ?>
+                                        </option>
+                                    <?php } ?>
+                                </select>
+                                <label>Qtd. de voltas:</label>
+                                <input type="number" name="qtd_voltas[]" value="<?php echo $dadosItem[2]; ?>" placeholder="Qtd Voltas" required>
+                                <label>Melhor tempo:</label>
+                                <input type="time" name="melhor_tempo[]" value="<?php echo $dadosItem[3]; ?>" placeholder="Melhor Tempo" required>
+                                <input type="checkbox" name="adv[]" value="cortar" <?php echo isset($dadosItem[4]) && $dadosItem[4] == 'cortar' ? 'checked' : ''; ?>>
+                                <label for="adv_cortar">cortar caminho</label>
+                                <input type="checkbox" name="adv[]" value="bandeira" <?php echo isset($dadosItem[4]) && $dadosItem[4] == 'bandeira' ? 'checked' : ''; ?>>
+                                <label for="adv_bandeira">bandeira de advertência</label>
+                                <input type="checkbox" name="adv[]" value="queimar" <?php echo isset($dadosItem[4]) && $dadosItem[4] == 'queimar' ? 'checked' : ''; ?>>
+                                <label for="adv_queimar">queimar largada</label>
+                                <input type="hidden" name="advTotal[]" value="<?php echo isset($dadosItem[4]) ? $dadosItem[4] : ''; ?>">
+                                <label>Pontuação:</label>
+                                <input readonly type="number" name="pontuacao[]" value="<?php echo isset($dadosItem[5]) ? $dadosItem[5] : ''; ?>">
+                                <button type="button" class="btn_gerarPontuacao">Gerar pontuação</button>
+                                <button type="button" class="btn_excluirRegistro">Excluir registro</button>
+                            </div>
+                    <?php
+                        }
+                    } ?>
+                </div>
+                <button type="button" id="addPiloto">Adicionar piloto</button>
+                <button type="submit" id="bt-Cadastrar">Cadastrar</button>
+            </form>
+        </section>
 
-    <script>
-        //Passando os dados do array de $usuarios pro JS conseguir popular
-        var usuarios = <?php echo json_encode($usuarios); ?>;
-    </script>
+        <script>
+            //Passando os dados do array de $usuarios pro JS conseguir popular
+            var usuarios = <?php echo json_encode($usuarios); ?>;
+        </script>
 
-    <?php
-        if(isset($dados) &&  $dados != NULL) {
-            echo "Dados que estou recebendo deste formulário: <br>";
-            
-            foreach ($dados as $dadosItem) {
-                echo "Id Corrida: " . $dadosCorrida['Id'] . "<br>";
-                echo "Posição: " . $dadosItem[0] . "<br>";
-                echo "Usuario_ID: " . $dadosItem[1] . "<br>";
-                echo "Qtd. Volta: " . $dadosItem[2] . "<br>";
-                echo "Melhor Tempo: " . $dadosItem[3] . "<br>";
-                echo "Advs: " . $dadosItem[4] . "<br>";
-                echo "Pontuação: " . $dadosItem[5] . "<br>";
-                echo "<br>";
-            }
-        }
-        
-    }?>
-
+    <?php } ?>
 
     <footer>
         <div>

@@ -1,5 +1,7 @@
 <?php
 require_once 'Config/Conexao.php';
+require_once 'models/Usuario.php';
+
 
 class Resultado
 {
@@ -31,9 +33,6 @@ class Resultado
             return "Erro ao inserir Resultado: " . $erro->getMessage();
         }
     }
-
-   
-
 
 
     public function alterarResultado($id, $usuario_id, $corrida_id, $quantidade_volta, $melhor_tempo, $adv, $posicao, $pontuacao_total, $status )
@@ -125,6 +124,50 @@ class Resultado
             return false;
         }
     }
+
+    public function verificarDuplicatas($posicoes, $pilotos, $qtd_voltas, $melhor_tempo, $advs, $pontuacoes, $idCorrida)
+    {
+        $usuarioModel = new Usuario();
+        $pilotosVerificados = [];
+        $dadosParaInserir = [];
+        $feedbackInsercaoErro = "Erro ao inserir essa posição: <br>";
+        $houveErro = false;
+        $classe = 'erro';
+
+        for ($i = 0; $i < count($posicoes); $i++) {
+            $posicaoPiloto = $posicoes[$i];
+            $idPiloto = $pilotos[$i];
+            $qtdVoltaPiloto = $qtd_voltas[$i];
+            $melhorTempoPiloto = $melhor_tempo[$i];
+            $advsPiloto = $advs[$i];
+            $pontuacaoPiloto = $pontuacoes[$i];
+
+            if (in_array($idPiloto, $pilotosVerificados)) {
+                $piloto = $usuarioModel->consultarUsuarioPorId($idPiloto);
+                $feedbackInsercaoErro .= "Piloto duplicado na posição: " . $posicaoPiloto . "º | Nome do Piloto: " . $piloto['Nome'] . " " . $piloto['Sobrenome'] ."<br>";
+                $houveErro = true;
+            } else {
+                $pilotosVerificados[] = $idPiloto;
+                $dadosParaInserir[] = array(
+                    'idPiloto' => $idPiloto,
+                    'idCorrida' => $idCorrida,
+                    'qtdVoltaPiloto' => $qtdVoltaPiloto,
+                    'melhorTempoPiloto' => $melhorTempoPiloto,
+                    'advsPiloto' => $advsPiloto,
+                    'posicaoPiloto' => $posicaoPiloto,
+                    'pontuacaoPiloto' => $pontuacaoPiloto
+                );
+            }
+        }
+
+        return [
+            'houveErro' => $houveErro,
+            'classe' => $classe,
+            'feedback' => $houveErro ? $feedbackInsercaoErro : null,
+            'dadosParaInserir' => $dadosParaInserir
+        ];
+    }
+    
 
 
     public function consultarResultadoComFiltro($busca)

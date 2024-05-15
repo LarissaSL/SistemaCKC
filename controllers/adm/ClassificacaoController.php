@@ -51,13 +51,14 @@ class ClassificacaoController extends RenderView {
         ]);
     }
 
-    public function cadastrar($id) {
+    public function cadastrar($idCorrida) {
         if (!isset($_SESSION)) {
             session_start();
         }
-
-        $dadosVerComoTa = [];
-
+    
+        $dadosPilotos = [];
+        $resultadoModel = new Resultado();
+    
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $posicoes = $_POST['posicoes'];
             $pilotos = $_POST['pilotos'];
@@ -65,35 +66,70 @@ class ClassificacaoController extends RenderView {
             $melhor_tempo = $_POST['melhor_tempo'];
             $advs = $_POST['advTotal'];
             $pontuacoes = $_POST['pontuacao'];
-        
-            $dadosVerComoTa = array();
-
-            for ($i = 0; $i < count($posicoes); $i++) {
-                $posicao = $posicoes[$i];
-                $piloto = $pilotos[$i];
-                $qtd_volta = $qtd_voltas[$i];
-                $melhorTempo = $melhor_tempo[$i];
-                $advs_piloto = $advs[$i];
-                $pontuacao = $pontuacoes[$i];
-
-                $dadosVerComoTa[] = array($posicao, $piloto, $qtd_volta, $melhorTempo, $advs_piloto, $pontuacao);
+    
+            // Verificar duplicatas de resultados
+            $verificacao = $resultadoModel->verificarDuplicatas(
+                $posicoes,
+                $pilotos,
+                $qtd_voltas,
+                $melhor_tempo,
+                $advs,
+                $pontuacoes,
+                $idCorrida
+            );
+    
+            $houveErro = $verificacao['houveErro'];
+            $classe = $verificacao['classe'];
+            $feedbackInsercaoErro = $verificacao['feedback'];
+            $dadosParaInserir = $verificacao['dadosParaInserir'];
+    
+            // Popular os dados dos Pilotos caso tenha erro
+            foreach ($posicoes as $i => $posicaoPiloto) {
+                $dadosPilotos[] = array(
+                    $posicaoPiloto,
+                    $pilotos[$i],
+                    $qtd_voltas[$i],
+                    $melhor_tempo[$i],
+                    $advs[$i],
+                    $pontuacoes[$i]
+                );
+            }
+    
+            if (!$houveErro) {
+                foreach ($dadosParaInserir as $dados) {
+                    $resultadoModel->inserirResultado(
+                        $dados['idPiloto'],
+                        $dados['idCorrida'],
+                        $dados['qtdVoltaPiloto'],
+                        $dados['melhorTempoPiloto'],
+                        $dados['advsPiloto'],
+                        $dados['posicaoPiloto'],
+                        $dados['pontuacaoPiloto'],
+                        "Cadastrado"
+                    );
+                }
+                // Redirecionar para a pagina de resultados se der tudo certo
+                header("Location: /sistemackc/admtm85/resultado");
+                exit();
+            } else {
+                $feedback = $feedbackInsercaoErro;
             }
         }
-
+    
         $corridaModel = new Corrida();
         $usuarioModel = new Usuario();
-
-        $dadosCorrida = $corridaModel->selecionarCorridaPorIdComNomeDoCamp($id);
+    
+        $dadosCorrida = $corridaModel->selecionarCorridaPorIdComNomeDoCamp($idCorrida);
         $nomeAbreviado = $corridaModel->definirAbreviacao($dadosCorrida['Nome_Campeonato']);
         $dadosUsuarios = $usuarioModel->obterNomeESobrenomeDosUsuarios();
-        
-
-
+    
         $this->carregarViewComArgumentos('adm/cadastrarResultado', [
             'dadosCorrida' => $dadosCorrida,
             'usuarios' => $dadosUsuarios,
             'nomeAbreviado' => $nomeAbreviado,
-            'dados' => $dadosVerComoTa
+            'dados' => $dadosPilotos,
+            'classe' => isset($classe) ? $classe : null,
+            'feedback' => isset($feedback) ? $feedback : null
         ]);
     }
 
