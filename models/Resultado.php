@@ -144,21 +144,12 @@ class Resultado
                 $pilotosVerificados[] = $posicaoPiloto;
             }
 
-            // Verifica se o piloto já foi verificado e vê se ele se o Piloto se repete
-            if (in_array($idPiloto, $pilotosVerificados)) {
-                $posicoesRepetidas = [];
-                foreach ($dadosParaInserir as $dados) {
-                    if ($dados['idPiloto'] == $idPiloto) {
-                        $posicoesRepetidas[] = $dados['posicaoPiloto'];
-                    }
-                }
-                
-                // Escrevendo o nome do piloto
+            // Verifica se o piloto já foi verificado e se ele se repete
+            if (in_array($idPiloto, array_column($dadosParaInserir, 'idPiloto'))) {
                 $piloto = $usuarioModel->consultarUsuarioPorId($idPiloto);
                 $feedbackInsercaoErro .= "Piloto duplicado na posição: " . $posicaoPiloto . "º | Nome do Piloto: " . $piloto['Nome'] . " " . $piloto['Sobrenome'] . "<br>";
                 $houveErro = true;
             } else {
-                $pilotosVerificados[] = $idPiloto;
                 $dadosParaInserir[] = array(
                     'idPiloto' => $idPiloto,
                     'idCorrida' => $idCorrida,
@@ -177,8 +168,6 @@ class Resultado
         ];
     }
     
-
-
     public function consultarResultadoComFiltro($busca)
     {
         try {
