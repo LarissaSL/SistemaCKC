@@ -3,19 +3,20 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- google fontes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
-    <!-- ícone de menu  -->
-    <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
-    <link rel="stylesheet" href="/sistemackc/views/Css/etapas.css">
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
-    <script defer src="/sistemackc/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
+    <script defer src="/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
 
-    <title>Etapas</title>
+    <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
+    <link rel="stylesheet" href="/sistemackc/views/Css/alterarSenha.css">
+
+    <title>Redefinir Senha</title>
 </head>
 
 <body>
@@ -24,6 +25,7 @@
         session_start();
     }
     ?>
+
     <header class="header">
         <nav class="nav">
             <a class="logo" href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a>
@@ -75,41 +77,26 @@
             </ul>
         </nav>
     </header>
-    <main>
-        <?php 
-        /* Usar pra ver quais variaveis estou mandando pra View
-        if(isset($corridas) && $classe != 'erro') {
-            $corrida = $corridas[0];
-            echo "Nome da Corrida: " . $corrida['nome'] . "<br>";
-            echo "Categoria: " . $corrida['categoria'] . "<br>";
-            echo "Nome do Campeonato: " . $corrida['nomeDoCampeonato'] . "<br>";
-            echo "Nome do Kartódromo: " . $corrida['nomeDoKartodromo'] . "<br>";
-            echo "Nome abreviado: " . $corrida['nomeAbreviado'] . "<br>";
-            echo "Endereço do Kartódromo: " . $corrida['enderecoDoKartodromo'] . "<br>";
-            echo "Data: " . $corrida['data'] . "<br>";
-            echo "Horario: " . $corrida['hora'] . "h " . $corrida['minuto'] . "min " . "<br><br>";
-        }
-        */
-        ?>
-        
-        <section class="container">
-            <!--TITULO DA PAG  -->
-            <h1 class="title">Etapas</h1>
 
-            <!--LINK PARA DOWNLOAD  -->
-            <div class="downloads">
-                <div class="iconDownload">
-                    <i class="ph ph-file-pdf"></i>
-                    <a class="download" href="sistemackc/views/Docs/" download="Regulamento_CKC_2024.pdf">Baixe o regulamento</a>
-                </div>
-                <span class="lineDownload"></span>
-            </div>
+    <!-- Conteúdo da página -->
+    <?php 
+                    echo "<p>Teste URL mandada: ". $dadosTeste[0]  . "</p>";
+                    echo "<p>Teste do ID Usuário: ". $dadosTeste[1]  . "</p>";
+                ?>
 
-            <section class="cards">
-                <!-- CARD CKC 95  -->
-                <?php 
 
-                if (empty($corridas)) {
+    <?php
+    if ($status) { ?>
+            <h1 class="titulo">Redefinir senha</h1>
+            <p class="aviso"><i class="ph ph-warning"></i>Preencha nos campos abaixo sua nova senha:</p>
+
+            <?php if (isset($_SESSION['tipo']) && $tipoUsuario == 'Administrador') {
+                echo "<form action='/sistemackc/admtm85/usuario/atualizar/senha/' method='POST'>";
+            } else {
+                echo "<form action='/sistemackc/usuario/atualizar/senha/' method='POST'>";
+            } ?>
+
+                <?php if (isset($feedback)) {
                     if (isset($feedback) && $feedback != '') {
                         echo "<div class='container-feedback'>";
                         if ($classe == 'erro') {
@@ -119,44 +106,28 @@
                         }
                         echo "</div>";
                     }
-                } else {
-                    foreach ($corridas as $corrida){ 
-                        echo "<article class='card_" . $corrida['nomeAbreviado'] . $corrida['categoria'] . "'>";
-                        echo "<div class='titleCard_" . $corrida['nomeAbreviado'] . "'>";
-                        echo "<h2><strong class='title_" . strtolower($corrida['nomeAbreviado']) . $corrida['categoria'] . "'>" . $corrida['nomeAbreviado'] . "</strong> " . $corrida['nome'] . "</h2>";
-                        echo "<span>" . $corrida['nomeDoCampeonato'] . "</span>";
-                        echo "</div>";
-                        echo "<div class='categoria_" . $corrida['nomeAbreviado'] . $corrida['categoria'] . "'>";
-                        if ($corrida['categoria'] == "Livre") {
-                            echo "<span>" . $corrida['categoria'] .  "</span>";
-                        } else {
-                            echo "<span>" . $corrida['categoria'] . " kg</span>";
-                        }                        
-                        echo "</div>";
-                        echo "<div class='date'>";
-                        echo "<span>" . $corrida['data'] . "</span>";
-                        echo "<div class='time'>";
-                        echo "<i class='ph ph-timer'></i>";
-                        echo "<p>" . $corrida['hora'] . "h " . $corrida['minuto'] . "min</p>";
-                        echo "</div>";
-                        echo "</div>";
-                        echo "<div class='address'>";
-                        echo "<div class='kart'>";
-                        echo "<i class='ph ph-map-pin'></i>";
-                        echo "<span class='kartodromo'>" . $corrida['nomeDoKartodromo'] . "</span>";
-                        echo "</div>";
-                        echo "<p class='locale'>";
-                        echo "<strong>Endereço:</strong> " . $corrida['enderecoDoKartodromo'];
-                        echo "</p>";
-                        echo "</div>";
-                        echo "<button class='inscrevase_" . $corrida['nomeAbreviado'] . "'>Inscreva-se</button>";
-                        echo "</article>";
-                    } 
-                }
-                ?>
-                
-            </section>
-    </main>
+                } ?>
+
+                <div class="campos">
+                    <div class="campo">
+                        <label class="senha" for="senha">Senha:</label>
+                        <input type="password" name="senha" required>
+                    </div>
+
+                    <div class="campo">
+                        <label class="senha" for="senha">Confirmação de Senha:</label>
+                        <input type="password" name="confirmarSenha" required>
+                    </div>
+                </div>
+
+                <div class="botao">
+                    <button type="submit" class="bt-alterar">Alterar</button>
+                </div>
+            </form>
+        </main>
+    <?php } else {
+        echo "<h1>Acesso não autorizado</h1>";
+    } ?>
     <footer>
         <div>
             <span class="copyright">© 2024 Copyright: ManasCode</span>
@@ -167,5 +138,4 @@
         </div>
     </footer>
 </body>
-
 </html>
