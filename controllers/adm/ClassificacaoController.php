@@ -51,6 +51,39 @@ class ClassificacaoController extends RenderView {
         ]);
     }
 
+    public function exibir($idCorrida) {
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+
+        $resultadoModel = new Resultado();
+        $corridaModel = new Corrida();
+        $usuarioModel = new Usuario();
+    
+        $dadosCorrida = $corridaModel->selecionarCorridaPorIdComNomeDoCamp($idCorrida);
+        $nomeAbreviado = $corridaModel->definirAbreviacao($dadosCorrida['Nome_Campeonato']);
+        $dadosResultados = $resultadoModel->selecionarResultadoPorCorridaId($idCorrida);
+
+        if(empty($dadosCorrida)) {
+            $feedback = "Erro ao selecionar os dados da corrida";
+            $classe = "erro";
+        }
+
+        if(!empty($dadosResultados)) {
+            $this->carregarViewComArgumentos('adm/exibirResultado', [
+                'dadosCorrida' => $dadosCorrida,
+                'usuarioModel' => $usuarioModel,
+                'nomeAbreviado' => $nomeAbreviado,
+                'dadosResultado' => $dadosResultados,
+                'classe' => isset($classe) ? $classe : null,
+                'feedback' => isset($feedback) ? $feedback : null
+            ]);
+        } else {
+            header("Location: /sistemackc/admtm85/resultado");
+            exit();
+        } 
+    }
+
     public function cadastrar($idCorrida) {
         if (!isset($_SESSION)) {
             session_start();
@@ -58,6 +91,12 @@ class ClassificacaoController extends RenderView {
     
         $dadosPilotos = [];
         $resultadoModel = new Resultado();
+        $corridaModel = new Corrida();
+        $usuarioModel = new Usuario();
+    
+        $dadosCorrida = $corridaModel->selecionarCorridaPorIdComNomeDoCamp($idCorrida);
+        $nomeAbreviado = $corridaModel->definirAbreviacao($dadosCorrida['Nome_Campeonato']);
+        $dadosUsuarios = $usuarioModel->obterNomeESobrenomeDosUsuarios();
     
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $posicoes = $_POST['posicoes'];
@@ -108,13 +147,6 @@ class ClassificacaoController extends RenderView {
             }
         }
     
-        $corridaModel = new Corrida();
-        $usuarioModel = new Usuario();
-    
-        $dadosCorrida = $corridaModel->selecionarCorridaPorIdComNomeDoCamp($idCorrida);
-        $nomeAbreviado = $corridaModel->definirAbreviacao($dadosCorrida['Nome_Campeonato']);
-        $dadosUsuarios = $usuarioModel->obterNomeESobrenomeDosUsuarios();
-    
         $this->carregarViewComArgumentos('adm/cadastrarResultado', [
             'dadosCorrida' => $dadosCorrida,
             'usuarios' => $dadosUsuarios,
@@ -125,8 +157,12 @@ class ClassificacaoController extends RenderView {
         ]);
     }
 
-    public function atualizar() {
-        $this->carregarView('adm/atualizarResultado');
+    public function atualizar($idCorrida) {
+        echo "Cliquei em Atualizar ID: " . $idCorrida;
+    }
+
+    public function excluir($idCorrida) {
+        echo "Cliquei em Excluir ID: " . $idCorrida;
     }
 
     public function teste() {

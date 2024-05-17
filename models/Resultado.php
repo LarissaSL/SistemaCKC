@@ -109,12 +109,12 @@ class Resultado
     public function selecionarResultadoPorCorridaId($corrida_id)
     {
         try {
-            $query = "SELECT * FROM resultado WHERE Corrida_id = :corrida_id";
+            $query = "SELECT * FROM resultado WHERE Corrida_id = :corrida_id ORDER BY Pontuacao_total DESC";
             $selecionar = $this->conexao->prepare($query);
             $selecionar->bindParam(':corrida_id', $corrida_id);
             $selecionar->execute();
 
-            return $selecionar->fetch(PDO::FETCH_ASSOC);
+            return $selecionar->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $erro) {
             echo "Erro ao selecionar resultado por corrida ID: " . $erro->getMessage();
             return false;
@@ -218,4 +218,4 @@ class Resultado
     }
 }
 
-   ?>
+?>

@@ -3,7 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- google fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <title>Resultados</title>
 
     <!-- Bootstrap CSS -->
@@ -27,7 +34,7 @@
                     <li><a href="/sistemackc/admtm85/campeonato">Campeonatos</a></li>
                     <li><a href="/sistemackc/admtm85/corrida">Corridas</a></li>
                     <li><a href="/sistemackc/admtm85/kartodromo">Kartodromos</a></li>
-                    <li><a href="#">Resultados</a></li>
+                    <li><a href="/sistemackc/admtm85/resultado">Resultados</a></li>
 
                     <li>
                         <?php
@@ -131,13 +138,14 @@
                         $resultadoModel = new Resultado();
                         $resultado = $resultadoModel->selecionarResultadoPorCorridaId($corrida['Id']);
                     
-                        // Se nao tiver resultado, desativa os botoes de cadastrar, editar e excluir
+                        // Se nao tiver resultado, desativa os botoes de exibir, cadastrar, editar e excluir
                         $disabled = !$resultado ? "disabled" : "";
                         $disabledCadastrar = $resultado ? "disabled" : "";
 
+                        echo "<a class='btn btn-primary $disabled' href='/sistemackc/admtm85/resultado/exibir/{$corrida["Id"]}'>Exibir</a>";
                         echo "<a class='btn btn-primary $disabledCadastrar' href='/sistemackc/admtm85/resultado/cadastrar/{$corrida["Id"]}'>Cadastrar</a>";
                         echo "<a class='btn btn-primary $disabled' href='/sistemackc/admtm85/corrida/atualizar/{$corrida["Id"]}'>Editar</a>";
-                        echo "<button class='btn btn-danger $disabled' onclick='confirmarExclusao({$corrida["Id"]},\"{$corrida["Nome"]}\")' $disabled>Excluir</button>";
+                        echo "<button class='btn btn-danger' onclick='confirmarExclusao({$corrida["Id"]}, \"{$corrida["Nome"]}\", \"{$corrida["Nome_Campeonato"]}\")'>Excluir</button>";
                         echo "</td>";
                     
                         echo "<td>" . $corrida['Nome_Campeonato'] . "</td>";
@@ -161,9 +169,9 @@
 
 
                 <script>
-                    function confirmarExclusao(id, nome) {
-                        if (confirm(`Tem certeza que deseja excluir:\nID: ${id}  |  ${nome} \n\nOBS.: Essa ação é irreversível.`)) {
-                            window.location.href = '/sistemackc/admtm85/corrida/excluir/' + id;
+                    function confirmarExclusao(id, nome, campeonato) {
+                        if (confirm(`Tem certeza que deseja excluir TODOS os registros:\n${campeonato} - ${nome} \n\nOBS.: Essa ação é irreversível.`)) {
+                            window.location.href = '/sistemackc/admtm85/resultado/excluir/' + id;
                         }
                     }
                 </script>

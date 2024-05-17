@@ -49,7 +49,6 @@
                     </li>
                 </ul>
             </nav>
-        <?php } ?>
     </header>
 
     <h1 class="title">Cadastro de Resultado</h1>
@@ -59,35 +58,35 @@
     </div>
     <div class="date">
         <?php
-        $dataCorrida = new DateTime($dadosCorrida['Data_corrida']);
-        echo "<span>" . $dataCorrida->format('d/m/Y') . "</span>";
+            $dataCorrida = new DateTime($dadosCorrida['Data_corrida']);
+            echo "<span>" . $dataCorrida->format('d/m/Y') . "</span>";
         ?>
     </div>
     <?php
-    $nomeCompleto = strtoupper($nomeAbreviado) . " " . $dadosCorrida['Nome'];
-    echo "<h2><strong class='title_'>" . $nomeCompleto . "</strong></h2>";
+            $nomeCompleto = strtoupper($nomeAbreviado) . " " . $dadosCorrida['Nome'];
+            echo "<h2><strong class='title_'>" . $nomeCompleto . "</strong></h2>";
     ?>
 
     <div class="categoria_">
         <?php
-        $categoriaFormatada = $dadosCorrida['Categoria'] == "Livre" ? $dadosCorrida['Categoria'] : $dadosCorrida['Categoria'] . " kg";
-        echo "<span>" . $categoriaFormatada . "</span>";
+            $categoriaFormatada = $dadosCorrida['Categoria'] == "Livre" ? $dadosCorrida['Categoria'] : $dadosCorrida['Categoria'] . " kg";
+            echo "<span>" . $categoriaFormatada . "</span>";
         ?>
     </div>
 
     <?php
-    if (isset($feedback) && !empty($feedback)) {
-        echo "<div class='container-feedback'>";
-        if ($classe == 'erro') {
-            echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
-        }
-        echo "</div>";
-    }
+            if (isset($feedback) && !empty($feedback)) {
+                echo "<div class='container-feedback'>";
+                if ($classe == 'erro') {
+                    echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
+                }
+                echo "</div>";
+            }
 
-    if (isset($usuarios) && $usuarios == []) {
-        echo "<p>É necessário ter ao menos 1 usuário cadastrado no sistema, para registrar um resultado</p>";
-        echo "<a class='bt-redirecionar' href='/sistemackc/admtm85/usuario/cadastrar'>Cadastrar usuario</a><br>";
-    } else {
+            if (isset($usuarios) && $usuarios == []) {
+                echo "<p>É necessário ter ao menos 1 usuário cadastrado no sistema, para registrar um resultado</p>";
+                echo "<a class='bt-redirecionar' href='/sistemackc/admtm85/usuario/cadastrar'>Cadastrar usuario</a><br>";
+            } else {
     ?>
 
         <section class="container">
@@ -135,16 +134,21 @@
         </script>
 
     <?php } ?>
+    <?php
+            } else {
+                echo "<h1>Acesso não autorizado</h1>";
+            }
+    ?>
 
-    <footer>
+<footer>
+    <div>
+        <span class="copyright">© 2024 Copyright: ManasCode</span>
         <div>
-            <span class="copyright">© 2024 Copyright: ManasCode</span>
-            <div>
-                <img src="/sistemackc/views/Img/ImgIcones/github.png">
-                <a target="_blank" href="https://github.com/LarissaSL/SistemaCKC_MVC">Repositório do Projeto</a>
-            </div>
+            <img src="/sistemackc/views/Img/ImgIcones/github.png">
+            <a target="_blank" href="https://github.com/LarissaSL/SistemaCKC_MVC">Repositório do Projeto</a>
         </div>
-    </footer>
+    </div>
+</footer>
 </body>
 
 </html>
