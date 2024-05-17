@@ -62,18 +62,14 @@ class ClassificacaoController extends RenderView {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $posicoes = $_POST['posicoes'];
             $pilotos = $_POST['pilotos'];
-            $qtd_voltas = $_POST['qtd_voltas'];
             $melhor_tempo = $_POST['melhor_tempo'];
-            $advs = $_POST['advTotal'];
             $pontuacoes = $_POST['pontuacao'];
     
             // Verificar duplicatas de resultados
             $verificacao = $resultadoModel->verificarDuplicatas(
                 $posicoes,
                 $pilotos,
-                $qtd_voltas,
                 $melhor_tempo,
-                $advs,
                 $pontuacoes,
                 $idCorrida
             );
@@ -88,9 +84,7 @@ class ClassificacaoController extends RenderView {
                 $dadosPilotos[] = array(
                     $posicaoPiloto,
                     $pilotos[$i],
-                    $qtd_voltas[$i],
                     $melhor_tempo[$i],
-                    $advs[$i],
                     $pontuacoes[$i]
                 );
             }
@@ -100,9 +94,7 @@ class ClassificacaoController extends RenderView {
                     $resultadoModel->inserirResultado(
                         $dados['idPiloto'],
                         $dados['idCorrida'],
-                        $dados['qtdVoltaPiloto'],
                         $dados['melhorTempoPiloto'],
-                        $dados['advsPiloto'],
                         $dados['posicaoPiloto'],
                         $dados['pontuacaoPiloto'],
                         "Cadastrado"

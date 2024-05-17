@@ -13,16 +13,14 @@ class Resultado
         $this->conexao = $bancoDeDados->getConexao();
     }
 
-    public function inserirResultado($usuario_id, $corrida_id, $quantidade_volta, $melhor_tempo, $adv, $posicao, $pontuacao_total, $status)
+    public function inserirResultado($usuario_id, $corrida_id, $melhor_tempo, $posicao, $pontuacao_total, $status)
     {
         try {
-            $queryInserir = "INSERT INTO resultado (Usuario_id, Corrida_id, Quantidade_volta, Melhor_tempo, Advertencia, Posicao, Pontuacao_total, Status) VALUES (:usuario_id, :corrida_id, :quantidade_volta, :melhor_tempo, :adv, :posicao, :pontuacao_total, :status)";
+            $queryInserir = "INSERT INTO resultado (Usuario_id, Corrida_id, Melhor_tempo, Posicao, Pontuacao_total, Status) VALUES (:usuario_id, :corrida_id, :melhor_tempo, :posicao, :pontuacao_total, :status)";
             $inserir = $this->conexao->prepare($queryInserir);
             $inserir->bindParam(':usuario_id', $usuario_id);
             $inserir->bindParam(':corrida_id', $corrida_id);
-            $inserir->bindParam(':quantidade_volta', $quantidade_volta);
             $inserir->bindParam(':melhor_tempo', $melhor_tempo);
-            $inserir->bindParam(':adv', $adv);
             $inserir->bindParam(':posicao', $posicao);
             $inserir->bindParam(':pontuacao_total', $pontuacao_total);
             $inserir->bindParam(':status', $status);
@@ -35,17 +33,15 @@ class Resultado
     }
 
 
-    public function alterarResultado($id, $usuario_id, $corrida_id, $quantidade_volta, $melhor_tempo, $adv, $posicao, $pontuacao_total, $status )
+    public function alterarResultado($id, $usuario_id, $corrida_id, $melhor_tempo, $posicao, $pontuacao_total, $status )
     {
         try {
-            $query = "UPDATE Resultado SET Usuario_id = :usuario_id, Corrida_id = :corrida_id, Quantidade_volta = :quantidade_volta, Tempo_volta = :tempo_volta, Advertencia = :adv, Pontuacao = :pontuacao, Pontuacao_total = :pontuacao_total Staus = :status WHERE Id = :id  ";
+            $query = "UPDATE Resultado SET Usuario_id = :usuario_id, Corrida_id = :corrida_id, Tempo_volta = :tempo_volta, Pontuacao = :pontuacao, Pontuacao_total = :pontuacao_total Staus = :status WHERE Id = :id  ";
             $alterar = $this->conexao->prepare($query);
             $alterar->bindParam(':id', $id);
             $alterar->bindParam(':usuario_id', $usuario_id);
             $alterar->bindParam(':corrida_id', $corrida_id);
-            $alterar->bindParam(':quantitade_volta', $quantidade_volta);
             $alterar->bindParam(':melhor_tempo', $melhor_tempo);
-            $alterar->bindParam(':adv', $adv);
             $alterar->bindParam(':posicao', $posicao);
             $alterar->bindParam(':pontuacao_total', $pontuacao_total);
             $alterar->bindParam(':status', $status);
@@ -125,7 +121,7 @@ class Resultado
         }
     }
 
-    public function verificarDuplicatas($posicoes, $pilotos, $qtd_voltas, $melhor_tempo, $advs, $pontuacoes, $idCorrida)
+    public function verificarDuplicatas($posicoes, $pilotos, $melhor_tempo, $pontuacoes, $idCorrida)
     {
         $usuarioModel = new Usuario();
         $pilotosVerificados = [];
@@ -137,9 +133,7 @@ class Resultado
         for ($i = 0; $i < count($posicoes); $i++) {
             $posicaoPiloto = $posicoes[$i];
             $idPiloto = $pilotos[$i];
-            $qtdVoltaPiloto = $qtd_voltas[$i];
             $melhorTempoPiloto = $melhor_tempo[$i];
-            $advsPiloto = $advs[$i];
             $pontuacaoPiloto = $pontuacoes[$i];
 
             // Verifica se a posicao se repete
@@ -168,9 +162,7 @@ class Resultado
                 $dadosParaInserir[] = array(
                     'idPiloto' => $idPiloto,
                     'idCorrida' => $idCorrida,
-                    'qtdVoltaPiloto' => $qtdVoltaPiloto,
                     'melhorTempoPiloto' => $melhorTempoPiloto,
-                    'advsPiloto' => $advsPiloto,
                     'posicaoPiloto' => $posicaoPiloto,
                     'pontuacaoPiloto' => $pontuacaoPiloto
                 );
