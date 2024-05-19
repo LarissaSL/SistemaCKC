@@ -136,7 +136,7 @@ class ClassificacaoController extends RenderView {
                         $dados['melhorTempoPiloto'],
                         $dados['posicaoPiloto'],
                         $dados['pontuacaoPiloto'],
-                        "Cadastrado"
+                        1
                     );
                 }
                 // Redirecionar para a pagina de resultados se der tudo certo
@@ -162,7 +162,80 @@ class ClassificacaoController extends RenderView {
     }
 
     public function excluir($idCorrida) {
-        echo "Cliquei em Excluir ID: " . $idCorrida;
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+    
+        $resultadoModel = new Resultado();
+        $corridaModel = new Corrida();
+        $usuarioModel = new Usuario();
+        
+        $dadosCorrida = $corridaModel->selecionarCorridaPorIdComNomeDoCamp($idCorrida);
+        $nomeAbreviado = $corridaModel->definirAbreviacao($dadosCorrida['Nome_Campeonato']);
+        $dadosResultados = $resultadoModel->selecionarResultadoPorCorridaId($idCorrida);
+    
+        if (empty($dadosCorrida)) {
+            $feedback = "Erro ao selecionar os dados da corrida";
+            $classe = "erro";
+            $this->carregarViewComArgumentos('adm/telaConfirmacaoExcluirResultado', [
+                'dadosCorrida' => $dadosCorrida,
+                'usuarioModel' => $usuarioModel,
+                'nomeAbreviado' => $nomeAbreviado,
+                'dadosResultado' => $dadosResultados,
+                'classe' => $classe,
+                'feedback' => $feedback
+            ]);
+            return;
+        }
+    
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $resultado = $resultadoModel->excluirResultado($idCorrida);
+    
+            if ($resultado == "Sucesso") {
+                header("Location: /sistemackc/admtm85/resultado");
+                exit(); 
+            } else {
+                $feedback = "Erro ao tentar excluir resultados, tente novamente";
+                $classe = "erro";
+    
+                $this->carregarViewComArgumentos('adm/telaConfirmacaoExcluirResultado', [
+                    'dadosCorrida' => $dadosCorrida,
+                    'usuarioModel' => $usuarioModel,
+                    'nomeAbreviado' => $nomeAbreviado,
+                    'dadosResultado' => $dadosResultados,
+                    'classe' => $classe,
+                    'feedback' => $feedback
+                ]);
+            }
+        } else {
+            if (!empty($dadosResultados)) {
+                $this->carregarViewComArgumentos('adm/telaConfirmacaoExcluirResultado', [
+                    'dadosCorrida' => $dadosCorrida,
+                    'usuarioModel' => $usuarioModel,
+                    'nomeAbreviado' => $nomeAbreviado,
+                    'dadosResultado' => $dadosResultados,
+                    'classe' => isset($classe) ? $classe : null,
+                    'feedback' => isset($feedback) ? $feedback : null
+                ]);
+            } else {
+                header("Location: /sistemackc/admtm85/resultado");
+                exit();
+            }
+        }
+    }
+
+    public function excluirDireto($idCorrida) {
+        $resultadoModel = new Resultado();
+        $resultado = $resultadoModel->excluirResultado($idCorrida);
+
+        if ($resultado == "Sucesso") {
+            header("Location: /sistemackc/admtm85/resultado");
+            exit(); 
+        } else {
+            echo '<script type="text/javascript">';
+            echo 'alert("Erro ao tentar excluir resultados, tente novamente");';
+            echo '</script>';
+        }
     }
 
     public function teste() {

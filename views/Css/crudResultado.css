@@ -1,0 +1,24 @@
+.statusContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    height: 100%; 
+}
+
+.status {
+    display: inline-block;
+    width: 140px; 
+    padding: 8px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+}
+.status_true {
+    background-color: #A9DBAB;
+    color: black;
+}
+.status_false {
+    background-color: #B9B9B9;
+    color: black;
+}

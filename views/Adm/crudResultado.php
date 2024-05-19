@@ -17,6 +17,8 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="/sistemackc/views/css/crudResultado.css">
+
 </head>
 
 <body>
@@ -144,10 +146,10 @@
                         $disabled = !$resultado ? "disabled" : "";
                         $disabledCadastrar = $resultado ? "disabled" : "";
 
-                        echo "<a class='btn btn-primary $disabled' href='/sistemackc/admtm85/resultado/exibir/{$corrida["Id"]}'>Exibir</a>";
                         echo "<a class='btn btn-primary $disabledCadastrar' href='/sistemackc/admtm85/resultado/cadastrar/{$corrida["Id"]}'>Cadastrar</a>";
+                        echo "<a class='btn btn-primary $disabled' href='/sistemackc/admtm85/resultado/exibir/{$corrida["Id"]}'>Exibir</a>";
                         echo "<a class='btn btn-primary $disabled' href='/sistemackc/admtm85/corrida/atualizar/{$corrida["Id"]}'>Editar</a>";
-                        echo "<button class='btn btn-danger' onclick='confirmarExclusao({$corrida["Id"]}, \"{$corrida["Nome"]}\", \"{$corrida["Nome_Campeonato"]}\")'>Excluir</button>";
+                        echo "<a class='btn btn-danger $disabled'href='/sistemackc/admtm85/resultado/excluir/{$corrida["Id"]}'>Excluir</a>";
                         echo "</td>";
                     
                         echo "<td>" . $corrida['Nome_Campeonato'] . "</td>";
@@ -158,12 +160,13 @@
                         $dataCorrida = new DateTime($corrida['Data_corrida']);
                         echo "<td>" . $dataCorrida->format('d/m/Y') . "</td>";
                     
+                        echo "<td class='statusContainer'>";
                         if ($resultado) {
-                            echo "<td>Cadastrado</td>";
+                            echo "<span class='status status_true'>Cadastrado</span>";
                         } else {
-                            echo "<td>Não cadastrado</td>";
+                            echo "<span class='status status_false'>Não cadastrado</span>";
                         }
-                    
+                        echo "</td>";
                         echo "</tr>";
                     }
                     echo "</table>";

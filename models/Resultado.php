@@ -13,17 +13,16 @@ class Resultado
         $this->conexao = $bancoDeDados->getConexao();
     }
 
-    public function inserirResultado($usuario_id, $corrida_id, $melhor_tempo, $posicao, $pontuacao_total, $status)
+    public function inserirResultado($usuario_id, $corrida_id, $melhor_tempo, $posicao, $pontuacao_total)
     {
         try {
-            $queryInserir = "INSERT INTO resultado (Usuario_id, Corrida_id, Melhor_tempo, Posicao, Pontuacao_total, Status) VALUES (:usuario_id, :corrida_id, :melhor_tempo, :posicao, :pontuacao_total, :status)";
+            $queryInserir = "INSERT INTO resultado (Usuario_id, Corrida_id, Melhor_tempo, Posicao, Pontuacao_total) VALUES (:usuario_id, :corrida_id, :melhor_tempo, :posicao, :pontuacao_total)";
             $inserir = $this->conexao->prepare($queryInserir);
             $inserir->bindParam(':usuario_id', $usuario_id);
             $inserir->bindParam(':corrida_id', $corrida_id);
             $inserir->bindParam(':melhor_tempo', $melhor_tempo);
             $inserir->bindParam(':posicao', $posicao);
             $inserir->bindParam(':pontuacao_total', $pontuacao_total);
-            $inserir->bindParam(':status', $status);
             $inserir->execute();
 
             return "Sucesso";
@@ -33,10 +32,10 @@ class Resultado
     }
 
 
-    public function alterarResultado($id, $usuario_id, $corrida_id, $melhor_tempo, $posicao, $pontuacao_total, $status )
+    public function alterarResultado($id, $usuario_id, $corrida_id, $melhor_tempo, $posicao, $pontuacao_total)
     {
         try {
-            $query = "UPDATE Resultado SET Usuario_id = :usuario_id, Corrida_id = :corrida_id, Tempo_volta = :tempo_volta, Pontuacao = :pontuacao, Pontuacao_total = :pontuacao_total Staus = :status WHERE Id = :id  ";
+            $query = "UPDATE Resultado SET Usuario_id = :usuario_id, Corrida_id = :corrida_id, Tempo_volta = :tempo_volta, Pontuacao = :pontuacao, Pontuacao_total = :pontuacao_total WHERE Id = :id  ";
             $alterar = $this->conexao->prepare($query);
             $alterar->bindParam(':id', $id);
             $alterar->bindParam(':usuario_id', $usuario_id);
@@ -44,7 +43,6 @@ class Resultado
             $alterar->bindParam(':melhor_tempo', $melhor_tempo);
             $alterar->bindParam(':posicao', $posicao);
             $alterar->bindParam(':pontuacao_total', $pontuacao_total);
-            $alterar->bindParam(':status', $status);
             $alterar->execute();
 
             return "Sucesso";
@@ -63,12 +61,12 @@ class Resultado
         }
     }
 
-    public function excluirResultado($id)
+    public function excluirResultado($idCorrida)
     {
         try {
-            $query = "DELETE FROM resultado WHERE Id = :id";
+            $query = "DELETE FROM resultado WHERE Corrida_id = :corrida_id";
             $excluir = $this->conexao->prepare($query);
-            $excluir->bindParam(':id', $id);
+            $excluir->bindParam(':corrida_id', $idCorrida);
             $excluir->execute();
 
             return "Sucesso";

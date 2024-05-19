@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/resultadoExibir.css">
 
-    <title>Resultado</title>
+    <title>Confirmar Exclusao</title>
 </head>
 
 <body>
@@ -55,7 +55,7 @@
             </nav>
     </header>
 
-    <h1>Classificação da Corrida</h1>
+    <h1>Confirmação de exclusão</h1>
 
     <?php
             if (isset($feedback) && !empty($feedback)) {
@@ -92,7 +92,8 @@
 
     
 
-    <p>Confira abaixo a classificação da corrida:</p>
+    <p>Você tem certeza que deseja excluir todos os resultados do <strong><?php echo $dadosCorrida['Nome_Campeonato'] . " - " . $dadosCorrida['Nome'] ?></strong></p>
+    <form action="" method="post">
     <div class="ranking-container">
         <?php
             foreach ($dadosResultado as $resultado) :
@@ -114,9 +115,10 @@
     <?php endforeach; ?>
 
     <?php 
-        echo "<a class='btn btn-primary' href='/sistemackc/admtm85/resultado/atualizar/{$dadosCorrida["Id"]}'>Editar</a>";
-        echo "<button class='btn btn-danger' onclick='confirmarExclusao({$dadosCorrida["Id"]}, \"{$dadosCorrida["Nome"]}\", \"{$dadosCorrida["Nome_Campeonato"]}\")'>Excluir</button>";
+        echo "<a class='btn btn-primary' href='/sistemackc/admtm85/resultado/'>Cancelar</a>";
+        echo "<button type='submit' class='btn btn-danger'>Excluir</button>";
     ?>
+    </form>
 
     
     <?php 
@@ -125,14 +127,5 @@
         }
     ?>
     </div>
-
-    <script>
-        function confirmarExclusao(id, nome, campeonato) {
-            if (confirm(`Tem certeza que deseja excluir TODOS os registros:\n${campeonato} - ${nome} \n\nOBS.: Essa ação é irreversível.`)) {
-                window.location.href = '/sistemackc/admtm85/resultado/excluir/corrida/' + id;
-            }
-        }
-    </script>
 </body>
-
 </html>

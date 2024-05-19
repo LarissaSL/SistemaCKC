@@ -150,7 +150,6 @@ class Conexao
                 Melhor_tempo TIME,
                 Posicao INTEGER,
                 Pontuacao_total INTEGER,
-                Status BOOLEAN,
                 PRIMARY KEY(Id),
                 FOREIGN KEY(usuario_id) REFERENCES usuario(id),
                 FOREIGN KEY(Corrida_id) REFERENCES Corrida(id)
