@@ -47,7 +47,7 @@
                     echo "<li><a href='/sistemackc/admtm85/campeonato'>Campeonatos</a></li>";
                     echo "<li><a href='/sistemackc/admtm85/corrida'>Corridas</a></li>";
                     echo "<li><a href='/sistemackc/admtm85/kartodromo'>Kartodromos</a></li>";
-                    echo "<li><a href='#'>Resultados</a></li>";
+                    echo "<li><a href='/sistemackc/admtm85/resultado'>Resultados</a></li>";
                 } ?>
 
                 <?php
