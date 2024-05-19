@@ -80,7 +80,6 @@
         <table class='table table-striped table-bordered '>
             <thead class='thead-dark'>
                 <tr>
-                    <th>ID</th>
                     <th>Nome</th>
                     <th>Data de Inicio</th>
                     <th>Data de Termino</th>
@@ -91,7 +90,6 @@
                 <?php
                 foreach ($campeonatos as $campeonato) {
                     echo "<tr>";
-                    echo "<td>" . $campeonato['Id'] . "</td>";
                     echo "<td>" . $campeonato['Nome'] . "</td>";
                     $dataInicio = new DateTime($campeonato['Data_inicio']);
                     $dataTermino = new DateTime($campeonato['Data_termino']);

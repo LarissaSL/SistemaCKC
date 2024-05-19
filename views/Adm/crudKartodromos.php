@@ -81,7 +81,6 @@
         <thead class='thead-dark'>
             <tr>
                 <th>Foto</th>
-                <th>ID</th>
                 <th>Nome</th>
                 <th>CEP</th>
                 <th>Rua</th>
@@ -96,7 +95,6 @@
                 foreach ($kartodromos as $kartodromo) {
                     echo "<tr>";
                     echo "<td><img style='width: 120px;' src='/sistemackc/views/Img/ImgSistema/" . $kartodromo['Foto'] . "' alt='Imagem do Kartódromo'></td>";
-                    echo "<td>" . $kartodromo['Id'] . "</td>";
                     echo "<td>" . $kartodromo['Nome'] . "</td>";
                     echo "<td>" . $kartodromo['CEP'] . "</td>";
                     echo "<td>" . $kartodromo['Rua'] . "</td>";

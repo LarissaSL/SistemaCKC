@@ -102,7 +102,6 @@
         <table class='table table-striped table-bordered '>
             <thead class='thead-dark'>
                 <tr>
-                    <th>ID</th>
                     <th>Nome Campeonato</th>
                     <th>Nome Kartodromo</th>
                     <th>Nome</th>
@@ -117,7 +116,6 @@
                 <?php
                 foreach ($corridas as $corrida) {
                     echo "<tr>";
-                    echo "<td>" . $corrida['Id'] . "</td>";
                     echo "<td>" . $corrida['Nome_Campeonato'] . "</td>";
                     echo "<td>" . $corrida['Nome_Kartodromo'] . "</td>";
                     echo "<td>" . $corrida['Nome'] . "</td>";

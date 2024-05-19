@@ -103,12 +103,13 @@
 
                 <section class="container-form">
                     <!-- Se o Usuário tiver foto ela irá aparecer -->
-                    <?php if (isset($usuario['Foto'])) : ?>
-                        <div class="containerFotoPerfil">
-                            <div class="imagem">
-                                <img src="/sistemackc/views/Img/ImgUsuario/<?php echo $usuario['Foto'] ?>" alt="Foto de <?php echo $usuario['Nome']; ?>">
-                            </div>
-                        <?php endif ?>
+                    <?php
+                    $foto = $usuario['Foto'] != NULL ? $usuario['Foto'] : 'perfil_escuro.png'; ?>
+                    <div class="containerFotoPerfil">
+                        <div class="imagem">
+                            <img src="/sistemackc/views/Img/ImgUsuario/<?php echo $foto ?>" alt="Foto de <?php echo $usuario['Nome']; ?>">
+                        </div>
+
 
                         <!-- Se o Usuário Logado for o mesmo do ID ele pode trocar sua foto de perfil -->
                         <?php
@@ -141,12 +142,12 @@
                 <?php
                     if (isset($feedback) && $feedback != '') {
                         echo "<div class='container-feedback'>";
-                        if ($classe == 'erro') {
-                            echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
-                        } else {
-                            echo "<span class='$classe'><i class='ph ph-check-square'></i><strong>$feedback</strong></span>";
-                        }
-                            echo "</div>";
+                    if ($classe == 'erro') {
+                        echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
+                    } else {
+                        echo "<span class='$classe'><i class='ph ph-check-square'></i><strong>$feedback</strong></span>";
+                    }
+                    echo "</div>";
                     }
                 ?>
             <?php } ?>
@@ -163,10 +164,25 @@
                         <input type="text" name="sobrenome" value="<?php echo $usuario['Sobrenome'] ?>" <?php echo (isset($_SESSION['email']) && $_SESSION['email'] == $usuario['Email']) || (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') ? '' : 'readonly'; ?>>
                     </div>
 
-                    <div class="campo">
-                        <label class="dataNascimento" for="dataNascimento">Data de Nascimento:</label>
-                        <input type="text" name="dataNascimento" value="<?php echo $dataFormatada ?>" <?php echo (isset($_SESSION['email']) && $_SESSION['email'] == $usuario['Email']) || (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') ? '' : 'readonly'; ?>>
-                    </div>
+                    <?php
+                    // Se o usuário é o dono do perfil ou um adm, exibe o campo de data de nascimento
+                    if ((isset($_SESSION['email']) && $_SESSION['email'] == $usuario['Email']) || (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador')) { ?>
+                        <div class="campo">
+                            <label class="dataNascimento" for="dataNascimento">Data de Nascimento:</label>
+                            <input type="text" name="dataNascimento" value="<?php echo $dataFormatada ?>">
+                        </div>
+                    <?php
+                        // Se nao , mostra a idade do piloto
+                    } else {
+                        $dataNascimento = new DateTime($dataFormatada);
+                        $hoje = new DateTime();
+                        $idade = $hoje->diff($dataNascimento)->y;
+                    ?>
+                        <div class="campo">
+                            <label class="dataNascimento" for="dataNascimento">Idade:</label>
+                            <input type="text" name="idade" value="<?php echo $idade . ' anos' ?>" readonly>
+                        </div>
+                    <?php } ?>
 
 
                     <?php if ((isset($_SESSION['email']) && $_SESSION['email'] == $usuario['Email']) || (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador')) : ?>
@@ -185,7 +201,7 @@
                                 <input type="text" value="<?php echo $usuario['Genero']; ?> " name="genero" <?php echo (isset($_SESSION['email']) && $_SESSION['email'] == $usuario['Email']) || (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') ? '' : 'readonly'; ?>>
                             <?php endif; ?>
                             </div>
-                            
+
                             <!-- FALTA ESTILO NESSE AQUI, Parte que o ADM escolhe o tipo de Usuário  -->
                             <?php if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') : ?>
                                 <div class="dataNascimento">

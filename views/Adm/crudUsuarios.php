@@ -90,7 +90,6 @@
         <thead class='thead-dark'>
             <tr>
                 <th>Foto de Perfil</th>
-                <th>ID</th>
                 <th>Tipo</th>
                 <th>Nome</th>
                 <th>Sobrenome</th>
@@ -109,8 +108,9 @@
             <?php
             foreach ($usuarios as $usuario) {
                 echo "<tr>";
-                echo "<td><img style='width: 120px;' src='/sistemackc/views/Img/ImgUsuario/" . $usuario['Foto'] . "' alt='Imagem de " . $usuario['Nome'] . "'></td>";
-                echo "<td>" . $usuario['Id'] . "</td>";
+
+                $foto = $usuario['Foto'] != NULL ? $usuario['Foto'] : 'perfil_escuro.png';
+                echo "<td><img style='width: 100px;' src='/sistemackc/views/Img/ImgUsuario/" . $foto . "' alt='Imagem de " . $usuario['Nome'] . "'></td>";
                 echo "<td>" . $usuario['Tipo'] . "</td>";
                 echo "<td>" . $usuario['Nome'] . "</td>";
                 echo "<td>" . $usuario['Sobrenome'] . "</td>";
