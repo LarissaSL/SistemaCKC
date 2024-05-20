@@ -41,7 +41,7 @@
                     <li><a href="/sistemackc/admtm85/campeonato">Campeonatos</a></li>
                     <li><a href="/sistemackc/admtm85/corrida">Corridas</a></li>
                     <li><a href="/sistemackc/admtm85/kartodromo">Kartodromos</a></li>
-                    <li><a href="#">Resultados</a></li>
+                    <li><a href="/sistemackc/admtm85/resultado">Resultados</a></li>
                     
                     <li class="drop-down">
                         <?php

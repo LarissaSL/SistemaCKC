@@ -148,7 +148,7 @@
 
                         echo "<a class='btn btn-primary $disabledCadastrar' href='/sistemackc/admtm85/resultado/cadastrar/{$corrida["Id"]}'>Cadastrar</a>";
                         echo "<a class='btn btn-primary $disabled' href='/sistemackc/admtm85/resultado/exibir/{$corrida["Id"]}'>Exibir</a>";
-                        echo "<a class='btn btn-primary $disabled' href='/sistemackc/admtm85/corrida/atualizar/{$corrida["Id"]}'>Editar</a>";
+                        echo "<a class='btn btn-primary $disabled' href='/sistemackc/admtm85/resultado/atualizar/{$corrida["Id"]}'>Editar</a>";
                         echo "<a class='btn btn-danger $disabled'href='/sistemackc/admtm85/resultado/excluir/{$corrida["Id"]}'>Excluir</a>";
                         echo "</td>";
                     

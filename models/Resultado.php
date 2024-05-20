@@ -32,14 +32,13 @@ class Resultado
     }
 
 
-    public function alterarResultado($id, $usuario_id, $corrida_id, $melhor_tempo, $posicao, $pontuacao_total)
+    public function alterarResultado($id, $usuario_id, $posicao, $melhor_tempo, $pontuacao_total)
     {
         try {
-            $query = "UPDATE Resultado SET Usuario_id = :usuario_id, Corrida_id = :corrida_id, Tempo_volta = :tempo_volta, Pontuacao = :pontuacao, Pontuacao_total = :pontuacao_total WHERE Id = :id  ";
+            $query = "UPDATE Resultado SET Usuario_id = :usuario_id, Tempo_volta = :tempo_volta, Pontuacao = :pontuacao, Pontuacao_total = :pontuacao_total WHERE Id = :id  ";
             $alterar = $this->conexao->prepare($query);
             $alterar->bindParam(':id', $id);
             $alterar->bindParam(':usuario_id', $usuario_id);
-            $alterar->bindParam(':corrida_id', $corrida_id);
             $alterar->bindParam(':melhor_tempo', $melhor_tempo);
             $alterar->bindParam(':posicao', $posicao);
             $alterar->bindParam(':pontuacao_total', $pontuacao_total);
