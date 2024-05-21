@@ -147,12 +147,9 @@ class Conexao
                 Id INT AUTO_INCREMENT,
                 Usuario_id INTEGER NOT NULL,
                 Corrida_id INTEGER NOT NULL,
-                Quantidade_volta INTEGER,
                 Melhor_tempo TIME,
-                Advertencia INTEGER,
                 Posicao INTEGER,
                 Pontuacao_total INTEGER,
-                Status BOOLEAN,
                 PRIMARY KEY(Id),
                 FOREIGN KEY(usuario_id) REFERENCES usuario(id),
                 FOREIGN KEY(Corrida_id) REFERENCES Corrida(id)

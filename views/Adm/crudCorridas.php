@@ -2,8 +2,18 @@
 <html lang=pt-br>
 
 <head>
-    <meta charset=UTF-8>
-    <meta name=viewport content="width=device-width" , initial-scale="1.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- google fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
+
+    <link rel="icon" href="/sistemackc/views/Img/ImgIcones/crash_icon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <title>Corridas</title>
 
     <!-- Bootstrap CSS -->
@@ -27,7 +37,7 @@
                     <li><a href="/sistemackc/admtm85/campeonato">Campeonatos</a></li>
                     <li><a href="/sistemackc/admtm85/corrida">Corridas</a></li>
                     <li><a href="/sistemackc/admtm85/kartodromo">Kartodromos</a></li>
-                    <li><a href="#">Resultados</a></li>
+                    <li><a href="/sistemackc/admtm85/resultado">Resultados</a></li>
 
                     <li>
                         <?php
@@ -52,7 +62,7 @@
 
     <!-- Só mostra feedback se a classe for a de erro -->
     <?php
-        if (isset($classe) && $classe == 'alert alert-danger') { ?>
+            if (isset($classe) && $classe == 'alert alert-danger') { ?>
         <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
     <?php } else { ?>
 
@@ -66,7 +76,7 @@
                     <label for="filtroCampeonato">Filtrar por Campeonato</label>
                     <select class="form-control" id="filtroCampeonato" name="filtroCampeonato">
                         <option value="">Selecione um Campeonato</option>
-                        <?php 
+                        <?php
                         foreach ($campeonatos as $campeonato) {
                             $selected = isset($_GET['filtroCampeonato']) && $_GET['filtroCampeonato'] == $campeonato['Id'] ? 'selected' : '';
                             echo "<option value='" . $campeonato['Id'] . "' $selected>" . $campeonato['Nome'] . "</option>";
@@ -86,14 +96,13 @@
 
 
         <?php
-            if (isset($classe) && $classe == 'erro') : ?>
-                <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
+                if (isset($classe) && $classe == 'erro') : ?>
+            <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
         <?php endif ?>
 
         <table class='table table-striped table-bordered '>
             <thead class='thead-dark'>
                 <tr>
-                    <th>ID</th>
                     <th>Nome Campeonato</th>
                     <th>Nome Kartodromo</th>
                     <th>Nome</th>
@@ -108,7 +117,6 @@
                 <?php
                 foreach ($corridas as $corrida) {
                     echo "<tr>";
-                    echo "<td>" . $corrida['Id'] . "</td>";
                     echo "<td>" . $corrida['Nome_Campeonato'] . "</td>";
                     echo "<td>" . $corrida['Nome_Kartodromo'] . "</td>";
                     echo "<td>" . $corrida['Nome'] . "</td>";
@@ -140,12 +148,40 @@
             echo "<h1>Acesso não autorizado</h1>";
         }
         ?>
+
         <footer>
-            <div>
-                <span class="copyright">© 2024 Copyright: ManasCode</span>
-                <div>
-                    <img src="/sistemackc/views/Img/ImgIcones/github.png">
-                    <a target="_blank" href="https://github.com/LarissaSL/SistemaCKC_MVC">Repositório do Projeto</a>
+            <!-- ondas -->
+            <div class="water">
+                <svg class="waves" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                    <defs>
+                        <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                    </defs>
+                    <g class="parallax">
+                        <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(47, 44, 44, 0.7)" />
+                        <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(47, 44, 44, 0.5)" />
+                        <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(49, 46, 46, 0.3)" />
+                        <use xlink:href="#gentle-wave" x="48" y="7" fill="var(--background-campos)" />
+
+                    </g>
+                </svg>
+            </div>
+            <!-- conteudo na nav -->
+            <div class="content">
+                <span class="copyright">2024 Manas Code | Todos os direitos reservados</span>
+                <div class="navegation">
+                    <div class="contact">
+                        <a href="https://www.instagram.com/crashkartchampionship?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
+                            <i class="ph-fill ph-instagram-logo"></i><!-- logo instagram-->
+                        </a>
+                        <a href="#" target="_blank">
+                            <i class="ph-fill ph-whatsapp-logo"></i><!-- logo whatsapp-->
+                        </a>
+                    </div>
+                    <div class="navigationLink">
+                        <a href="/sistemackc/etapas">Etapas</a>
+                        <a href="#">Classificação</a>
+                        <a href="/sistemackc/kartodromo">Kartódromos</a>
+                    </div>
                 </div>
             </div>
         </footer>

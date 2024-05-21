@@ -3,7 +3,16 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- google fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
+
+    <link rel="icon" href="/sistemackc/views/Img/ImgIcones/crash_icon.ico" type="image/x-icon">
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <title>Kartódromos</title>
 
     <!-- Bootstrap CSS -->
@@ -27,7 +36,7 @@
                     <li><a href="/sistemackc/admtm85/campeonato">Campeonatos</a></li>
                     <li><a href="/sistemackc/admtm85/corrida">Corridas</a></li>
                     <li><a href="/sistemackc/admtm85/kartodromo">Kartodromos</a></li>
-                    <li><a href="#">Resultados</a></li>
+                    <li><a href="/sistemackc/admtm85/resultado">Resultados</a></li>
 
                     <li>
                         <?php
@@ -72,7 +81,6 @@
         <thead class='thead-dark'>
             <tr>
                 <th>Foto</th>
-                <th>ID</th>
                 <th>Nome</th>
                 <th>CEP</th>
                 <th>Rua</th>
@@ -87,7 +95,6 @@
                 foreach ($kartodromos as $kartodromo) {
                     echo "<tr>";
                     echo "<td><img style='width: 120px;' src='/sistemackc/views/Img/ImgSistema/" . $kartodromo['Foto'] . "' alt='Imagem do Kartódromo'></td>";
-                    echo "<td>" . $kartodromo['Id'] . "</td>";
                     echo "<td>" . $kartodromo['Nome'] . "</td>";
                     echo "<td>" . $kartodromo['CEP'] . "</td>";
                     echo "<td>" . $kartodromo['Rua'] . "</td>";

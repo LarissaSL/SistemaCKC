@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/resultadoExibir.css">
 
-    <title>Atualizar</title>
+    <title>Confirmar Exclusao</title>
 </head>
 
 <body>
@@ -55,7 +55,7 @@
             </nav>
     </header>
 
-    <h1>Atualização de Resultado</h1>
+    <h1>Confirmação de exclusão</h1>
 
     <?php
             if (isset($feedback) && !empty($feedback)) {
@@ -90,68 +90,42 @@
         </div>
     </div>
 
-    <div id="pilotosContainer">
-        <form method="POST" action="/sistemackc/admtm85/resultado/atualizarRegistro/<?php echo $idCorrida; ?>">
-            <?php
-            if (isset($dadosResultado) && $dadosResultado != NULL) {
-                foreach ($dadosResultado as $dadosItem) {
-                    // Processando os dados de cada usuário
-                    $usuario = $usuarioModel->consultarUsuarioPorId($dadosItem["Usuario_id"]);
-                    $nome = $usuario['Nome'];
-                    $sobrenome = $usuario['Sobrenome'];
-                    $foto = $usuario['Foto'] != NULL ? $usuario['Foto'] : 'perfil_branco.png';
-                    ?>
-                    <div class="piloto">
-                        <img class="pilot-img" src="/sistemackc/views/Img/ImgUsuario/<?php echo $foto; ?>" alt="<?php echo $nome . ' ' . $sobrenome; ?>">
-                        <div class="pilot-info">
-                            <span><?php echo $dadosItem["Posicao"]; ?>º Lugar</span>
-                            <span><?php echo $nome . ' ' . $sobrenome; ?></span>
-                            <span><?php echo $dadosItem["Melhor_tempo"]; ?></span>
-                            <span><?php echo isset($dadosItem["Pontuacao_total"]) ? $dadosItem["Pontuacao_total"] : ''; ?> pts</span>
-                        </div>
-                        <input type="hidden" name="ids[]" value="<?php echo $dadosItem['Id']; ?>">
-                        <label>Posição:</label>
-                        <select name="posicoes[]" required>
-                            <?php
-                            $posicoes = array("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15");
-                            foreach ($posicoes as $posicao) {
-                                echo "<option value='$posicao' " . ($dadosItem["Posicao"] == $posicao ? 'selected' : '') . ">$posicao º</option>";
-                            }
-                            ?>
-                        </select>
-                        <label>Piloto:</label>
-                        <select name="pilotos[]" required>
-                            <?php foreach ($usuarios as $usuario) { ?>
-                                <option value="<?php echo $usuario['id']; ?>" <?php echo $usuario['id'] == $dadosItem["Usuario_id"] ? 'selected' : ''; ?>>
-                                    <?php echo $usuario['nome'] . ' ' . $usuario['sobrenome']; ?>
-                                </option>
-                            <?php } ?>
-                        </select>
-                        <label>Melhor tempo:</label>
-                        <input type="time" name="melhor_tempo[]" value="<?php echo $dadosItem["Melhor_tempo"]; ?>" placeholder="Melhor Tempo" required>
-                        <label>Pontuação:</label>
-                        <input readonly type="number" name="pontuacao[]" value="<?php echo isset($dadosItem["Pontuacao_total"]) ? $dadosItem["Pontuacao_total"] : ''; ?>">
-                    </div>
-                <?php
-                }
-            }
-            ?>
-            <button type="submit">Atualizar registros</button>
-        </form>
-    </div>
+    
 
+    <p>Você tem certeza que deseja excluir todos os resultados do <strong><?php echo $dadosCorrida['Nome_Campeonato'] . " - " . $dadosCorrida['Nome'] ?></strong></p>
+    <form action="" method="post">
+    <div class="ranking-container">
+        <?php
+            foreach ($dadosResultado as $resultado) :
+                // Processando os dados de cada usuario
+                $usuario = $usuarioModel->consultarUsuarioPorId($resultado['Usuario_id']);
+                $nome = $usuario['Nome'];
+                $sobrenome = $usuario['Sobrenome'];
+                $foto = $usuario['Foto'] != NULL ? $usuario['Foto'] : 'perfil_branco.png';
+        ?>
+            <div class="pilot">
+                <img class="pilot-img" src="/sistemackc/views/Img/ImgUsuario/<?php echo $foto; ?>" alt="<?php echo $nome . ' ' . $sobrenome; ?>">
+                <div class="pilot-info <?php echo "posicao" .$resultado['Posicao']; ?>">
+                    <span><?php echo $resultado['Posicao']; ?>º Lugar</span>
+                    <span><?php echo $nome . ' ' . $sobrenome; ?></span>
+                    <span><?php echo $resultado['Melhor_tempo']; ?></span>
+                    <span><?php echo $resultado['Pontuacao_total']; ?> pts</span>
+                </div>
+            </div>
+    <?php endforeach; ?>
+
+    <?php 
+        echo "<a class='btn btn-primary' href='/sistemackc/admtm85/resultado/'>Cancelar</a>";
+        echo "<button type='submit' class='btn btn-danger'>Excluir</button>";
+    ?>
+    </form>
+
+    
     <?php 
         }} else {
             echo "<h1>Acesso não autorizado</h1>";
         }
     ?>
     </div>
-
-    <script>
-        function confirmarExclusao(id, posicao, idUsuario, melhor_tempo, pontuacao) {
-            window.location.href = '/sistemackc/admtm85/resultado/excluir/corrida/' + id;
-        }
-    </script>
 </body>
-
 </html>

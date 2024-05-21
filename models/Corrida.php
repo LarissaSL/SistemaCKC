@@ -95,6 +95,23 @@ class Corrida
         }
     }
 
+    public function selecionarCorridaPorIdComNomeDoCamp($id)
+    {
+        try {
+            $query = "SELECT corrida.*, campe.Nome AS Nome_Campeonato
+                    FROM corrida
+                    INNER JOIN campeonato campe ON corrida.Campeonato_id = campe.Id
+                    WHERE corrida.Id = :id";
+            $selecionar = $this->conexao->prepare($query);
+            $selecionar->bindParam(':id', $id);
+            $selecionar->execute();
+
+            return $selecionar->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $erro) {
+            return "Erro ao selecionar corrida por ID: " . $erro->getMessage();
+        }
+    }
+
     public function selecionarTodasAsCorridas()
     {
         try {
@@ -314,6 +331,16 @@ class Corrida
         }
     }
 
+    public function definirAbreviacao($nomeCampeonato) {
+        if (stripos($nomeCampeonato, 'Crash Kart Championship') !== false || stripos($nomeCampeonato, 'ckc') !== false) {
+            return 'ckc';
+        } elseif (stripos($nomeCampeonato, 'Desafio dos Loucos') !== false || stripos($nomeCampeonato, 'ddl') !== false) {
+            return 'ddl'; 
+        } else {
+            return 'cmp';
+        }
+    }
+
     public function construirHtml() {
         $infoCorridas = $this->selecionarTodasAsCorridasComNomesEEnderecos();
     
@@ -329,13 +356,7 @@ class Corrida
                 $horas = $partesHora[0];
                 $minutos = $partesHora[1]; 
 
-                if (stripos($corrida['Nome_Campeonato'], 'Crash Kart Championship') !== false || stripos($corrida['Nome_Campeonato'], 'ckc') !== false) {
-                    $nomeAbreviado = 'ckc';
-                } elseif (stripos($corrida['Nome_Campeonato'], 'Desafio dos Loucos') !== false || stripos($corrida['Nome_Campeonato'], 'ddl') !== false) {
-                    $nomeAbreviado = 'ddl'; 
-                } else {
-                    $nomeAbreviado = 'cmp';
-                }
+                $nomeAbreviado = $this->definirAbreviacao($corrida['Nome_Campeonato']);
         
                 // Retornos pra view
                 $corridasFormatadas[] = array(
@@ -412,6 +433,80 @@ class Corrida
                 'corridas' => array(),
                 'feedback' => "Erro na consulta: " . $erro->getMessage(),
                 'classe' => "erro"
+            );
+        }
+    }
+
+    public function consultarCorridaPorFiltroParaResultado($filtroCampeonato, $filtroMes, $filtroAno, $filtroDia)
+    {
+        try {
+            $sql = "SELECT corrida.*, campe.Nome AS Nome_Campeonato, karto.Nome AS Nome_Kartodromo, 
+                            DAY(corrida.Data_corrida) AS Dia, 
+                            MONTH(corrida.Data_corrida) AS Mes, 
+                            YEAR(corrida.Data_corrida) AS Ano
+                    FROM corrida 
+                    INNER JOIN campeonato campe ON corrida.Campeonato_id = campe.Id 
+                    INNER JOIN kartodromo karto ON corrida.Kartodromo_id = karto.Id
+                    WHERE 1";
+
+            // Verificacao de quais filtros foram passados
+            if (!empty($filtroCampeonato)) {
+                $sql .= " AND corrida.Campeonato_id = :filtroCampeonato";
+            }
+
+            if (!empty($filtroMes)) {
+                $sql .= " AND MONTH(corrida.Data_corrida) = :filtroMes";
+            }
+
+            if (!empty($filtroAno)) {
+                $sql .= " AND YEAR(corrida.Data_corrida) = :filtroAno";
+            }
+
+            if (!empty($filtroDia)) {
+                $sql .= " AND DAY(corrida.Data_corrida) = :filtroDia";
+            }
+
+            $consulta = $this->conexao->prepare($sql);
+
+            // Bindando os valores a serem passados
+            if (!empty($filtroCampeonato)) {
+                $consulta->bindValue(':filtroCampeonato', $filtroCampeonato);
+            }
+
+            if (!empty($filtroMes)) {
+                $consulta->bindValue(':filtroMes', $filtroMes);
+            }
+
+            if (!empty($filtroAno)) {
+                $consulta->bindValue(':filtroAno', $filtroAno);
+            }
+
+            if (!empty($filtroDia)) {
+                $consulta->bindValue(':filtroDia', $filtroDia);
+            }
+
+            $consulta->execute();
+
+            $corridas = $consulta->fetchAll(PDO::FETCH_ASSOC);
+
+            if (empty($corridas)) {
+                return array( 
+                    'corridas' => $corridas,
+                    'feedback' => "Nenhuma corrida encontrada",
+                    'classe' => "alert alert-danger"
+                );
+            } else {
+                return array(
+                    'corridas' => $corridas,
+                    'feedback' => "Sucesso",
+                    'classe' => "alert alert-success"
+                );
+            } 
+        } catch (PDOException $erro) {
+            return array(
+                'corridas' => array(),
+                'feedback' => "Erro na consulta: " . $erro->getMessage(),
+                'classe' => "alert alert-danger"
             );
         }
     }

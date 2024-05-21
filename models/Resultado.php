@@ -1,5 +1,7 @@
 <?php
 require_once 'Config/Conexao.php';
+require_once 'models/Usuario.php';
+
 
 class Resultado
 {
@@ -11,19 +13,16 @@ class Resultado
         $this->conexao = $bancoDeDados->getConexao();
     }
 
-    public function inserirResultado($usuario_id, $corrida_id, $quantidade_volta, $melhor_tempo, $adv, $posicao, $pontuacao_total, $status)
+    public function inserirResultado($usuario_id, $corrida_id, $melhor_tempo, $posicao, $pontuacao_total)
     {
         try {
-            $queryInserir = "INSERT INTO resultado (Usuario_id, Corrida_id, Quantidade_volta, Melhor_tempo, Advertencia, Posicao, Pontuacao_total, Status) VALUES (:usuario_id, :corrida_id, :quantidade_volta, :melhor_tempo, :adv, :posicao, :pontuacao_total, :status)";
+            $queryInserir = "INSERT INTO resultado (Usuario_id, Corrida_id, Melhor_tempo, Posicao, Pontuacao_total) VALUES (:usuario_id, :corrida_id, :melhor_tempo, :posicao, :pontuacao_total)";
             $inserir = $this->conexao->prepare($queryInserir);
             $inserir->bindParam(':usuario_id', $usuario_id);
             $inserir->bindParam(':corrida_id', $corrida_id);
-            $inserir->bindParam(':quantidade_volta', $quantidade_volta);
             $inserir->bindParam(':melhor_tempo', $melhor_tempo);
-            $inserir->bindParam(':adv', $adv);
             $inserir->bindParam(':posicao', $posicao);
             $inserir->bindParam(':pontuacao_total', $pontuacao_total);
-            $inserir->bindParam(':status', $status);
             $inserir->execute();
 
             return "Sucesso";
@@ -32,24 +31,17 @@ class Resultado
         }
     }
 
-   
 
-
-
-    public function alterarResultado($usuario_id, $corrida_id, $quantidade_volta, $melhor_tempo, $adv, $posicao, $pontuacao_total, $status )
+    public function alterarResultado($id, $usuario_id, $posicao, $melhor_tempo, $pontuacao_total)
     {
         try {
-            $query = "UPDATE Resultado SET Usuario_id = :usuario_id, Corrida_id = :corrida_id, Quantidade_volta = :quantidade_volta, Tempo_volta = :tempo_volta, Advertencia = :adv, Pontuacao = :pontuacao, Pontuacao_total = :pontuacao_total Staus = :status WHERE Id = :id  ";
+            $query = "UPDATE Resultado SET Usuario_id = :usuario_id, Tempo_volta = :tempo_volta, Pontuacao = :pontuacao, Pontuacao_total = :pontuacao_total WHERE Id = :id  ";
             $alterar = $this->conexao->prepare($query);
             $alterar->bindParam(':id', $id);
             $alterar->bindParam(':usuario_id', $usuario_id);
-            $alterar->bindParam(':corrida_id', $corrida_id);
-            $alterar->bindParam(':quantitade_volta', $quantidade_volta);
             $alterar->bindParam(':melhor_tempo', $melhor_tempo);
-            $alterar->bindParam(':adv', $adv);
             $alterar->bindParam(':posicao', $posicao);
             $alterar->bindParam(':pontuacao_total', $pontuacao_total);
-            $inserir->bindParam(':status', $status);
             $alterar->execute();
 
             return "Sucesso";
@@ -68,12 +60,12 @@ class Resultado
         }
     }
 
-    public function excluirResultado($id)
+    public function excluirResultado($idCorrida)
     {
         try {
-            $query = "DELETE FROM resultado WHERE Id = :id";
+            $query = "DELETE FROM resultado WHERE Corrida_id = :corrida_id";
             $excluir = $this->conexao->prepare($query);
-            $excluir->bindParam(':id', $id);
+            $excluir->bindParam(':corrida_id', $idCorrida);
             $excluir->execute();
 
             return "Sucesso";
@@ -111,7 +103,68 @@ class Resultado
         }
     }
 
+    public function selecionarResultadoPorCorridaId($corrida_id)
+    {
+        try {
+            $query = "SELECT * FROM resultado WHERE Corrida_id = :corrida_id ORDER BY Pontuacao_total DESC";
+            $selecionar = $this->conexao->prepare($query);
+            $selecionar->bindParam(':corrida_id', $corrida_id);
+            $selecionar->execute();
 
+            return $selecionar->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $erro) {
+            echo "Erro ao selecionar resultado por corrida ID: " . $erro->getMessage();
+            return false;
+        }
+    }
+
+    public function verificarDuplicatas($posicoes, $pilotos, $melhor_tempo, $pontuacoes, $idCorrida)
+    {
+        $usuarioModel = new Usuario();
+        $pilotosVerificados = [];
+        $dadosParaInserir = [];
+        $feedbackInsercaoErro = "Erro ao inserir: <br>";
+        $houveErro = false;
+        $classe = 'erro';
+
+        for ($i = 0; $i < count($posicoes); $i++) {
+            $posicaoPiloto = $posicoes[$i];
+            $idPiloto = $pilotos[$i];
+            $melhorTempoPiloto = $melhor_tempo[$i];
+            $pontuacaoPiloto = $pontuacoes[$i];
+
+            // Verifica se a posicao se repete
+            if (in_array($posicaoPiloto, $pilotosVerificados)) {
+                $feedbackInsercaoErro .= "Posição duplicada: " . $posicaoPiloto . "º<br>";
+                $houveErro = true;
+            } else {
+                $pilotosVerificados[] = $posicaoPiloto;
+            }
+
+            // Verifica se o piloto já foi verificado e se ele se repete
+            if (in_array($idPiloto, array_column($dadosParaInserir, 'idPiloto'))) {
+                $piloto = $usuarioModel->consultarUsuarioPorId($idPiloto);
+                $feedbackInsercaoErro .= "Piloto duplicado na posição: " . $posicaoPiloto . "º | Nome do Piloto: " . $piloto['Nome'] . " " . $piloto['Sobrenome'] . "<br>";
+                $houveErro = true;
+            } else {
+                $dadosParaInserir[] = array(
+                    'idPiloto' => $idPiloto,
+                    'idCorrida' => $idCorrida,
+                    'melhorTempoPiloto' => $melhorTempoPiloto,
+                    'posicaoPiloto' => $posicaoPiloto,
+                    'pontuacaoPiloto' => $pontuacaoPiloto
+                );
+            }
+        }
+
+        return [
+            'houveErro' => $houveErro,
+            'classe' => $classe,
+            'feedback' => $houveErro ? $feedbackInsercaoErro : null,
+            'dadosParaInserir' => $dadosParaInserir
+        ];
+    }
+    
     public function consultarResultadoComFiltro($busca)
     {
         try {
@@ -134,20 +187,20 @@ class Resultado
 
             if (empty($resultados)) {
                 return array( 
-                    'Resultado' => $resultados,
+                    'Resultados' => $resultados,
                     'feedback' => "Nenhum resultado encontrado",
                     'classe' => "alert alert-danger"
                 );
             } else {
                 return array(
-                    'Resultado' => $resultados,
+                    'Resultados' => $resultados,
                     'feedback' => "Sucesso",
-                    'classe' => "Sucesso"
+                    'classe' => "alert alert-success"
                 );
             } 
         } catch (PDOException $erro) {
             return array(
-                'Resultado' => array(),
+                'Resultados' => array(),
                 'feedback' => "Erro na consulta: " . $erro->getMessage(),
                 'classe' => "alert alert-danger"
             );
@@ -155,8 +208,11 @@ class Resultado
     }
 
     public function teste() {
-        return "Entrei aqui";
+        return array(
+            'feedback' => "Erro fake para treinar o Alert da Giu",
+            'classe' => "erro"
+        );
     }
 }
 
-   ?>
+?>

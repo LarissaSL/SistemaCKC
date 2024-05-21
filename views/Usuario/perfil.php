@@ -15,6 +15,8 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
     <script defer src="/sistemackc/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
 
+    <link rel="icon" href="/sistemackc/views/Img/ImgIcones/crash_icon.ico" type="image/x-icon">
+
     <title>Perfil</title>
 </head>
 
@@ -51,7 +53,7 @@
                         echo "<li><a href='/sistemackc/admtm85/campeonato'>Campeonatos</a></li>";
                         echo "<li><a href='/sistemackc/admtm85/corrida'>Corridas</a></li>";
                         echo "<li><a href='/sistemackc/admtm85/kartodromo'>Kartodromos</a></li>";
-                        echo "<li><a href='#'>Resultados</a></li>";
+                        echo "<li><a href='/sistemackc/admtm85/resultado'>Resultados</a></li>";
                     } ?>
 
                     <?php
@@ -101,12 +103,13 @@
 
                 <section class="container-form">
                     <!-- Se o Usuário tiver foto ela irá aparecer -->
-                    <?php if (isset($usuario['Foto'])) : ?>
-                        <div class="containerFotoPerfil">
-                            <div class="imagem">
-                                <img src="/sistemackc/views/Img/ImgUsuario/<?php echo $usuario['Foto'] ?>" alt="Foto de <?php echo $usuario['Nome']; ?>">
-                            </div>
-                        <?php endif ?>
+                    <?php
+                    $foto = $usuario['Foto'] != NULL ? $usuario['Foto'] : 'perfil_escuro.png'; ?>
+                    <div class="containerFotoPerfil">
+                        <div class="imagem">
+                            <img src="/sistemackc/views/Img/ImgUsuario/<?php echo $foto ?>" alt="Foto de <?php echo $usuario['Nome']; ?>">
+                        </div>
+
 
                         <!-- Se o Usuário Logado for o mesmo do ID ele pode trocar sua foto de perfil -->
                         <?php
@@ -137,15 +140,15 @@
 
                 <!-- Aqui exibe os feedbacks -->
                 <?php
-                    if (isset($feedback) && $feedback != '') {
-                        echo "<div class='container-feedback'>";
-                        if ($classe == 'erro') {
-                            echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
-                        } else {
-                            echo "<span class='$classe'><i class='ph ph-check-square'></i><strong>$feedback</strong></span>";
-                        }
-                            echo "</div>";
-                    }
+                            if (isset($feedback) && $feedback != '') {
+                                echo "<div class='container-feedback'>";
+                                if ($classe == 'erro') {
+                                    echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
+                                } else {
+                                    echo "<span class='$classe'><i class='ph ph-check-square'></i><strong>$feedback</strong></span>";
+                                }
+                                echo "</div>";
+                            }
                 ?>
             <?php } ?>
 
@@ -161,10 +164,25 @@
                         <input type="text" name="sobrenome" value="<?php echo $usuario['Sobrenome'] ?>" <?php echo (isset($_SESSION['email']) && $_SESSION['email'] == $usuario['Email']) || (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') ? '' : 'readonly'; ?>>
                     </div>
 
-                    <div class="campo">
-                        <label class="dataNascimento" for="dataNascimento">Data de Nascimento:</label>
-                        <input type="text" name="dataNascimento" value="<?php echo $dataFormatada ?>" <?php echo (isset($_SESSION['email']) && $_SESSION['email'] == $usuario['Email']) || (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') ? '' : 'readonly'; ?>>
-                    </div>
+                    <?php
+                    // Se o usuário é o dono do perfil ou um adm, exibe o campo de data de nascimento
+                    if ((isset($_SESSION['email']) && $_SESSION['email'] == $usuario['Email']) || (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador')) { ?>
+                        <div class="campo">
+                            <label class="dataNascimento" for="dataNascimento">Data de Nascimento:</label>
+                            <input type="text" name="dataNascimento" value="<?php echo $dataFormatada ?>">
+                        </div>
+                    <?php
+                        // Se nao , mostra a idade do piloto
+                    } else {
+                        $dataNascimento = new DateTime($dataFormatada);
+                        $hoje = new DateTime();
+                        $idade = $hoje->diff($dataNascimento)->y;
+                    ?>
+                        <div class="campo">
+                            <label class="dataNascimento" for="dataNascimento">Idade:</label>
+                            <input type="text" name="idade" value="<?php echo $idade . ' anos' ?>" readonly>
+                        </div>
+                    <?php } ?>
 
 
                     <?php if ((isset($_SESSION['email']) && $_SESSION['email'] == $usuario['Email']) || (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador')) : ?>
@@ -183,7 +201,7 @@
                                 <input type="text" value="<?php echo $usuario['Genero']; ?> " name="genero" <?php echo (isset($_SESSION['email']) && $_SESSION['email'] == $usuario['Email']) || (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') ? '' : 'readonly'; ?>>
                             <?php endif; ?>
                             </div>
-                            
+
                             <!-- FALTA ESTILO NESSE AQUI, Parte que o ADM escolhe o tipo de Usuário  -->
                             <?php if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') : ?>
                                 <div class="dataNascimento">
@@ -234,11 +252,38 @@
     <?php } ?>
         </main>
         <footer>
-            <div>
-                <span class="copyright">© 2024 Copyright: ManasCode</span>
-                <div>
-                    <img src="/sistemackc/views/Img/ImgIcones/github.png">
-                    <a target="_blank" href="https://github.com/LarissaSL/SistemaCKC_MVC">Repositório do Projeto</a>
+            <!-- ondas -->
+            <div class="water">
+                <svg class="waves" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                    <defs>
+                        <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                    </defs>
+                    <g class="parallax">
+                        <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(47, 44, 44, 0.7)" />
+                        <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(47, 44, 44, 0.5)" />
+                        <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(49, 46, 46, 0.3)" />
+                        <use xlink:href="#gentle-wave" x="48" y="7" fill="var(--background-campos)" />
+
+                    </g>
+                </svg>
+            </div>
+            <!-- conteudo na nav -->
+            <div class="content">
+                <span class="copyright">2024 Manas Code | Todos os direitos reservados</span>
+                <div class="navegation">
+                    <div class="contact">
+                        <a href="https://www.instagram.com/crashkartchampionship?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
+                            <i class="ph-fill ph-instagram-logo"></i><!-- logo instagram-->
+                        </a>
+                        <a href="#" target="_blank">
+                            <i class="ph-fill ph-whatsapp-logo"></i><!-- logo whatsapp-->
+                        </a>
+                    </div>
+                    <div class="navigationLink">
+                        <a href="/sistemackc/etapas">Etapas</a>
+                        <a href="#">Classificação</a>
+                        <a href="/sistemackc/kartodromo">Kartódromos</a>
+                    </div>
                 </div>
             </div>
         </footer>

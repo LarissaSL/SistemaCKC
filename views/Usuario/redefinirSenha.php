@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/alterarSenha.css">
 
-    <title>Senha</title>
+    <title>Redefinir Senha</title>
 </head>
 
 <body>
@@ -81,41 +81,21 @@
     </header>
 
     <!-- Conteúdo da página -->
-    <?php
-    if (isset($_SESSION['tipo'])) {
-        $tipoUsuario = $_SESSION['tipo'];
-    } else {
-        $tipoUsuario = null;
-    }
-
-
-    if (!isset($usuario)) {
-        echo "<h1>Usuário não encontrado</h1>";
-        exit;
-    }
-
-
-    if ((isset($_SESSION['email']) && $_SESSION['email'] == $usuario['Email']) || $tipoUsuario == 'Administrador') {
-    ?>
-        <main class="container-conteudo">
-            <div class="background-image"></div>
-            <div id="bt-go-back">
-                <?php
-                if ($tipoUsuario == 'Administrador') {
-                    echo "<a href='/sistemackc/admtm85/usuario/{$usuario['Id']}'><i class='ph ph-caret-left'></i></a>";
-                } else {
-                    echo "<a href='/sistemackc/usuario/{$usuario['Id']}'><i class='ph ph-caret-left'></i></a>";
-                }
+    <?php 
+                    echo "<p>Teste URL mandada: ". $dadosTeste[0]  . "</p>";
+                    echo "<p>Teste do ID Usuário: ". $dadosTeste[1]  . "</p>";
                 ?>
-            </div>
 
-            <h1 class="titulo">Alterar senha</h1>
-            <p class="aviso"><i class="ph ph-warning"></i>Por motivos de segurança, <strong>não exibimos a senha do usuário.</strong> Se deseja alterá-la, preencha o campo abaixo:</p>
+
+    <?php
+    if ($status) { ?>
+            <h1 class="titulo">Redefinir senha</h1>
+            <p class="aviso"><i class="ph ph-warning"></i>Preencha nos campos abaixo sua nova senha:</p>
 
             <?php if (isset($_SESSION['tipo']) && $tipoUsuario == 'Administrador') {
-                echo "<form action='/sistemackc/admtm85/usuario/atualizar/senha/{$usuario['Id']}' method='POST'>";
+                echo "<form action='/sistemackc/admtm85/usuario/atualizar/senha/' method='POST'>";
             } else {
-                echo "<form action='/sistemackc/usuario/atualizar/senha/{$usuario['Id']}' method='POST'>";
+                echo "<form action='/sistemackc/usuario/atualizar/senha/' method='POST'>";
             } ?>
 
                 <?php if (isset($feedback)) {

@@ -1,0 +1,49 @@
+.ranking-container {
+    width: 80%;
+    max-width: 800px;
+}
+
+.pilot {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+.pilot-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.pilot-info {
+    background-color: #567CE8;
+    border-radius: 25px;
+    padding: 10px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.pilot-info.posicao1 {
+    background-color: #CCA530; 
+}
+
+.pilot-info.posicao2 {
+    background-color: #B9B9B9;
+}
+
+.pilot-info.posicao3 {
+    background-color: #9B674A; 
+}
+
+
+
+.pilot-info span {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px;
+    color: black;
+}

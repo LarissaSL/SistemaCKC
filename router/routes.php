@@ -14,6 +14,8 @@ $routes = [
     '/usuario/cadastro' => 'usuario#UsuarioController#cadastrar',
     '/usuario/atualizar/{id}' => 'usuario#UsuarioController#atualizar',
     '/usuario/atualizar/senha/{id}' => 'usuario#UsuarioController#atualizarSenha',
+    '/usuario/redefinirSenha/{id}' => 'usuario#UsuarioController#redefinirSenha',
+
 
     // Rotas ADM
     '/admtm85/menu' => 'adm#AdmController#index',
@@ -47,7 +49,13 @@ $routes = [
 
     // Rotas das Resultados
     '/admtm85/resultado' => 'adm#ClassificacaoController#mostrarResultados',
-    '/admtm85/resultado/cadastrar' => 'adm#ClassificacaoController#cadastrar',
+    '/admtm85/resultado/exibir/{id}' => 'adm#ClassificacaoController#exibir',
+    '/admtm85/resultado/cadastrar/{id}' => 'adm#ClassificacaoController#cadastrar',
     '/admtm85/resultado/atualizar/{id}' => 'adm#ClassificacaoController#atualizar',
     '/admtm85/resultado/excluir/{id}' => 'adm#ClassificacaoController#excluir',
+    '/admtm85/resultado/excluir/corrida/{id}' => 'adm#ClassificacaoController#excluirDireto',
+
+
+    //Rota para testar Alertas
+    '/teste' => 'adm#ClassificacaoController#teste',
 ];
