@@ -112,6 +112,7 @@ button,
     background-color: var(--color-button);
     color: var(--text-base-light);
     font-family: var(--fonte-title);
+    cursor: pointer;
     /*tive que colocar aqui também pq não estava pegando a fonte*/
 }
 

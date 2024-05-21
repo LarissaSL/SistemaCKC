@@ -181,7 +181,7 @@
                 <input type="password" name="confirmarSenha" value="<?php echo isset($dados[7]) ? $dados[7] : ''; ?>" required>
             </div>
 
-            <button type="submit" class="bt-cadastrar">Cadastrar</button>
+            <button type="submit" class="bt-cadastrar" disabled>Cadastrar</button>
             </form>
         </section>
     </main>

@@ -84,6 +84,13 @@
     display: flex;
     justify-content: center;
     margin-top: 1rem;
+    cursor: pointer;
+}
+
+button.bt-cadastrar:disabled {
+    color:rgba(0, 0, 0, 0.479);
+    background-color: #58535379;
+    cursor: not-allowed;
 }
 
 @media screen and (min-width: 425px) {
