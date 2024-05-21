@@ -142,17 +142,6 @@ class Usuario
     {
         $statusDaValidacao = "aceito";
 
-        // Verifica se a formatação inserida do CPF é válida (tam 11 e apenas números)
-        if (!ctype_digit($cpf)) 
-        {
-            return $statusDaValidacao = "Digite o CPF apenas com números<br>Ex.: 11122233344.";
-        }
-
-        if(strlen($cpf) !== 11 ) 
-        {
-            return $statusDaValidacao = "O CPF precisa ter 11 dígitos."; 
-        }
-
         // Verifica se o CPF do usuário já foi cadastrado
         try 
         {

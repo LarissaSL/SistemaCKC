@@ -14,7 +14,7 @@
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
     <script defer src="/sistemackc/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
-
+    <script src="/sistemackc/views/Js/validarcpf.js"></script>
     <title>Cadastro</title>
 </head>
 
@@ -145,7 +145,8 @@
 
             <div class="cpf">
                 <label class="cpf" for="cpf">CPF:</label>
-                <input type="text" name="cpf" value="<?php echo isset($dados[3]) ? $dados[3] : ''; ?>" required>
+                <input type="text" name="cpf" id="cpf" value="<?php echo isset($dados[3]) ? $dados[3] : ''; ?>" required>
+                <span id="cpfError" style="color: red;"></span>
             </div>
 
             <div class="telefone">
@@ -191,6 +192,9 @@
             </div>
         </div>
     </footer>
+
+
 </body>
 
 </html>
+

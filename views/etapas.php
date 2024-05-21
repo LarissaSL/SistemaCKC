@@ -166,6 +166,8 @@
             </div>
         </div>
     </footer>
+    <script src="https://cdn.botpress.cloud/webchat/v1/inject.js"></script>
+    <script src="https://mediafiles.botpress.cloud/5a7f406f-c78a-46b6-a7e5-bf4a1daed5fb/webchat/config.js" defer></script>
 </body>
 
 </html>
