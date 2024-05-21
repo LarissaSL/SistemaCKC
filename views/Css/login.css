@@ -1,5 +1,5 @@
 /* CORPO DA PAG */
-main, footer{
+main{
     display: block;
     padding-block: 2rem;
     margin-inline: 1.6rem;
