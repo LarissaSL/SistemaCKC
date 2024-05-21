@@ -13,6 +13,7 @@
     <link rel="icon" href="/sistemackc/views/Img/ImgIcones/crash_icon.ico" type="image/x-icon">
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
     <title>Usuários</title>
 
     <!-- Bootstrap CSS -->
@@ -40,16 +41,16 @@
 
                     <li>
                         <?php
-                            if (isset($_SESSION['nome'])) {
-                                echo "<p>Olá, " . $_SESSION['nome'] . "</p>";
-                                echo "<ul class='drop-corrida'>";
-                                echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
-                                echo "<li><a href='/sistemackc/admtm85/menu'>Menu</a></li>";
-                                echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
-                                echo "</ul>";
-                            } else {
-                                echo "<a href='#'>Entrar</a>";
-                            }
+                        if (isset($_SESSION['nome'])) {
+                            echo "<p>Olá, " . $_SESSION['nome'] . "</p>";
+                            echo "<ul class='drop-corrida'>";
+                            echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
+                            echo "<li><a href='/sistemackc/admtm85/menu'>Menu</a></li>";
+                            echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
+                            echo "</ul>";
+                        } else {
+                            echo "<a href='#'>Entrar</a>";
+                        }
                         ?>
                     </li>
                 </ul>
@@ -80,8 +81,8 @@
     </form>
 
     <!-- Só mostra feedback se a classe for a de erro -->
-    <?php 
-        if (isset($classe) && $classe == 'alert alert-danger') : ?>
+    <?php
+            if (isset($classe) && $classe == 'alert alert-danger') : ?>
         <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
     <?php endif ?>
 
@@ -146,15 +147,43 @@
             echo "<h1>Acesso não autorizado</h1>";
         }
         ?>
+
         <footer>
-        <div>
-            <span class="copyright">© 2024 Copyright: ManasCode</span>
-            <div>
-                <img src="/sistemackc/views/Img/ImgIcones/github.png">
-                <a target="_blank" href="https://github.com/LarissaSL/SistemaCKC_MVC">Repositório do Projeto</a>
+            <!-- ondas -->
+            <div class="water">
+                <svg class="waves" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                    <defs>
+                        <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                    </defs>
+                    <g class="parallax">
+                        <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(47, 44, 44, 0.7)" />
+                        <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(47, 44, 44, 0.5)" />
+                        <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(49, 46, 46, 0.3)" />
+                        <use xlink:href="#gentle-wave" x="48" y="7" fill="var(--background-campos)" />
+
+                    </g>
+                </svg>
             </div>
-        </div>
-    </footer>
+            <!-- conteudo na nav -->
+            <div class="content">
+                <span class="copyright">2024 Manas Code | Todos os direitos reservados</span>
+                <div class="navegation">
+                    <div class="contact">
+                        <a href="https://www.instagram.com/crashkartchampionship?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
+                            <i class="ph-fill ph-instagram-logo"></i><!-- logo instagram-->
+                        </a>
+                        <a href="#" target="_blank">
+                            <i class="ph-fill ph-whatsapp-logo"></i><!-- logo whatsapp-->
+                        </a>
+                    </div>
+                    <div class="navigationLink">
+                        <a href="/sistemackc/etapas">Etapas</a>
+                        <a href="#">Classificação</a>
+                        <a href="/sistemackc/kartodromo">Kartódromos</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
 </body>
 
 

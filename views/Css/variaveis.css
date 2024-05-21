@@ -196,15 +196,114 @@ div#bt-go-back {
     display: none;
 }
 
-footer {
+/* footer {
     display: flex;
     justify-content: center;
     background: var(--background-navbar);
     color: var(--text-base-light);
     padding: 1rem;
     text-align: center;
+} */
+
+/* BARRA DE ROLAGEM */
+::-webkit-scrollbar{
+    width: 20px;
+    background-color: var(--background-campos);   
+}
+::-webkit-scrollbar-thumb{
+    width: 15px;
+    border-radius: 10px;
+    background-color: var(--background-cards);
+
 }
 
+/* ***** FOOOTER ***** */
+.waves {
+    position: relative;
+    width: 100%;
+    height: 15vh;
+    margin-bottom: -7px;
+}
+
+/* CONTEUDO DA NAV */
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    height: 20vh;
+    color: var(--text-base-light);
+    text-align: center;
+    justify-content: space-between;
+    background-color: var(--background-campos);
+}
+
+.content span {
+    height: 61px;
+}
+.content span, .navegation {
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+.navegation {
+    display: flex;
+    height: 61px;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1rem;
+}
+
+.content span, .navigationLink {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-end;
+}
+
+.navigationLink {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+/* lodos insta/whats */
+.contact {
+    font-size: 2.3rem;
+}
+
+/* ANIMAÇÃO DAS ONDAS */
+.parallax>use {
+    animation: move-forever 25s cubic-bezier(0.50, 0.5, 0.40, 0.5) infinite;
+}
+
+.parallax>use:nth-child(1) {
+    animation-delay: -2s;
+    animation-duration: 7s;
+}
+
+.parallax>use:nth-child(2) {
+    animation-delay: -3s;
+    animation-duration: 10s;
+}
+
+.parallax>use:nth-child(3) {
+    animation-delay: -4s;
+    animation-duration: 14s;
+}
+
+.parallax>use:nth-child(4) {
+    animation-delay: -5s;
+    animation-duration: 20s;
+}
+
+@keyframes move-forever {
+    0% {
+        transform: translate3d(-90px, 0, 0);
+    }
+
+    100% {
+        transform: translate3d(85px, 0, 0);
+    }
+}
 
 /* menu responsivo */
 @media(max-width: 700px) {
@@ -345,6 +444,23 @@ footer {
         flex-direction: row;
         align-items: center;
         justify-content: center
+    }
+
+    /* ***** FOOOTER ***** */
+    .content {
+        align-items: center;
+        flex-direction: column-reverse;
+    }
+
+
+}
+
+@media(max-width: 768px) {
+
+    /* ***** FOOOTER ***** */
+    .waves {
+        height: 35px;
+        min-height: 35px;
     }
 
 }
