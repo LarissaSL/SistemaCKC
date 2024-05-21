@@ -80,7 +80,7 @@
 
     <main>
         <div class="background-image"></div>
-        <div id="bt-voltar">
+        <div id="bt-go-back">
             <a href="/sistemackc/"><i class="ph ph-caret-left"></i></a>
         </div>
         <section class="container">
