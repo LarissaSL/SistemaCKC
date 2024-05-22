@@ -79,9 +79,9 @@ class KartodromoController extends RenderView
             $rua = $_POST['rua'];
             $bairro = $_POST['bairro'];
             $numero = $_POST['numero'];
-            $site = $_POST['site'] ?? '';
-            $tratarURL = $kartodromoModel->adicionarPrefixoHttp($site);
-            $dados = [$nome, $cep, $rua, $bairro, $numero, $site];
+            $redes = $_POST['redes'] ?? '';
+            $tratarURL = $kartodromoModel->adicionarPrefixoHttp($redes);
+            $dados = [$nome, $cep, $rua, $bairro, $numero, $redes];
             $feedback = "";
             $classe = "";
 
@@ -186,7 +186,7 @@ class KartodromoController extends RenderView
             $infoKartodromo['Rua'],
             $infoKartodromo['Bairro'],
             $infoKartodromo['Numero'],
-            $infoKartodromo['Site']
+            $infoKartodromo['Redes']
         ];
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -199,9 +199,9 @@ class KartodromoController extends RenderView
             $rua = $_POST['rua'];
             $bairro = $_POST['bairro'];
             $numero = $_POST['numero'];
-            $site = $_POST['site'] ?? '';
-            $tratarURL = $kartodromoModel->adicionarPrefixoHttp($site);
-            $dados = [$infoKartodromo['Foto'], $nome, $cep, $rua, $bairro, $numero, $site];
+            $redes = $_POST['redes'] ?? '';
+            $tratarURL = $kartodromoModel->adicionarPrefixoHttp($redes);
+            $dados = [$infoKartodromo['Foto'], $nome, $cep, $rua, $bairro, $numero, $redes];
             $nomeFoto = "";
 
             // Verificar se uma nova imagem foi enviada

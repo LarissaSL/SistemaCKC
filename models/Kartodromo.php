@@ -12,17 +12,17 @@ class Kartodromo
         $this->conexao = $bancoDeDados->getConexao();
     }
 
-    public function inserirKartodromo($nome, $cep, $rua, $bairro, $numero, $site, $foto)
+    public function inserirKartodromo($nome, $cep, $rua, $bairro, $numero, $redes, $foto)
     {
         try {
-            $queryInserir = "INSERT INTO kartodromo (Nome, CEP, Rua, Bairro, Numero, Site, Foto) VALUES (:nome, :cep, :rua, :bairro, :numero, :site, :foto)";
+            $queryInserir = "INSERT INTO kartodromo (Nome, CEP, Rua, Bairro, Numero, Redes, Foto) VALUES (:nome, :cep, :rua, :bairro, :numero, :redes, :foto)";
             $inserir = $this->conexao->prepare($queryInserir);
             $inserir->bindParam(':nome', $nome);
             $inserir->bindParam(':cep', $cep);
             $inserir->bindParam(':rua', $rua);
             $inserir->bindParam(':bairro', $bairro);
             $inserir->bindParam(':numero', $numero);
-            $inserir->bindParam(':site', $site);
+            $inserir->bindParam(':redes', $redes);
             $inserir->bindParam(':foto', $foto);
             $inserir->execute();
 
@@ -68,10 +68,10 @@ class Kartodromo
         return $url;
     }
 
-    public function alterarKartodromo($id, $nome, $cep, $rua, $bairro, $numero, $site, $foto)
+    public function alterarKartodromo($id, $nome, $cep, $rua, $bairro, $numero, $redes, $foto)
     {
         try {
-            $query = "UPDATE kartodromo SET Nome = :nome, CEP = :cep, Rua = :rua, Bairro = :bairro, Numero = :numero, Site = :site, Foto = :foto WHERE Id = :id";
+            $query = "UPDATE kartodromo SET Nome = :nome, CEP = :cep, Rua = :rua, Bairro = :bairro, Numero = :numero, Redes = :redes, Foto = :foto WHERE Id = :id";
             $alterar = $this->conexao->prepare($query);
             $alterar->bindParam(':id', $id);
             $alterar->bindParam(':nome', $nome);
@@ -79,7 +79,7 @@ class Kartodromo
             $alterar->bindParam(':rua', $rua);
             $alterar->bindParam(':bairro', $bairro);
             $alterar->bindParam(':numero', $numero);
-            $alterar->bindParam(':site', $site);
+            $alterar->bindParam(':redes', $redes);
             $alterar->bindParam(':foto', $foto);
 
             $alterar->execute();

@@ -96,7 +96,7 @@ class Conexao
                 Rua VARCHAR(50),
                 Bairro VARCHAR(50),
                 Numero INTEGER,
-                Site VARCHAR(50),
+                Redes VARCHAR(50),
                 Foto VARCHAR(50)
             )";
             $this->conexao->exec($query);
