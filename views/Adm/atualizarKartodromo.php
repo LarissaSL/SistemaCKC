@@ -131,8 +131,8 @@
                         </div>
 
                         <div class="campo">
-                            <label for="site">Site:</label>
-                            <input type="text" id="site" name="site" value="<?php echo isset($dados[6]) ? $dados[6] : ''; ?>" required>
+                            <label for="redes">Redes:</label>
+                            <input type="text" id="redes" name="redes" value="<?php echo isset($dados[6]) ? $dados[6] : ''; ?>" required>
                         </div>
                     </div>
                 </div>
