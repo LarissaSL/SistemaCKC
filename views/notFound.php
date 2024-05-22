@@ -16,7 +16,7 @@
     <link rel="icon" href="/sistemackc/views/Img/ImgIcones/crash_icon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
-    <link rel="stylesheet" href="/sistemackc/views/Css/erro.css">
+    <link rel="stylesheet" href="/sistemackc/views/Css/CssAdm/erro.css">
 
     <title>Erro</title>
 </head>

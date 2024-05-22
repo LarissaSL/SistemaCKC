@@ -19,7 +19,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
-    <link rel="stylesheet" href="/sistemackc/views/Css/crudKartodromo.css">
+    <link rel="stylesheet" href="/sistemackc/views/Css/CssAdm/crudKartodromo.css">
     
     <title>Cadastrar Kartódromo</title>
 </head>
