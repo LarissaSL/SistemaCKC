@@ -29,27 +29,33 @@
         if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
         ?>
             <!-- Inicio do Conteúdo para o ADM -->
-            <nav>
-                <i class="ph ph-list"></i><!-- ícone de menu -->
-                <ul>
-                    <!--<li><a href="/sistemackc/admtm85/menu"><img src="../views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a></li> -->
-                    <li><a href="/sistemackc/admtm85/usuario">Usuarios</a></li>
-                    <li><a href="/sistemackc/admtm85/campeonato">Campeonatos</a></li>
-                    <li><a href="/sistemackc/admtm85/corrida">Corridas</a></li>
-                    <li><a href="/sistemackc/admtm85/kartodromo">Kartodromos</a></li>
-                    <li><a href="/sistemackc/admtm85/resultado">Resultados</a></li>
+            <nav class="nav">
+                <a class="logo" href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a>
 
-                    <li>
+                <button class="hamburger"></button> 
+                <ul class="nav-list">
+                    <li class="drop-down">
+                        <a href="#" class="dropdown-toggle">Menu<i class="ph ph-caret-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/sistemackc/admtm85/usuario">Usuarios</a></li>
+                            <li><a href="/sistemackc/admtm85/corrida">Corridas</a></li>
+                            <li><a href="/sistemackc/admtm85/campeonato">Campeonatos</a></li>
+                            <li><a href="/sistemackc/admtm85/resultado">Resultados</a></li>
+                            <li><a href="/sistemackc/admtm85/kartodromo">Kartodromos</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="drop-down">
                         <?php
-                        if (isset($_SESSION['nome'])) {
-                            echo "<p>Olá, " . $_SESSION['nome'] . "</p>";
-                            echo "<ul class='drop-corrida'>";
+                        if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
+                            echo "<a href='#' class='dropdown-toggle'>Olá, " . $_SESSION['nome'] . "<i class='ph ph-caret-down'></i></a>";
+                            echo "<ul class='dropdown-menu'>";
                             echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
                             echo "<li><a href='/sistemackc/admtm85/menu'>Menu</a></li>";
-                            echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
-                            echo "</ul>";
+                            echo "<li><a href='/sistemackc/logout'>Sair</a></li>";
+                            echo "</ul>"; 
                         } else {
-                            echo "<a href='#'>Entrar</a>";
+                            echo "<a href='/sistemackc/usuario/login'>Entrar</a>";
                         }
                         ?>
                     </li>

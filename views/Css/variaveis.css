@@ -439,8 +439,8 @@ div#bt-go-back {
         align-items: center;
         justify-content: space-around;
     }
-
-    .drop-down.active .dropdown-toggle {
+/* ************** */
+    .drop-down.active .dropdown-toggle { 
         display: flex;
         flex-direction: row;
         align-items: center;
