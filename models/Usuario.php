@@ -31,8 +31,17 @@ class Usuario
             $inserir->execute();
             return true; 
         } catch (PDOException $erro) {
-            echo "Erro no cadastro: " . $erro->getMessage();
-            return false; 
+            $codigoDoErro = $erro->getCode();
+
+            switch($codigoDoErro)
+            {
+                case 23000:
+                    return "Ocorreu um erro. CPF ou E-mail já registrados no Sistema. Por favor, tente novamente.";
+                    break;
+                default:
+                    return $erro;
+                    break;
+            }     
         }
     }
 
@@ -59,7 +68,7 @@ class Usuario
             switch($codigoDoErro)
             {
                 case 23000:
-                    return "Ocorreu um erro. CPF ou E-mail já registrados no Sistema. Por favor, tente novamente.";
+                    return "Ocorreu um erro. E-mail já registrado no Sistema. Por favor, tente novamente.";
                     break;
                 default:
                     return $erro;
@@ -186,17 +195,8 @@ class Usuario
         return $statusDaValidacao;
     }
 
-    public function validarEmail($email, $confirmarEmail, $acao) {
+    public function validarEmail($email, $acao) {
         $statusDaValidacao = "aceito";
-
-        // Verifica se a formatação inserida do Email tem o @
-        if (strpos($email, "@") == false) {
-            return $statusDaValidacao = "Digite um e-mail válido";
-        }
-
-        if ($email !== $confirmarEmail) {
-            return $statusDaValidacao = "Os e-mails devem ser idênticos";
-        }
 
         // Verifica se o E-mail do usuário já foi Cadastrado
         try {

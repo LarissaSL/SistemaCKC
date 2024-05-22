@@ -16,7 +16,10 @@
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
     <script defer src="/sistemackc/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
-    <script src="/sistemackc/views/Js/validarcpf.js"></script>
+    <!-- <script src="/sistemackc/views/Js/validarcpf.js"></script>-->
+    <script src="/sistemackc/views/Js/validarCpfSenhaEmail.js"></script>
+
+
     <title>Cadastro</title>
 </head>
 
@@ -49,7 +52,7 @@
                     echo "<li><a href='/sistemackc/admtm85/campeonato'>Campeonatos</a></li>";
                     echo "<li><a href='/sistemackc/admtm85/corrida'>Corridas</a></li>";
                     echo "<li><a href='/sistemackc/admtm85/kartodromo'>Kartodromos</a></li>";
-                    echo "<li><a href='#'>Resultados</a></li>";
+                    echo "<li><a href='/sistemackc/admtm85/resultado'>Resultados</a></li>";
                 } ?>
 
                 <?php
@@ -91,7 +94,7 @@
             <?php
                 if (isset($feedback) && $feedback != '') {
                     echo "<div class='container-feedback'>";
-                    if($classe == 'erro'){
+                    if(isset($classe) && $classe == 'erro'){
                         echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
                     } else {
                         echo "<span class='$classe'><i class='ph ph-check-square'></i><strong>$feedback</strong></span>";
@@ -127,11 +130,11 @@
             <?php if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') : ?>
             <div class="dataNascimento">
                 <select name="tipo" id="tipo">
-                    <option value="Comum" selected>Comum</option>
-                    <option value="Administrador">Administrador</option>
+                    <option value="Comum" <?php echo isset($dados[12]) && $dados[12] == 'Comum' ? 'selected' : ''; ?>>Comum</option>
+                    <option value="Administrador" <?php echo isset($dados[12]) && $dados[12] == 'Administrador' ? 'selected' : ''; ?>>Administrador</option>
                 </select>
             </div>
-            <?php endif ?>
+            <?php endif; ?>
 
             <div class="genero">
                 <label class="escolha" for="genero">Gênero:</label>
@@ -163,25 +166,27 @@
 
             <div class="email">
                 <label class="email" for="email">E-mail:</label>
-                <input type="text" name="email" value="<?php echo isset($dados[4]) ? $dados[4] : ''; ?>" required>
+                <input type="text" name="email" id="email" value="<?php echo isset($dados[4]) ? htmlspecialchars($dados[4]) : ''; ?>" required>
             </div>
 
             <div class="confirmaEmail">
-                <label class="email" for="email">Confirmação de E-mail:</label>
-                <input type="text" name="confirmarEmail" value="<?php echo isset($dados[5]) ? $dados[5] : ''; ?>" required>
+                <label class="email" for="confirmarEmail">Confirmação de E-mail:</label>
+                <input type="text" name="confirmarEmail" id="confirmarEmail" value="<?php echo isset($dados[5]) ? htmlspecialchars($dados[5]) : ''; ?>" required>
+                <span id="emailError" style="color: red;" class="error"></span>
             </div>
 
             <div class="senha">
                 <label class="senha" for="senha">Senha:</label>
-                <input type="password" name="senha" value="<?php echo isset($dados[6]) ? $dados[6] : ''; ?>" required>
+                <input type="password" name="senha" id="senha" value="<?php echo isset($dados[6]) ? htmlspecialchars($dados[6]) : ''; ?>" required>
             </div>
 
             <div class="confirmaSenha">
-                <label class="senha" for="senha">Confirmação de Senha:</label>
-                <input type="password" name="confirmarSenha" value="<?php echo isset($dados[7]) ? $dados[7] : ''; ?>" required>
+                <label class="senha" for="confirmarSenha">Confirmação de Senha:</label>
+                <input type="password" name="confirmarSenha" id="confirmarSenha" value="<?php echo isset($dados[7]) ? htmlspecialchars($dados[7]) : ''; ?>" required>
+                <span id="senhaError" style="color: red;" class="error"></span>
             </div>
 
-            <button type="submit" class="bt-cadastrar" disabled>Cadastrar</button>
+            <button type="submit" class="bt-cadastrar" <?php echo isset($dados[13]) ? $dados[13] : 'disabled'?>>Cadastrar</button>
             </form>
         </section>
     </main>

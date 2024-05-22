@@ -87,7 +87,7 @@ class UsuarioController extends RenderView
             $genero = $_POST['genero'];
             $telefone = $_POST['telefone'];
             $dataNascimento = $_POST['dataNascimento'];
-            $tipo = $_POST['tipo'];
+            $tipo = isset($_POST['tipo']) ? $_POST['tipo'] : 'Comum';
 
             $feedback = "";
             $nomeDaClasseParaErro = "erro";
@@ -96,7 +96,7 @@ class UsuarioController extends RenderView
             $novoUsuario = new Usuario();
 
             $statusDaValidacaoCpf = $novoUsuario->validarCpf($cpf, 'cadastrar');
-            $statusDaValidacaoEmail = $novoUsuario->validarEmail($email, $confirmarEmail, 'cadastrar');
+            $statusDaValidacaoEmail = $novoUsuario->validarEmail($email, 'cadastrar');
             $statusDaValidacaoSenha = $novoUsuario->validarSenha($senha, $confirmarSenha);
             $telefoneFormatado = $novoUsuario->formatarTelefone($telefone);
 
@@ -108,7 +108,7 @@ class UsuarioController extends RenderView
 
                 //Enviando o E-mail de Boas Vindas
                 $emailBoasVindas = new Email();
-                $bodyDoEmail = file_get_contents('views\Email\boasVindas.html');
+                $bodyDoEmail = file_get_contents('views/Email/boasVindas.html');
                 $nomeDaPessoa = $nome . " " . $sobrenome;
                 $bodyDoEmail = str_replace('%NOME_DA_PESSOA%', $nomeDaPessoa, $bodyDoEmail);
                 $altDoBody = 'Seja bem-vindo(a) ao CKC';
@@ -118,27 +118,27 @@ class UsuarioController extends RenderView
                     if (!isset($_SESSION)) {
                         session_start();
                     }
-                    if(isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador'){
+                    if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
                         header('Location: /sistemackc/admtm85/usuario');
                         exit();
-                    } 
-                    else
-                    {
+                    } else {
                         $this->login($email, $senha);
-                    }  
+                    }
                 } else {
                     $this->carregarViewComArgumentos('usuario/cadastro', [
                         'feedback' => "Erro ao cadastrar, tente novamente.",
                         'status' => $nomeDaClasseParaErro,
                     ]);
                 }
-                // Erros e seus feedbacks
             } else {
-                $dadosPreenchidos = [$nome, $sobrenome, $dataNascimento, $cpf, $email, $confirmarEmail, $senha, $confirmarSenha, $peso, $genero, $telefone, $dataNascimento];
+                $dadosPreenchidos = [$nome, $sobrenome, $dataNascimento, $cpf, $email, $confirmarEmail, $senha, $confirmarSenha, $peso, $genero, $telefone, $dataNascimento, $tipo, ''];
                 if ($statusDaValidacaoCpf !== "aceito") {
                     $feedback = $statusDaValidacaoCpf;
+                    $dadosPreenchidos[13] = 'disabled';
+
                 } elseif ($statusDaValidacaoEmail !== "aceito") {
                     $feedback = $statusDaValidacaoEmail;
+                    $dadosPreenchidos[13] = 'disabled';
                 } elseif ($statusDaValidacaoSenha !== "aceito") {
                     $feedback = $statusDaValidacaoSenha;
                 }
@@ -231,7 +231,8 @@ class UsuarioController extends RenderView
             $infoUsuario['Peso'],
             $infoUsuario['Data_nascimento'],
             $infoUsuario['Genero'],
-            $infoUsuario['Telefone']
+            $infoUsuario['Telefone'],
+            $infoUsuario['Tipo']
         ];
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -247,7 +248,7 @@ class UsuarioController extends RenderView
             $genero = $_POST['genero'];
             $telefone = $_POST['telefone'];
             $dataNascimento = $_POST['dataNascimento'];
-            $tipo = $_POST['tipo'];
+            $tipo = isset($_POST['tipo']) ? $_POST['tipo'] : 'Comum';
             $nomeFoto = "";
 
             // Verificações sobre a IMG
@@ -283,7 +284,7 @@ class UsuarioController extends RenderView
             if($validacaoDaImagem == 'aceito') {
                 // Validações e Formatação do restante de Dados
                 $statusDaValidacaoCpf = $usuarioModel->validarCpf($cpf, 'atualizar', $id);
-                $statusDaValidacaoEmail = $usuarioModel->validarEmail($email, $email, 'atualizar');
+                $statusDaValidacaoEmail = $usuarioModel->validarEmail($email, 'atualizar');
                 $telefoneFormatado = $usuarioModel->formatarTelefone($telefone);
                 $dataFormatada = date('Y-m-d', strtotime($dataNascimento));
 
