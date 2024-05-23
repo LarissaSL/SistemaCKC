@@ -110,83 +110,86 @@
                 echo "<form action='/sistemackc/usuario/cadastro' class='form' method='POST'>";
             } ?>
 
-            <div class="nome">
-                <label class="nome" for="nome">Nome:</label>
-                <input type="text" name="nome" value="<?php echo isset($dados[0]) ? $dados[0] : ''; ?>" required>
-            </div>
+            <div class="div_container">                
+                <div class="campo">
+                    <label class="nome" for="nome">Nome:</label>
+                    <input type="text" name="nome" value="<?php echo isset($dados[0]) ? $dados[0] : ''; ?>" required>
+                </div>
 
-            <div class="sobrenome">
-                <label class="sobrenome" for="sobrenome">Sobrenome:</label>
-                <input type="text" name="sobrenome" value="<?php echo isset($dados[1]) ? $dados[1] : ''; ?>" required>
-            </div>
+                <div class="campo">
+                    <label class="sobrenome" for="sobrenome">Sobrenome:</label>
+                    <input type="text" name="sobrenome" value="<?php echo isset($dados[1]) ? $dados[1] : ''; ?>" required>
+                </div>
 
-            <div class="dataNascimento">
-                <label class="dataNascimento" for="dataNascimento">Data de Nascimento:</label>
-                <input type="date" name="dataNascimento" value="<?php echo isset($dados[2]) ? $dados[2] : ''; ?>" required>
-            </div>
+                <div class="campo">
+                    <label class="dataNascimento" for="dataNascimento">Data de Nascimento:</label>
+                    <input type="date" name="dataNascimento" value="<?php echo isset($dados[2]) ? $dados[2] : ''; ?>" required>
+                </div>
+                
+                <div class="genero">
+                    <label class="escolha" for="genero">Gênero:</label>
+                    <input type="radio" value="Masculino" name="genero" <?php echo isset($dados[9]) && $dados[9] == 'Masculino' ? 'checked' : ''; ?>>
+                    <label class="homem" for="homem">Masculino</label>
 
+                    <input type="radio" value="Feminino" name="genero" <?php echo isset($dados[9]) && $dados[9] == 'Feminino' ? 'checked' : ''; ?>>
+                    <label class="mulher" for="mulher">Feminino</label>
 
-            <!-- FALTA ESTILO NESSE AQUI, Parte que o ADM escolhe o tipo de Usuário  -->
-            <?php if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') : ?>
-            <div class="dataNascimento">
+                    <input type="radio" value="Outro" name="genero" <?php echo isset($dados[9]) && $dados[9] == 'Outro' ? 'checked' : ''; ?>>
+                    <label class="outro" for="outro">Outro</label>
+                </div>
+
+                <div class="campo">
+                    <label class="cpf" for="cpf">CPF:</label>
+                    <input type="text" name="cpf" id="cpf" value="<?php echo isset($dados[3]) ? $dados[3] : ''; ?>" required>
+                    <span id="cpfError" style="color: red;"></span>
+                </div>
+
+                <div class="campo">
+                    <label class="telefone" for="telefone">Celular:</label>
+                    <input type="text" name="telefone" value="<?php echo isset($dados[10]) ? $dados[10] : ''; ?>" required>
+                </div>
+                
+                <div class="campo">
+                    <label class="email" for="email">E-mail:</label>
+                    <input type="text" name="email" id="email" value="<?php echo isset($dados[4]) ? htmlspecialchars($dados[4]) : ''; ?>" required>
+                </div>
+
+                <div class="campo">
+                    <label class="email" for="confirmarEmail">Confirmação de E-mail:</label>
+                    <input type="text" name="confirmarEmail" id="confirmarEmail" value="<?php echo isset($dados[5]) ? htmlspecialchars($dados[5]) : ''; ?>" required>
+                    <span id="emailError" style="color: red;" class="error"></span>
+                </div>
+                
+                <div class="campo">
+                    <label class="senha" for="senha">Senha:</label>
+                    <input type="password" name="senha" id="senha" value="<?php echo isset($dados[6]) ? htmlspecialchars($dados[6]) : ''; ?>" required>
+                </div>
+                
+                <div class="campo">
+                    <label class="senha" for="confirmarSenha">Confirmação de Senha:</label>
+                    <input type="password" name="confirmarSenha" id="confirmarSenha" value="<?php echo isset($dados[7]) ? htmlspecialchars($dados[7]) : ''; ?>" required>
+                    <span id="senhaError" style="color: red;" class="error"></span>
+                </div>            
+
+                <div class="campo">
+                <label class="peso" for="peso">Peso:</label>
+                <input type="number" name="peso" value="<?php echo isset($dados[8]) ? $dados[8] : ''; ?>" required>
+                </div>
+            
+                <?php if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') : ?>
+                <div class="campo">
                 <select name="tipo" id="tipo">
                     <option value="Comum" <?php echo isset($dados[12]) && $dados[12] == 'Comum' ? 'selected' : ''; ?>>Comum</option>
                     <option value="Administrador" <?php echo isset($dados[12]) && $dados[12] == 'Administrador' ? 'selected' : ''; ?>>Administrador</option>
                 </select>
-            </div>
-            <?php endif; ?>
-
-            <div class="genero">
-                <label class="escolha" for="genero">Gênero:</label>
-                <input type="radio" value="Masculino" name="genero" <?php echo isset($dados[9]) && $dados[9] == 'Masculino' ? 'checked' : ''; ?>>
-                <label class="homem" for="homem">Masculino</label>
-
-                <input type="radio" value="Feminino" name="genero" <?php echo isset($dados[9]) && $dados[9] == 'Feminino' ? 'checked' : ''; ?>>
-                <label class="mulher" for="mulher">Feminino</label>
-
-                <input type="radio" value="Outro" name="genero" <?php echo isset($dados[9]) && $dados[9] == 'Outro' ? 'checked' : ''; ?>>
-                <label class="outro" for="outro">Outro</label>
+                </div>
+                <?php endif; ?>
             </div>
 
-            <div class="cpf">
-                <label class="cpf" for="cpf">CPF:</label>
-                <input type="text" name="cpf" id="cpf" value="<?php echo isset($dados[3]) ? $dados[3] : ''; ?>" required>
-                <span id="cpfError" style="color: red;"></span>
+            <div class="button-container">            
+                <button type="submit" class="bt-cadastrar" <?php echo isset($dados[13]) ? $dados[13] : 'disabled'?>>Cadastrar</button>
             </div>
 
-            <div class="telefone">
-                <label class="telefone" for="telefone">Celular:</label>
-                <input type="text" name="telefone" value="<?php echo isset($dados[10]) ? $dados[10] : ''; ?>" required>
-            </div>
-
-            <div class="peso">
-                <label class="peso" for="peso">Peso:</label>
-                <input type="number" name="peso" value="<?php echo isset($dados[8]) ? $dados[8] : ''; ?>" required>
-            </div>
-
-            <div class="email">
-                <label class="email" for="email">E-mail:</label>
-                <input type="text" name="email" id="email" value="<?php echo isset($dados[4]) ? htmlspecialchars($dados[4]) : ''; ?>" required>
-            </div>
-
-            <div class="confirmaEmail">
-                <label class="email" for="confirmarEmail">Confirmação de E-mail:</label>
-                <input type="text" name="confirmarEmail" id="confirmarEmail" value="<?php echo isset($dados[5]) ? htmlspecialchars($dados[5]) : ''; ?>" required>
-                <span id="emailError" style="color: red;" class="error"></span>
-            </div>
-
-            <div class="senha">
-                <label class="senha" for="senha">Senha:</label>
-                <input type="password" name="senha" id="senha" value="<?php echo isset($dados[6]) ? htmlspecialchars($dados[6]) : ''; ?>" required>
-            </div>
-
-            <div class="confirmaSenha">
-                <label class="senha" for="confirmarSenha">Confirmação de Senha:</label>
-                <input type="password" name="confirmarSenha" id="confirmarSenha" value="<?php echo isset($dados[7]) ? htmlspecialchars($dados[7]) : ''; ?>" required>
-                <span id="senhaError" style="color: red;" class="error"></span>
-            </div>
-
-            <button type="submit" class="bt-cadastrar" <?php echo isset($dados[13]) ? $dados[13] : 'disabled'?>>Cadastrar</button>
             </form>
         </section>
     </main>
@@ -208,7 +211,6 @@
         </div>
         <!-- conteudo na nav -->
         <div class="content">
-            <span class="copyright">2024 Manas Code | Todos os direitos reservados</span>
             <div class="navegation">
                 <div class="contact">
                     <a href="https://www.instagram.com/crashkartchampionship?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
@@ -224,6 +226,7 @@
                     <a href="/sistemackc/kartodromo">Kartódromos</a>
                 </div>
             </div>
+            <span class="copyright">2024 Manas Code | Todos os direitos reservados</span>
         </div>
     </footer>
 
