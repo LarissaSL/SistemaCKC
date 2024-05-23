@@ -13,3 +13,15 @@ dropdownToggles.forEach((toggle, index) => {
         toggle.classList.toggle("active"); // Adiciona ou remove a classe 'active' no dropdown-toggle clicado
     });
 });
+
+// Download do regulamento (Button)
+const regulation = document.querySelector(".regulation");
+
+regulation.onclick = function() {
+    const link = document.createElement("a");
+    link.href = "/sistemackc/views/Docs/Regulamento_CKC_2024.pdf"; 
+    link.download = "Regulamento_CKC_2024.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link); 
+}

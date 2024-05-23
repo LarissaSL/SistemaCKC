@@ -17,6 +17,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
+    <link rel="stylesheet" href="/sistemackc/views/Css/CssAdm/crudUsuario.css">
     
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -70,15 +71,18 @@
     <main>
 
         <h1>CRUD dos Usuarios</h1>
-        <a class='btn btn-primary' href='/sistemackc/admtm85/usuario/cadastrar'>Cadastrar novo usuário</a>
+        <p class="subTititulo">Aqui você pode fazer cadastro, consulta, alteração e exclusão de usuários no sistema.</p>
+        <a class='bt-cadastrarUser' href='/sistemackc/admtm85/usuario/cadastrar'>Cadastrar novo usuário</a><!-- Botão de cadastrar novo usuário -->
 
         <form method="get">
             <div class="row my-4">
+                <!-- Busca/filtro -->
                 <div class="col">
                     <label>Filtrar por Nome</label>
                     <input type="text" name="busca" class="form-control" value="<?php echo htmlspecialchars($busca); ?>">
                 </div>
                 <div class="col">
+                    <!-- Busca/filtro -->
                     <label>Tipo de usuário</label>
                     <select name="tipo" class="form-control">
                         <option value="">Comum/Administrador</option>
@@ -87,7 +91,7 @@
                     </select>
                 </div>
                 <div class="col d-flex align-items-end">
-                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                    <button type="submit" class="btn btn-primary">Filtrar</button><!-- Botão de filtar -->
                 </div>
             </div>
         </form>
@@ -100,7 +104,7 @@
 
 
         <table class='table table-striped table-bordered '>
-            <thead class='thead-dark'>
+            <thead class='thead-dark'> <!--cabecalho da tabela -->
                 <tr>
                     <th>Foto de Perfil</th>
                     <th>Tipo</th>
@@ -117,7 +121,7 @@
                     <th>Ações</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody><!--corpo da tabela/linhas -->
                 <?php
                 foreach ($usuarios as $usuario) {
                     echo "<tr>";
@@ -136,10 +140,9 @@
                     echo "<td>" . $usuario['Genero'] . "</td>";
                     echo "<td>" . $usuario['Telefone'] . "</td>";
                     echo "<td>" . $usuario['Data_registro'] . "</td>";
-                    echo "<td>
-                <a class='btn btn-primary' href='/sistemackc/admtm85/usuario/{$usuario["Id"]}'>Editar</a>";
+                    echo "<td> <a class='btn btn-primary' href='/sistemackc/admtm85/usuario/{$usuario["Id"]}'>Editar</a>"; //<!--Botão de editar -->
                     if ($usuario['Id'] != 1) {
-                        echo "<button class='btn btn-danger' onclick='confirmarExclusao({$usuario["Id"]}, \"{$usuario["Nome"]}\", \"{$usuario["Sobrenome"]}\")'>Excluir</button>";
+                        echo "<button class='btn btn-danger' onclick='confirmarExclusao({$usuario["Id"]}, \"{$usuario["Nome"]}\", \"{$usuario["Sobrenome"]}\")'>Excluir</button>"; //<!--Botão de excluir -->
                     }
                     echo "</tr>";
                 }

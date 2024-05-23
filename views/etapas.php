@@ -105,7 +105,7 @@
             <div class="downloads">
                 <div class="iconDownload">
                     <i class="ph ph-file-pdf"></i>
-                    <a class="download" href="sistemackc/views/Docs/" download="Regulamento_CKC_2024.pdf">Baixe o regulamento</a>
+                    <a class="download" href="/sistemackc/views/Docs/Regulamento_CKC_2024.pdf" download="Regulamento_CKC_2024.pdf">Baixe o regulamento</a>
                 </div>
                 <span class="lineDownload"></span>
             </div>
