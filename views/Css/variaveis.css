@@ -226,20 +226,22 @@ div#bt-go-back {
     margin-bottom: -7px;
 }
 
-/* CONTEUDO DA NAV */
+/* CONTEUDO DA FOOTER */
 .content {
     display: flex;
     flex-wrap: wrap;
     position: relative;
-    height: 20vh;
+    height: 24vh;
     color: var(--text-base-light);
     text-align: center;
+    flex-direction: row-reverse;
     justify-content: space-between;
     background-color: var(--background-campos);
 }
 
 .content span {
     height: 61px;
+    font-size: 1.3rem;
 }
 .content span, .navegation {
     margin-left: 2rem;
@@ -257,7 +259,7 @@ div#bt-go-back {
 .content span, .navigationLink {
     display: flex;
     flex-wrap: wrap;
-    align-content: flex-end;
+    align-content: center;
 }
 
 .navigationLink {
@@ -449,8 +451,10 @@ div#bt-go-back {
 
     /* ***** FOOOTER ***** */
     .content {
+        display: flex;
         align-items: center;
-        flex-direction: column-reverse;
+        flex-direction: row-reverse;
+        justify-content: center;
     }
 
 

@@ -4,7 +4,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 80em;
+    height: 80vw;
     background-image: url(/sistemackc/views/Img/ImgTelas/cadastroUsuario.jpg);
     background-repeat: no-repeat;
     background-size: cover; 
@@ -13,7 +13,6 @@
     filter: grayscale(100%) brightness(10%);
     z-index: -1;
 }
-
 
 .container{
     display: flex;
@@ -28,13 +27,6 @@
     margin-bottom: 2rem;
 }
 
-.form{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 2rem;
-}
-
 .container-feedback {
     text-align: center;
     font-size: 2rem;
@@ -42,7 +34,7 @@
 
 .ph-warning-circle,
 .ph-check-square {
-    margin: 0 .5rem;
+    margin: 0.5rem;
 }
 
 .sucesso {
@@ -53,24 +45,16 @@
     color: #ff0000b9;
 }
 
-.nome,
-.sobrenome,
-.dataNascimento,
-.cpf,
-.telefone,
-.peso,
-.email,
-.confirmaEmail,
-.senha,
-.confirmaSenha{
-    width: 24rem; /*antes estava 100%*/
+div.campo{
+    width: 100%;
     display: flex;
     flex-direction: column;
-    margin-top: 1rem;
+    margin-top: 2.5rem;
 }
 
 .genero{
     width: 100%;
+    font-size: 1.3rem;
     margin-top: 2rem;
 }
 
@@ -80,50 +64,49 @@
 }
 
 .bt-cadastrar{
-    width: 24rem;/*antes estava 100%*/
+    width: 24rem;
     display: flex;
     justify-content: center;
-    margin-top: 1rem;
+    margin-top: 2rem;
     cursor: pointer;
 }
 
 button.bt-cadastrar:disabled {
-    color:rgba(0, 0, 0, 0.479);
-    background-color: #58535379;
+    color:#00000060;
+    background-color: #8b8787;
     cursor: not-allowed;
 }
 
 @media screen and (min-width: 425px) {
-    .form{
-        width: 90%;
-    }
+   .campo input, select{
+        width: 28rem;
+   }
 
-    .genero{
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-    }
+   div.campo{
+        margin-top: 3rem;
+   }
 
-    .bt-cadastrar{
-        margin-top: 2rem;
-    }
+   .bt-cadastrar{
+        width: 28rem;
+   }
 }
 
 @media screen and (min-width: 768px) {
-    .form{
-        width: 50%;
+    .div_container{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 2rem 8rem;
     }
 
-    .genero{
-        width: 50%;
-    }
-
-    .bt-cadastrar{
-        margin-top: 2rem;
-    }
-   
+    .button-container{
+        display: flex;
+        justify-content: center;
+    } 
 }
 
 @media screen and (min-width: 1024px) {
-    
+    .div_container{
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 2rem 6rem;
+    }    
 }

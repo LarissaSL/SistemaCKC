@@ -1,0 +1,88 @@
+:root {
+    --background-principal: #D9D9D9;
+}
+
+.container {
+    text-align: center;
+}
+
+.titulo {
+    color: #000000;
+    font-size: 2rem;
+    margin-top: 3rem;
+}
+
+.cards-container {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 2rem;
+    margin-top: 10rem;
+}
+
+.card-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2b2b2b;
+    border-radius: 20px; 
+    border: 2px solid #0033C1;
+    width: 17rem;
+    height: 17rem;
+    margin-bottom: 0.5rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.card.clicked {
+    background-color: #0033C1;
+}
+
+.card:hover {
+    background-color: #0033C1;
+    transform: scale(1.05);
+}
+
+.icon i {
+    font-size: 12rem;
+    color: #fff;
+}
+
+.card-link {
+    text-decoration: none;
+    color: #0033C1;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.texto {  
+    color:#000000;
+    font-size: 2rem;
+    margin-top: 6rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
