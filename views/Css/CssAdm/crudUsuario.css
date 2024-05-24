@@ -1,18 +1,166 @@
+:root{
+    --bacground-adm:#D9D9D9;
+}
+body{
+    background-color: var(--bacground-adm);
+    font-size: 1.6rem;
+    color: black;
+    font-weight: 400;
+
+}
+.contrainer{
+    margin-left: 3rem;
+    margin-right: 3rem;
+}
+h1.title{
+    display: flex;
+    margin-top: 7rem;
+    font-size: 4rem;
+    font-weight: 700;
+    justify-content: center;
+}
+p.subTititulo{
+    display: flex;
+    margin-top: 1rem;
+    font-size: 2rem;
+    justify-content: center;
+    font-weight: 400;
+}
+
 /* Botão de cadastrar novo usuário */
 .bt-cadastrarUser {
     display: block;
     padding: 1.3rem;
     width: 20rem;
+    margin-top: 2rem;
     border: none;
     border-radius: 8px;
     font-size: 1.6rem;
-    background-color: var(--color-button);
-    color: var(--text-base-light);
     font-family: var(--fonte-title);
+    color: var(--text-base-light);
+    background-color: var(--color-button);
     cursor: pointer;
 }
-.bt-cadastrarUser:hover{
-    color: var(--text-base-light);
+.bt-cadastrarUser:hover, 
+button.bt_filtrar:hover{
+    font-weight: 500;
+    border: .1rem solid;
     text-decoration: none;
+    background-color: white;
+    color: var(--color-button);
+}
+
+form{
+    display: flex;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+
+.filtro{
+    display: flex;
+    align-items: end;
+    gap: 4rem;    
+}
+.filtro label{
+    font-weight: 500;
+    color: black;
+}
+
+input, select.busca_User{
+    width: 40rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    background-color: white;
+    border-color: black;
+    border-width: 1px;
+    border-radius: 10px;
+    color: black;
+    letter-spacing: 1.2px;
+}
+.filtro_nome, .filtro_user{
+    display: flex;
+    flex-direction: column;
+}
+
+select.busca_User{
+    width: 30rem;
+    padding: 1.3rem;
+}
+
+select option{
+    height: 1rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    letter-spacing: 1.2px;
+    border-color: black;
+    border-width: 1px;
+    border-radius: 10px;
+    background-color: rgb(220, 220, 220);
+}
+
+
+button.bt_filtrar, .bt-editar, .bt-excluir{
+    width: 12rem;
+}
+
+div.tabela {
+    border: solid;
+    border-radius: 30px;
+    border-color: transparent;
+    max-width: 100%;
+    overflow-x: auto;
+}
+table.tabela-conteudo {
+    border-collapse: collapse;
+    background: #FFFBFA;
+    border-radius: 20px;
+}
+th, td{
+    padding: 20px;
+    width: 20%;
+}
+td.acoes, th{
+    background-color: aqua;
+    font-size: 1.8rem;
+    padding: 14px;
+}
+
+/* th.acoes {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    background-color: aqua;
+    justify-content: space-around;
+} */
+.icos {
+    display: flex;
+    flex-direction: row;
+    gap: 5rem;
+}
+    
+.bt-editar{
+    width: 0;
+    color: blue;
+    font-size: 3rem;
+}
+.bt-excluir{
+    padding: 0;
+    font-size: 3rem;
+    width: 0;
+    border-radius: 0;
+    color: red;
+    background-color: transparent;
+
+
+}
+
+.modal{
+    display: none;
+    /* visibility: hidden; */
+}
+
+td.bt-modal {
+    text-align: center;
 }
 

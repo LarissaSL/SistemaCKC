@@ -305,21 +305,11 @@ class Usuario
 
             $consulta->execute();
 
-            $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
-
-            if (empty($resultados)) {
-                return array( 
-                    'usuarios' => [],
-                    'feedback' => "Nenhum usuário encontrado",
-                    'classe' => "alert alert-danger"
-                );
-            } else {
-                return array(
-                    'campeonatos' => $consulta->fetchAll(PDO::FETCH_ASSOC),
-                    'feedback' => "Sucesso",
-                    'classe' => "Sucesso"
-                );
-            }
+            return array(
+                'usuarios' => $consulta->fetchAll(PDO::FETCH_ASSOC),
+                'feedback' => 'Consulta realizada com sucesso.',
+                'classe' => 'alert alert-success'
+            );
         } 
         catch (PDOException $erro) 
         {

@@ -14,14 +14,13 @@
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
     <script defer src="/sistemackc/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
-
+    <script defer src="/sistemackc/views/Js/modal.js"></script> 
+    
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/CssAdm/crudUsuario.css">
-    
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    
+
+
     <title>Usuários</title>
 </head>
 
@@ -37,7 +36,7 @@
             <nav class="nav">
                 <a class="logo" href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a>
 
-                <button class="hamburger"></button> 
+                <button class="hamburger"></button>
                 <ul class="nav-list">
                     <li class="drop-down">
                         <a href="#" class="dropdown-toggle">Menu<i class="ph ph-caret-down"></i></a>
@@ -49,7 +48,7 @@
                             <li><a href="/sistemackc/admtm85/kartodromo">Kartodromos</a></li>
                         </ul>
                     </li>
-                    
+
                     <li class="drop-down">
                         <?php
                         if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
@@ -58,7 +57,7 @@
                             echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
                             echo "<li><a href='/sistemackc/admtm85/menu'>Menu</a></li>";
                             echo "<li><a href='/sistemackc/logout'>Sair</a></li>";
-                            echo "</ul>"; 
+                            echo "</ul>";
                         } else {
                             echo "<a href='/sistemackc/usuario/login'>Entrar</a>";
                         }
@@ -69,99 +68,109 @@
     </header>
     <!-- Inicio do Conteúdo para o ADM -->
     <main>
+        <section class="contrainer">
+            <h1 class="title">Manutenção de Usuários: /CRUD dos Usuarios</h1>
+            <p class="subTititulo">Aqui você pode fazer cadastro, consulta, alteração e exclusão de usuários no sistema.</p>
+            <a class='bt-cadastrarUser' href='/sistemackc/admtm85/usuario/cadastrar'>Cadastrar novo usuário</a><!-- Botão de cadastrar novo usuário -->
 
-        <h1>CRUD dos Usuarios</h1>
-        <p class="subTititulo">Aqui você pode fazer cadastro, consulta, alteração e exclusão de usuários no sistema.</p>
-        <a class='bt-cadastrarUser' href='/sistemackc/admtm85/usuario/cadastrar'>Cadastrar novo usuário</a><!-- Botão de cadastrar novo usuário -->
-
-        <form method="get">
-            <div class="row my-4">
-                <!-- Busca/filtro -->
-                <div class="col">
-                    <label>Filtrar por Nome</label>
-                    <input type="text" name="busca" class="form-control" value="<?php echo htmlspecialchars($busca); ?>">
-                </div>
-                <div class="col">
+            <form method="get">
+                <div class="filtro">
                     <!-- Busca/filtro -->
-                    <label>Tipo de usuário</label>
-                    <select name="tipo" class="form-control">
-                        <option value="">Comum/Administrador</option>
-                        <option value="comum" <?php echo $tipo == 'comum' ? 'selected' : ''; ?>>Comum</option>
-                        <option value="administrador" <?php echo $tipo == 'administrador' ? 'selected' : ''; ?>>Administrador</option>
-                    </select>
+                    <div class="filtro_nome">
+                        <label>Filtrar por Nome</label>
+                        <input type="text" name="busca" class="form-control" value="<?php echo htmlspecialchars($busca); ?>">
+                    </div>
+
+                    <div class="filtro_user">
+                        <!-- Busca/filtro -->
+                        <label>Tipo de usuário</label>
+                        <select name="tipo" class="busca_User">
+                            <option value="">Comum/Administrador</option>
+                            <option value="comum" <?php echo $tipo == 'comum' ? 'selected' : ''; ?>>Comum</option>
+                            <option value="administrador" <?php echo $tipo == 'administrador' ? 'selected' : ''; ?>>Administrador</option>
+                        </select>
+                    </div>
+
+                    <div class="bt-filtrar">
+                        <button type="submit" class="bt_filtrar">Filtrar</button><!-- Botão de filtar -->
+                    </div>
                 </div>
-                <div class="col d-flex align-items-end">
-                    <button type="submit" class="btn btn-primary">Filtrar</button><!-- Botão de filtar -->
-                </div>
-            </div>
-        </form>
+            </form>
 
-        <!-- Só mostra feedback se a classe for a de erro -->
-        <?php
-            if (isset($classe) && $classe == 'alert alert-danger') : ?>
-            <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
-        <?php endif ?>
-
-
-        <table class='table table-striped table-bordered '>
-            <thead class='thead-dark'> <!--cabecalho da tabela -->
-                <tr>
-                    <th>Foto de Perfil</th>
-                    <th>Tipo</th>
-                    <th>Nome</th>
-                    <th>Sobrenome</th>
-                    <th>CPF</th>
-                    <th>Email</th>
-                    <th>Senha</th>
-                    <th>Peso</th>
-                    <th>Data de nascimento</th>
-                    <th>Genero</th>
-                    <th>Telefone</th>
-                    <th>Data de Registro</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody><!--corpo da tabela/linhas -->
-                <?php
-                foreach ($usuarios as $usuario) {
-                    echo "<tr>";
-
-                    $foto = $usuario['Foto'] != NULL ? $usuario['Foto'] : 'perfil_escuro.png';
-                    echo "<td><img style='width: 100px;' src='/sistemackc/views/Img/ImgUsuario/" . $foto . "' alt='Imagem de " . $usuario['Nome'] . "'></td>";
-                    echo "<td>" . $usuario['Tipo'] . "</td>";
-                    echo "<td>" . $usuario['Nome'] . "</td>";
-                    echo "<td>" . $usuario['Sobrenome'] . "</td>";
-                    echo "<td>" . $usuario['Cpf'] . "</td>";
-                    echo "<td>" . $usuario['Email'] . "</td>";
-                    echo "<td>" . substr($usuario['Senha'], 0, 5) . " ...</td>";
-                    echo "<td>" . $usuario['Peso'] . "</td>";
-                    $dataNascimento = new DateTime($usuario['Data_nascimento']);
-                    echo "<td>" . $dataNascimento->format('d/m/Y') . "</td>";
-                    echo "<td>" . $usuario['Genero'] . "</td>";
-                    echo "<td>" . $usuario['Telefone'] . "</td>";
-                    echo "<td>" . $usuario['Data_registro'] . "</td>";
-                    echo "<td> <a class='btn btn-primary' href='/sistemackc/admtm85/usuario/{$usuario["Id"]}'>Editar</a>"; //<!--Botão de editar -->
-                    if ($usuario['Id'] != 1) {
-                        echo "<button class='btn btn-danger' onclick='confirmarExclusao({$usuario["Id"]}, \"{$usuario["Nome"]}\", \"{$usuario["Sobrenome"]}\")'>Excluir</button>"; //<!--Botão de excluir -->
-                    }
-                    echo "</tr>";
-                }
-                echo "</table>";
-                ?>
-
-                <script>
-                    function confirmarExclusao(id, nome, sobrenome) {
-                        if (confirm(`Tem certeza que deseja excluir:\nID: ${id}  |  ${nome} ${sobrenome}\n\nOBS.: Essa ação é irreversivel.`)) {
-                            window.location.href = './usuario/excluir/' + id;
-                        }
-                    }
-                </script>
-
+            <!-- Só mostra feedback se a classe for a de erro -->
             <?php
+            if (isset($classe) && $classe == 'alert alert-danger') : ?>
+                <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
+            <?php endif ?>
+
+            <div class="tabela">
+                <table class='tabela-conteudo'>
+                    <thead class='tb-cabecalho'> <!--cabecalho da tabela -->
+                        <tr class="nome-cabecalhos">
+                            <th>Ações</th>
+                            <th>Foto de Perfil</th>
+                            <th>Tipo</th>
+                            <th>Nome</th>
+                            <th>Sobrenome</th>
+                            <th>CPF</th>
+                            <th>Email</th>
+                            <th class="modal">Senha</th>
+                            <th class="modal">Peso</th>
+                            <th class="modal">Data de nascimento</th>
+                            <th class="modal">Genero</th>
+                            <th>Telefone</th>
+                            <th class="modal">Data de Registro</th>
+                            <th>Mais informaçãoes</th>
+                        </tr>
+                    </thead>
+                    <tbody><!--corpo da tabela/linhas -->
+                        <?php
+                        foreach ($usuarios as $usuario) {
+                            $usuarioJson = htmlspecialchars(json_encode($usuario), ENT_QUOTES, 'UTF-8');
+                            echo "<tr>";
+
+                            echo "<td class='acoes'><div class='icos'><a class='bt-editar' href='/sistemackc/admtm85/usuario/{$usuario["Id"]}'><i class='ph-bold ph-note-pencil'></i></a>"; //<!--Botão de editar -->
+                            if ($usuario['Id'] != 1) {
+                                echo "<button class='bt-excluir' onclick='confirmarExclusao({$usuario["Id"]}, \"{$usuario["Nome"]}\", \"{$usuario["Sobrenome"]}\")'><i class='ph-bold ph-trash'></i></button></div></td>"; //<!--Botão de excluir -->
+                            }
+
+                            $foto = $usuario['Foto'] != NULL ? $usuario['Foto'] : 'perfil_escuro.png';
+                            echo "<td><img style='width: 100px;' src='/sistemackc/views/Img/ImgUsuario/" . $foto . "' alt='Imagem de " . $usuario['Nome'] . "'></td>";
+                            echo "<td>" . $usuario['Tipo'] . "</td>";
+                            echo "<td>" . $usuario['Nome'] . "</td>";
+                            echo "<td>" . $usuario['Sobrenome'] . "</td>";
+                            echo "<td>" . $usuario['Cpf'] . "</td>";
+                            echo "<td>" . $usuario['Email'] . "</td>";
+                            echo "<td class='modal'>" . substr($usuario['Senha'], 0, 5) . " ...</td>";
+                            echo "<td class='modal'>" . $usuario['Peso'] . "</td>";
+                            $dataNascimento = new DateTime($usuario['Data_nascimento']);
+                            echo "<td class='modal'>" . $dataNascimento->format('d/m/Y') . "</td>";
+                            echo "<td class='modal'>" . $usuario['Genero'] . "</td>";
+                            echo "<td>" . $usuario['Telefone'] . "</td>";
+                            echo "<td class='modal'> " . $usuario['Data_registro'] . "</td>";
+                            echo "<td class='bt-modal'><button class='btModal' data-params='" . $usuarioJson . "'><i class='ph-bold ph-plus'></i></button></td>";
+                            echo "</tr>";
+                        }
+                        // echo "</tboby>";
+                        echo "</table>";
+                        ?>
+                    <!-- </tbody>
+                </table> -->
+            </div>
+            <script>
+                function confirmarExclusao(id, nome, sobrenome) {
+                    if (confirm(`Tem certeza que deseja excluir:\nID: ${id}  |  ${nome} ${sobrenome}\n\nOBS.: Essa ação é irreversivel.`)) {
+                        window.location.href = './usuario/excluir/' + id;
+                    }
+                }
+            </script>
+
+        <?php
         } else {
             echo "<h1>Acesso não autorizado</h1>";
         }
-            ?>
+        ?>
+        </section>
     </main>
     <footer>
         <!-- ondas -->

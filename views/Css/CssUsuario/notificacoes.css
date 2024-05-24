@@ -1,0 +1,162 @@
+:root{
+    --notificacao-exclamacao: #e9bd0c;
+}
+main.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+/* caixa de notificação */
+.mensagem {
+    padding: 19px 60px;
+    position: fixed;
+    top: 20px;
+    right: 105px;
+    background-color: chocolate;
+    border-radius: 3px;
+    color: #fff;
+
+    animation: slidein 0.2s cubic-bezier(0.25 0.46 0.45 0.94) both;
+}
+
+/* animação de entrar e sair da tela (notificação) */
+@keyframes slidein {
+    0% {
+        transform: translateX(1000px);
+        opacity: 0;
+    }
+
+    100% {
+
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* linha que fica em baixo da caixa de notificação */
+.mensagem::before {
+    content: " ";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 30px;
+    height: 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: time 4s forwards;
+}
+
+/* animação de linha da caixa de notificação */
+@keyframes time {
+    0% {
+        width: 100%;
+    }
+
+    100% {
+        width: 0;
+    }
+}
+
+
+/* ********************* OUTRO ESTILO PARA A NOVA NOTIFICAÇÃO TIPO 2 ********************** */
+.nofifications{
+    position: fixed;
+    top: 40px;
+    right: 20px;
+    color: var(--background-principal);
+}
+
+.nofifications :where(.toast, .column){
+    display: flex;
+    align-items: center;
+}
+
+/* caixa de notificação*/
+.nofifications .toast{
+    width: 400px;
+    position: relative;
+    overflow: hidden;
+    list-style: none;
+    border-radius: 4px;
+    padding: 16px 17px;
+    margin-bottom: 10px;
+    background: var(--text-base-light);
+    justify-content: space-between;
+    animation: show_toast 0.3s ease forwards;/*definição das animações*/
+}
+/* animanção da caixa quando ela aparece na tela */
+@keyframes show_toast {
+    0%{
+        transform: translateX(100%);
+    }
+    40%{
+        transform: translateX(-5%);
+    }
+    80%{
+        transform: translateX(0%);
+    }
+    100%{
+        transform: translateX(-10%);
+    }
+}
+
+/* linha que fica em baixo da caixa de notificação */
+.toast::before{
+    position: absolute;
+    content: "";
+    height: 4px;
+    width: 100%;
+    bottom: 0px;
+    left: 0px;
+    animation: progress 5s linear forwards;/*definição das animações*/
+}
+/* animação da linha */
+@keyframes progress {
+    100%{
+        width: 0%;
+    }
+}
+
+/* a partir daqui entra o css espacifico (erro, sucesso...) cor linha */
+.toast.success::before{
+    background:var(--notificacao-exclamacao);
+}
+.toast.error::before{
+    background:var(--categoria-ckc-110);
+}
+
+/* tamanho do icone exclamação */
+.toast .column i{
+    font-size: 2.7rem;
+}
+/* cor dos icones exclamação e error */
+.toast.success .column i{
+    color: var(--notificacao-exclamacao);
+}
+
+.toast.error .column i{
+    color: var(--categoria-ckc-110);
+}
+
+/* tamanho do texto da notificação*/
+.toast .column span{
+    margin-left: 12px;
+}
+
+/* cor do icone X */
+.toast i.ph.ph-x{
+    color: #a4a6d4;
+    cursor: pointer;
+    font-size: 1.7rem;
+}
+
+.toast i.ph.ph-x:hover{
+    color: black;
+}
+
+button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
