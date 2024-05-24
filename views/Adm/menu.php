@@ -19,7 +19,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
-    <!-- <link rel="stylesheet" href="/sistemackc/views/Css/CssAdm/menu.css"> -->
+    <link rel="stylesheet" href="/sistemackc/views/Css/CssAdm/menu.css">
 
     <title>Menu</title>
 </head>
@@ -68,12 +68,69 @@
 
     <main>
         <section class="container">
-
-            <h1>Menu</h1>
-            <div class="Image-Text">
-                <img src="#" alt="piloto do ckc em seu kart">
+            <div class="titulo">
+                <h1>Bem vindo ao Sistema CKC!</h1>
             </div>
 
+            <div class="cards-container">
+                <div class="card-item">
+                    <div class="card">
+                        <div class="icon">
+                            <a href="/sistemackc/admtm85/usuario">
+                                <i class="ph ph-users"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <a href="/sistemackc/admtm85/usuario" class="card-link">Usuários</a>
+                </div>
+
+                <div class="card-item">
+                    <div class="card">
+                        <div class="icon">
+                            <a href="/sistemackc/admtm85/corrida">
+                                <i class="ph ph-flag"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <a href="/sistemackc/admtm85/corrida" class="card-link">Corridas</a>
+                </div>
+
+                <div class="card-item">
+                    <div class="card">
+                        <div class="icon">
+                            <a href="/sistemackc/admtm85/campeonato">
+                                <i class="ph ph-trophy"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <a href="/sistemackc/admtm85/campeonato" class="card-link">Campeonatos</a>
+                </div>
+
+                <div class="card-item">
+                    <div class="card">
+                        <div class="icon">
+                            <a href="/sistemackc/admtm85/resultado">
+                                <i class="ph ph-list-numbers"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <a href="/sistemackc/admtm85/resultado" class="card-link">Resultados</a>
+                </div>
+
+                <div class="card-item">
+                    <div class="card">
+                        <div class="icon">
+                            <a href="/sistemackc/admtm85/kartodromo">
+                                <i class="ph ph-map-pin"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <a href="/sistemackc/admtm85/kartodromo" class="card-link">Kartódromos</a>
+                </div>
+            </div>
+
+            <p class="texto">Escolha uma das opções acima e clique para continuar.</p>
+        </section>
     </main>
     <?php 
         } else {
