@@ -110,7 +110,7 @@ class Campeonato
     public function selecionarTodosOsCampeonatos()
     {
         try {
-            $query = "SELECT * FROM campeonato";
+            $query = "SELECT * FROM campeonato ORDER BY Id DESC";
             $selecionar = $this->conexao->prepare($query);
             $selecionar->execute();
 

@@ -32,7 +32,7 @@
             <nav class="nav">
                 <a class="logo" href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a>
 
-                <button class="hamburger"></button> 
+                <button class="hamburger"></button>
                 <ul class="nav-list">
                     <li class="drop-down">
                         <a href="#" class="dropdown-toggle">Menu<i class="ph ph-caret-down"></i></a>
@@ -44,7 +44,7 @@
                             <li><a href="/sistemackc/admtm85/kartodromo">Kartodromos</a></li>
                         </ul>
                     </li>
-                    
+
                     <li class="drop-down">
                         <?php
                         if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
@@ -53,7 +53,7 @@
                             echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
                             echo "<li><a href='/sistemackc/admtm85/menu'>Menu</a></li>";
                             echo "<li><a href='/sistemackc/logout'>Sair</a></li>";
-                            echo "</ul>"; 
+                            echo "</ul>";
                         } else {
                             echo "<a href='/sistemackc/usuario/login'>Entrar</a>";
                         }
@@ -62,20 +62,15 @@
                 </ul>
             </nav>
     </header>
-    <!-- Inicio do Conteúdo para o ADM -->
-    <h1>CRUD dos Campeonatos</h1>
-    <a class='btn btn-primary' href='/sistemackc/admtm85/campeonato/cadastrar'>Cadastrar novo Campeonato</a>
-
-    <!-- Só mostra feedback se a classe for a de erro -->
-    <?php
-            if (isset($classe) && $classe == 'alert alert-danger') { ?>
-        <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
-    <?php } else { ?>
+    <main>
+        <!-- Inicio do Conteúdo para o ADM -->
+        <h1>CRUD dos Campeonatos</h1>
+        <a class='btn btn-primary' href='/sistemackc/admtm85/campeonato/cadastrar'>Cadastrar novo Campeonato</a>
 
         <form method="get">
             <div class="form-row">
                 <div class="form-group col-md-3">
-                    <label for="filtroNome">Filtrar por Nome</label>
+                    <label for="filtroNome" style="color: black;">Filtrar por Nome</label>
                     <input type="text" class="form-control" id="filtroNome" name="filtroNome" value="<?php echo isset($_GET['filtroNome']) ? htmlspecialchars($_GET['filtroNome']) : ''; ?>">
                 </div>
                 <div class="form-group col-md-3 d-flex align-items-end">
@@ -83,6 +78,12 @@
                 </div>
             </div>
         </form>
+
+        <!-- Só mostra feedback se a classe for a de erro -->
+        <?php
+            if (isset($classe) && $classe == 'alert alert-danger') : ?>
+            <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
+        <?php endif ?>
 
         <table class='table table-striped table-bordered '>
             <thead class='thead-dark'>
@@ -118,49 +119,49 @@
                         }
                     }
                 </script>
-            <?php } ?>
 
-        <?php
+            <?php
         } else {
             echo "<h1>Acesso não autorizado</h1>";
         }
-        ?>
-        <footer>
-            <!-- ondas -->
-            <div class="water">
-                <svg class="waves" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-                    <defs>
-                        <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-                    </defs>
-                    <g class="parallax">
-                        <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(47, 44, 44, 0.7)" />
-                        <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(47, 44, 44, 0.5)" />
-                        <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(49, 46, 46, 0.3)" />
-                        <use xlink:href="#gentle-wave" x="48" y="7" fill="var(--background-campos)" />
+            ?>
+    </main>
+    <footer>
+        <!-- ondas -->
+        <div class="water">
+            <svg class="waves" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                <defs>
+                    <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                </defs>
+                <g class="parallax">
+                    <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(47, 44, 44, 0.7)" />
+                    <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(47, 44, 44, 0.5)" />
+                    <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(49, 46, 46, 0.3)" />
+                    <use xlink:href="#gentle-wave" x="48" y="7" fill="var(--background-campos)" />
 
-                    </g>
-                </svg>
-            </div>
-            <!-- conteudo na nav -->
-            <div class="content">
-                <span class="copyright">2024 Manas Code | Todos os direitos reservados</span>
-                <div class="navegation">
-                    <div class="contact">
-                        <a href="https://www.instagram.com/crashkartchampionship?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
-                            <i class="ph-fill ph-instagram-logo"></i><!-- logo instagram-->
-                        </a>
-                        <a href="#" target="_blank">
-                            <i class="ph-fill ph-whatsapp-logo"></i><!-- logo whatsapp-->
-                        </a>
-                    </div>
-                    <div class="navigationLink">
-                        <a href="/sistemackc/etapas">Etapas</a>
-                        <a href="#">Classificação</a>
-                        <a href="/sistemackc/kartodromo">Kartódromos</a>
-                    </div>
+                </g>
+            </svg>
+        </div>
+        <!-- conteudo na nav -->
+        <div class="content">
+            <span class="copyright">2024 Manas Code | Todos os direitos reservados</span>
+            <div class="navegation">
+                <div class="contact">
+                    <a href="https://www.instagram.com/crashkartchampionship?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
+                        <i class="ph-fill ph-instagram-logo"></i><!-- logo instagram-->
+                    </a>
+                    <a href="#" target="_blank">
+                        <i class="ph-fill ph-whatsapp-logo"></i><!-- logo whatsapp-->
+                    </a>
+                </div>
+                <div class="navigationLink">
+                    <a href="/sistemackc/etapas">Etapas</a>
+                    <a href="#">Classificação</a>
+                    <a href="/sistemackc/kartodromo">Kartódromos</a>
                 </div>
             </div>
-        </footer>
+        </div>
+    </footer>
 </body>
 
 </html>

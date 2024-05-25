@@ -5,10 +5,8 @@ require_once 'models/Campeonato.php';
 class CampeonatoController extends RenderView
 {
     public function mostrarCampeonatos() {
+        
         $campeonatoModel = new Campeonato();
-        $campeonatos = $campeonatoModel->selecionarTodosOsCampeonatos();
-        $feedback = '';
-        $classe = '';
     
         // Verifica se tem requisição GET, por conta do filtro
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -24,16 +22,16 @@ class CampeonatoController extends RenderView
             } else {
                 $campeonatos = $campeonatoModel->selecionarTodosOsCampeonatos();
                 if (empty($campeonatos)) {
-                    $feedback = 'Nenhum campeonato cadastrado.';
+                    $feedback = 'Nenhum campeonato encontrado.';
                     $classe = 'alert alert-danger';
                 }
             }
         }
     
         $this->carregarViewComArgumentos('adm/crudCampeonato', [
-            'campeonatos' => $campeonatos,
-            'feedback' => $feedback,
-            'classe' => $classe
+            'campeonatos' => isset($campeonatos) ? $campeonatos : [],
+            'feedback' => isset($feedback) ? $feedback : '',
+            'classe' => isset($classe) ? $classe : ''
         ]);
     }
 
