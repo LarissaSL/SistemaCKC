@@ -17,8 +17,6 @@ class CorridaController extends RenderView
 
         $corridas = $corridaModel->selecionarTodasAsCorridasComNomes();
         $campeonatos = $campeonatoModel->selecionarNomesEIdsDosCampeonatos();
-        $feedback = '';
-        $classe = '';
     
         // Verifica se tem requisição GET, por conta do filtro
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -36,7 +34,7 @@ class CorridaController extends RenderView
             } else {
                 $corridas = $corridaModel->selecionarTodasAsCorridasComNomes();
                 if (empty($corridas)) {
-                    $feedback = 'Nenhuma corrida cadastrada.';
+                    $feedback = 'Nenhuma corrida encontrada.';
                     $classe = 'alert alert-danger';
                 }
             }
@@ -44,8 +42,8 @@ class CorridaController extends RenderView
     
         $this->carregarViewComArgumentos('adm/crudCorridas', [
             'corridas' => $corridas,
-            'feedback' => $feedback,
-            'classe' => $classe,
+            'feedback' => isset($feedback) ? $feedback : '',
+            'classe' => isset($classe) ? $classe : '',
             'campeonatos' => $campeonatos
         ]);
     }

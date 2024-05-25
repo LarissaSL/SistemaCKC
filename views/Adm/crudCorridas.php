@@ -66,20 +66,20 @@
     <h1>CRUD das Corridas</h1>
     <a class='btn btn-primary' href='/sistemackc/admtm85/corrida/cadastrar'>Cadastrar nova Corrida</a>
 
-    <!-- Só mostra feedback se a classe for a de erro -->
+    <!-- Demais erros possiveis (Erro na consulta, nao achar, etc) -->
     <?php
-            if (isset($classe) && $classe == 'alert alert-danger') { ?>
-        <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
+        if (isset($classe) && $classe == 'alert alert-danger') { ?>
+            <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
     <?php } else { ?>
 
         <form method="get">
             <div class="form-row">
                 <div class="form-group col-md-3">
-                    <label for="filtroNome">Filtrar por Nome</label>
+                    <label for="filtroNome" style="color: black;">Filtrar por Nome</label>
                     <input type="text" class="form-control" id="filtroNome" name="filtroNome" value="<?php echo isset($_GET['filtroNome']) ? htmlspecialchars($_GET['filtroNome']) : ''; ?>">
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="filtroCampeonato">Filtrar por Campeonato</label>
+                    <label for="filtroCampeonato" style="color: black;">Filtrar por Campeonato</label>
                     <select class="form-control" id="filtroCampeonato" name="filtroCampeonato">
                         <option value="">Selecione um Campeonato</option>
                         <?php
@@ -91,7 +91,7 @@
                     </select>
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="filtroData">Filtrar por Data</label>
+                    <label for="filtroData" style="color: black;">Filtrar por Data</label>
                     <input type="date" class="form-control" id="filtroData" name="filtroData" value="<?php echo isset($_GET['filtroData']) ? htmlspecialchars($_GET['filtroData']) : ''; ?>">
                 </div>
                 <div class="form-group col-md-3 d-flex align-items-end">
@@ -101,9 +101,10 @@
         </form>
 
 
+        <!-- Erros caso nao tenha as dependencias cadastradas -->
         <?php
-                if (isset($classe) && $classe == 'erro') : ?>
-            <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
+            if (isset($classe) && $classe == 'erro') : ?>
+                <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
         <?php endif ?>
 
         <table class='table table-striped table-bordered '>
@@ -127,12 +128,19 @@
                     echo "<td>" . $corrida['Nome_Kartodromo'] . "</td>";
                     echo "<td>" . $corrida['Nome'] . "</td>";
                     echo "<td>" . $corrida['Categoria'] . "</td>";
+
+                    //Conversoes das Datas e Tempos
                     $dataCorrida = new DateTime($corrida['Data_corrida']);
                     echo "<td>" . $dataCorrida->format('d/m/Y') . "</td>";
-                    echo "<td>" . $corrida['Horario'] . "</td>";
-                    echo "<td>" . $corrida['Tempo_corrida'] . "</td>";
+
+                    $horario = new DateTime($corrida['Horario']);
+                    echo "<td>" . $horario->format('H\hi\m\i\n') . "</td>";
+
+                    $tempoCorrida = $corrida['Tempo_corrida']; 
+                    $tempoMinutos = (int)date('i', strtotime($tempoCorrida));
+                    echo "<td>" . $tempoMinutos . "min</td>";
                     echo "<td>
-                <a class='btn btn-primary' href='/sistemackc/admtm85/corrida/atualizar/{$corrida["Id"]}'>Editar</a>";
+                        <a class='btn btn-primary' href='/sistemackc/admtm85/corrida/atualizar/{$corrida["Id"]}'>Editar</a>";
                     echo "<button class='btn btn-danger' onclick='confirmarExclusao({$corrida["Id"]},\"{$corrida["Nome"]}\")'>Excluir</button>";
                     echo "</tr>";
                 }
