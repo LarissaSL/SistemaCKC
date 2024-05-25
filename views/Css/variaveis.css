@@ -197,15 +197,6 @@ div#bt-go-back {
     display: none;
 }
 
-/* footer {
-    display: flex;
-    justify-content: center;
-    background: var(--background-navbar);
-    color: var(--text-base-light);
-    padding: 1rem;
-    text-align: center;
-} */
-
 /* BARRA DE ROLAGEM */
 ::-webkit-scrollbar{
     width: 20px;
@@ -218,7 +209,7 @@ div#bt-go-back {
 
 }
 
-/* ***** FOOOTER ***** */
+/* FOOTER */
 .waves {
     position: relative;
     width: 100%;
@@ -226,54 +217,7 @@ div#bt-go-back {
     margin-bottom: -7px;
 }
 
-/* CONTEUDO DA FOOTER */
-.content {
-    display: flex;
-    flex-wrap: wrap;
-    position: relative;
-    height: 24vh;
-    color: var(--text-base-light);
-    text-align: center;
-    flex-direction: row-reverse;
-    justify-content: space-between;
-    background-color: var(--background-campos);
-}
-
-.content span {
-    height: 61px;
-    font-size: 1.3rem;
-}
-.content span, .navegation {
-    margin-left: 2rem;
-    margin-right: 2rem;
-}
-
-.navegation {
-    display: flex;
-    height: 61px;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 1rem;
-}
-
-.content span, .navigationLink {
-    display: flex;
-    flex-wrap: wrap;
-    align-content: center;
-}
-
-.navigationLink {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-}
-
-/* lodos insta/whats */
-.contact {
-    font-size: 2.3rem;
-}
-
-/* ANIMAÇÃO DAS ONDAS */
+/* animação das ondas no footer */
 .parallax>use {
     animation: move-forever 25s cubic-bezier(0.50, 0.5, 0.40, 0.5) infinite;
 }
@@ -308,10 +252,55 @@ div#bt-go-back {
     }
 }
 
-/* menu responsivo */
+/* conteúdo do footer */
+.content {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    color: var(--text-base-light);
+    text-align: center;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    background-color: var(--background-campos);
+}
+
+.copyright {
+    height: 61px;
+    font-size: 1.3rem;
+}
+.copyright, .navegation {
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
+.navegation {
+    display: flex;
+    height: 61px;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1rem;
+}
+
+.copyright, .navigationLink {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+}
+
+.navigationLink {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+/* logos insta/whats */
+.contact {
+    font-size: 2.3rem;
+}
+
+/* MENU RESPONSIVO */
+/* NAVBAR */
 @media(max-width: 700px) {
-
-
     div#bt-go-back {
         display: flex;
         font-size: 2rem;
@@ -344,7 +333,6 @@ div#bt-go-back {
         z-index: 5555;
     }
 
-
     /* PARA FAZER OS DOIS TRAÇOS DO MENU */
     .hamburger::after,
     .hamburger::before {
@@ -358,7 +346,6 @@ div#bt-go-back {
         position: relative;
         transition: 0.3s;
     }
-
 
     /*Estilos ativos - aanimação que conecta com o js*/
     .nav.active .nav-list {
@@ -441,31 +428,48 @@ div#bt-go-back {
         align-items: center;
         justify-content: space-around;
     }
-/* ************** */
+
     .drop-down.active .dropdown-toggle { 
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: center
-    }
-
-    /* ***** FOOOTER ***** */
-    .content {
-        display: flex;
-        align-items: center;
-        flex-direction: row-reverse;
-        justify-content: center;
-    }
-
-
+    }   
 }
 
-@media(max-width: 768px) {
-
-    /* ***** FOOOTER ***** */
-    .waves {
-        height: 35px;
-        min-height: 35px;
+/* FOOTER */
+@media (min-width: 375px){
+    .content {
+        display: flex;
+        flex-wrap: wrap;
+        align-content: space-around; 
     }
 
+    .content span {
+        font-size: 1.5rem;
+    }
+}
+
+@media (min-width: 425px){
+
+    .content span {
+        font-size: 1.7rem;
+    }
+
+    .content .navegation {
+        font-size: 1.7rem;
+    }
+}
+
+@media (min-width: 768px){
+    .content {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+  
+    }
+
+    .content span {
+        height: 100px;
+    }
 }
