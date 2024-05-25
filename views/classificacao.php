@@ -14,19 +14,21 @@
 
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/classificacao.css">
+    <link rel="stylesheet" href="/sistemackc/views/Css/etapas.css">
+
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <title>Classificao</title>
+    <title>Classificacao</title>
 
 </head>
 
 <body>
-<?php
+    <?php
     if (!isset($_SESSION)) {
         session_start();
     }
     ?>
-    <header class="header"> 
+    <header class="header">
         <!-- <nav class="nav">
             <a class="logo" href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a>
 
@@ -76,91 +78,125 @@
                 ?>
             </ul>
         </nav>-->
-    </header> 
+    </header>
 
     <main>
-    <section class="contrainer">
-    <!-- Inicio do Conteúdo para o ADM -->
-    <div class="cabecalho">
-        <h1>Classificação</h1>
-        <p class="chamada">Selecione algum filtro para que o resultado seja exibido:</p>
-    </div>
+        <section class="contrainer">
+            <!-- Inicio do Conteúdo para o ADM -->
+            <div class="infoDeComeco">
+                <h1>Classificação</h1>
+                <p class="chamada">Selecione algum filtro para que o resultado seja exibido:</p>
+            </div>
+
+            <form method="get">
+                <div class="containerFiltros">
+                    <div class="filtro_campeonato">
+                        <label for="filtro_Campeonato">Filtrar por Campeonato</label>
+                        <select class="buscaSelect" id="filtroCampeonato" name="filtroCampeonato">
+                            <option value="">Selecione um Campeonato</option>
+                            <?php
+                            foreach ($campeonatos as $campeonato) {
+                                $selected = isset($_GET['filtroCampeonato']) && $_GET['filtroCampeonato'] == $campeonato['Id'] ? 'selected' : '';
+                                echo "<option value='" . $campeonato['Id'] . "' $selected>" . $campeonato['Nome'] . "</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+
+                    <div class="filtro_classificacao">
+                        <label for="filtro_Classificacao">Filtrar por Classificação</label>
+                        <select class="buscaSelect" id="filtroClassificacao" name="filtroClassificacao">
+                            <option value="Corrida" <?php echo isset($_GET['filtroClassificacao']) && $_GET['filtroClassificacao'] == 'Corrida' ? 'selected' : 'selected'; ?>>Corrida</option>
+                            <option value="Geral" <?php echo isset($_GET['filtroClassificacao']) && $_GET['filtroClassificacao'] == 'Geral' ? 'selected' : ''; ?>>Geral</option>
+                        </select>
+                    </div>
 
 
-    <form method="get">
-        <div class="containerFiltros">
-            <div class="filtro_campeonato">
-                <label for="filtro_Campeonato">Filtrar por Campeonato</label>
-                <select class="buscaSelect" id="filtroCampeonato" name="filtroCampeonato">
-                    <option value="" disabled selected>Selecione um Campeonato</option>
-                    <?php
-                    foreach ($campeonatos as $campeonato) {
-                        $selected = isset($_GET['filtroCampeonato']) && $_GET['filtroCampeonato'] == $campeonato['Id'] ? 'selected' : '';
-                        echo "<option value='" . $campeonato['Id'] . "' $selected>" . $campeonato['Nome'] . "</option>";
+                    <div class="filtro_dia">
+                        <label for="filtroDia">Filtrar por Dia</label>
+                        <select class="buscaSelect" id="filtroDia" name="filtroDia">
+                            <option value="">Selecione um Dia</option>
+                            <?php
+                            for ($dia = 1; $dia <= 31; $dia++) {
+                                $selected = isset($_GET['filtroDia']) && $_GET['filtroDia'] == $dia ? 'selected' : '';
+                                echo "<option value='" . $dia . "' $selected>" . $dia . "</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="filtro_mes">
+                        <label for="filtroMes">Filtrar por Mês</label>
+                        <select class="buscaSelect" id="filtroMes" name="filtroMes">
+                            <option value="">Selecione um Mês</option>
+                            <?php
+                            $meses = [
+                                1 => 'Janeiro', 2 => 'Fevereiro', 3 => 'Março', 4 => 'Abril',
+                                5 => 'Maio', 6 => 'Junho', 7 => 'Julho', 8 => 'Agosto',
+                                9 => 'Setembro', 10 => 'Outubro', 11 => 'Novembro', 12 => 'Dezembro'
+                            ];
+                            foreach ($meses as $numeroMes => $nomeMes) {
+                                $selected = isset($_GET['filtroMes']) && $_GET['filtroMes'] == $numeroMes ? 'selected' : '';
+                                echo "<option value='" . $numeroMes . "' $selected>" . $nomeMes . "</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="filtro_ano">
+                        <label for="filtroAno">Filtrar por Ano</label>
+                        <input type="text" class="buscaSelect" id="filtroAno" name="filtroAno" placeholder="Digite o ano" value="<?php echo isset($_GET['filtroAno']) ? htmlspecialchars($_GET['filtroAno']) : ''; ?>">
+                    </div>
+                    <div class="form-group col-md-3 d-flex align-items-end">
+                        <button type="submit" class="bt_filtrar">Filtrar</button><!-- Botão de filtar -->
+                    </div>
+                </div>
+            </form>
+
+            <section>
+                <?php
+                foreach ($corridas as $corrida) {
+                    echo "<article class='card'>";
+                    echo "<div class='titleCard_" . $corrida['nomeAbreviado'] . "'>";
+                    echo "<h2><strong class='title_" . strtolower($corrida['nomeAbreviado']) . $corrida['categoria'] . "'>" . $corrida['nomeAbreviado'] . "</strong> " . $corrida['nome'] . "</h2>";
+                    echo "<span>" . $corrida['nomeDoCampeonato'] . "</span>";
+                    echo "</div>";
+                    echo "<div class='categoria_" . $corrida['nomeAbreviado'] . $corrida['categoria'] . "'>";
+                    if ($corrida['categoria'] == "Livre") {
+                        echo "<span>" . $corrida['categoria'] .  "</span>";
+                    } else {
+                        echo "<span>" . $corrida['categoria'] . " kg</span>";
                     }
-                    ?>
-                </select>
-            </div>
+                    echo "</div>";
+                    echo "<div class='date'>";
+                    echo "<span>" . $corrida['data'] . "</span>";
+                    echo "<div class='time'>";
+                    echo "<i class='ph ph-timer'></i>";
+                    echo "<p>" . $corrida['hora'] . "h " . $corrida['minuto'] . "min</p>";
+                    echo "</div>";
+                    echo "</div>";
+                    echo "<a class='btn-verResultado'>Ver resultado</a>";
+                    echo "</article>";
+                } ?>
+            </section>
 
-            <div class="filtro_dia">
-                <label for="filtroDia">Filtrar por Dia</label>
-                <select class="buscaSelect" id="filtroDia" name="filtroDia">
-                    <option value="">Selecione um Dia</option>
-                    <?php
-                    for ($dia = 1; $dia <= 31; $dia++) {
-                        $selected = isset($_GET['filtroDia']) && $_GET['filtroDia'] == $dia ? 'selected' : '';
-                        echo "<option value='" . $dia . "' $selected>" . $dia . "</option>";
-                    }
-                    ?>
-                </select>
-            </div>
-            <div class="filtro_mes">
-                <label for="filtroMes">Filtrar por Mês</label>
-                <select class="buscaSelect" id="filtroMes" name="filtroMes">
-                    <option value="">Selecione um Mês</option>
-                    <?php
-                    $meses = [
-                        1 => 'Janeiro', 2 => 'Fevereiro', 3 => 'Março', 4 => 'Abril',
-                        5 => 'Maio', 6 => 'Junho', 7 => 'Julho', 8 => 'Agosto',
-                        9 => 'Setembro', 10 => 'Outubro', 11 => 'Novembro', 12 => 'Dezembro'
-                    ];
-                    foreach ($meses as $numeroMes => $nomeMes) {
-                        $selected = isset($_GET['filtroMes']) && $_GET['filtroMes'] == $numeroMes ? 'selected' : '';
-                        echo "<option value='" . $numeroMes . "' $selected>" . $nomeMes . "</option>";
-                    }
-                    ?>
-                </select>
-            </div>
-            <div class="filtro_ano">
-                <label for="filtroAno">Filtrar por Ano</label>
-                <input type="text" class="buscaSelect" id="filtroAno" name="filtroAno" placeholder="Digite o ano" value="<?php echo isset($_GET['filtroAno']) ? htmlspecialchars($_GET['filtroAno']) : ''; ?>">
-            </div>
-            <div class="form-group col-md-3 d-flex align-items-end">
-                <button type="submit" class="bt_filtrar">Filtrar</button><!-- Botão de filtar -->
-            </div>
-        </div>
-    </form>
-
-    <!-- Só mostra feedback se a classe for a de erro -->
-    <?php
+            <!-- Só mostra feedback se a classe for a de erro -->
+            <?php
             if (isset($classe) && $classe == 'alert alert-danger') : ?>
-        <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
-    <?php endif?>
+                <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
+            <?php endif ?>
 
-    </section>
+        </section>
     </main>
 
-        
 
-        <footer>
+    <footer>
+        <div>
+            <span class="copyright">© 2024 Copyright: ManasCode</span>
             <div>
-                <span class="copyright">© 2024 Copyright: ManasCode</span>
-                <div>
-                    <img src="/sistemackc/views/Img/ImgIcones/github.png">
-                    <a target="_blank" href="https://github.com/LarissaSL/SistemaCKC_MVC">Repositório do Projeto</a>
-                </div>
+                <img src="/sistemackc/views/Img/ImgIcones/github.png">
+                <a target="_blank" href="https://github.com/LarissaSL/SistemaCKC_MVC">Repositório do Projeto</a>
             </div>
-        </footer>
+        </div>
+    </footer>
 </body>
 
 </html>

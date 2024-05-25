@@ -342,38 +342,41 @@ class Corrida
         }
     }
 
-    public function construirHtml() {
-        $infoCorridas = $this->selecionarTodasAsCorridasComNomesEEnderecos();
+    public function construirHtml($infoCorridas = null) {
+        $infoCorridas = $infoCorridas == null ? $this->selecionarTodasAsCorridasComNomesEEnderecos() : $infoCorridas;
     
         if (!empty($infoCorridas)) {
             $corridasFormatadas = array();
     
             foreach ($infoCorridas as $corrida) {
-                // Formataçoes de Data e Horario
+                // Formatações de Data e Horário
                 $data = date('d/m/Y', strtotime($corrida['Data_corrida']));
                 
                 $horaFormatada = date('H:i:s', strtotime($corrida['Horario']));
                 $partesHora = explode(":", $horaFormatada);
                 $horas = $partesHora[0];
                 $minutos = $partesHora[1]; 
-
+    
                 $nomeAbreviado = $this->definirAbreviacao($corrida['Nome_Campeonato']);
-        
-                // Retornos pra view
+                $enderecoKartodromo = isset($corrida['Endereco_Kartodromo']) ? $corrida['Endereco_Kartodromo'] : '';
+    
+                // Retornos para a view
                 $corridasFormatadas[] = array(
                     'nome' => $corrida['Nome'],
                     'categoria' => $corrida['Categoria'],
                     'nomeDoCampeonato' => $corrida['Nome_Campeonato'],
                     'nomeDoKartodromo' => $corrida['Nome_Kartodromo'],
                     'nomeAbreviado' => $nomeAbreviado,
-                    'enderecoDoKartodromo' => $corrida['Endereco_Kartodromo'],
+                    'enderecoDoKartodromo' => $enderecoKartodromo,
                     'data' => $data,
                     'hora' => $horas,
                     'minuto' => $minutos
                 );
             }
             return $corridasFormatadas;
-        } 
+        } else {
+            return null; 
+        }
     }
 
     public function consultarCorridaPorFiltro($filtroNome, $filtroCampeonatoId, $filtroData)

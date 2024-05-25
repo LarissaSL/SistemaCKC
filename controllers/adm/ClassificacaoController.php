@@ -53,31 +53,38 @@ class ClassificacaoController extends RenderView
     public function exibirResultadoUsuario() {
         $corridaModel = new Corrida();
         $campeonatoModel = new Campeonato();
-
+    
         $campeonatos = $campeonatoModel->selecionarNomesEIdsDosCampeonatos();
-
+    
         // Verifica se tem requisição GET, por conta do filtro
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $filtroCampeonato = isset($_GET['filtroCampeonato']) ? $_GET['filtroCampeonato'] : '';
             $filtroMes = isset($_GET['filtroMes']) ? $_GET['filtroMes'] : '';
             $filtroAno = isset($_GET['filtroAno']) ? $_GET['filtroAno'] : '';
             $filtroDia = isset($_GET['filtroDia']) ? $_GET['filtroDia'] : '';
-
-            if (!empty($filtroCampeonato) || (!empty($filtroMes)) || !empty($filtroAno) || !empty($filtroDia)) {
+            $filtroClassificacao = isset($_GET['filtroClassificacao']) ? $_GET['filtroClassificacao'] : ''; 
+    
+            if (!empty($filtroCampeonato) || !empty($filtroMes) || !empty($filtroAno) || !empty($filtroDia)) {
                 $consulta = $corridaModel->consultarCorridaPorFiltroParaResultado($filtroCampeonato, $filtroMes, $filtroAno, $filtroDia);
 
-                $corridas = $consulta['corridas'];
-                $feedback = $consulta['feedback'];
-                $classe = $consulta['classe'];
+                if (!empty($consulta)) {
+                    $corridas = $corridaModel->construirHtml($consulta['corridas']);
+                    $feedback = $consulta['feedback'];
+                    $classe = $consulta['classe'];
+                } else {
+                    $corridas = [];
+                    $feedback = 'Nenhuma corrida encontrada.';
+                    $classe = 'alert alert-danger';
+                }
             } else {
-                $corridas = $corridaModel->selecionarTodasAsCorridasComNomes();
+                $corridas = $corridaModel->construirHtml();
                 if (empty($corridas)) {
                     $feedback = 'Nenhuma corrida encontrada.';
                     $classe = 'alert alert-danger';
                 }
             }
         }
-
+    
         $this->carregarViewComArgumentos('classificacao', [
             'corridas' => isset($corridas) ? $corridas : [],
             'feedback' => isset($feedback) ? $feedback : '',

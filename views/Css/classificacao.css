@@ -1,18 +1,18 @@
 main {
     margin: 2rem;
     padding: 1rem;
+    width: 100%;
 }
 
-.cabecalho {
-    width: 100%;
+.infoDeComeco{
     display: flex;
     flex-direction: column;
-    gap: 1rem;
     text-align: center;
 }
 
 form{
     display: flex;
+    width: 100%;
     margin-top: 3rem;
     margin-bottom: 3rem;
 }
@@ -21,7 +21,8 @@ form{
 .filtro_ano, 
 .filtro_dia, 
 .filtro_mes, 
-.filtro_campeonato{
+.filtro_campeonato,
+.filtro_classificacao{
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -33,7 +34,7 @@ form{
 
 form label{
     font-weight: 500;
-    color: rgb(240, 240, 240);
+    color: white;
 }
 
 input, select.buscaSelect{
@@ -65,9 +66,38 @@ select option{
 }
 
 select.buscaSelect option:checked {
-    color: black;
+    color: black; 
 }
 
 button.bt_filtrar{
     width: 260px;
+}
+
+article.card {
+    display: flex;
+    width: 250px;
+    padding: 3rem;
+    margin: .7rem;
+    height: 390px;
+    margin-bottom: 3rem;
+    border: solid;
+    border-radius: 20px;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    border-color: var(--color-button);
+    background-color: var(--background-cards);
+    gap: 3rem;
+}
+
+.btn-verResultado {
+    padding: 1.3rem;
+    width: 180px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 700;
+    background-color: var(--color-button);   
+    color: var(--text-base-light);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
