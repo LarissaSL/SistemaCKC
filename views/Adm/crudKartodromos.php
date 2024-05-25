@@ -58,12 +58,6 @@
     <!-- Inicio do Conteúdo para o ADM -->
     <h1>CRUD dos Kartódromos</h1>
     <a class='btn btn-primary' href='/sistemackc/admtm85/kartodromo/cadastrar'>Cadastrar novo kartódromo</a>
-    
-    <!-- Só mostra feedback se a classe for a de erro -->
-    <?php 
-        if (isset($classe) && $classe == 'alert alert-danger') { ?>
-        <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
-    <?php  } else { ?>
 
     <form method="get">
         <div class="row my-4">
@@ -76,6 +70,12 @@
             </div>
         </div>
     </form>
+
+     <!-- Só mostra feedback se a classe for a de erro -->
+     <?php 
+        if (isset($classe) && $classe == 'alert alert-danger') : ?>
+        <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
+    <?php  endif ?>
 
     <table class='table table-striped table-bordered '>
         <thead class='thead-dark'>
@@ -110,7 +110,7 @@
             ?>
         </tbody>
     </table>
-    <?php } ?>
+    
 
     <script>
         function confirmarExclusao(id, nome) {

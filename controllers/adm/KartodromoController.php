@@ -32,11 +32,6 @@ class KartodromoController extends RenderView
 
         $kartodromoModel = new Kartodromo();
 
-        $kartodromos = $kartodromoModel->selecionarTodosKartodromos();
-        $feedback = '';
-        $classe = '';
-        $busca = '';
-
         // Verifica se tem requisição GET, por conta do filtro
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $busca = isset($_GET['busca']) ? $_GET['busca'] : '';
@@ -51,17 +46,17 @@ class KartodromoController extends RenderView
             } else {
                 $kartodromos = $kartodromoModel->selecionarTodosKartodromos();
                 if (empty($kartodromos)) {
-                    $feedback = 'Nenhum Kartódromo cadastrado.';
+                    $feedback = 'Nenhum Kartódromo encontrado';
                     $classe = 'alert alert-danger';
                 }
             }
         }
 
         $this->carregarViewComArgumentos('adm/crudKartodromos', [
-            'kartodromos' => $kartodromos,
-            'feedback' => $feedback,
-            'classe' => $classe,
-            'busca' => $busca
+            'kartodromos' => isset($kartodromos) ? $kartodromos : [],
+            'feedback' => isset($feedback) ? $feedback : '',
+            'classe' => isset($classe) ? $classe : '',
+            'busca' => isset($busca) ? $busca : ''
         ]);
     }
 
