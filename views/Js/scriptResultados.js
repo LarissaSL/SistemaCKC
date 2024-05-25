@@ -11,6 +11,15 @@ document.getElementById("addPiloto").addEventListener("click", function () {
     atualizarBotaoCadastrar();
 });
 
+// Delegação de eventos para o botão de excluir registro
+document.getElementById("pilotosContainer").addEventListener("click", function (event) {
+    if (event.target && event.target.className == "btn_excluirRegistro") {
+        event.target.parentNode.remove();
+        atualizarBotaoCadastrar();
+        recalcularPosicoesEPontuacoes();
+    }
+});
+
 // Função para popular o select de posições
 function popularPosicoesSelect(selectElement, posicaoInicial) {
     var posicoes = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"];
@@ -95,12 +104,6 @@ function adicionarPiloto() {
     btnExcluirRegistro.type = 'button';
     btnExcluirRegistro.className = 'btn_excluirRegistro';
     btnExcluirRegistro.textContent = 'Excluir registro';
-    btnExcluirRegistro.addEventListener('click', function () {
-        pilotoDiv.remove();
-        atualizarBotaoCadastrar();
-        // Recalcular as posições e pontuações
-        recalcularPosicoesEPontuacoes();
-    });
     pilotoDiv.appendChild(btnExcluirRegistro);
 
     pilotosContainer.appendChild(pilotoDiv);

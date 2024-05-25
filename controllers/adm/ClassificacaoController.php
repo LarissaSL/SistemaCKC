@@ -18,10 +18,7 @@ class ClassificacaoController extends RenderView
         $corridaModel = new Corrida();
         $campeonatoModel = new Campeonato();
 
-        $corridas = $corridaModel->selecionarTodasAsCorridasComNomes();
         $campeonatos = $campeonatoModel->selecionarNomesEIdsDosCampeonatos();
-        $feedback = '';
-        $classe = '';
 
         // Verifica se tem requisição GET, por conta do filtro
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -39,17 +36,17 @@ class ClassificacaoController extends RenderView
             } else {
                 $corridas = $corridaModel->selecionarTodasAsCorridasComNomes();
                 if (empty($corridas)) {
-                    $feedback = 'Nenhuma corrida cadastrada.';
+                    $feedback = 'Nenhuma corrida encontrada.';
                     $classe = 'alert alert-danger';
                 }
             }
         }
 
         $this->carregarViewComArgumentos('adm/crudResultado', [
-            'corridas' => $corridas,
-            'feedback' => $feedback,
-            'classe' => $classe,
-            'campeonatos' => $campeonatos
+            'corridas' => isset($corridas) ? $corridas : [],
+            'feedback' => isset($feedback) ? $feedback : '',
+            'classe' => isset($classe) ? $classe : '',
+            'campeonatos' => isset($campeonatos) ? $campeonatos : []
         ]);
     }
 
