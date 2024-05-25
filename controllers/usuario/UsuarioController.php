@@ -30,16 +30,9 @@ class UsuarioController extends RenderView
             } else {
                 $usuarios = $usuarioModel->consultarTodosOsUsuarios();
                 if (empty($usuarios)) {
-                    $feedback = 'Nenhum usuário cadastrado.';
+                    $feedback = 'Nenhum usuário encontrado.';
                     $classe = 'alert alert-danger';
                 }
-            }
-        } else {
-            // Se não tiver requisição GET, mostra todos
-            $usuarios = $usuarioModel->consultarTodosOsUsuarios();
-            if (empty($usuarios)) {
-                $feedback = 'Nenhum usuário cadastrado.';
-                $classe = 'alert alert-danger';
             }
         }
 

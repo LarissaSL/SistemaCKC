@@ -132,7 +132,7 @@ class Kartodromo
     public function selecionarTodosKartodromos()
     {
         try {
-            $query = "SELECT * FROM kartodromo";
+            $query = "SELECT * FROM kartodromo ORDER BY Id DESC";
             $selecionar = $this->conexao->prepare($query);
             $selecionar->execute();
 
