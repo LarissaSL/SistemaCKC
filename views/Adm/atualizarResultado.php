@@ -32,7 +32,7 @@
             <nav class="nav">
                 <a class="logo" href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a>
 
-                <button class="hamburger"></button> 
+                <button class="hamburger"></button>
                 <ul class="nav-list">
                     <li class="drop-down">
                         <a href="#" class="dropdown-toggle">Menu<i class="ph ph-caret-down"></i></a>
@@ -44,7 +44,7 @@
                             <li><a href="/sistemackc/admtm85/kartodromo">Kartodromos</a></li>
                         </ul>
                     </li>
-                    
+
                     <li class="drop-down">
                         <?php
                         if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
@@ -53,7 +53,7 @@
                             echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
                             echo "<li><a href='/sistemackc/admtm85/menu'>Menu</a></li>";
                             echo "<li><a href='/sistemackc/logout'>Sair</a></li>";
-                            echo "</ul>"; 
+                            echo "</ul>";
                         } else {
                             echo "<a href='/sistemackc/usuario/login'>Entrar</a>";
                         }
@@ -62,8 +62,6 @@
                 </ul>
             </nav>
     </header>
-
-    <h1>Atualização de Resultado</h1>
 
     <?php
             if (isset($feedback) && !empty($feedback)) {
@@ -75,91 +73,137 @@
             } else {
     ?>
 
-    <div class=informacoesCorrida>
-        <div class="title_">
-            <?php echo "<span>" . $dadosCorrida['Nome_Campeonato'] . "</span>" ?>
-        </div>
-        <div class="date">
-            <?php
-                $dataCorrida = new DateTime($dadosCorrida['Data_corrida']);
-                echo "<span>" . $dataCorrida->format('d/m/Y') . "</span>";
-            ?>
-        </div>
-        <?php
-                $nomeCompleto = strtoupper($nomeAbreviado) . " " . $dadosCorrida['Nome'];
-                echo "<h2><strong class='title_'>" . $nomeCompleto . "</strong></h2>";
-        ?>
+        <div class="background-image"></div>
+        <h1 class="titulo">Atualização de Resultado</h1>
+        <div class="containerInformacoes">
+            <div class="containerImagem">
+                <img class="fundoImg" src="/sistemackc/Views/Img/ImgTelas/fundo.png" alt="fundo da foto do Crash">
+                <img class="imagem" src="/sistemackc/Views/Img/ImgTelas/crash.png" alt="foto do Crash">
+            </div>
+            <div class="informacoesCorrida">
+                <div class="title">
+                    <span><?php echo $dadosCorrida['Nome_Campeonato']; ?></span>
+                </div>
+                <?php $classeH2 = strtolower($nomeAbreviado) . $dadosCorrida['Categoria']; ?>
+                <h2>
+                    <strong class="<?php echo $classeH2; ?>"><?php echo strtoupper($nomeAbreviado) ?></strong>
+                    <?php echo $dadosCorrida['Nome']; ?>
+                </h2>
+                <div class="date">
+                    <span><?php echo date('d/m/Y', strtotime($dadosCorrida['Data_corrida'])); ?></span>
+                </div>
+                <div class="categoria">
+                    <span class="categoria <?php echo 'cat' . $dadosCorrida['Categoria']; ?>">
+                        <?php
+                        if ($dadosCorrida['Categoria'] == "Livre") {
+                            echo $dadosCorrida['Categoria'];
+                        } else {
+                            echo $dadosCorrida['Categoria'] . " kg";
+                        }
+                        ?>
 
-        <div class="categoria_">
-            <?php
-                $categoriaFormatada = $dadosCorrida['Categoria'] == "Livre" ? $dadosCorrida['Categoria'] : $dadosCorrida['Categoria'] . " kg";
-                echo "<span>" . $categoriaFormatada . "</span>";
-            ?>
+                    </span>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div id="pilotosContainer">
-        <form method="POST" action="/sistemackc/admtm85/resultado/atualizarRegistro/<?php echo $idCorrida; ?>">
-            <?php
-            if (isset($dadosResultado) && $dadosResultado != NULL) {
-                foreach ($dadosResultado as $dadosItem) {
-                    // Processando os dados de cada usuário
-                    $usuario = $usuarioModel->consultarUsuarioPorId($dadosItem["Usuario_id"]);
-                    $nome = $usuario['Nome'];
-                    $sobrenome = $usuario['Sobrenome'];
-                    $foto = $usuario['Foto'] != NULL ? $usuario['Foto'] : 'perfil_branco.png';
-                    ?>
-                    <div class="piloto">
-                        <img class="pilot-img" src="/sistemackc/views/Img/ImgUsuario/<?php echo $foto; ?>" alt="<?php echo $nome . ' ' . $sobrenome; ?>">
-                        <div class="pilot-info">
-                            <span><?php echo $dadosItem["Posicao"]; ?>º Lugar</span>
-                            <span><?php echo $nome . ' ' . $sobrenome; ?></span>
-                            <span><?php echo $dadosItem["Melhor_tempo"]; ?></span>
-                            <span><?php echo isset($dadosItem["Pontuacao_total"]) ? $dadosItem["Pontuacao_total"] : ''; ?> pts</span>
-                        </div>
-                        <input type="hidden" name="ids[]" value="<?php echo $dadosItem['Id']; ?>">
-                        <label>Posição:</label>
-                        <select name="posicoes[]" required>
-                            <?php
-                            $posicoes = array("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15");
-                            foreach ($posicoes as $posicao) {
-                                echo "<option value='$posicao' " . ($dadosItem["Posicao"] == $posicao ? 'selected' : '') . ">$posicao º</option>";
-                            }
-                            ?>
-                        </select>
-                        <label>Piloto:</label>
-                        <select name="pilotos[]" required>
-                            <?php foreach ($usuarios as $usuario) { ?>
-                                <option value="<?php echo $usuario['id']; ?>" <?php echo $usuario['id'] == $dadosItem["Usuario_id"] ? 'selected' : ''; ?>>
-                                    <?php echo $usuario['nome'] . ' ' . $usuario['sobrenome']; ?>
-                                </option>
-                            <?php } ?>
-                        </select>
-                        <label>Melhor tempo:</label>
-                        <input type="time" name="melhor_tempo[]" value="<?php echo $dadosItem["Melhor_tempo"]; ?>" placeholder="Melhor Tempo" required>
-                        <label>Pontuação:</label>
-                        <input readonly type="number" name="pontuacao[]" value="<?php echo isset($dadosItem["Pontuacao_total"]) ? $dadosItem["Pontuacao_total"] : ''; ?>">
-                    </div>
+        <div id="pilotosContainer">
+            <form method="POST" action="/sistemackc/admtm85/resultado/atualizarRegistro/<?php echo $idCorrida; ?>">
                 <?php
+                if (isset($dadosResultado) && $dadosResultado != NULL) {
+                    foreach ($dadosResultado as $dadosItem) {
+                        // Processando os dados de cada usuário
+                        $usuario = $usuarioModel->consultarUsuarioPorId($dadosItem["Usuario_id"]);
+                        $nome = $usuario['Nome'];
+                        $sobrenome = $usuario['Sobrenome'];
+                        $foto = $usuario['Foto'] != NULL ? $usuario['Foto'] : 'perfil_branco.png';
+                ?>
+                        <div class="pilot">
+                            <div class="pilot-img-container">
+                                <img class="pilot-img" src="/sistemackc/views/Img/ImgUsuario/<?php echo $foto; ?>" alt="<?php echo $nome . ' ' . $sobrenome; ?>">
+                            </div>
+                            <input type="hidden" name="ids[]" value="<?php echo $dadosItem['Id']; ?>">
+                            <label>Posição:</label>
+                            <select name="posicoes[]" required>
+                                <?php
+                                $posicoes = array("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15");
+                                foreach ($posicoes as $posicao) {
+                                    echo "<option value='$posicao' " . ($dadosItem["Posicao"] == $posicao ? 'selected' : '') . ">$posicao º</option>";
+                                }
+                                ?>
+                            </select>
+                            <label>Piloto:</label>
+                            <select name="pilotos[]" required>
+                                <?php foreach ($usuarios as $usuario) { ?>
+                                    <option value="<?php echo $usuario['id']; ?>" <?php echo $usuario['id'] == $dadosItem["Usuario_id"] ? 'selected' : ''; ?>>
+                                        <?php echo $usuario['nome'] . ' ' . $usuario['sobrenome']; ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                            <label>Melhor tempo:</label>
+                            <input type="time" name="melhor_tempo[]" value="<?php echo $dadosItem["Melhor_tempo"]; ?>" placeholder="Melhor Tempo" required>
+                            <label>Pontuação:</label>
+                            <input readonly type="number" name="pontuacao[]" value="<?php echo isset($dadosItem["Pontuacao_total"]) ? $dadosItem["Pontuacao_total"] : ''; ?>">
+                        </div>
+                <?php
+                    }
                 }
-            }
-            ?>
-            <button type="submit">Atualizar registros</button>
-        </form>
-    </div>
+                ?>
+                <button type="submit">Atualizar registros</button>
+            </form>
+        </div>
 
-    <?php 
-        }} else {
+
+<?php
+            }
+        } else {
             echo "<h1>Acesso não autorizado</h1>";
         }
-    ?>
-    </div>
+?>
+</div>
 
-    <script>
-        function confirmarExclusao(id, posicao, idUsuario, melhor_tempo, pontuacao) {
-            window.location.href = '/sistemackc/admtm85/resultado/excluir/corrida/' + id;
-        }
-    </script>
+<script>
+    function confirmarExclusao(id, posicao, idUsuario, melhor_tempo, pontuacao) {
+        window.location.href = '/sistemackc/admtm85/resultado/excluir/corrida/' + id;
+    }
+</script>
+
+<footer>
+    <!-- ondas -->
+    <div class="water">
+        <svg class="waves" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+            <defs>
+                <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+            </defs>
+            <g class="parallax">
+                <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(47, 44, 44, 0.7)" />
+                <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(47, 44, 44, 0.5)" />
+                <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(49, 46, 46, 0.3)" />
+                <use xlink:href="#gentle-wave" x="48" y="7" fill="var(--background-campos)" />
+
+            </g>
+        </svg>
+    </div>
+    <!-- conteudo na nav -->
+    <div class="content">
+        <div class="navegation">
+            <div class="contact">
+                <a href="https://www.instagram.com/crashkartchampionship?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
+                    <i class="ph-fill ph-instagram-logo"></i><!-- logo instagram-->
+                </a>
+                <a href="#" target="_blank">
+                    <i class="ph-fill ph-whatsapp-logo"></i><!-- logo whatsapp-->
+                </a>
+            </div>
+            <div class="navigationLink">
+                <a href="/sistemackc/etapas">Etapas</a>
+                <a href="#">Classificação</a>
+                <a href="/sistemackc/kartodromo">Kartódromos</a>
+            </div>
+        </div>
+        <span class="copyright">2024 Manas Code | Todos os direitos reservados</span>
+    </div>
+</footer>
 </body>
 
 </html>

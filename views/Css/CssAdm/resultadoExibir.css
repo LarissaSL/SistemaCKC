@@ -1,49 +1,503 @@
+:root {
+    --primeiro-lugar: #DCB338;
+    --segundo-lugar: #D0D0D0;
+    --terceiro-lugar: #AB7253;
+    --outros-lugares: #85A3F8;
+    --cor-excluir: #730202;
+}
+
+/* Background img */
+.background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80vw;
+    background-image: url(/sistemackc/views/Img/ImgTelas/cadastroUsuario.jpg);
+    background-repeat: no-repeat;
+    background-size: cover; 
+    background-position: center; 
+    opacity: 0.5; 
+    filter: grayscale(100%) brightness(10%);
+    z-index: -1;
+}
+
+main {
+    padding: 1rem;
+    margin: 1rem;
+}
+
+.informacoesCorrida {
+    margin: 8rem 0 3rem;
+    text-align: center;
+}
+
+.containerImagem {
+    position: relative;
+    height: auto;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+}  
+
+.fundoImg,
+.imagem {
+    width: 230px;
+    height: auto;
+    z-index: 1; 
+}
+.imagem {
+    align-self: center;
+}
+
+.fundoImg {
+    filter: brightness(120%);
+}
+
+.imagem {
+    position: absolute;
+    top: 0;
+    height: auto;
+    z-index: 2; 
+}
+
+.titulo {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+div.title span {
+    font-size: 2rem;
+    width: 100%;
+}
+
+.informacoesCorrida h2 {
+    margin-bottom: 2rem;
+}
+
+h2 .ddlLivre {
+    color: var(--categoria-ddl-livre);
+}
+
+h2 .ckc110 {
+    color: var(--categoria-ckc-110);
+}
+
+h2 .cmp110,
+h2 .cmp95,
+h2 .cmpLivre {
+    color: var(--color-cmp);
+}
+
+.date span { 
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.categoria span {
+    display: inline-block; 
+    font-size: 1.2rem;
+    padding: .4em;
+    width: 80px;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    border-radius: 17px; 
+    color: black;
+    text-align: center;
+}
+
+.categoria.cat95 {
+    background-color: var(--categoria-ckc-95);
+}
+
+.categoria.cat110 {
+    background-color: var(--categoria-ckc-110);
+}
+
+.categoria.catLivre {
+    background-color: var(--categoria-ddl-livre);
+}
+
+.categoria.catcmp {
+    background-color: var(--color-cmp);
+}
+
 .ranking-container {
-    width: 80%;
-    max-width: 800px;
+    width: 100%;
 }
 
 .pilot {
     display: flex;
     align-items: center;
-    margin: 10px 0;
-    padding: 10px;
+    margin: 2rem 0;
+}
+
+.pilot-img-container {
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%; 
+    overflow: hidden; 
+    margin-right: 20px;
+    background-color: white; 
 }
 
 .pilot-img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 20px;
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
 }
 
 .pilot-info {
-    background-color: #567CE8;
+    background-color: var(--outros-lugares);
     border-radius: 25px;
-    padding: 10px 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px 15px;
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: start;
+    gap: 1.5rem; 
+    width: 220px; 
+}
+
+span.nomePiloto {
+    flex-grow: 1; 
 }
 
 .pilot-info.posicao1 {
-    background-color: #CCA530; 
+    background-color: var(--primeiro-lugar); 
 }
 
 .pilot-info.posicao2 {
-    background-color: #B9B9B9;
+    background-color: var(--segundo-lugar);
 }
 
 .pilot-info.posicao3 {
-    background-color: #9B674A; 
+    background-color: var(--terceiro-lugar); 
 }
 
-
-
 .pilot-info span {
-    font-size: 16px;
+    font-size: .8rem;
     font-weight: bold;
-    margin-right: 10px;
     color: black;
+}
+
+.botoes {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5rem;
+    gap: 3rem;
+    align-items: center;
+}
+
+.btn-editar,
+.btn-danger {
+    font-size: 1.3rem;
+}
+
+.btn-editar {
+    padding: 1.3rem;
+    width: 24rem;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 700;
+    background-color: var(--color-button);   
+    color: var(--text-base-light);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-editar:hover {
+    color: var(--background-campos);
+    background-color: var(--text-base-light);
+}
+
+.btn-danger {
+    background-color: var(--cor-excluir);
+}
+
+@media (min-width: 375px) {
+    p {
+        text-align: center;
+    }
+    
+    .pilot-info {
+        width: 270px;
+    } 
+    
+    .pilot-info span {
+        font-size: 1.2rem;
+    }
+}
+
+@media (min-width: 425px) {
+    .pilot-info {
+        width: 310px;
+    } 
+    
+    .pilot-info span {
+        font-size: 1.3rem;
+    }
+
+    .pilot-img-container {
+        width: 45px; 
+        height: 45px; 
+    }
+
+    .pilot {
+        justify-content: center;
+    }
+
+}
+
+@media (min-width: 768px) {
+    main {
+        padding: 3.5rem;
+    }
+
+    .fundoImg,
+    .imagem {
+        width: 300px;
+    }
+
+    .containerInformacoes {
+        display: flex;
+        flex-flow: row;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .titulo {
+        text-align: center;
+        font-size: 4rem;
+    }
+
+    .informacoesCorrida {
+        margin-top: 8rem;
+        text-align: start;
+        margin-left: 35px;
+    }
+    
+    .fundoImg,
+    .imagem {
+        width: 300px;
+    }
+
+    .date span { 
+        font-size: 2.5rem;
+    }
+    
+    .categoria span {
+        font-size: 1.8rem;
+        width: 120px;
+        margin: 1.5rem 0;
+    }
+
+    .pilot-info span {
+        font-size: .8rem;
+        font-weight: bold;
+        color: black;
+    }
+
+    div.title span {
+        font-size: 2.8rem;
+    }
+    
+    .informacoesCorrida h2 {
+        font-size: 3.5rem;
+    }
+
+    p {
+        font-size: 2rem;
+        margin-top: 60px;
+    }
+    
+    .pilot-img-container {
+        width: 70px; 
+        height: 70px; 
+    }
+    
+    .pilot-info { 
+        width: 600px; 
+        justify-content: space-between;
+        padding: 1.5rem 2.5rem;
+    }
+
+    .pilot-info span {
+        font-size: 1.8rem;
+    }
+
+    .pilot {
+        justify-content: center;
+    }
+
+    span.nomePiloto {
+        flex-grow: 0; 
+    }   
+
+    .botoes {
+        flex-direction: row;
+        gap: 70px;
+        justify-content: center;
+    }
+    
+    .btn-editar,
+    .btn-danger {
+        font-size: 1.8rem;
+    }
+}
+
+@media (min-width: 900px) { 
+    .fundoImg,
+    .imagem {
+        width: 300px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .containerImagem {
+        height: 400px;
+    }
+    
+    .fundoImg,
+    .imagem {
+        width: 340px;
+    }
+
+    div.title span {
+        font-size: 3rem;
+    }
+
+    .informacoesCorrida {
+        margin-top: 4rem;
+    }
+
+    .informacoesCorrida h2 {
+        font-size: 4rem;
+    }
+
+    .date span { 
+        font-size: 3rem;
+    }
+    
+    .categoria span {
+        font-size: 2.3rem;
+        width: 150px;
+    }
+
+    .pilot-info span {
+        font-size: 2.3rem;
+        font-weight: bold;
+        color: black;
+    }
+    
+    .informacoesCorrida h2 {
+        font-size: 3.5rem;
+        margin-bottom: 40px;
+    }
+
+    .pilot-img-container {
+        width: 95px; 
+        height: 90px;
+    }
+    
+    .pilot-info { 
+        width: 950px; 
+        justify-content: space-between;
+        padding: 1.5rem 2.5rem;
+    }
+
+    .pilot-info span {
+        font-size: 2.5rem;
+    }
+
+    .pilot {
+        justify-content: center;
+        width: 100%;
+    }
+
+    span.nomePiloto {
+        flex-grow: 0; 
+    }   
+
+    .botoes {
+        margin: 5rem;
+        justify-content: center;
+    }
+    
+    .btn-editar,
+    .btn-danger {
+        font-size: 2rem;
+    }     
+}
+
+@media (min-width: 1440px) {
+    main {
+        padding: 0 11rem;
+        margin-top: 5rem;
+    }
+    
+    .fundoImg,
+    .imagem {
+        width: 340px;
+        margin: 2rem;
+    }
+
+    p {
+        margin-top: 3rem;
+    }
+
+    .pilot {
+        justify-content: center;
+        width: 100%;
+    }
+
+    div.title span {
+        font-size: 3rem;
+    }
+
+    h2 strong,
+    .informacoesCorrida h2 {
+        font-size: 3rem;
+    }
+
+    .date span { 
+        font-size: 3rem;
+    }
+    
+    .categoria span {
+        font-size: 2rem;
+        width: 190px;
+    }
+
+    .pilot-info span {
+        font-size: 2rem;
+    }
+
+    .pilot-info { 
+        width: 1000px; 
+        justify-content: space-between;
+        padding: 2rem 4rem;
+    }
+    
+    .btn-editar,
+    .btn-danger {
+        font-size: 2rem;
+    }  
+    
+}
+
+@media (min-width: 1800px) {
+    .informacoesCorrida {
+        margin-top: 1rem;
+    }
+
+    h2 strong,
+    .informacoesCorrida h2 {
+        font-size: 3rem;
+    }
+
+    div.title span {
+        font-size: 3rem;
+    }
 }
