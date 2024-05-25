@@ -41,8 +41,8 @@ class KartodromoController extends RenderView
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $busca = isset($_GET['busca']) ? $_GET['busca'] : '';
 
-            if (!empty($filtroNome)) {
-                $consulta = $kartodromoModel->consultarKartodromoComFiltro($filtroNome);
+            if (!empty($busca)) {
+                $consulta = $kartodromoModel->consultarKartodromoComFiltro($busca);
 
                 $kartodromos = $consulta['kartodromos'];
                 $feedback = $consulta['feedback'];
@@ -79,7 +79,7 @@ class KartodromoController extends RenderView
             $rua = $_POST['rua'];
             $bairro = $_POST['bairro'];
             $numero = $_POST['numero'];
-            $redes = $_POST['redes'] ?? '';
+            $redes = isset($_POST['redes']) ? $_POST['redes'] : '';
             $tratarURL = $kartodromoModel->adicionarPrefixoHttp($redes);
             $dados = [$nome, $cep, $rua, $bairro, $numero, $redes];
             $feedback = "";
