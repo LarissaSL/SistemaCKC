@@ -1,0 +1,73 @@
+main {
+    margin: 2rem;
+    padding: 1rem;
+}
+
+.cabecalho {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+}
+
+form{
+    display: flex;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+.containerFiltros,
+.filtro_ano, 
+.filtro_dia, 
+.filtro_mes, 
+.filtro_campeonato{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.containerFiltros {
+    gap: 3rem;
+}
+
+form label{
+    font-weight: 500;
+    color: rgb(240, 240, 240);
+}
+
+input, select.buscaSelect{
+    width: 260px;
+    font-family: var(--fonte-title);
+    font-size: 1.4rem;
+    font-weight: 500;
+    background-color: white;
+    border-color: var(--color-menu);
+    border-width: 1px;
+    border-radius: 10px;
+    color: black;
+    letter-spacing: 1.2px;
+}
+
+select.buscaSelect{
+    padding: 1.3rem;
+}
+
+select option{
+    height: 1rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    letter-spacing: 1.2px;
+    border-width: 1px;
+    border-radius: 10px;
+    color: black;
+    background-color: rgb(220, 220, 220);
+}
+
+select.buscaSelect option:checked {
+    color: black;
+}
+
+button.bt_filtrar{
+    width: 260px;
+}

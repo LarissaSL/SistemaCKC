@@ -50,6 +50,42 @@ class ClassificacaoController extends RenderView
         ]);
     }
 
+    public function exibirResultadoUsuario() {
+        $corridaModel = new Corrida();
+        $campeonatoModel = new Campeonato();
+
+        $campeonatos = $campeonatoModel->selecionarNomesEIdsDosCampeonatos();
+
+        // Verifica se tem requisição GET, por conta do filtro
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $filtroCampeonato = isset($_GET['filtroCampeonato']) ? $_GET['filtroCampeonato'] : '';
+            $filtroMes = isset($_GET['filtroMes']) ? $_GET['filtroMes'] : '';
+            $filtroAno = isset($_GET['filtroAno']) ? $_GET['filtroAno'] : '';
+            $filtroDia = isset($_GET['filtroDia']) ? $_GET['filtroDia'] : '';
+
+            if (!empty($filtroCampeonato) || (!empty($filtroMes)) || !empty($filtroAno) || !empty($filtroDia)) {
+                $consulta = $corridaModel->consultarCorridaPorFiltroParaResultado($filtroCampeonato, $filtroMes, $filtroAno, $filtroDia);
+
+                $corridas = $consulta['corridas'];
+                $feedback = $consulta['feedback'];
+                $classe = $consulta['classe'];
+            } else {
+                $corridas = $corridaModel->selecionarTodasAsCorridasComNomes();
+                if (empty($corridas)) {
+                    $feedback = 'Nenhuma corrida encontrada.';
+                    $classe = 'alert alert-danger';
+                }
+            }
+        }
+
+        $this->carregarViewComArgumentos('classificacao', [
+            'corridas' => isset($corridas) ? $corridas : [],
+            'feedback' => isset($feedback) ? $feedback : '',
+            'classe' => isset($classe) ? $classe : '',
+            'campeonatos' => isset($campeonatos) ? $campeonatos : []
+        ]);
+    }
+
     public function exibir($idCorrida, $local = null)
     {
         if (!isset($_SESSION)) {
@@ -73,7 +109,13 @@ class ClassificacaoController extends RenderView
             $feedback = "Nenhum resultado cadastrado para essa corrida";
             $classe = "erro";
         } else {
-            $definirAView = $local == null ? 'adm/exibirResultado' : 'adm/atualizarResultado';
+            if($local == null) {
+                $definirAView = 'adm/exibirResultado';
+            } elseif ($local == 'usuario') {
+                $definirAView = 'adm/atualizarResultado';
+            } else {
+                $definirAView = 'adm/atualizarResultado';
+            }
             $usuarios = $local == null ? null : $usuarioModel->obterNomeESobrenomeDosUsuarios();
             $this->carregarViewComArgumentos( $definirAView, [
                 'dadosCorrida' => $dadosCorrida,
