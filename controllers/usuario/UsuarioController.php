@@ -10,17 +10,13 @@ class UsuarioController extends RenderView
     public function mostrarUsuarios()
     {
         $usuarioModel = new Usuario();
-        $usuarios = $usuarioModel->consultarTodosOsUsuarios();
-        $feedback = '';
-        $classe = '';
 
-        // Verifica se tem uma requisição GET na pagina
+        // Verifica se tem uma requisição GET na página
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $busca = isset($_GET['busca']) ? $_GET['busca'] : '';
             $tipo = isset($_GET['tipo']) ? $_GET['tipo'] : '';
 
-            if(!empty($busca) || !empty($tipo))
-            {
+            if (!empty($busca) || !empty($tipo)) {
                 if (!preg_match('/\d/', $busca)) {
                     $consulta = $usuarioModel->consultarUsuariosComFiltro($busca, $tipo);
 
@@ -31,24 +27,29 @@ class UsuarioController extends RenderView
                     $feedback = 'Digite apenas letras por favor';
                     $classe = 'alert alert-danger';
                 }
-
-                
             } else {
                 $usuarios = $usuarioModel->consultarTodosOsUsuarios();
+                if (empty($usuarios)) {
+                    $feedback = 'Nenhum usuário cadastrado.';
+                    $classe = 'alert alert-danger';
+                }
             }
-            
         } else {
-            // Se nao tiver requisição GET, mostra todos
+            // Se não tiver requisição GET, mostra todos
             $usuarios = $usuarioModel->consultarTodosOsUsuarios();
+            if (empty($usuarios)) {
+                $feedback = 'Nenhum usuário cadastrado.';
+                $classe = 'alert alert-danger';
+            }
         }
 
-        // Carregaento da view
+        // Carregamento da view
         $this->carregarViewComArgumentos('adm/crudUsuarios', [
-            'usuarios' => $usuarios,
-            'busca' => $busca,
-            'tipo' => $tipo,
-            'feedback' => $feedback,
-            'classe' => $classe
+            'usuarios' => isset($usuarios) ? $usuarios : [],
+            'busca' => isset($busca) ? $busca : '',
+            'tipo' => isset($tipo) ? $tipo : '',
+            'feedback' => isset($feedback) ? $feedback : '',
+            'classe' => isset($classe) ? $classe : ''
         ]);
     }
 

@@ -80,7 +80,7 @@ class Usuario
     public function consultarTodosOsUsuarios()
     {
         try {
-            $consulta = $this->conexao->prepare("SELECT * FROM usuario");
+            $consulta = $this->conexao->prepare("SELECT * FROM usuario ORDER BY Id DESC");
             $consulta->execute();
             $usuarios = $consulta->fetchAll(PDO::FETCH_ASSOC);
             return $usuarios;
@@ -304,12 +304,21 @@ class Usuario
             }
 
             $consulta->execute();
-
-            return array(
-                'usuarios' => $consulta->fetchAll(PDO::FETCH_ASSOC),
-                'feedback' => 'Consulta realizada com sucesso.',
-                'classe' => 'alert alert-success'
-            );
+            $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
+            
+            if (empty($resultados)) {
+                return array( 
+                    'usuarios' => [],
+                    'feedback' => "Nenhum usuário encontrado",
+                    'classe' => "alert alert-danger"
+                );
+            } else {
+                return array(
+                    'usuarios' => $resultados,
+                    'feedback' => "Sucesso",
+                    'classe' => "Sucesso"
+                );
+            }
         } 
         catch (PDOException $erro) 
         {

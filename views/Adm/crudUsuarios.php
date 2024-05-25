@@ -120,7 +120,7 @@
                             <th class="modal">Genero</th>
                             <th>Telefone</th>
                             <th class="modal">Data de Registro</th>
-                            <th>Mais informaçãoes</th>
+                            <th>Mais informações</th>
                         </tr>
                     </thead>
                     <tbody><!--corpo da tabela/linhas -->
