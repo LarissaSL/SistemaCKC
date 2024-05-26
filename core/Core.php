@@ -11,12 +11,12 @@ class Core
         foreach ($routes as $path => $controller) 
         {
             // Criando uma expressão regular para a rota
-            $pattern = '#^' . str_replace(['/', '{id}'], ['\/', '(\w+)'], $path) . '$#'; 
+            $pattern = '#^' . str_replace(['/', '{id}'], ['\/', '([\w-]+)'], $path) . '$#'; 
             
             // Verifica se a rota contém parâmetros
             $partesDaUrl = explode('/', $url);
             $ultimoParametroDaUrl = end($partesDaUrl);
-            $comParametros = preg_match('/^\d+$/', $ultimoParametroDaUrl) === 1;
+            $comParametros = preg_match('/^[\w-]+$/', $ultimoParametroDaUrl) === 1;
 
             // Divide o nome do controller e o método
             [$pastaDoController, $controllerAtual, $metodo] = explode('#', $controller);

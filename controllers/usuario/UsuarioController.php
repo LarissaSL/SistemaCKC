@@ -403,13 +403,14 @@ class UsuarioController extends RenderView
     }
 
     public function redefinirSenha($token) {
-        $url = "c4ca4238a0b923820dcc509a6f75849b";
-        $idUsuario = hash('md5', $token);
+        $url = $token;
+        $idUsuario = 1;
+        $idCriptografado = hash('md5', $idUsuario);
 
         $dados = array($url, $idUsuario);
         $statusAutorizacao = true;
 
-        if($idUsuario != $url) {
+        if($url != $idCriptografado) {
             $feedback = 'Acesso não autorizado';
             $classe = 'erro';
             $statusAutorizacao = false;
@@ -420,9 +421,6 @@ class UsuarioController extends RenderView
             'classe' => isset($classe) ? $classe : null,
             'status' => isset($statusAutorizacao) ? $statusAutorizacao : null,
             'dadosTeste' => isset($dados) ? $dados : null
-        ]);
-
-        
+        ]); 
     }
-
 }
