@@ -95,7 +95,7 @@
                         <label for="filtro_Classificacao">Classificação desejada</label>
                         <select class="buscaSelect" id="filtroClassificacao" name="filtroClassificacao">
                             <option value="corrida" <?php echo isset($_GET['filtroClassificacao']) && $_GET['filtroClassificacao'] == 'corrida' ? 'selected' : 'selected'; ?>>Corrida</option>
-                            <option value="geral" <?php echo isset($_GET['filtroClassificacao']) && $_GET['filtroClassificacao'] == 'geral' ? 'selected' : ''; ?>>Geral</option>
+                            <option value="geral" disabled<?php echo isset($_GET['filtroClassificacao']) && $_GET['filtroClassificacao'] == 'geral' ? 'selected' : ''; ?>>Geral</option>
                         </select>
                     </div>
 
@@ -181,7 +181,7 @@
                     echo "<p>" . $corrida['qtdPilotos'] . "/15</p>";
                     echo "</div>";
                     $link = '/sistemackc/classificacao/' . $tipoDeExibicao . '/' . $corrida['id'];
-                    echo "<a class='btn-verResultado' target='_blank' href='$link'>Ver resultado</a>";
+                    echo "<a class='btn-verResultado' href='$link'>Ver resultado</a>";
                     echo "</article>";
             }
             ?>

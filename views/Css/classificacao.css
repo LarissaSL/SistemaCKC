@@ -71,6 +71,12 @@ form label{
     color: white;
 }
 
+option[disabled] {
+    color:#00000060;
+    background-color: #8b8787;
+    cursor: not-allowed;
+}
+
 input, 
 select.buscaSelect{
     max-width: 260px;
@@ -347,13 +353,13 @@ button.bt_filtrar:hover {
     form label,
     div.time,
     select option{
-        font-size: 2rem;
+        font-size: 1.7rem;
     }
 
     .containerFiltros {
-        gap: 30px;
+        gap: 45px;
         padding: 5rem;
-        margin: 0 6rem;
+        margin: 0 8rem;
     }
 
     button.bt_filtrar{
