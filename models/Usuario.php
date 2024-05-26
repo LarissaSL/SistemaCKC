@@ -109,6 +109,24 @@ class Usuario
         }
     }
 
+    public function consultarTodosOsId()
+    {
+        try {
+            $consulta = $this->conexao->prepare("SELECT Id FROM usuario");
+            $consulta->execute();
+            $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
+            
+            if ($resultados) {
+                return $resultados;
+            } else {
+                return false;
+            }
+        } catch (PDOException $erro) {
+            echo "Erro na consulta: " . $erro->getMessage();
+            return false;
+        }
+    }
+
     public function obterNomeESobrenomeDosUsuarios() {
         try {
             $consulta = $this->conexao->prepare("SELECT * FROM usuario");
@@ -277,6 +295,37 @@ class Usuario
         } catch (PDOException $erro) {
             return "Erro ao atualizar a senha: " . $erro->getMessage();
         }
+    }
+
+    public function gerarLinkRedefinicaoSenha($idUsuario) {
+        $idCriptografado = md5($idUsuario);
+    
+        // Link
+        $link = 'http://localhost/sistemackc/usuario/redefinir/senha/' . $idCriptografado;
+    
+        return $link;
+    }
+
+    public function obterIdPorToken($token) {
+        $ids = $this->consultarTodosOsId();
+    
+        // Verifica cada ID
+        foreach($ids as $id) {
+            $idCriptografado = hash('md5', $id['Id']);
+    
+            // Verifica se o token corresponde ao ID criptografado
+            if ($token == $idCriptografado) {
+                return array(
+                    'id' => $id['Id'],
+                    'status' => true,
+                );
+            }
+        }
+
+        return array(
+            'id' => false,
+            'status' => false,
+        );
     }
 
     public function consultarUsuariosComFiltro($busca, $tipo)

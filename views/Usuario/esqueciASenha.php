@@ -8,17 +8,24 @@
     <!-- google fontes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
-
-    <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
-    <script defer src="/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
 
     <link rel="icon" href="/sistemackc/views/Img/ImgIcones/crash_icon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/CssUsuario/alterarSenha.css">
 
-    <title>Redefinir Senha</title>
+     <!-- Chat -->
+     <script src="https://cdn.botpress.cloud/webchat/v1/inject.js"></script>
+    <script src="https://mediafiles.botpress.cloud/5a7f406f-c78a-46b6-a7e5-bf4a1daed5fb/webchat/config.js" defer></script>
+
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
+    <script defer src="/sistemackc/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
+    <script defer src="/sistemackc/views/Js/validarEmailRedefinicao.js"></script>
+
+    <title>Esqueci a Senha</title>
+
 </head>
 
 <body>
@@ -27,7 +34,6 @@
         session_start();
     }
     ?>
-
     <header class="header">
         <nav class="nav">
             <a class="logo" href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a>
@@ -80,14 +86,13 @@
         </nav>
     </header>
 
-    <!-- Conteúdo da página -->
-    <?php
-    if ($status) { ?>
-            <div class="background-image"></div>
+    <main>
+        <div class="background-image"></div>
         <section class="container">
 
-            <h1 class="titulo">Redefinir senha</h1>
-            <p class="aviso"><i class="ph ph-warning"></i>Preencha os campos abaixo para redefinir sua senha </p>
+            <h1 class="titulo">Esqueceu a senha?</h1>
+            <p class="aviso"><i class="ph ph-warning"></i>Preencha os campos abaixo, te enviaremos um e-mail para que você possa redefini-lá.</p>
+
             <?php 
                 if (isset($feedback)) :
                     if (isset($feedback) && $feedback != '') {
@@ -102,28 +107,28 @@
                 endif 
             ?>
 
-            <form action='' method='POST'>
+            <form action='' method='POST' class="formRedefinir">
+            
                 <div class="campos">
                     <div class="campo">
-                        <label class="senha" for="senha">Senha:</label>
-                        <input type="password" name="senha" required>
+                        <label class="email" for="email">Email:</label>
+                        <input type="mail" name="email" id="email" required value="<?php echo isset($email) ? $email : '' ?>">
                     </div>
 
                     <div class="campo">
-                        <label class="senha" for="senha">Confirmação de Senha:</label>
-                        <input type="password" name="confirmarSenha" required>
+                        <label class="email" for="email">Confirmação de Email:</label>
+                        <input type="mail" name="confirmarEmail" id="confirmarEmail"required value="<?php echo isset($confirmarEmail) ? $confirmarEmail : '' ?>">
+                        <span id="emailError" class="error" style="color:red;"></span>
                     </div>
                 </div>
+                
+                
 
                 <div class="botao">
-                    <button type="submit" class="bt-alterar">Alterar</button>
+                    <button type="submit" class="bt-alterar">Enviar</button>
                 </div>
             </form>
-        </section>     
-        
-    <?php } else {
-        echo "<h1>Acesso não autorizado</h1>";
-    } ?>
+        </section>
     </main>
 
     <footer>
@@ -162,5 +167,7 @@
             </div>
         </div>
     </footer>
+
 </body>
+
 </html>
