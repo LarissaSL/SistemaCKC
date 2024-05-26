@@ -113,7 +113,7 @@
                     echo "<p class='enderecoKartodromo'>{$kartodromo['Rua']}, {$kartodromo['Numero']} - {$kartodromo['Bairro']} , CEP: {$kartodromo['CEP']} </p>";
                     echo "</div>";
                     echo "<div class='botoes'>";
-                    echo "<a class='bt-siteKartodromo' href='{$kartodromo['Site']}' target='_blank'>Visitar site</a>";
+                    echo "<a class='bt-siteKartodromo' href='{$kartodromo['Redes']}' target='_blank'>Visitar rede</a>";
                     echo "</div>";
                     echo "</div>";
                     echo "</article>";
