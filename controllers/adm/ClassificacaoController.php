@@ -148,6 +148,7 @@ class ClassificacaoController extends RenderView
         $dadosCorrida = $corridaModel->selecionarCorridaPorIdComNomeDoCamp($idCorrida);
         $nomeAbreviado = empty($dadosCorrida) ? '' : $corridaModel->definirAbreviacao($dadosCorrida['Nome_Campeonato']);
 
+        // colocar a funcao de calcular classificacao geral
         $dadosResultados = $tipoResultado == null ? $resultadoModel->selecionarResultadoPorCorridaId($idCorrida) : $resultadoModel->selecionarResultadoPorCorridaId($idCorrida);
         if (empty($dadosCorrida)) {
             $feedback = "Erro ao selecionar os dados da corrida";

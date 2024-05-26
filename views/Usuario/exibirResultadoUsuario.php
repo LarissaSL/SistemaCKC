@@ -147,7 +147,7 @@
         </div>
     </main>
 
-    <footer>
+<footer>
         <!-- ondas -->
         <div class="water">
             <svg class="waves" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">

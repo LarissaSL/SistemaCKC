@@ -29,7 +29,7 @@
     }
     ?>
     <header class="header">
-        <!-- <nav class="nav">
+        <nav class="nav">
             <a class="logo" href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a>
 
             <button class="hamburger"></button>
@@ -77,11 +77,12 @@
                 }
                 ?>
             </ul>
-        </nav>-->
+        </nav>
     </header>
 
     <main>
-        <section class="contrainer">
+        <div class="background-image"></div>
+        <section class="container">
             <!-- Inicio do Conteúdo para o ADM -->
             <div class="infoDeComeco">
                 <h1>Classificação</h1>
@@ -90,6 +91,14 @@
 
             <form method="get">
                 <div class="containerFiltros">
+                    <div class="filtro_classificacao">
+                        <label for="filtro_Classificacao">Classificação desejada</label>
+                        <select class="buscaSelect" id="filtroClassificacao" name="filtroClassificacao">
+                            <option value="corrida" <?php echo isset($_GET['filtroClassificacao']) && $_GET['filtroClassificacao'] == 'corrida' ? 'selected' : 'selected'; ?>>Corrida</option>
+                            <option value="geral" <?php echo isset($_GET['filtroClassificacao']) && $_GET['filtroClassificacao'] == 'geral' ? 'selected' : ''; ?>>Geral</option>
+                        </select>
+                    </div>
+
                     <div class="filtro_campeonato">
                         <label for="filtro_Campeonato">Filtrar por Campeonato</label>
                         <select class="buscaSelect" id="filtroCampeonato" name="filtroCampeonato">
@@ -102,15 +111,6 @@
                             ?>
                         </select>
                     </div>
-
-                    <div class="filtro_classificacao">
-                        <label for="filtro_Classificacao">Tipo de Classificação desejada</label>
-                        <select class="buscaSelect" id="filtroClassificacao" name="filtroClassificacao">
-                            <option value="corrida" <?php echo isset($_GET['filtroClassificacao']) && $_GET['filtroClassificacao'] == 'corrida' ? 'selected' : 'selected'; ?>>Corrida</option>
-                            <option value="geral" <?php echo isset($_GET['filtroClassificacao']) && $_GET['filtroClassificacao'] == 'geral' ? 'selected' : ''; ?>>Geral</option>
-                        </select>
-                    </div>
-
 
                     <div class="filtro_dia">
                         <label for="filtroDia">Filtrar por Dia</label>
@@ -143,7 +143,7 @@
                     </div>
                     <div class="filtro_ano">
                         <label for="filtroAno">Filtrar por Ano</label>
-                        <input type="text" class="buscaSelect" id="filtroAno" name="filtroAno" placeholder="Digite o ano" value="<?php echo isset($_GET['filtroAno']) ? htmlspecialchars($_GET['filtroAno']) : ''; ?>">
+                        <input type="text" class="filtroAno" id="filtroAno" name="filtroAno" placeholder="Digite o ano" value="<?php echo isset($_GET['filtroAno']) ? htmlspecialchars($_GET['filtroAno']) : ''; ?>">
                     </div>
                     <div class="form-group col-md-3 d-flex align-items-end">
                         <button type="submit" class="bt_filtrar">Filtrar</button><!-- Botão de filtar -->
@@ -151,7 +151,15 @@
                 </div>
             </form>
 
-            <section>
+            <?php 
+            if (isset($feedback) && $feedback != '') {
+                echo "<div class='container-feedback'>";
+                echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
+                echo "</div>";
+               
+            } else { ?>
+
+            <section class='containerCards'>
             <?php
             foreach ($corridas as $corrida) {
                     echo "<article class='card'>";
@@ -178,34 +186,48 @@
             }
             ?>
             </section>
-
-            <!-- Só mostra feedback se a classe for a de erro -->
-            <?php
-            if (isset($classe) && $classe == 'erro') : ?>
-                <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
-            <?php endif ?>
         </section>
+        <?php } ?>
     </main>
 
 
     <footer>
-        <div>
-            <span class="copyright">© 2024 Copyright: ManasCode</span>
-            <div>
-                <img src="/sistemackc/views/Img/ImgIcones/github.png">
-                <a target="_blank" href="https://github.com/LarissaSL/SistemaCKC_MVC">Repositório do Projeto</a>
+        <!-- ondas -->
+        <div class="water">
+            <svg class="waves" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                <defs>
+                    <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"/>
+                </defs>
+                <g class="parallax">
+                    <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(47, 44, 44, 0.7)"/>
+                    <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(47, 44, 44, 0.5)"/>
+                    <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(49, 46, 46, 0.3)"/>
+                    <use xlink:href="#gentle-wave" x="48" y="7" fill="var(--background-campos)"/>
+                
+                </g>
+            </svg>
+        </div>
+        <!-- conteudo na nav -->
+        <div class="content">
+            <span class="copyright">2024 Manas Code | Todos os direitos reservados</span>
+            <div class="navegation">
+                <div class="contact">
+                    <a href="https://www.instagram.com/crashkartchampionship?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
+                        <i class="ph-fill ph-instagram-logo"></i><!-- logo instagram-->
+                    </a>
+                    <a href="#" target="_blank">
+                        <i class="ph-fill ph-whatsapp-logo"></i><!-- logo whatsapp-->
+                    </a>
+                </div>
+                <div class="navigationLink">
+                    <a href="/sistemackc/etapas">Etapas</a>
+                    <a href="#">Classificação</a>
+                    <a href="/sistemackc/kartodromo">Kartódromos</a>
+                </div>
             </div>
         </div>
     </footer>
 
-    <script type="text/javascript">
-    document.querySelectorAll('a.disabled').forEach(function(link) {
-        link.addEventListener('click', function(event) {
-            event.preventDefault();
-            alert('Resultado não esta disponível ainda.');
-        });
-    });
-</script>
 </body>
 
 </html>
