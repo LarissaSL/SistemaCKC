@@ -75,7 +75,7 @@
         <form method="get">
             <div class="form-row">
                 <div class="form-group col-md-3">
-                    <label for="filtroNome" style="color: black;">Filtrar por Nome</label>
+                    <label for="filtroNome" style="color: black;">Filtrar por Nome da Corrida</label>
                     <input type="text" class="form-control" id="filtroNome" name="filtroNome" value="<?php echo isset($_GET['filtroNome']) ? htmlspecialchars($_GET['filtroNome']) : ''; ?>">
                 </div>
                 <div class="form-group col-md-3">

@@ -46,7 +46,7 @@
                     <a href="#" class="dropdown-toggle">Corridas<i class="ph ph-caret-down"></i></a>
                     <ul class="dropdown-menu">
                         <li><a href="/sistemackc/etapas">Etapas</a></li>
-                        <li><a href="#">Classificação</a></li>
+                        <li><a href="/sistemackc/classificacao">Classificação</a></li>
                         <li><a href="/sistemackc/kartodromo">Kartódromos</a></li>
                     </ul>
                 </li>
@@ -102,7 +102,7 @@
                         <label class="password" for="senha">Senha:</label>
                         <input type="password" name="senha">
                         <!-- link de esqueci minha senha-->
-                        <a href="#">Esqueci minha senha</a>
+                        <a href="/sistemackc/usuario/solicitar/senha">Esqueci minha senha</a>
                     </div>
                     <!-- botão de entrar -->
                     <button class="bt-go-in">Entrar</button>

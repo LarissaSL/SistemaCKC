@@ -42,7 +42,7 @@
                         <a href="#" class="dropdown-toggle">Corridas<i class="ph ph-caret-down"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="/sistemackc/etapas">Etapas</a></li>
-                            <li><a href="#">Classificação</a></li>
+                            <li><a href="/sistemackc/classificacao">Classificação</a></li>
                             <li><a href="/sistemackc/kartodromo">Kartódromos</a></li>
                         </ul>
                     </li>
@@ -51,7 +51,7 @@
                     echo "<li><a href='/sistemackc/admtm85/campeonato'>Campeonatos</a></li>";
                     echo "<li><a href='/sistemackc/admtm85/corrida'>Corridas</a></li>";
                     echo "<li><a href='/sistemackc/admtm85/kartodromo'>Kartodromos</a></li>";
-                    echo "<li><a href='#'>Resultados</a></li>";
+                    echo "<li><a href='/sistemackc/admtm85/resultado'>Resultados</a></li>";
                 } ?>
 
                 <?php
@@ -81,24 +81,15 @@
     </header>
 
     <!-- Conteúdo da página -->
-    <?php 
-                    echo "<p>Teste URL mandada: ". $dadosTeste[0]  . "</p>";
-                    echo "<p>Teste do ID Usuário: ". $dadosTeste[1]  . "</p>";
-                ?>
-
-
     <?php
     if ($status) { ?>
+            <div class="background-image"></div>
+        <section class="container">
+
             <h1 class="titulo">Redefinir senha</h1>
-            <p class="aviso"><i class="ph ph-warning"></i>Preencha nos campos abaixo sua nova senha:</p>
-
-            <?php if (isset($_SESSION['tipo']) && $tipoUsuario == 'Administrador') {
-                echo "<form action='/sistemackc/admtm85/usuario/atualizar/senha/' method='POST'>";
-            } else {
-                echo "<form action='/sistemackc/usuario/atualizar/senha/' method='POST'>";
-            } ?>
-
-                <?php if (isset($feedback)) {
+            <p class="aviso"><i class="ph ph-warning"></i>Preencha os campos abaixo para redefinir sua senha </p>
+            <?php 
+                if (isset($feedback)) :
                     if (isset($feedback) && $feedback != '') {
                         echo "<div class='container-feedback'>";
                         if ($classe == 'erro') {
@@ -108,8 +99,10 @@
                         }
                         echo "</div>";
                     }
-                } ?>
+                endif 
+            ?>
 
+            <form action='' method='POST'>
                 <div class="campos">
                     <div class="campo">
                         <label class="senha" for="senha">Senha:</label>
@@ -126,10 +119,13 @@
                     <button type="submit" class="bt-alterar">Alterar</button>
                 </div>
             </form>
-        </main>
+        </section>     
+        
     <?php } else {
         echo "<h1>Acesso não autorizado</h1>";
     } ?>
+    </main>
+
     <footer>
         <!-- ondas -->
         <div class="water">
@@ -160,7 +156,7 @@
                 </div>
                 <div class="navigationLink">
                     <a href="/sistemackc/etapas">Etapas</a>
-                    <a href="#">Classificação</a>
+                    <a href="/sistemackc/classificacao">Classificação</a>
                     <a href="/sistemackc/kartodromo">Kartódromos</a>
                 </div>
             </div>

@@ -19,6 +19,10 @@
     <link rel="stylesheet" href="/sistemackc/views/Css/CssAdm/resultadoExibir.css">
     <link rel="icon" href="/sistemackc/views/Img/ImgIcones/crash_icon.ico" type="image/x-icon">
 
+     <!-- Chat -->
+     <script src="https://cdn.botpress.cloud/webchat/v1/inject.js"></script>
+    <script src="https://mediafiles.botpress.cloud/5a7f406f-c78a-46b6-a7e5-bf4a1daed5fb/webchat/config.js" defer></script>
+
     <script defer src="/sistemackc/views/Js/nav.js"></script>
 </head>
 
@@ -37,7 +41,7 @@
                         <a href="#" class="dropdown-toggle">Corridas<i class="ph ph-caret-down"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="/sistemackc/etapas">Etapas</a></li>
-                            <li><a href="#">Classificação</a></li>
+                            <li><a href="/sistemackc/classificacao">Classificação</a></li>
                             <li><a href="/sistemackc/kartodromo">Kartódromos</a></li>
                         </ul>
                     </li>

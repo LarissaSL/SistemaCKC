@@ -12,12 +12,13 @@ $routes = [
 
 
     //Rotas Usuario
-    '/usuario/{id}' => 'usuario#UsuarioController#mostrarPerfil',
     '/usuario/login' => 'usuario#UsuarioController#login',
     '/usuario/cadastro' => 'usuario#UsuarioController#cadastrar',
+    '/usuario/{id}' => 'usuario#UsuarioController#mostrarPerfil',
     '/usuario/atualizar/{id}' => 'usuario#UsuarioController#atualizar',
     '/usuario/atualizar/senha/{id}' => 'usuario#UsuarioController#atualizarSenha',
-    '/usuario/redefinirSenha/{id}' => 'usuario#UsuarioController#redefinirSenha',
+    '/usuario/solicitar/senha' => 'usuario#UsuarioController#esqueciASenha',
+    '/usuario/redefinir/senha/{id}' => 'usuario#UsuarioController#redefinirSenha',
 
 
     // Rotas ADM

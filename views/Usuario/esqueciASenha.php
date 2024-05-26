@@ -8,17 +8,24 @@
     <!-- google fontes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
-
-    <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
-    <script defer src="/sistemackc/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
 
     <link rel="icon" href="/sistemackc/views/Img/ImgIcones/crash_icon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
-    <link rel="stylesheet" href="/sistemackc/views/Css/CssUsuario/kartodromo.css">
+    <link rel="stylesheet" href="/sistemackc/views/Css/CssUsuario/alterarSenha.css">
 
-    <title>Kartodromo</title>
+     <!-- Chat -->
+     <script src="https://cdn.botpress.cloud/webchat/v1/inject.js"></script>
+    <script src="https://mediafiles.botpress.cloud/5a7f406f-c78a-46b6-a7e5-bf4a1daed5fb/webchat/config.js" defer></script>
+
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
+    <script defer src="/sistemackc/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
+    <script defer src="/sistemackc/views/Js/validarEmailRedefinicao.js"></script>
+
+    <title>Esqueci a Senha</title>
+
 </head>
 
 <body>
@@ -27,7 +34,6 @@
         session_start();
     }
     ?>
-
     <header class="header">
         <nav class="nav">
             <a class="logo" href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a>
@@ -51,7 +57,7 @@
                     echo "<li><a href='/sistemackc/admtm85/campeonato'>Campeonatos</a></li>";
                     echo "<li><a href='/sistemackc/admtm85/corrida'>Corridas</a></li>";
                     echo "<li><a href='/sistemackc/admtm85/kartodromo'>Kartodromos</a></li>";
-                    echo "<li><a href='#'>Resultados</a></li>";
+                    echo "<li><a href='/sistemackc/admtm85/resultado'>Resultados</a></li>";
                 } ?>
 
                 <?php
@@ -79,49 +85,52 @@
             </ul>
         </nav>
     </header>
+
     <main>
         <div class="background-image"></div>
-        <!-- botão de voltar -->
-        <div id="bt-go-back">
-            <a href="/sistemackc/"><i class="ph ph-caret-left"></i></a> <!--tag 'a' com o icone de seta '<' -->
-        </div>
-        <h1 class="titulo">Kartódromos</h1>
         <section class="container">
 
-            <?php
-            if (empty($kartodromos)) {
-                if (isset($feedback) && $feedback != '') {
-                    echo "<div class='container-feedback'>";
-                    if ($classe == 'erro') {
-                        echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
-                    } else {
-                        echo "<span class='$classe'><i class='ph ph-check-square'></i><strong>$feedback</strong></span>";
+            <h1 class="titulo">Esqueceu a senha?</h1>
+            <p class="aviso"><i class="ph ph-warning"></i>Preencha os campos abaixo, te enviaremos um e-mail para que você possa redefini-lá.</p>
+
+            <?php 
+                if (isset($feedback)) :
+                    if (isset($feedback) && $feedback != '') {
+                        echo "<div class='container-feedback'>";
+                        if ($classe == 'erro') {
+                            echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
+                        } else {
+                            echo "<span class='$classe'><i class='ph ph-check-square'></i><strong>$feedback</strong></span>";
+                        }
+                        echo "</div>";
                     }
-                    echo "</div>";
-                }
-            } else {
-                foreach ($kartodromos as $kartodromo) {
-                    echo "<article class='card'>";
-                    echo "<h2 class='nomeKartodromo'>{$kartodromo['Nome']}</h2>";
-                    echo "<div class='fundoImg'>";
-                    echo "<img class='imgKartodromo' src='/sistemackc/views/Img/ImgSistema/{$kartodromo['Foto']}' alt='pista do Kartódromo {$kartodromo['Nome']}'>";
-                    echo "</div>";
-                    echo "<div class='infoKartodromo'>";
-                    echo "<div class='infoLocalizacao'>";
-                    echo "<i class='ph ph-map-pin'></i>";
-                    echo "<span class='subTitulo'><strong>Localização</strong></span>";
-                    echo "<p class='enderecoKartodromo'>{$kartodromo['Rua']}, {$kartodromo['Numero']} - {$kartodromo['Bairro']} , CEP: {$kartodromo['CEP']} </p>";
-                    echo "</div>";
-                    echo "<div class='botoes'>";
-                    echo "<a class='bt-siteKartodromo' href='{$kartodromo['Redes']}' target='_blank'>Visitar rede</a>";
-                    echo "</div>";
-                    echo "</div>";
-                    echo "</article>";
-                }
-            }
+                endif 
             ?>
+
+            <form action='' method='POST' class="formRedefinir">
+            
+                <div class="campos">
+                    <div class="campo">
+                        <label class="email" for="email">Email:</label>
+                        <input type="mail" name="email" id="email" required value="<?php echo isset($email) ? $email : '' ?>">
+                    </div>
+
+                    <div class="campo">
+                        <label class="email" for="email">Confirmação de Email:</label>
+                        <input type="mail" name="confirmarEmail" id="confirmarEmail"required value="<?php echo isset($confirmarEmail) ? $confirmarEmail : '' ?>">
+                        <span id="emailError" class="error" style="color:red;"></span>
+                    </div>
+                </div>
+                
+                
+
+                <div class="botao">
+                    <button type="submit" class="bt-alterar">Enviar</button>
+                </div>
+            </form>
         </section>
     </main>
+
     <footer>
         <!-- ondas -->
         <div class="water">
@@ -152,12 +161,13 @@
                 </div>
                 <div class="navigationLink">
                     <a href="/sistemackc/etapas">Etapas</a>
-                    <a href="#">Classificação</a>
+                    <a href="/sistemackc/classificacao">Classificação</a>
                     <a href="/sistemackc/kartodromo">Kartódromos</a>
                 </div>
             </div>
         </div>
     </footer>
+
 </body>
 
 </html>

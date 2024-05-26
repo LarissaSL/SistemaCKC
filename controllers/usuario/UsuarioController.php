@@ -129,7 +129,6 @@ class UsuarioController extends RenderView
                 if ($statusDaValidacaoCpf !== "aceito") {
                     $feedback = $statusDaValidacaoCpf;
                     $dadosPreenchidos[13] = 'disabled';
-
                 } elseif ($statusDaValidacaoEmail !== "aceito") {
                     $feedback = $statusDaValidacaoEmail;
                     $dadosPreenchidos[13] = 'disabled';
@@ -176,9 +175,8 @@ class UsuarioController extends RenderView
                 $_SESSION['email'] = $usuario['Email'];
 
                 $rotaParaRedirecionar = $_SESSION['tipo'] == 'Comum' ? "/sistemackc/usuario/{$usuario['Id']}" : "/sistemackc/admtm85/menu";
-                header('Location:'.$rotaParaRedirecionar);
+                header('Location:' . $rotaParaRedirecionar);
                 exit();
-                
             } else {
                 $this->carregarViewComArgumentos('usuario/loginUsuario', [
                     'feedback' => $autenticacao,
@@ -189,7 +187,6 @@ class UsuarioController extends RenderView
         } else {
             $this->carregarView('usuario/loginUsuario');
         }
-        
     }
 
     public function logout()
@@ -230,7 +227,7 @@ class UsuarioController extends RenderView
         ];
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            
+
             $imagem = new Imagem();
 
             // Dados do formulario
@@ -275,7 +272,7 @@ class UsuarioController extends RenderView
                 $validacaoDaImagem = 'aceito';
             }
 
-            if($validacaoDaImagem == 'aceito') {
+            if ($validacaoDaImagem == 'aceito') {
                 // Validações e Formatação do restante de Dados
                 $statusDaValidacaoCpf = $usuarioModel->validarCpf($cpf, 'atualizar', $id);
                 $statusDaValidacaoEmail = $usuarioModel->validarEmail($email, 'atualizar');
@@ -287,18 +284,15 @@ class UsuarioController extends RenderView
                     $resultado = $usuarioModel->atualizarUsuario($id, $tipo, $nome, $sobrenome, $cpf, $email, $peso, $dataFormatada, $genero, $telefoneFormatado, $nomeFoto);
 
                     if ($resultado == "atualizado") {
-                        if(isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador')
-                        {
+                        if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
                             $feedback = "Usuário atualizado com Sucesso!";
                             $classe = "sucesso";
-                        } 
-                        else {
+                        } else {
                             $feedback = "Alterações feitas com Sucesso!";
                             $classe = "sucesso";
                             $_SESSION['email'] = $email;
                             $_SESSION['nome'] = $nome;
-                        } 
-    
+                        }
                     } else {
                         $feedback = $resultado;
                         $classe = "erro";
@@ -323,11 +317,10 @@ class UsuarioController extends RenderView
                 ]);
             } else {
                 $rotaParaRedirecionar = $_SESSION['tipo'] == 'Comum' ? "/sistemackc//" : "/sistemackc/admtm85/usuario";
-                header('Location:'.$rotaParaRedirecionar);
+                header('Location:' . $rotaParaRedirecionar);
                 exit();
             }
-            
-        }   
+        }
     }
 
     public function excluir($id)
@@ -361,7 +354,7 @@ class UsuarioController extends RenderView
         }
 
         $usuario = new Usuario();
-        $usuarioDados = $usuario->consultarUsuarioPorId($id); 
+        $usuarioDados = $usuario->consultarUsuarioPorId($id);
         $feedback = "";
         $classe = "";
 
@@ -385,14 +378,14 @@ class UsuarioController extends RenderView
                 // Se a senha for atualizada com sucesso, redireciona
                 if ($feedbackDeAtualizacao == "Senha atualizada com sucesso") {
                     $rotaParaRedirecionar = $_SESSION['tipo'] == 'Comum' ? "/sistemackc//" : "/sistemackc/admtm85/usuario";
-                    header('Location:'.$rotaParaRedirecionar);
+                    header('Location:' . $rotaParaRedirecionar);
                     exit();
-                } 
+                }
             } else {
                 $feedback = $feedbackDeSenha;
                 $classe = 'erro';
             }
-        } 
+        }
 
         // Carrega a view com os argumentos preparados
         $this->carregarViewComArgumentos('usuario/alterarSenha', [
@@ -402,27 +395,93 @@ class UsuarioController extends RenderView
         ]);
     }
 
-    public function redefinirSenha($token) {
-        $url = "c4ca4238a0b923820dcc509a6f75849b";
-        $idUsuario = hash('md5', $token);
+    public function esqueciASenha()
+    {
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $email = $_POST['email'];
+            $confirmarEmail = $_POST['confirmarEmail'];
 
-        $dados = array($url, $idUsuario);
-        $statusAutorizacao = true;
+            $usuarioModel = new Usuario();
+            $emailModel = new Email();
 
-        if($idUsuario != $url) {
-            $feedback = 'Acesso não autorizado';
-            $classe = 'erro';
-            $statusAutorizacao = false;
+            // Ver se o email existe
+            $usuario = $usuarioModel->consultarUsuarioPorEmail($email);
+
+            if ($usuario) {
+                $link = $usuarioModel->gerarLinkRedefinicaoSenha($usuario['Id']);
+
+                $bodyDoEmail = file_get_contents('views/Email/redefinirSenha.html');
+                $bodyDoEmail = str_replace('%LINK%', $link, $bodyDoEmail);
+                $altDoBody = 'E-mail de redefinicao de senha: ' . $link;
+                $statusEnvioDoEmail = $emailModel->enviarEmail($email, 'Redefinir senha no CKC', $bodyDoEmail, $altDoBody);
+
+                if ($statusEnvioDoEmail) {
+                    echo '<script>
+                        alert("Um link para redefinir sua senha foi enviado para o seu email."); 
+                        window.location.href = "/sistemackc/";
+                    </script>';
+                    exit();
+                    $classe = "sucesso";
+                } else {
+                    $feedback = "Ocorreu um erro ao enviar o email. Por favor, tente novamente.";
+                    $classe = "erro";
+                }
+            } else {
+                // Feedback de que o email não está cadastrado no sistema
+                $feedback = "O email fornecido não está cadastrado em nosso sistema.";
+                $classe = "erro";
+            }
         }
 
+        // Carrega a view 
+        $this->carregarViewComArgumentos('usuario/esqueciASenha', [
+            'feedback' => isset($feedback) ? $feedback : '',
+            'classe' => isset($classe) ? $classe : '',
+            'email' => isset($email) ? $email : '',
+            'confirmarEmail' => isset($confirmarEmail) ? $confirmarEmail : '',
+            'usuario' => isset($usuario) ? $usuario : null,
+        ]);
+    }
+
+    public function redefinirSenha($token)
+    {
+        $usuarioModel = new Usuario();
+
+        // Verificar se o token esta valido
+        $idUsuario = $usuarioModel->obterIdPorToken($token);
+
+        // Define os status
+        if ($idUsuario) {
+            $status = $idUsuario['status'];
+        } 
+
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $novaSenha = $_POST['senha'];
+            $confirmarSenha = $_POST['confirmarSenha'];
+
+            $statusValidacaoSenha = $usuarioModel->validarSenha($novaSenha, $confirmarSenha);
+
+            if ($statusValidacaoSenha === "aceito") {
+                $resultado = $usuarioModel->trocarSenha($idUsuario['id'], $novaSenha);
+
+                if ($resultado === "Senha atualizada com sucesso") {
+                    header("Location: /sistemackc/usuario/login");
+                    exit();
+                } else {
+                    $feedback = "Erro ao atualizar a senha. Por favor, tente novamente.";
+                    $classe = "erro";
+                }
+            } else {
+                $feedback = $statusValidacaoSenha;
+                $classe = "erro";
+            }
+        } 
+
+        // Carregar a view com o formulário para redefinir a senha
         $this->carregarViewComArgumentos('usuario/redefinirSenha', [
             'feedback' => isset($feedback) ? $feedback : null,
             'classe' => isset($classe) ? $classe : null,
-            'status' => isset($statusAutorizacao) ? $statusAutorizacao : null,
-            'dadosTeste' => isset($dados) ? $dados : null
-        ]);
-
-        
+            'status' => isset($status) ? $status : false
+        ]); 
     }
-
 }
