@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="/sistemackc/views/Css/etapas.css">
 
 
+    <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
+    <script defer src="/sistemackc/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <title>Classificacao</title>
 
