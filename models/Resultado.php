@@ -164,7 +164,7 @@ class Resultado
             'dadosParaInserir' => $dadosParaInserir
         ];
     }
-    
+
     public function consultarResultadoComFiltro($busca)
     {
         try {

@@ -342,6 +342,25 @@ class Corrida
         }
     }
 
+    public function contarPilotosNaCorrida($corrida_id)
+    {
+        try {
+            $query = "SELECT COUNT(Usuario_id) AS total_pilotos FROM resultado WHERE Corrida_id = :corrida_id";
+
+            $consulta = $this->conexao->prepare($query);
+
+            $consulta->bindParam(':corrida_id', $corrida_id);
+
+            $consulta->execute();
+
+            $resultado = $consulta->fetch(PDO::FETCH_ASSOC);
+
+            return $resultado['total_pilotos'];
+        } catch (PDOException $erro) {
+            return "Erro ao contar pilotos na corrida: " . $erro->getMessage();
+        }
+    }
+
     public function construirHtml($infoCorridas = null) {
         $infoCorridas = $infoCorridas == null ? $this->selecionarTodasAsCorridasComNomesEEnderecos() : $infoCorridas;
     
@@ -357,11 +376,15 @@ class Corrida
                 $horas = $partesHora[0];
                 $minutos = $partesHora[1]; 
     
+                // Contagem de pilotos na corrida (só aparece no exibir resultados pro usuario)
+                $qtdPilotos = $this->contarPilotosNaCorrida($corrida['Id']);
+    
                 $nomeAbreviado = $this->definirAbreviacao($corrida['Nome_Campeonato']);
                 $enderecoKartodromo = isset($corrida['Endereco_Kartodromo']) ? $corrida['Endereco_Kartodromo'] : '';
     
                 // Retornos para a view
                 $corridasFormatadas[] = array(
+                    'id' => $corrida['Id'],
                     'nome' => $corrida['Nome'],
                     'categoria' => $corrida['Categoria'],
                     'nomeDoCampeonato' => $corrida['Nome_Campeonato'],
@@ -370,7 +393,8 @@ class Corrida
                     'enderecoDoKartodromo' => $enderecoKartodromo,
                     'data' => $data,
                     'hora' => $horas,
-                    'minuto' => $minutos
+                    'minuto' => $minutos,
+                    'qtdPilotos' => $qtdPilotos
                 );
             }
             return $corridasFormatadas;

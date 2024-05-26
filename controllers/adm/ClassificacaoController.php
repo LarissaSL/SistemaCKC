@@ -67,13 +67,13 @@ class ClassificacaoController extends RenderView
             if (!empty($filtroCampeonato) || !empty($filtroMes) || !empty($filtroAno) || !empty($filtroDia)) {
                 $consulta = $corridaModel->consultarCorridaPorFiltroParaResultado($filtroCampeonato, $filtroMes, $filtroAno, $filtroDia);
 
-                if (!empty($consulta)) {
+                if (!empty($consulta['corridas'])) {
                     $corridas = $corridaModel->construirHtml($consulta['corridas']);
                     $feedback = $consulta['feedback'];
                     $classe = $consulta['classe'];
                 } else {
                     $corridas = [];
-                    $feedback = 'Nenhuma corrida encontrada.';
+                    $feedback = 'Nenhuma corrida e resultado encontrados.';
                     $classe = 'alert alert-danger';
                 }
             } else {

@@ -167,10 +167,10 @@
                     }
                     echo "</div>";
                     echo "<div class='date'>";
-                    echo "<span>" . $corrida['data'] . "</span>";
+                    echo "<span>" . $corrida['data'] . "</span>"; 
                     echo "<div class='time'>";
-                    echo "<i class='ph ph-timer'></i>";
-                    echo "<p>" . $corrida['hora'] . "h " . $corrida['minuto'] . "min</p>";
+                    echo "<i class='ph ph-steering-wheel'></i>";
+                    echo "<p>" . $corrida['qtdPilotos'] . "/15</p>";
                     echo "</div>";
                     echo "</div>";
                     echo "<a class='btn-verResultado'>Ver resultado</a>";
