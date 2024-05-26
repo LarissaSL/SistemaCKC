@@ -202,7 +202,7 @@ class Campeonato
             // Binda os parâmetros de filtro apenas se não estiverem vazios
             if (!empty($filtroNome)) {
                 $filtroNome = "%{$filtroNome}%";
-                $consulta->bindParam(':filtroNome', $filtroNome);
+                $consulta->bindValue(':filtroNome', $filtroNome);
             }
 
             $consulta->execute();

@@ -450,15 +450,15 @@ class Corrida
 
             if (!empty($filtroNome)) {
                 $filtroNome = "%{$filtroNome}%";
-                $consulta->bindParam(':filtroNome', $filtroNome);
+                $consulta->bindValue(':filtroNome', $filtroNome);
             }
 
             if (!empty($filtroCampeonatoId)) {
-                $consulta->bindParam(':filtroCampeonatoId', $filtroCampeonatoId);
+                $consulta->bindValue(':filtroCampeonatoId', $filtroCampeonatoId);
             }
 
             if (!empty($filtroData)) {
-                $consulta->bindParam(':filtroData', $filtroData);
+                $consulta->bindValue(':filtroData', $filtroData);
             }
 
             $consulta->execute();
