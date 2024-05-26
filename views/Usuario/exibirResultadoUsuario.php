@@ -37,7 +37,7 @@
                         <a href="#" class="dropdown-toggle">Corridas<i class="ph ph-caret-down"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="/sistemackc/etapas">Etapas</a></li>
-                            <li><a href="#">Classificação</a></li>
+                            <li><a href="/sistemackc/classificacao">Classificação</a></li>
                             <li><a href="/sistemackc/kartodromo">Kartódromos</a></li>
                         </ul>
                     </li>
