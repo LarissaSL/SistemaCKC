@@ -50,11 +50,12 @@ class ClassificacaoController extends RenderView
         ]);
     }
 
-    public function exibirResultadoUsuario() {
+    public function exibirTodosOsResultados() {
         $corridaModel = new Corrida();
         $campeonatoModel = new Campeonato();
     
         $campeonatos = $campeonatoModel->selecionarNomesEIdsDosCampeonatos();
+        $corridasComResultados = array(); 
     
         // Verifica se tem requisição GET, por conta do filtro
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -62,25 +63,52 @@ class ClassificacaoController extends RenderView
             $filtroMes = isset($_GET['filtroMes']) ? $_GET['filtroMes'] : '';
             $filtroAno = isset($_GET['filtroAno']) ? $_GET['filtroAno'] : '';
             $filtroDia = isset($_GET['filtroDia']) ? $_GET['filtroDia'] : '';
-            $filtroClassificacao = isset($_GET['filtroClassificacao']) ? $_GET['filtroClassificacao'] : ''; 
-    
+            $filtroClassificacao = isset($_GET['filtroClassificacao']) ? $_GET['filtroClassificacao'] : 'corrida'; 
+
             if (!empty($filtroCampeonato) || !empty($filtroMes) || !empty($filtroAno) || !empty($filtroDia)) {
                 $consulta = $corridaModel->consultarCorridaPorFiltroParaResultado($filtroCampeonato, $filtroMes, $filtroAno, $filtroDia);
 
                 if (!empty($consulta['corridas'])) {
-                    $corridas = $corridaModel->construirHtml($consulta['corridas']);
-                    $feedback = $consulta['feedback'];
-                    $classe = $consulta['classe'];
+                    // Tratar para exibir corridas com resultados
+                    $corridasEncontradas = $consulta['corridas'];
+                     
+                    foreach ($corridasEncontradas as $corrida) {
+                        if ($corridaModel->corridaTemResultado($corrida['Id'])) {
+                            $corridasComResultados[] = $corrida; 
+                        }
+                    }
+
+                    // Construir HTML para as corridas com resultados
+                    if (!empty($corridasComResultados)) {
+                        $corridas = $corridaModel->construirHtml($corridasComResultados);
+                    
+                    // Caso tenha corridas com o Filtro, mas não tenha resultados nessas corridas
+                    } else {
+                        $feedback = 'Sentimos muito, mas as corridas com esse filtro, ainda não tem Resultado registrado.';
+                        $classe = 'erro';
+                    }
+  
+                // Caso não tenha encontrado as corridas com algum dos filtros
                 } else {
-                    $corridas = [];
-                    $feedback = 'Nenhuma corrida e resultado encontrados.';
-                    $classe = 'alert alert-danger';
+                    $feedback = 'Nenhuma corrida e resultado encontrados para o filtro desejado.';
+                    $classe = 'erro';
                 }
             } else {
-                $corridas = $corridaModel->construirHtml();
-                if (empty($corridas)) {
+                // Caso nao tenha filtro, verifica se tem corridas no sistema e trata para mostrar apenas as corridas com Resultados
+                $corridasEncontradas = $corridaModel->selecionarTodasAsCorridasComNomesEEnderecos();
+                if (!empty($corridasEncontradas)){
+                    
+                foreach ($corridasEncontradas as $corrida) {
+                    if ($corridaModel->corridaTemResultado($corrida['Id'])) {
+                        $corridasComResultados[] = $corrida; 
+                    }
+                }
+
+                // Construir HTML para as corridas com resultados
+                $corridas = $corridaModel->construirHtml($corridasComResultados);
+                } else {
                     $feedback = 'Nenhuma corrida encontrada.';
-                    $classe = 'alert alert-danger';
+                    $classe = 'erro';
                 }
             }
         }
@@ -89,11 +117,25 @@ class ClassificacaoController extends RenderView
             'corridas' => isset($corridas) ? $corridas : [],
             'feedback' => isset($feedback) ? $feedback : '',
             'classe' => isset($classe) ? $classe : '',
+            'tipoDeExibicao' => strtolower($filtroClassificacao),
             'campeonatos' => isset($campeonatos) ? $campeonatos : []
         ]);
     }
 
-    public function exibir($idCorrida, $local = null)
+    public function exibirResultadoUsuario() {
+        $url = $_SERVER['REQUEST_URI'];
+
+        $partesUrl = explode('/', $url);
+
+        $tipoDeExibicao = $partesUrl[3] == 'corrida' ?  NULL : 'geral';
+    
+        $idCorrida = isset($partesUrl[4]) ? $partesUrl[4] : '';
+
+
+        $this->exibir($idCorrida, 'usuario', $tipoDeExibicao);
+    }
+
+    public function exibir($idCorrida, $local = NULL, $tipoResultado = NULL)
     {
         if (!isset($_SESSION)) {
             session_start();
@@ -104,36 +146,43 @@ class ClassificacaoController extends RenderView
         $usuarioModel = new Usuario();
 
         $dadosCorrida = $corridaModel->selecionarCorridaPorIdComNomeDoCamp($idCorrida);
-        $nomeAbreviado = $corridaModel->definirAbreviacao($dadosCorrida['Nome_Campeonato']);
-        $dadosResultados = $resultadoModel->selecionarResultadoPorCorridaId($idCorrida);
+        $nomeAbreviado = empty($dadosCorrida) ? '' : $corridaModel->definirAbreviacao($dadosCorrida['Nome_Campeonato']);
 
+        $dadosResultados = $tipoResultado == null ? $resultadoModel->selecionarResultadoPorCorridaId($idCorrida) : $resultadoModel->selecionarResultadoPorCorridaId($idCorrida);
         if (empty($dadosCorrida)) {
             $feedback = "Erro ao selecionar os dados da corrida";
             $classe = "erro";
         }
 
-        if (empty($dadosResultados)) {
-            $feedback = "Nenhum resultado cadastrado para essa corrida";
-            $classe = "erro";
+        // Definindo a view de exibicao
+        if($local == null) {
+            $definirAView = 'adm/exibirResultado';
+            $urlParaRedirecionar = '/sistemackc/admtm85/resultado';
+        } elseif ($local == 'usuario') {
+            $definirAView = 'usuario/exibirResultadoUsuario';
+            $urlParaRedirecionar = '/sistemackc/classificacao';
         } else {
-            if($local == null) {
-                $definirAView = 'adm/exibirResultado';
-            } elseif ($local == 'usuario') {
-                $definirAView = 'adm/atualizarResultado';
-            } else {
-                $definirAView = 'adm/atualizarResultado';
-            }
-            $usuarios = $local == null ? null : $usuarioModel->obterNomeESobrenomeDosUsuarios();
+            $definirAView = 'adm/atualizarResultado';
+            $urlParaRedirecionar = '/sistemackc/admtm85/resultado/atualizar/5';
+        }
+
+        if (empty($dadosResultados)) {
+            $feedback = "Não existe resultado cadastrado para essa corrida";
+            $classe = "erro";
+        }
+
+        $usuarios = $local == null ? null : $usuarioModel->obterNomeESobrenomeDosUsuarios();
             $this->carregarViewComArgumentos( $definirAView, [
-                'dadosCorrida' => $dadosCorrida,
+                'dadosCorrida' => isset($dadosCorrida) ? $dadosCorrida : [],
                 'usuarioModel' => $usuarioModel,
                 'nomeAbreviado' => $nomeAbreviado,
                 'dadosResultado' => $dadosResultados,
+                'tipoDeClassificacao' => $tipoResultado != null ? $tipoResultado : '',
                 'usuarios' => isset($usuarios) ? $usuarios : null,
                 'classe' => isset($classe) ? $classe : null,
-                'feedback' => isset($feedback) ? $feedback : null
+                'feedback' => isset($feedback) ? $feedback : null,
+                'urlParaRedirecionar' => isset($urlParaRedirecionar) ? $urlParaRedirecionar : ''
             ]);
-        }
     }
 
     public function cadastrar($idCorrida)

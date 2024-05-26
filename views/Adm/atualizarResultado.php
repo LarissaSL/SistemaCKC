@@ -63,18 +63,17 @@
             </nav>
     </header>
 
-    <?php
-            if (isset($feedback) && !empty($feedback)) {
-                echo "<div class='container-feedback'>";
-                if ($classe == 'erro') {
-                    echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
-                }
-                echo "</div>";
-            } else {
-    ?>
-
         <div class="background-image"></div>
         <h1 class="titulo">Atualização de Resultado</h1>
+        <?php
+            if (isset($feedback) && $feedback != '') {
+                echo "<div class='container-feedback'>";
+                echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
+                echo '<a class="btn-voltar" href="/sistemackc/admtm85/resultado">Voltar</a>';
+                echo "</div>";
+               
+            } else {
+        ?>
         <div class="containerInformacoes">
             <div class="containerImagem">
                 <img class="fundoImg" src="/sistemackc/Views/Img/ImgTelas/fundo.png" alt="fundo da foto do Crash">
@@ -154,12 +153,12 @@
         </div>
 
 
-<?php
+    <?php
             }
-        } else {
-            echo "<h1>Acesso não autorizado</h1>";
-        }
-?>
+            } else {
+                echo "<h1>Acesso não autorizado</h1>";
+            }
+    ?>
 </div>
 
 <script>

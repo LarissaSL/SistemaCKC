@@ -361,6 +361,28 @@ class Corrida
         }
     }
 
+    public function corridaTemResultado($idCorrida)
+    {
+        try {
+            $query = "SELECT COUNT(*) AS total_resultados FROM resultado WHERE Corrida_id = :corrida_id";
+            $selecionar = $this->conexao->prepare($query);
+            $selecionar->bindParam(':corrida_id', $idCorrida, PDO::PARAM_INT);
+            $selecionar->execute();
+
+            $resultado = $selecionar->fetch(PDO::FETCH_ASSOC);
+            
+            // Ver se tem algum resultado cadastrado
+            if ($resultado && $resultado['total_resultados'] > 0) {
+                return true; 
+            } else {
+                return false; 
+            }
+        } catch (PDOException $erro) {
+            echo "Erro ao verificar se a corrida tem resultado: " . $erro->getMessage();
+            return false;
+        }
+    }
+
     public function construirHtml($infoCorridas = null) {
         $infoCorridas = $infoCorridas == null ? $this->selecionarTodasAsCorridasComNomesEEnderecos() : $infoCorridas;
     

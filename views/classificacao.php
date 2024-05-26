@@ -104,10 +104,10 @@
                     </div>
 
                     <div class="filtro_classificacao">
-                        <label for="filtro_Classificacao">Filtrar por Classificação</label>
+                        <label for="filtro_Classificacao">Tipo de Classificação desejada</label>
                         <select class="buscaSelect" id="filtroClassificacao" name="filtroClassificacao">
-                            <option value="Corrida" <?php echo isset($_GET['filtroClassificacao']) && $_GET['filtroClassificacao'] == 'Corrida' ? 'selected' : 'selected'; ?>>Corrida</option>
-                            <option value="Geral" <?php echo isset($_GET['filtroClassificacao']) && $_GET['filtroClassificacao'] == 'Geral' ? 'selected' : ''; ?>>Geral</option>
+                            <option value="corrida" <?php echo isset($_GET['filtroClassificacao']) && $_GET['filtroClassificacao'] == 'corrida' ? 'selected' : 'selected'; ?>>Corrida</option>
+                            <option value="geral" <?php echo isset($_GET['filtroClassificacao']) && $_GET['filtroClassificacao'] == 'geral' ? 'selected' : ''; ?>>Geral</option>
                         </select>
                     </div>
 
@@ -152,8 +152,8 @@
             </form>
 
             <section>
-                <?php
-                foreach ($corridas as $corrida) {
+            <?php
+            foreach ($corridas as $corrida) {
                     echo "<article class='card'>";
                     echo "<div class='titleCard_" . $corrida['nomeAbreviado'] . "'>";
                     echo "<h2><strong class='title_" . strtolower($corrida['nomeAbreviado']) . $corrida['categoria'] . "'>" . $corrida['nomeAbreviado'] . "</strong> " . $corrida['nome'] . "</h2>";
@@ -172,18 +172,18 @@
                     echo "<i class='ph ph-steering-wheel'></i>";
                     echo "<p>" . $corrida['qtdPilotos'] . "/15</p>";
                     echo "</div>";
-                    echo "</div>";
-                    echo "<a class='btn-verResultado'>Ver resultado</a>";
+                    $link = '/sistemackc/classificacao/' . $tipoDeExibicao . '/' . $corrida['id'];
+                    echo "<a class='btn-verResultado' target='_blank' href='$link'>Ver resultado</a>";
                     echo "</article>";
-                } ?>
+            }
+            ?>
             </section>
 
             <!-- Só mostra feedback se a classe for a de erro -->
             <?php
-            if (isset($classe) && $classe == 'alert alert-danger') : ?>
+            if (isset($classe) && $classe == 'erro') : ?>
                 <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
             <?php endif ?>
-
         </section>
     </main>
 
@@ -197,6 +197,15 @@
             </div>
         </div>
     </footer>
+
+    <script type="text/javascript">
+    document.querySelectorAll('a.disabled').forEach(function(link) {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            alert('Resultado não esta disponível ainda.');
+        });
+    });
+</script>
 </body>
 
 </html>

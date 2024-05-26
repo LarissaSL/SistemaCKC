@@ -6,7 +6,14 @@
     --cor-excluir: #730202;
 }
 
-/* Background img */
+.container-feedback {
+    display: flex;
+    flex-direction: column;
+    font-size: 2rem;
+    align-items: center;
+    gap: 2rem;
+}
+
 .background-image {
     position: absolute;
     top: 0;
@@ -191,11 +198,13 @@ span.nomePiloto {
 }
 
 .btn-editar,
-.btn-danger {
+.btn-danger,
+.btn-voltar {
     font-size: 1.3rem;
 }
 
-.btn-editar {
+.btn-editar,
+.btn-voltar {
     padding: 1.3rem;
     width: 24rem;
     border-radius: 8px;
@@ -206,7 +215,8 @@ span.nomePiloto {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.btn-editar:hover {
+.btn-editar:hover,
+.btn-voltar:hover {
     color: var(--background-campos);
     background-color: var(--text-base-light);
 }

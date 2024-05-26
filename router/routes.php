@@ -6,8 +6,9 @@ $routes = [
     '/logout' => 'usuario#UsuarioController#logout',
     '/historia' => 'usuario#SiteUsuarioController#historia',
     '/etapas' => 'adm#CorridaController#mostrarCorridasUsuario',
-    '/classificacao' => 'adm#ClassificacaoController#exibirResultadoUsuario',
-
+    '/classificacao' => 'adm#ClassificacaoController#exibirTodosOsResultados',
+    '/classificacao/corrida/{id}' => 'adm#ClassificacaoController#exibirResultadoUsuario',
+    '/classificacao/geral/{id}' => 'adm#ClassificacaoController#exibirResultadoUsuario',
 
 
     //Rotas Usuario

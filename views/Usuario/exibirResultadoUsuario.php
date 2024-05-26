@@ -24,44 +24,55 @@
 
 <body>
     <header class="header">
-        <?php
-        if (!isset($_SESSION)) {
-            session_start();
-        }
-        if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
-        ?>
-            <nav class="nav">
-                <a class="logo" href="/sistemackc/">
-                    <img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC">
-                </a>
-                <button class="hamburger"></button>
-                <ul class="nav-list">
+        <nav class="nav">
+            <a class="logo" href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a>
+
+            <button class="hamburger"></button>
+            <ul class="nav-list">
+                <?php
+                if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Comum' || !isset($_SESSION['tipo'])) {
+                    echo "<li><a href='/sistemackc/historia'>História</a></li>";
+                ?>
                     <li class="drop-down">
-                        <a href="#" class="dropdown-toggle">Menu<i class="ph ph-caret-down"></i></a>
+                        <a href="#" class="dropdown-toggle">Corridas<i class="ph ph-caret-down"></i></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/sistemackc/admtm85/usuario">Usuários</a></li>
-                            <li><a href="/sistemackc/admtm85/corrida">Corridas</a></li>
-                            <li><a href="/sistemackc/admtm85/campeonato">Campeonatos</a></li>
-                            <li><a href="/sistemackc/admtm85/resultado">Resultados</a></li>
-                            <li><a href="/sistemackc/admtm85/kartodromo">Kartódromos</a></li>
+                            <li><a href="/sistemackc/etapas">Etapas</a></li>
+                            <li><a href="#">Classificação</a></li>
+                            <li><a href="/sistemackc/kartodromo">Kartódromos</a></li>
                         </ul>
                     </li>
+                <?php } elseif (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
+                    echo "<li><a href='/sistemackc/admtm85/usuario'>Usuarios</a></li>";
+                    echo "<li><a href='/sistemackc/admtm85/campeonato'>Campeonatos</a></li>";
+                    echo "<li><a href='/sistemackc/admtm85/corrida'>Corridas</a></li>";
+                    echo "<li><a href='/sistemackc/admtm85/kartodromo'>Kartodromos</a></li>";
+                    echo "<li><a href='/sistemackc/admtm85/resultado'>Resultados</a></li>";
+                } ?>
+
+                <?php
+                if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Comum') { ?>
                     <li class="drop-down">
-                        <a href='#' class='dropdown-toggle'>Olá, <?php echo $_SESSION['nome']; ?><i class='ph ph-caret-down'></i></a>
-                        <ul class='dropdown-menu'>
-                            <li><a href='/sistemackc/usuario/<?php echo $_SESSION['id']; ?>'>Perfil</a></li>
-                            <li><a href='/sistemackc/admtm85/menu'>Menu</a></li>
-                            <li><a href='/sistemackc/logout'>Sair</a></li>
+                        <?php echo "<a href='#' class='dropdown-toggle'>Olá, " . $_SESSION['nome'] . "<i class='ph ph-caret-down'></i></a>"; ?>
+                        <ul class="dropdown-menu">
+                            <?php echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>"; ?>
+                            <?php echo "<li><a href='/sistemackc/logout'>Logout</a></li>"; ?>
                         </ul>
                     </li>
-                </ul>
-            </nav>
-        <?php
-        } else {
-            echo "<h1>Acesso não autorizado</h1>";
-            exit;
-        }
-        ?>
+                <?php } elseif (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') { ?>
+                    <li class='drop-down'>
+                        <?php echo "<a href='#' class='dropdown-toggle'>Olá, " . $_SESSION['nome'] . "<i class='ph ph-caret-down'></i></a>"; ?>
+                        <ul class='dropdown-menu'>
+                            <?php echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>"; ?>
+                            <li><a href='/sistemackc/admtm85/menu'>Menu</a></li>
+                            <li><a href='/sistemackc/logout'>Logout</a></li>
+                        </ul>
+                    </li>
+                <?php } else {
+                    echo "<a href='/sistemackc/usuario/login'>Entrar</a>";
+                }
+                ?>
+            </ul>
+        </nav>
     </header>
 
     <main>
@@ -71,9 +82,7 @@
             if (isset($feedback) && $feedback != '') {
                 echo "<div class='container-feedback'>";
                 echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
-                echo '<a class="btn-voltar" href="/sistemackc/admtm85/resultado">Voltar</a>';
                 echo "</div>";
-               
             } else {
         ?>
 
@@ -110,7 +119,7 @@
         </div>
 
         <div class="ranking-container">
-            <p>Confira abaixo a classificação da corrida:</p>
+            <p>Confira abaixo a classificação <?php echo $tipoDeClassificacao ?> da corrida:</p>
             <?php
             foreach ($dadosResultado as $resultado) :
                 $usuario = $usuarioModel->consultarUsuarioPorId($resultado['Usuario_id']);
@@ -131,23 +140,14 @@
                 </div>
             <?php endforeach; ?>
         </div>
+        <?php } ?>
 
         <div class="botoes">
-            <a class="btn-editar" href="/sistemackc/admtm85/resultado/atualizar/<?php echo $dadosCorrida['Id']; ?>">Editar</a>
-            <button class="btn-danger" onclick="confirmarExclusao(<?php echo $dadosCorrida['Id']; ?>, '<?php echo $dadosCorrida['Nome']; ?>', '<?php echo $dadosCorrida['Nome_Campeonato']; ?>')">Excluir</button>
+            <a class="btn-editar" href="/sistemackc/classificacao">Voltar</a>
         </div>
-        <?php } ?>
     </main>
 
-    <script>
-        function confirmarExclusao(id, nome, campeonato) {
-            if (confirm(`Tem certeza que deseja excluir TODOS os registros:\n${campeonato} - ${nome} \n\nOBS.: Essa ação é irreversível.`)) {
-                window.location.href = '/sistemackc/admtm85/resultado/excluir/corrida/' + id;
-            }
-        }
-    </script>
-
-<footer>
+    <footer>
         <!-- ondas -->
         <div class="water">
             <svg class="waves" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
