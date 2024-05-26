@@ -1,10 +1,8 @@
-:root{
-    --bacground-adm:#D9D9D9;
-}
+
 body{
     background-color: var(--bacground-adm);
     font-size: 1.6rem;
-    color: black;
+    color: var(--text-adm-black);
     font-weight: 400;
 
 }
@@ -113,7 +111,7 @@ div.tabela {
 }
 table.tabela-conteudo {
     border-collapse: collapse;
-    background: #FFFBFA;
+    background: var(--background-tabelas-adm);
     border-radius: 20px;
 }
 th, td{
@@ -121,7 +119,7 @@ th, td{
     width: 20%;
 }
 td.acoes, th{
-    background-color: aqua;
+    background-color: var(--tabelas-colunas-adm);
     font-size: 1.8rem;
     padding: 14px;
 }
@@ -135,8 +133,9 @@ td.acoes, th{
 } */
 .icos {
     display: flex;
+    margin-left: -2rem;
     flex-direction: row;
-    gap: 5rem;
+    justify-content: space-around;
 }
     
 .bt-editar{
@@ -144,23 +143,28 @@ td.acoes, th{
     color: blue;
     font-size: 3rem;
 }
-.bt-excluir{
+.bt-excluir, .btModal {
     padding: 0;
     font-size: 3rem;
     width: 0;
     border-radius: 0;
     color: red;
     background-color: transparent;
-
+}
+.icon-plus {
+    /* display: flex; */
+    margin-left: 3rem;
+}
+.btModal {
+    color: blue;
 
 }
-
 .modal{
     display: none;
     /* visibility: hidden; */
 }
 
-td.bt-modal {
+/* td.bt-modal {
     text-align: center;
-}
+} */
 

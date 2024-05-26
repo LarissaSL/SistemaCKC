@@ -148,7 +148,7 @@
                             echo "<td class='modal'>" . $usuario['Genero'] . "</td>";
                             echo "<td>" . $usuario['Telefone'] . "</td>";
                             echo "<td class='modal'> " . $usuario['Data_registro'] . "</td>";
-                            echo "<td class='bt-modal'><button class='btModal' data-params='" . $usuarioJson . "'><i class='ph-bold ph-plus'></i></button></td>";
+                            echo "<td class='bt-modal'><div class='icon-plus'><button class='btModal' data-params='" . $usuarioJson . "'><i class='ph-bold ph-plus'></i></button></div></td>";
                             echo "</tr>";
                         }
                         // echo "</tboby>";
