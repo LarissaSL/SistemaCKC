@@ -1,3 +1,11 @@
+:root {
+    --card: #1D1F3A;
+    --stroke-card: #FFFFFF;
+    --botao: #0033C1;
+
+}
+
+
 main {
     margin: 0;
     padding: 0;
@@ -134,13 +142,13 @@ article.card {
     height: 390px;
     margin-bottom: 3rem;
     border: solid;
+    border-color: var(--stroke-card);
     border-radius: 20px;
     text-align: center;
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    border-color: var(--color-button);
-    background-color: #373331;
+    background-color: var(--card);
     gap: 3rem;
 }
 
