@@ -4,7 +4,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 80vw;
+    height: 242vh;
     background-image: url(/sistemackc/views/Img/ImgTelas/cadastroUsuario.jpg);
     background-repeat: no-repeat;
     background-size: cover; 
@@ -78,7 +78,7 @@ button.bt-cadastrar:disabled {
 }
 
 @media screen and (min-width: 425px) {
-   .campo input, select{
+   .campo input, select, select#tipo{
         width: 28rem;
    }
 
@@ -88,6 +88,9 @@ button.bt-cadastrar:disabled {
 
    .bt-cadastrar{
         width: 28rem;
+   }
+   .background-image {
+        height: 185vh;
    }
 }
 
@@ -102,11 +105,17 @@ button.bt-cadastrar:disabled {
         display: flex;
         justify-content: center;
     } 
+    .background-image {
+        height: 184vh;
+   }
 }
 
 @media screen and (min-width: 1024px) {
     .div_container{
         grid-template-columns: 1fr 1fr 1fr;
         grid-gap: 2rem 6rem;
-    }    
+    }   
+    .background-image {
+        height: 105vh;
+    } 
 }

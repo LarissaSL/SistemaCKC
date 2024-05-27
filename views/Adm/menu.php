@@ -36,18 +36,7 @@
                 <a class="logo" href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a>
 
                 <button class="hamburger"></button> 
-                <ul class="nav-list">
-                    <li class="drop-down">
-                        <a href="#" class="dropdown-toggle">Menu<i class="ph ph-caret-down"></i></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/sistemackc/admtm85/usuario">Usuarios</a></li>
-                            <li><a href="/sistemackc/admtm85/corrida">Corridas</a></li>
-                            <li><a href="/sistemackc/admtm85/campeonato">Campeonatos</a></li>
-                            <li><a href="/sistemackc/admtm85/resultado">Resultados</a></li>
-                            <li><a href="/sistemackc/admtm85/kartodromo">Kartodromos</a></li>
-                        </ul>
-                    </li>
-                    
+                <ul class="nav-list">                    
                     <li class="drop-down">
                         <?php
                         if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {

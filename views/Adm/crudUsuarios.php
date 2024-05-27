@@ -14,11 +14,12 @@
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
     <script defer src="/sistemackc/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
-    <script defer src="/sistemackc/views/Js/modal.js"></script> 
-    
+    <script defer src="/sistemackc/views/Js/modal.js"></script>
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/CssAdm/crudUsuario.css">
+    <link rel="stylesheet" href="/sistemackc/views/Css/CssAdm/modal.css">
 
 
     <title>Usuários</title>
@@ -69,9 +70,9 @@
     <!-- Inicio do Conteúdo para o ADM -->
     <main>
         <section class="contrainer">
-            <h1 class="title">Manutenção de Usuários: /CRUD dos Usuarios</h1>
+            <h1 class="title">Manutenção de Usuários</h1>
             <p class="subTititulo">Aqui você pode fazer cadastro, consulta, alteração e exclusão de usuários no sistema.</p>
-            <a class='bt-cadastrarUser' href='/sistemackc/admtm85/usuario/cadastrar'>Cadastrar novo usuário</a><!-- Botão de cadastrar novo usuário -->
+            <a class='bt-cadastrar' href='/sistemackc/admtm85/usuario/cadastrar'>Cadastrar novo usuário</a><!-- Botão de cadastrar novo usuário -->
 
             <form method="get">
                 <div class="filtro">
@@ -106,7 +107,7 @@
             <div class="tabela">
                 <table class='tabela-conteudo'>
                     <thead class='tb-cabecalho'> <!--cabecalho da tabela -->
-                        <tr class="nome-cabecalhos">
+                        <tr class='nome-cabecalhos'>
                             <th>Ações</th>
                             <th>Foto de Perfil</th>
                             <th>Tipo</th>
@@ -124,12 +125,14 @@
                         </tr>
                     </thead>
                     <tbody><!--corpo da tabela/linhas -->
+                        
                         <?php
                         foreach ($usuarios as $usuario) {
-                            $usuarioJson = htmlspecialchars(json_encode($usuario), ENT_QUOTES, 'UTF-8');
+        
                             echo "<tr>";
 
-                            echo "<td class='acoes'><div class='icos'><a class='bt-editar' href='/sistemackc/admtm85/usuario/{$usuario["Id"]}'><i class='ph-bold ph-note-pencil'></i></a>"; //<!--Botão de editar -->
+                            echo "<td class='acoes'><div class='icos'>
+                                <a class='bt-editar' href='/sistemackc/admtm85/usuario/{$usuario["Id"]}'><i class='ph-bold ph-note-pencil'></i></a>"; //<!--Botão de editar -->
                             if ($usuario['Id'] != 1) {
                                 echo "<button class='bt-excluir' onclick='confirmarExclusao({$usuario["Id"]}, \"{$usuario["Nome"]}\", \"{$usuario["Sobrenome"]}\")'><i class='ph-bold ph-trash'></i></button></div></td>"; //<!--Botão de excluir -->
                             }
@@ -148,14 +151,25 @@
                             echo "<td class='modal'>" . $usuario['Genero'] . "</td>";
                             echo "<td>" . $usuario['Telefone'] . "</td>";
                             echo "<td class='modal'> " . $usuario['Data_registro'] . "</td>";
-                            echo "<td class='bt-modal'><div class='icon-plus'><button class='btModal' data-params='" . $usuarioJson . "'><i class='ph-bold ph-plus'></i></button></div></td>";
+                            echo "<td class='bt-modal'><div class='icon-plus'><button class='btModal' 
+                                    foto='" . $usuario['Foto'] . "' 
+                                    cpf='" . $usuario['Cpf'] . "' 
+                                    data-nascimento'" . $usuario['Data_nascimento'] . "' 
+                                    tipo='" . $usuario['Tipo'] . "' 
+                                    nome'" . $usuario['Nome'] . "' 
+                                    sobrenone='" . $usuario['Sobrenome'] . "' 
+                                    email='" . $usuario['Email'] . "' 
+                                    senha='" . substr($usuario['Senha'], 0, 5) . "' 
+                                    peso='" . $usuario['Peso'] . "' 
+                                    genero='" . $usuario['Genero'] . "' 
+                                    telefone='" . $usuario['Telefone'] . "' 
+                                    data-registro='" . $usuario['Data_registro'] . "'><i class='ph-bold ph-plus'></i></button></div></td>";
                             echo "</tr>";
                         }
-                        // echo "</tboby>";
                         echo "</table>";
+                        
                         ?>
-                    <!-- </tbody>
-                </table> -->
+
             </div>
             <script>
                 function confirmarExclusao(id, nome, sobrenome) {
@@ -171,6 +185,7 @@
         }
         ?>
         </section>
+        <div class='modal-container'></div>
     </main>
     <footer>
         <!-- ondas -->
@@ -209,6 +224,4 @@
         </div>
     </footer>
 </body>
-
-
 </html>

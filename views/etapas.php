@@ -154,7 +154,7 @@
                         echo "<strong>Endereço:</strong> " . $corrida['enderecoDoKartodromo'];
                         echo "</p>";
                         echo "</div>";
-                        echo "<button class='inscrevase_" . $corrida['nomeAbreviado'] . "'>Inscreva-se</button>";
+                        echo "<button class='inscrevase' onclick='redirecionarWhats()'>Inscreva-se</button>";
                         echo "</article>";
                     } 
                 }

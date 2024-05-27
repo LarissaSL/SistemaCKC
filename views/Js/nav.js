@@ -17,11 +17,16 @@ dropdownToggles.forEach((toggle, index) => {
 // Download do regulamento (Button)
 const regulation = document.querySelector(".regulation");
 
-regulation.onclick = function() {
+regulation.onclick = function () {
     const link = document.createElement("a");
-    link.href = "/sistemackc/views/Docs/Regulamento_CKC_2024.pdf"; 
+    link.href = "/sistemackc/views/Docs/Regulamento_CKC_2024.pdf";
     link.download = "Regulamento_CKC_2024.pdf";
     document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link); 
+    document.body.removeChild(link);
+}
+
+// bt de inscrever na etapas
+function redirecionarWhats(){
+    window.open('https://wa.me/5511984372045', '_blank')
 }

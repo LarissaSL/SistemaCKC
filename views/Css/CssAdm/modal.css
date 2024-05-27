@@ -1,0 +1,106 @@
+:root{
+    --background-heder-modal:#567CE8;
+}
+
+/* caixa do modal */
+.modal-container{
+    position: relative;
+    display: none;
+    width: 600px;
+    height: 360px;
+    color: black;
+    border: 0 solid ;
+    border-radius: 20px;
+    background: #fff;
+    z-index: 999;
+}
+/* Mostra o modal-container quando a classe 'visible' é adicionada */
+.modal-container.visible {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: -766px;
+    left: 349px;
+}
+.contentModal {
+    position: relative;
+    top: -92px;
+}
+
+/* desfoque de fundo */
+.blur-background {
+    filter: blur(10px);
+    transition: filter 0.3s;
+}
+
+/* cabeça~ho do modal */
+.headerModal{
+    display: flex;
+    height: 150px;
+    border-radius: 20px 20px 0 0;
+    flex-direction: column;
+    justify-content: space-around;
+    background: var(--background-heder-modal);
+}
+/* fechar modal */
+.icon-close{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 1rem; 
+}
+/* icon de X */
+i.ph.ph-x {
+    font-size: 3rem;
+    cursor: pointer;
+}
+/* caixa da foto */
+.icon-foto{
+    display: flex;
+    justify-content: center;
+}
+/* icone do usuario */
+.foto{
+    font-size: 5rem;
+    margin-top: -2rem;
+}
+/* texto em negrito */
+span{
+    font-weight: 700;
+}
+/* corpo do cabeçalho */
+.boryHeder{
+    display: flex;
+    justify-content: space-around;
+}
+.user{
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+
+.contentHeder,.boryModal{
+    margin: 1rem;
+}
+
+.campo{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+
+}
+.line1,.line2, .line3{
+    content: " ";
+    display: block;
+    width: 600px;
+    height: 1px;
+    background: rgba(0, 51, 193, 17%);
+    margin-top: -11px;
+    position: relative;
+}
+
+.line2{
+    margin-top: -74px;
+}
+.line3{
+    margin-top: -74px;
+}

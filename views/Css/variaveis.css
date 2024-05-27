@@ -58,7 +58,7 @@ button,
 
 }
 
-input {
+input, select#tipo, select#campeonato,select#kartodromo {
     /* depois por o tamnaho - "width" */
     border: solid;
     border-width: 2px;
@@ -141,6 +141,7 @@ button,
     /*alinhar os elementos horizontalmente ao centro*/
     position: relative;
     z-index: 5555;
+    background-color: var(--background-navbar);
 }
 
 .nav-list {
@@ -184,7 +185,7 @@ ul.dropdown-menu {
 }
 
 /* MENU HAMBURGER  */
-.hamburger {
+.hamburger{
     display: none;
     border: none;
     width: 3rem;

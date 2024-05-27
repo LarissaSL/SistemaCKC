@@ -5,19 +5,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- google fontes -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet">
 
     <link rel="icon" href="/sistemackc/views/Img/ImgIcones/crash_icon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
 
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
+    <script defer src="/sistemackc/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
+
+    <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
+    <link rel="stylesheet" href="/sistemackc/views/Css/CssAdm/crudUsuario.css">
     <title>Campeonatos</title>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 
 <body>
@@ -63,69 +64,76 @@
             </nav>
     </header>
     <main>
-        <!-- Inicio do Conteúdo para o ADM -->
-        <h1>CRUD dos Campeonatos</h1>
-        <a class='btn btn-primary' href='/sistemackc/admtm85/campeonato/cadastrar'>Cadastrar novo Campeonato</a>
+        <section class="contrainer">
+            <!-- Inicio do Conteúdo para o ADM -->
+            <h1 class="title">Manutenção de Campeonatos</h1>
+            <p class="subTititulo">Aqui você pode fazer cadastro, consulta, alteração e exclusão de usuários no sistema.</p>
+            <a class='bt-cadastrar-camp' href='/sistemackc/admtm85/campeonato/cadastrar'>Cadastrar novo Campeonato</a>
 
-        <form method="get">
-            <div class="form-row">
-                <div class="form-group col-md-3">
-                    <label for="filtroNome" style="color: black;">Filtrar por Nome</label>
-                    <input type="text" class="form-control" id="filtroNome" name="filtroNome" value="<?php echo isset($_GET['filtroNome']) ? htmlspecialchars($_GET['filtroNome']) : ''; ?>">
+            <form method="get">
+                <div class="filtro">
+                    <div class="ffiltro_nome">
+                        <label for="filtroNome" style="color: black;">Filtrar por Nome</label>
+                        <input type="text" class="form-control" id="filtroNome" name="filtroNome" value="<?php echo isset($_GET['filtroNome']) ? htmlspecialchars($_GET['filtroNome']) : ''; ?>">
+                    </div>
+                    <div class="bt-filtrar">
+                        <button type="submit" class="btn btn-primary">Filtrar</button>
+                    </div>
                 </div>
-                <div class="form-group col-md-3 d-flex align-items-end">
-                    <button type="submit" class="btn btn-primary">Filtrar</button>
-                </div>
-            </div>
-        </form>
+            </form>
 
-        <!-- Só mostra feedback se a classe for a de erro -->
-        <?php
-            if (isset($classe) && $classe == 'alert alert-danger') : ?>
-            <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
-        <?php endif ?>
-
-        <table class='table table-striped table-bordered '>
-            <thead class='thead-dark'>
-                <tr>
-                    <th>Nome</th>
-                    <th>Data de Inicio</th>
-                    <th>Data de Termino</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                foreach ($campeonatos as $campeonato) {
-                    echo "<tr>";
-                    echo "<td>" . $campeonato['Nome'] . "</td>";
-                    $dataInicio = new DateTime($campeonato['Data_inicio']);
-                    $dataTermino = new DateTime($campeonato['Data_termino']);
-                    echo "<td>" . $dataInicio->format('d/m/Y') . "</td>";
-                    echo "<td>" . $dataTermino->format('d/m/Y') . "</td>";
-                    echo "<td>
-                <a class='btn btn-primary' href='/sistemackc/admtm85/campeonato/atualizar/{$campeonato["Id"]}'>Editar</a>";
-                    echo "<button class='btn btn-danger' onclick='confirmarExclusao({$campeonato["Id"]},\"{$campeonato["Nome"]}\")'>Excluir</button>";
-                    echo "</tr>";
-                }
-                echo "</table>";
-                ?>
-
-
-                <script>
-                    function confirmarExclusao(id, nome) {
-                        if (confirm(`Tem certeza que deseja excluir:\nID: ${id}  |  ${nome} \n\nOBS.: Essa ação é irreversivel.`)) {
-                            window.location.href = '/sistemackc/admtm85/campeonato/excluir/' + id;
-                        }
-                    }
-                </script>
-
+            <!-- Só mostra feedback se a classe for a de erro -->
             <?php
+            if (isset($classe) && $classe == 'alert alert-danger') : ?>
+                <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
+            <?php endif ?>
+
+            <div class="tabela">
+                <table class='tabela-conteudo'>
+                    <thead class='tb-cabecalho'>
+                        <tr class='nome-cabecalhos'>
+                            <th>Ações</th>
+                            <th>Nome</th>
+                            <th>Data de Inicio</th>
+                            <th>Data de Termino</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        foreach ($campeonatos as $campeonato) {
+                            echo "<tr>";
+                            echo "<td class='acoes'><div class='icos'>
+                         <a class='bt-editar' href='/sistemackc/admtm85/campeonato/atualizar/{$campeonato["Id"]}'><i class='ph-bold ph-note-pencil'></i></a>";
+                            echo "<button class='bt-excluir' onclick='confirmarExclusao({$campeonato["Id"]},\"{$campeonato["Nome"]}\")'><i class='ph-bold ph-trash'></i></button></div></td>";
+
+                            echo "<td>" . $campeonato['Nome'] . "</td>";
+                            $dataInicio = new DateTime($campeonato['Data_inicio']);
+                            $dataTermino = new DateTime($campeonato['Data_termino']);
+                            echo "<td>" . $dataInicio->format('d/m/Y') . "</td>";
+                            echo "<td>" . $dataTermino->format('d/m/Y') . "</td>";
+
+                            echo "</tr>";
+                        }
+                        echo "</table>";
+                        ?>
+
+                    </tbody>
+            </div>
+            <script>
+                function confirmarExclusao(id, nome) {
+                    if (confirm(`Tem certeza que deseja excluir:\nID: ${id}  |  ${nome} \n\nOBS.: Essa ação é irreversivel.`)) {
+                        window.location.href = '/sistemackc/admtm85/campeonato/excluir/' + id;
+                    }
+                }
+            </script>
+
+        <?php
         } else {
             echo "<h1>Acesso não autorizado</h1>";
         }
-            ?>
+        ?>
     </main>
+    </section>
     <footer>
         <!-- ondas -->
         <div class="water">

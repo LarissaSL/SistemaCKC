@@ -37,15 +37,15 @@
     <?php
     if (isset($feedback) && !empty($feedback)) {
         echo '
-<div class="nofifications">
-    <div class="toast success">
-        <div class="column">
-            <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
-            <span> '. $feedback .'</span>
-        </div>
-        <i class="ph ph-x"></i><!--iconde de X -->
-    </div>
-</div>';
+        <div class="nofifications">
+            <div class="toast success">
+                <div class="column">
+                    <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
+                    <span> '. $feedback .'</span>
+                </div>
+                <i class="ph ph-x" onclick="(this.parentElement).remove()"></i><!--iconde de X -->
+            </div>
+        </div>';
     }
     ?>
 

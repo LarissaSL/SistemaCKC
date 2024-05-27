@@ -26,7 +26,7 @@ p.subTititulo{
 }
 
 /* Botão de cadastrar novo usuário */
-.bt-cadastrarUser {
+.bt-cadastrar,.bt-cadastrar-camp {
     display: block;
     padding: 1.3rem;
     width: 20rem;
@@ -39,13 +39,18 @@ p.subTititulo{
     background-color: var(--color-button);
     cursor: pointer;
 }
-.bt-cadastrarUser:hover, 
+.bt-cadastrar:hover, 
 button.bt_filtrar:hover{
     font-weight: 500;
     border: .1rem solid;
     text-decoration: none;
     background-color: white;
     color: var(--color-button);
+}
+/* crud campeonato */
+.bt-cadastrar-camp{
+    display: flex;
+    width: 25rem;
 }
 
 form{
@@ -58,14 +63,16 @@ form{
 .filtro{
     display: flex;
     align-items: end;
-    gap: 4rem;    
+    gap: 4rem;   
+    flex-wrap: wrap; 
 }
 .filtro label{
     font-weight: 500;
     color: black;
 }
 
-input, select.busca_User{
+input, select.busca_User,
+ select.busca_data{
     width: 40rem;
     font-size: 1.4rem;
     font-weight: 500;
@@ -81,9 +88,13 @@ input, select.busca_User{
     flex-direction: column;
 }
 
-select.busca_User{
+select.busca_User, select.busca_data{
     width: 30rem;
     padding: 1.3rem;
+}
+select.busca_data, input.busca_data{
+    width: 15rem;
+
 }
 
 select option{
@@ -136,6 +147,14 @@ td.acoes, th{
     margin-left: -2rem;
     flex-direction: row;
     justify-content: space-around;
+}
+/* bt de exibir resultados */
+i.ph-bold.ph-list-magnifying-glass {
+    color: #CC5918;
+}
+/* bt de cadastra resultados */
+i.ph-bold.ph-plus-square {
+    color: #069B0C;
 }
     
 .bt-editar{

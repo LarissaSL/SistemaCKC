@@ -211,6 +211,7 @@
         </div>
         <!-- conteudo na nav -->
         <div class="content">
+            <span class="copyright">2024 Manas Code | Todos os direitos reservados</span>
             <div class="navegation">
                 <div class="contact">
                     <a href="https://www.instagram.com/crashkartchampionship?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
@@ -226,7 +227,6 @@
                     <a href="/sistemackc/kartodromo">Kartódromos</a>
                 </div>
             </div>
-            <span class="copyright">2024 Manas Code | Todos os direitos reservados</span>
         </div>
     </footer>
 
