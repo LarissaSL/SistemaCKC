@@ -84,7 +84,7 @@
 
             <!-- Só mostra feedback se a classe for a de erro -->
             <?php
-            if (isset($classe) && $classe == 'alert alert-danger') : ?>
+            if (isset($feedback) && $feedback != '') : ?>
                 <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
             <?php endif ?>
 
