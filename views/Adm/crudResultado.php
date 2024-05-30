@@ -146,7 +146,7 @@
                         <?php
                         foreach ($corridas as $corrida) {
                             echo "<tr>";
-                            echo "<td>";
+                            echo "<td class='acoes'><div class='icos'>";
 
                             // Verifica se existe resultado para essa corrida
                             $resultadoModel = new Resultado();
@@ -160,6 +160,7 @@
                             echo "<a class='bt-editar $disabled' href='/sistemackc/admtm85/resultado/exibir/{$corrida["Id"]}'><i class='ph-bold ph-list-magnifying-glass'></i></a>";
                             echo "<a class='bt-editar $disabled' href='/sistemackc/admtm85/resultado/atualizar/{$corrida["Id"]}'><i class='ph-bold ph-note-pencil'></i></a>";
                             echo "<a class='bt-excluir $disabled'href='/sistemackc/admtm85/resultado/excluir/{$corrida["Id"]}'><i class='ph-bold ph-trash'></i></a></td>";
+                            echo "</div>";
                             echo "</td>";
 
                             echo "<td>" . $corrida['Nome_Campeonato'] . "</td>";

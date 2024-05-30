@@ -152,11 +152,11 @@
                             echo "<td>" . $usuario['Telefone'] . "</td>";
                             echo "<td class='modal'> " . $usuario['Data_registro'] . "</td>";
                             echo "<td class='bt-modal'><div class='icon-plus'><button class='btModal' 
-                                    foto='" . $usuario['Foto'] . "' 
+                                    foto='<img style=\"width: 90px;\" src=\"/sistemackc/views/Img/ImgUsuario/" . $foto . "\" alt=\"Imagem de " . $usuario['Nome'] . "\">'
                                     cpf='" . $usuario['Cpf'] . "' 
-                                    data-nascimento'" . $usuario['Data_nascimento'] . "' 
+                                    data-nascimento='" . $usuario['Data_nascimento'] . "' 
                                     tipo='" . $usuario['Tipo'] . "' 
-                                    nome'" . $usuario['Nome'] . "' 
+                                    nome='" . $usuario['Nome'] . "' 
                                     sobrenone='" . $usuario['Sobrenome'] . "' 
                                     email='" . $usuario['Email'] . "' 
                                     senha='" . substr($usuario['Senha'], 0, 5) . "' 

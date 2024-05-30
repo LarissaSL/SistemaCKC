@@ -72,7 +72,7 @@
 
             <form method="get">
                 <div class="filtro">
-                    <div class="ffiltro_nome">
+                    <div class="filtro_nome">
                         <label for="filtroNome" style="color: black;">Filtrar por Nome</label>
                         <input type="text" class="form-control" id="filtroNome" name="filtroNome" value="<?php echo isset($_GET['filtroNome']) ? htmlspecialchars($_GET['filtroNome']) : ''; ?>">
                     </div>

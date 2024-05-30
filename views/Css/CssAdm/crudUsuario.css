@@ -6,6 +6,9 @@ body{
     font-weight: 400;
 
 }
+main{
+    margin: 2rem;
+}
 .contrainer{
     margin-left: 3rem;
     margin-right: 3rem;
@@ -26,7 +29,7 @@ p.subTititulo{
 }
 
 /* Botão de cadastrar novo usuário */
-.bt-cadastrar,.bt-cadastrar-camp {
+.bt-cadastrar,.bt-cadastrar-camp, .bt-cadastrar-kart {
     display: block;
     padding: 1.3rem;
     width: 20rem;
@@ -47,11 +50,12 @@ button.bt_filtrar:hover{
     background-color: white;
     color: var(--color-button);
 }
-/* crud campeonato */
-.bt-cadastrar-camp{
+/* crud campeonato e crud kartodromo*/
+.bt-cadastrar-camp, .bt-cadastrar-kart{
     display: flex;
     width: 25rem;
 }
+
 
 form{
     display: flex;
@@ -128,6 +132,7 @@ table.tabela-conteudo {
 th, td{
     padding: 20px;
     width: 20%;
+    text-align: center;
 }
 td.acoes, th{
     background-color: var(--tabelas-colunas-adm);
@@ -135,13 +140,6 @@ td.acoes, th{
     padding: 14px;
 }
 
-/* th.acoes {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    background-color: aqua;
-    justify-content: space-around;
-} */
 .icos {
     display: flex;
     margin-left: -2rem;
@@ -156,7 +154,22 @@ i.ph-bold.ph-list-magnifying-glass {
 i.ph-bold.ph-plus-square {
     color: #069B0C;
 }
-    
+
+/* bt de redes em crud kartodromos */
+a.links {
+    display: flex;
+    height: 38px;
+    width: 150px;
+    color: black;
+    cursor: pointer;
+    font-weight: 600;
+    align-items: center;
+    border: solid transparent;
+    border-radius: 35px;
+    justify-content: center;
+    background: #85A3F8;
+}
+
 .bt-editar{
     width: 0;
     color: blue;
@@ -171,7 +184,6 @@ i.ph-bold.ph-plus-square {
     background-color: transparent;
 }
 .icon-plus {
-    /* display: flex; */
     margin-left: 3rem;
 }
 .btModal {
@@ -180,10 +192,6 @@ i.ph-bold.ph-plus-square {
 }
 .modal{
     display: none;
-    /* visibility: hidden; */
 }
 
-/* td.bt-modal {
-    text-align: center;
-} */
 

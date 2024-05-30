@@ -97,6 +97,8 @@ function abrirModal(container, foto, cpf, nascimento, tipo, nome, sobrenome, ema
     container.classList.add('visible');
     background.classList.add('blur-background');
     console.log(container);
+    
+    console.log(`foto: ${foto}, cpf: ${cpf}, nascimento: ${nascimento}, tipo: ${tipo}, nome: ${nome}, sobrenome: ${sobrenome}, email: ${email}, peso: ${peso}, genero: ${genero}, fone: ${telefone}, registro: ${registro}`);
 }
 function closeIcon() {
     const modalContainer = document.querySelector('.modal-container');
