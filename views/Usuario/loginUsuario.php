@@ -56,7 +56,7 @@
                         echo "<p>Olá, " . $_SESSION['nome'] . "</p>";
                         echo "<ul class='drop-corrida'>";
                         echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
-                        echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
+                        echo "<li><a href='/sistemackc/logout'>Sair</a></li>";
                         echo "</ul>";
                     }
                     if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
@@ -64,7 +64,7 @@
                         echo "<ul class='drop-corrida'>";
                         echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
                         echo "<li><a href='/sistemackc/admtm85/menu'>Menu</a></li>";
-                        echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
+                        echo "<li><a href='/sistemackc/logout'>Sair</a></li>";
                         echo "</ul>";
                     }
                     ?>
@@ -102,7 +102,7 @@
                         <label class="password" for="senha">Senha:</label>
                         <input type="password" name="senha">
                         <!-- link de esqueci minha senha-->
-                        <a href="/sistemackc/usuario/solicitar/senha">Esqueci minha senha</a>
+                        <a class="esquecerSenha" href="/sistemackc/usuario/solicitar/senha">Esqueci minha senha</a>
                     </div>
                     <!-- botão de entrar -->
                     <button class="bt-go-in">Entrar</button>

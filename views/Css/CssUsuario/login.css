@@ -59,6 +59,10 @@ main{
     align-self: flex-start; /* Alinha os rótulos à esquerda */
     margin-left: .1rem; /* Adiciona um espaço entre o rótulo e o input */
 }
+a.esquecerSenha {
+    text-decoration: underline;
+    margin-bottom: 1rem;
+}
 
 /* Ajuste da largura dos inputs dentro das divs .emails e .passwords */
 .emails input, .passwords input {

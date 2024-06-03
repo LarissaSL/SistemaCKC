@@ -40,8 +40,8 @@
                     <li><a href="/sistemackc/admtm85/usuario">Usuarios</a></li>
                     <li><a href="/sistemackc/admtm85/campeonato">Campeonatos</a></li>
                     <li><a href="/sistemackc/admtm85/corrida">Corridas</a></li>
+                    <li><a href="/sistemackc/admtm85/resultado">Resultados</a></li>
                     <li><a href="/sistemackc/admtm85/kartodromo">Kartodromos</a></li>
-                    <li><a href="#">Resultados</a></li>
                     
                     <li class="drop-down">
                         <?php
@@ -50,7 +50,7 @@
                             echo "<ul class='dropdown-menu'>";
                             echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
                             echo "<li><a href='/sistemackc/admtm85/menu'>Menu</a></li>";
-                            echo "<li><a href='/sistemackc/logout'>Logout</a></li>";
+                            echo "<li><a href='/sistemackc/logout'>Sair</a></li>";
                             echo "</ul>"; 
                         } else {
                             echo "<a href='/sistemackc/usuario/login'>Entrar</a>";

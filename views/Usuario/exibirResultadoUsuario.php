@@ -59,7 +59,7 @@
                         <?php echo "<a href='#' class='dropdown-toggle'>Olá, " . $_SESSION['nome'] . "<i class='ph ph-caret-down'></i></a>"; ?>
                         <ul class="dropdown-menu">
                             <?php echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>"; ?>
-                            <?php echo "<li><a href='/sistemackc/logout'>Logout</a></li>"; ?>
+                            <?php echo "<li><a href='/sistemackc/logout'>Sair</a></li>"; ?>
                         </ul>
                     </li>
                 <?php } elseif (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') { ?>
@@ -68,7 +68,7 @@
                         <ul class='dropdown-menu'>
                             <?php echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>"; ?>
                             <li><a href='/sistemackc/admtm85/menu'>Menu</a></li>
-                            <li><a href='/sistemackc/logout'>Logout</a></li>
+                            <li><a href='/sistemackc/logout'>Sair</a></li>
                         </ul>
                     </li>
                 <?php } else {
