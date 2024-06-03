@@ -16,6 +16,9 @@
     <script defer src="/sistemackc/views/Js/nav.js"></script>
     <script defer src="/sistemackc/views/Js/scriptResultados.js"></script>
 
+    <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
+    <link rel="stylesheet" href="/sistemackc/views/Css/CssAdm/resultadoExibir.css">
+
     <title>Cadastrar Resultados</title>
 </head>
 

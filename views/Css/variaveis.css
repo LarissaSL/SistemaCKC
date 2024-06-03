@@ -58,7 +58,11 @@ button,
 
 }
 
-input, select#tipo, select#campeonato,select#kartodromo {
+input, 
+select#tipo, 
+select#campeonato,
+select#kartodromo,
+select.selecao {
     /* depois por o tamnaho - "width" */
     border: solid;
     border-width: 2px;
@@ -269,14 +273,26 @@ div#bt-go-back {
     background-color: var(--background-campos);
 }
 
+
+/* .copyrights {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+} */
 .copyright {
     height: 61px;
     font-size: 1.3rem;
 }
+
 .copyright, .navegation {
     margin-left: 2rem;
     margin-right: 2rem;
 }
+
+/* span.dev {
+    margin-top: -24px;
+} */
 
 .navegation {
     display: flex;
@@ -311,7 +327,7 @@ div#bt-go-back {
         font-size: 2rem;
         padding: 1rem;
     }
-
+  
     .hamburger {
         display: block;
     }

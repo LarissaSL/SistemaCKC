@@ -231,7 +231,9 @@
         </div>
         <!-- conteudo na nav -->
         <div class="content">
-            <span class="copyright">2024 Manas Code | Todos os direitos reservados</span>
+      
+            <span class="copyright">© Sistema Gerenciador de corridas de kart. Todos os Direitos Reservados à Manas Code</span>
+     
             <div class="navegation">
                 <div class="contact">
                     <a href="https://www.instagram.com/crashkartchampionship?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">

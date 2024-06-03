@@ -117,27 +117,37 @@
                                 <img class="pilot-img" src="/sistemackc/views/Img/ImgUsuario/<?php echo $foto; ?>" alt="<?php echo $nome . ' ' . $sobrenome; ?>">
                             </div>
                             <input type="hidden" name="ids[]" value="<?php echo $dadosItem['Id']; ?>">
-                            <label>Posição:</label>
-                            <select name="posicoes[]" required>
-                                <?php
-                                $posicoes = array("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15");
-                                foreach ($posicoes as $posicao) {
-                                    echo "<option value='$posicao' " . ($dadosItem["Posicao"] == $posicao ? 'selected' : '') . ">$posicao º</option>";
-                                }
-                                ?>
-                            </select>
-                            <label>Piloto:</label>
-                            <select name="pilotos[]" required>
-                                <?php foreach ($usuarios as $usuario) { ?>
-                                    <option value="<?php echo $usuario['id']; ?>" <?php echo $usuario['id'] == $dadosItem["Usuario_id"] ? 'selected' : ''; ?>>
-                                        <?php echo $usuario['nome'] . ' ' . $usuario['sobrenome']; ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
-                            <label>Melhor tempo:</label>
-                            <input type="time" name="melhor_tempo[]" value="<?php echo $dadosItem["Melhor_tempo"]; ?>" placeholder="Melhor Tempo" required>
-                            <label>Pontuação:</label>
-                            <input readonly type="number" name="pontuacao[]" value="<?php echo isset($dadosItem["Pontuacao_total"]) ? $dadosItem["Pontuacao_total"] : ''; ?>">
+                            <div class="campos">
+                                <label>Posição:</label>
+                                <select id="posicao" class="selecao" name="posicoes[]" required>
+                                    <?php
+                                    $posicoes = array("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15");
+                                    foreach ($posicoes as $posicao) {
+                                        echo "<option value='$posicao' " . ($dadosItem["Posicao"] == $posicao ? 'selected' : '') . ">$posicao º</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+
+                            <div class="campos">
+                                <label>Piloto:</label>
+                                <select class="selecao" name="pilotos[]" required>
+                                    <?php foreach ($usuarios as $usuario) { ?>
+                                        <option value="<?php echo $usuario['id']; ?>" <?php echo $usuario['id'] == $dadosItem["Usuario_id"] ? 'selected' : ''; ?>>
+                                            <?php echo $usuario['nome'] . ' ' . $usuario['sobrenome']; ?>
+                                        </option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+
+                            <div class="campos">
+                                <label>Melhor tempo:</label>
+                                <input type="time" name="melhor_tempo[]" value="<?php echo $dadosItem["Melhor_tempo"]; ?>" placeholder="Melhor Tempo" required>
+                            </div>
+                            <div class="campos">
+                                <label>Pontuação:</label>
+                                <input readonly type="number" name="pontuacao[]" value="<?php echo isset($dadosItem["Pontuacao_total"]) ? $dadosItem["Pontuacao_total"] : ''; ?>">
+                            </div>
                         </div>
                 <?php
                     }

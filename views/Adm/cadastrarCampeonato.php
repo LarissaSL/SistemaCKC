@@ -63,7 +63,9 @@
 
     <main class="container-conteudo">
         <div class="background-image"></div>
-        <a class="bt-voltar" href="/sistemackc/admtm85/campeonato/"><i class="ph ph-caret-left"></i>Voltar</a>
+        <div id="bt-go-back">
+            <a class="bt-voltar" href="/sistemackc/admtm85/campeonato/"><i class="ph ph-caret-left"></i></a>
+        </div>
 
         <h1 class="titulo">Cadastrar Novo Campeonato</h1>
 

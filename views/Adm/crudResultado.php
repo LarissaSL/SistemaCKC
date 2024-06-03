@@ -17,6 +17,7 @@
 
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/CssAdm/crudUsuario.css">
+    <link rel="stylesheet" href="/sistemackc/views/Css/CssAdm/crudResultado.css">
     <title>Resultados</title>
 
 

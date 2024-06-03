@@ -63,8 +63,9 @@
 
     <main class="container-conteudo">
         <div class="background-image"></div>
-        <a class="bt-voltar" href="/sistemackc/admtm85/kartodromo/"><i class="ph ph-caret-left"></i>Voltar</a>
-
+        <div id="bt-go-back">
+            <a class="bt-voltar" href="/sistemackc/admtm85/kartodromo/"><i class="ph ph-caret-left"></i>Voltar</a>
+        </div>
         <h1 class="titulo">Cadastrar Novo Kartódromo</h1>
 
 

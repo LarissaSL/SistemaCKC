@@ -166,6 +166,17 @@ h2 .cmpLivre {
     gap: 1.5rem; 
     width: 220px; 
 }
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.campos {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+}
 
 span.nomePiloto {
     flex-grow: 1; 
@@ -223,6 +234,9 @@ span.nomePiloto {
 
 .btn-danger {
     background-color: var(--cor-excluir);
+}
+#posicao{
+    width: 7rem;
 }
 
 @media (min-width: 375px) {

@@ -1,13 +1,11 @@
 .statusContainer {
     display: flex;
-    justify-content: center;
     align-items: center; 
     height: 100%; 
 }
 
 .status {
     display: inline-block;
-    width: 140px; 
     padding: 8px;
     border-radius: 12px;
     font-size: 14px;
