@@ -118,6 +118,17 @@ class Resultado
         }
     }
 
+    public function verificarResultadosExistentes($idCorrida)
+    {
+        $query = "SELECT COUNT(*) AS total_resultados FROM resultado WHERE Corrida_id = :corrida_id";
+        $verificar = $this->conexao->prepare($query);
+        $verificar->bindParam(':corrida_id', $idCorrida, PDO::PARAM_INT);
+        $verificar->execute();
+
+        $totalResultados = $verificar->fetchColumn();
+        return $totalResultados > 0;
+    }
+
     public function verificarDuplicatas($posicoes, $pilotos, $melhor_tempo, $pontuacoes, $idCorrida)
     {
         $usuarioModel = new Usuario();
