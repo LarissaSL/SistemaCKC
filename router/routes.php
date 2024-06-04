@@ -58,6 +58,8 @@ $routes = [
     '/admtm85/resultado/atualizar/{id}' => 'adm#ClassificacaoController#atualizar',
     '/admtm85/resultado/excluir/{id}' => 'adm#ClassificacaoController#excluir',
     '/admtm85/resultado/excluir/corrida/{id}' => 'adm#ClassificacaoController#excluirDireto',
+    '/admtm85/resultado/excluir/resultado/{id}' => 'adm#ClassificacaoController#excluirUmResultado',
+
 
 
     //Rota para testar Alertas

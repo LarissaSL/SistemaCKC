@@ -61,7 +61,7 @@ function adicionarPiloto() {
     var formPilotos = document.getElementById('formPilotos'); // Obtém o formulário
     var pilotosContainer = formPilotos.querySelector('#pilotosContainer'); // Obtém o container de pilotos dentro do formulário
     var numeroPilotos = pilotosContainer.querySelectorAll('.pilot').length;
-    
+
     // Verifica se o número de pilotos atingiu 15
     if (numeroPilotos >= 15) {
         botaoAdicionar = document.getElementById("addPilot");
@@ -114,7 +114,7 @@ function adicionarPiloto() {
     selectPiloto.name = 'pilotos[]';
     selectPiloto.required = true;
     selectPiloto.className = 'selecao';
-    popularPilotosSelect(selectPiloto, usuarios); 
+    popularPilotosSelect(selectPiloto, usuarios);
     divCampos2.appendChild(selectPiloto);
 
     var divCampos3 = document.createElement('div');
@@ -135,7 +135,7 @@ function adicionarPiloto() {
     var divCampos4 = document.createElement('div');
     divCampos4.className = 'campos';
     pilotoDiv.appendChild(divCampos4);
-    
+
     var labelPontuacao = document.createElement('label');
     labelPontuacao.textContent = 'Pontuação:';
     divCampos4.appendChild(labelPontuacao);
@@ -156,11 +156,11 @@ function adicionarPiloto() {
     btnExcluirRegistro.textContent = 'Excluir registro';
     divCampos5.appendChild(btnExcluirRegistro);
 
-    pilotosContainer.appendChild(pilotoDiv); 
+    pilotosContainer.appendChild(pilotoDiv);
 
     // Gerar a pontuação inicial
     gerarPontuacao(pilotoDiv);
-    
+
     // Atualiza o número de pilotos com resultados
     atualizarNumeroPilotos(numeroPilotos + 1);
 }
@@ -244,7 +244,16 @@ function recalcularPosicoesEPontuacoes() {
     });
 }
 
-// Função para excluir o resultado pelo ID
+// Requisição AJAX
 function excluirResultado(resultadoID) {
-    console.log("Entrei no Excluir o ID" + resultadoID);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/sistemackc/admtm85/resultado/excluir/resultado/" + resultadoID, true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log(xhr.responseText);
+            console.log("Exclui esse ID: " + resultadoID);
+        }
+    };
+    xhr.send();
 }

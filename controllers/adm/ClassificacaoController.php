@@ -8,6 +8,29 @@ require_once 'models/Kartodromo.php';
 
 class ClassificacaoController extends RenderView
 {
+    public function __construct()
+    {
+        // Verifica se a requisição é uma chamada AJAX - Usado na Atualizacao e Exclui individual de um Resultado
+        if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            if (isset($_POST['funcao'])) {
+                $funcao = $_POST['funcao'];
+                switch ($funcao) {
+                    case 'excluirUmResultado':
+                        if (isset($_POST['excluir_resultado_id'])) {
+                            $idResultado = $_POST['excluir_resultado_id'];
+                            $this->excluirUmResultado($idResultado);
+                        } else {
+                            echo "Erro: ID do resultado não fornecido.";
+                        }
+                        break;
+                    default:
+                        echo "Erro: Função desconhecida.";
+                        break;
+                }
+                exit(); 
+            }
+        }
+    }
 
     // ADM
     public function mostrarResultados()
@@ -425,6 +448,24 @@ class ClassificacaoController extends RenderView
             echo '<script type="text/javascript">';
             echo 'alert("Erro ao tentar excluir resultados, tente novamente");';
             echo '</script>';
+        }
+    }
+
+    public function excluirUmResultado($idResultado) {
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+
+        $resultadoModel = new Resultado();
+    
+        //$resultadoExcluido = $resultadoModel->excluirResultadoPiloto($idResultado);
+        $resultadoExcluido = "Sucesso";
+    
+    
+        if ($resultadoExcluido === "Sucesso") {
+            echo "Resultado excluído com sucesso!";
+        } else {
+            echo "Erro ao excluir resultado. Por favor, tente novamente mais tarde.";
         }
     }
 
