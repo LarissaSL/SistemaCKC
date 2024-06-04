@@ -1,30 +1,57 @@
-var numeroPilotos = pilotosContainer.querySelectorAll('.pilot').length;
+// Função para recalcular a pontuação quando houver uma mudança na posição do piloto
+function recalculaPontuacao() {
+    var pilotos = document.querySelectorAll('.pilot');
+    pilotos.forEach(function(pilotoDiv) {
+        gerarPontuacao(pilotoDiv);
+    });
+}
 
 document.addEventListener('DOMContentLoaded', function () {
     // Inicializa a primeira vez se necessário
+    var numeroPilotos = pilotosContainer.querySelectorAll('.pilot').length;
     atualizarNumeroPilotos(numeroPilotos);
-});
 
-// Adiciona evento ao botão de adicionar piloto
-document.getElementById("addPilot").addEventListener("click", function () {
-    adicionarPiloto();
-});
+    // Chama a função gerarPontuacao para cada piloto presente na página
+    var pilotos = document.querySelectorAll('.pilot');
+    pilotos.forEach(function(pilotoDiv) {
+        gerarPontuacao(pilotoDiv);
+    });
 
-// Delegação de eventos para o botão de excluir registro
-document.getElementById("pilotosContainer").addEventListener("click", function (event) {
-    if (event.target && event.target.className == "btn_excluirRegistro") {
-        var pilotoDiv = event.target.closest(".pilot");
-        var hiddenID = pilotoDiv.querySelector("input[name='ids[]']");
-        if (hiddenID && hiddenID.value !== "") {
-            // Exclui no banco
-            excluirResultado(hiddenID.value);
-        } else {
-            // Se não houver campo hidden ou o campo estiver vazio, apenas remova a div do piloto
-            pilotoDiv.remove();
-            atualizarNumeroPilotos(numeroPilotos);
-            recalcularPosicoesEPontuacoes();
+    // Adiciona evento ao botão de adicionar piloto
+    document.getElementById("addPilot").addEventListener("click", function () {
+        adicionarPiloto();
+    });
+
+    // Delegação de eventos para o botão de excluir registro
+    document.getElementById("pilotosContainer").addEventListener("click", function (event) {
+        if (event.target && event.target.className == "btn_excluirRegistro") {
+            var pilotoDiv = event.target.closest(".pilot");
+            var numeroPilotos = pilotosContainer.querySelectorAll('.pilot').length;
+            var hiddenID = pilotoDiv.querySelector("input[name='ids[]']");
+            if (hiddenID && hiddenID.value !== "") {
+                var btn = event.target;
+                
+                // Confirma a exclusão antes de prosseguir
+                if(confirmarExclusao(btn)){
+                    pilotoDiv.remove();
+                    atualizarNumeroPilotos(numeroPilotos - 1);
+                    recalcularPosicoesEPontuacoes();
+                }
+            } else {
+                // Se não houver campo hidden ou o campo estiver vazio, apenas remova a div do piloto
+                pilotoDiv.remove();
+                atualizarNumeroPilotos(numeroPilotos - 1);
+                recalcularPosicoesEPontuacoes();
+            }
         }
-    }
+    });
+
+    // Adiciona evento de mudança ao select de posição para recalcular a pontuação
+    document.getElementById("pilotosContainer").addEventListener("change", function (event) {
+        if (event.target && event.target.name == "posicoes[]") {
+            recalculaPontuacao();
+        }
+    });
 });
 
 // Função para popular o select de posições
@@ -58,27 +85,30 @@ function popularPilotosSelect(selectElement, usuarios) {
 }
 
 function adicionarPiloto() {
-    var formPilotos = document.getElementById('formPilotos'); // Obtém o formulário
-    var pilotosContainer = formPilotos.querySelector('#pilotosContainer'); // Obtém o container de pilotos dentro do formulário
+    var formPilotos = document.getElementById('formPilotos'); 
+    var pilotosContainer = formPilotos.querySelector('#pilotosContainer'); 
+    var pilotos = pilotosContainer.querySelectorAll('.pilot');
     var numeroPilotos = pilotosContainer.querySelectorAll('.pilot').length;
+    var maiorPosicao = 0;
 
-    // Verifica se o número de pilotos atingiu 15
-    if (numeroPilotos >= 15) {
-        botaoAdicionar = document.getElementById("addPilot");
-        botaoAdicionar.disabled = true;
-        alert("O número máximo de pilotos foi atingido.");
-        return;
-    }
+    // Encontra a maior posição já selecionada
+    pilotos.forEach(function (pilotoDiv) {
+        var posicao = parseInt(pilotoDiv.querySelector("select[name='posicoes[]']").value);
+        if (posicao > maiorPosicao) {
+            maiorPosicao = posicao;
+        }
+    });
 
-    var proximaPosicao = (numeroPilotos + 1).toString();
+    // Incrementa a posição para a próxima disponível
+    var proximaPosicao = (maiorPosicao + 1).toString();
 
     var pilotoDiv = document.createElement('div');
     pilotoDiv.className = 'pilot';
 
     var hiddenID = document.createElement('input');
     hiddenID.type = 'hidden';
-    hiddenID.name = 'resultado_id';
-    hiddenID.value = ''; // Inicialmente vazio
+    hiddenID.name = 'ids[]';
+    hiddenID.value = ''; 
     pilotoDiv.appendChild(hiddenID);
 
     var divCampos1 = document.createElement('div');
@@ -235,13 +265,34 @@ function gerarPontuacao(pilotoDiv) {
 
 // Função para recalcular as posições e pontuações quando um registro for excluído
 function recalcularPosicoesEPontuacoes() {
-    var pilotos = document.querySelectorAll('.piloto');
-    pilotos.forEach(function (pilotoDiv, index) {
+    var pilotos = document.querySelectorAll('.pilot');
+    pilotos.forEach(function(pilotoDiv, index) {
         var novaPosicao = (index + 1).toString();
         var selectPosicao = pilotoDiv.querySelector("select[name='posicoes[]']");
         selectPosicao.value = novaPosicao;
         gerarPontuacao(pilotoDiv);
     });
+}
+
+function confirmarExclusao(btn) {
+    console.log("Função confirmarExclusao foi chamada.");
+    var pilotoDiv = btn.closest('.pilot');
+    var resultadoID = pilotoDiv.querySelector("input[name='ids[]']").value;
+    var posicao = pilotoDiv.querySelector(".selecao[name='posicoes[]']").value;
+    var pontuacao = pilotoDiv.querySelector("input[name='pontuacao[]']").value;
+    var nomePiloto = pilotoDiv.querySelector(".selecao[name='pilotos[]'] option:checked").innerText.trim();
+
+    // Alerta de confirmação
+    var confirmacao = confirm(`Tem certeza que deseja EXCLUIR esse resultado:\n\n${posicao}º   |   ${nomePiloto}   |   ${pontuacao} pts\n\nOBS.: TODAS as posições e pontuações serão recalculadas\nOBS.2: Essa ação é irreversível!`);
+
+    // Se o usuário confirmar a exclusão
+    if (confirmacao) {
+        excluirResultado(resultadoID);
+        return true;
+    } else {
+        console.log("Exclusão cancelada.");
+        return false;
+    }
 }
 
 // Requisição AJAX
@@ -250,9 +301,14 @@ function excluirResultado(resultadoID) {
     xhr.open("POST", "/sistemackc/admtm85/resultado/excluir/resultado/" + resultadoID, true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            console.log(xhr.responseText);
-            console.log("Exclui esse ID: " + resultadoID);
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                console.log(xhr.responseText);
+                // Recarrega a página após a exclusão bem-sucedida
+                location.reload();
+            } else {
+                console.error('Erro ao excluir resultado. Status: ' + xhr.status);
+            }
         }
     };
     xhr.send();

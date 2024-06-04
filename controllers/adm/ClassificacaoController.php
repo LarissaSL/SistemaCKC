@@ -458,10 +458,8 @@ class ClassificacaoController extends RenderView
 
         $resultadoModel = new Resultado();
     
-        //$resultadoExcluido = $resultadoModel->excluirResultadoPiloto($idResultado);
-        $resultadoExcluido = "Sucesso";
-    
-    
+        $resultadoExcluido = $resultadoModel->excluirResultadoPiloto($idResultado);
+
         if ($resultadoExcluido === "Sucesso") {
             echo "Resultado excluído com sucesso!";
         } else {
