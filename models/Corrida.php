@@ -125,14 +125,16 @@ class Corrida
         }
     }
 
-    public function selecionarTodasAsCorridasComNomes()
+    public function selecionarTodasAsCorridasComNomes($ordem)
     {
+        $ordenacao = $ordem == "id" ? 'ORDER BY infoCorrida.Id DESC' : 'ORDER BY infoCorrida.data_corrida DESC';
+
         try {
             $query = "SELECT infoCorrida.*, campe.Nome AS Nome_Campeonato, karto.Nome AS Nome_Kartodromo 
                       FROM corrida infoCorrida 
                       INNER JOIN campeonato campe ON infoCorrida.Campeonato_id = campe.Id 
                       INNER JOIN kartodromo karto ON infoCorrida.Kartodromo_id = karto.Id
-                      ORDER BY infoCorrida.Id DESC";
+                      $ordenacao";
             $selecionar = $this->conexao->prepare($query);
             $selecionar->execute();
 

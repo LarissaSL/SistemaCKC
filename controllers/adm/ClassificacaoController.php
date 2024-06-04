@@ -9,6 +9,7 @@ require_once 'models/Kartodromo.php';
 class ClassificacaoController extends RenderView
 {
 
+    // ADM
     public function mostrarResultados()
     {
         if (!isset($_SESSION)) {
@@ -34,7 +35,7 @@ class ClassificacaoController extends RenderView
                 $feedback = $consulta['feedback'];
                 $classe = $consulta['classe'];
             } else {
-                $corridas = $corridaModel->selecionarTodasAsCorridasComNomes();
+                $corridas = $corridaModel->selecionarTodasAsCorridasComNomes('data');
                 if (empty($corridas)) {
                     $feedback = 'Nenhuma corrida encontrada.';
                     $classe = 'alert alert-danger';
@@ -50,6 +51,7 @@ class ClassificacaoController extends RenderView
         ]);
     }
 
+    // Usuario
     public function exibirTodosOsResultados() {
         $corridaModel = new Corrida();
         $campeonatoModel = new Campeonato();
