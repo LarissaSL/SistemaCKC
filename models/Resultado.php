@@ -60,12 +60,28 @@ class Resultado
         }
     }
 
+    // Exclui todos os resultados da Corrida
     public function excluirResultado($idCorrida)
     {
         try {
             $query = "DELETE FROM resultado WHERE Corrida_id = :corrida_id";
             $excluir = $this->conexao->prepare($query);
             $excluir->bindParam(':corrida_id', $idCorrida);
+            $excluir->execute();
+
+            return "Sucesso";
+        } catch (PDOException $erro) {
+            return "Erro ao excluir resultado: " . $erro->getMessage();
+        }
+    }
+
+    // Exclui todos os resultados da Corrida
+    public function excluirResultadoPiloto($id)
+    {
+        try {
+            $query = "DELETE FROM resultado WHERE Id = :id";
+            $excluir = $this->conexao->prepare($query);
+            $excluir->bindParam(':id', $id);
             $excluir->execute();
 
             return "Sucesso";

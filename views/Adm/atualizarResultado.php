@@ -12,6 +12,7 @@
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
     <script defer src="/sistemackc/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
+    <script defer src="/sistemackc/views/Js/atualizarResultados.js"></script>
 
     <link rel="icon" href="/sistemackc/views/Img/ImgIcones/crash_icon.ico" type="image/x-icon">
 
@@ -58,17 +59,16 @@
             </nav>
     </header>
 
-        <div class="background-image"></div>
-        <h1 class="titulo">Atualização de Resultado</h1>
-        <?php
+    <div class="background-image"></div>
+    <h1 class="titulo">Atualização de Resultado</h1>
+    <?php
             if (isset($feedback) && $feedback != '') {
                 echo "<div class='container-feedback'>";
                 echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
                 echo '<a class="btn-voltar" href="/sistemackc/admtm85/resultado">Voltar</a>';
                 echo "</div>";
-               
             } else {
-        ?>
+    ?>
         <div class="containerInformacoes">
             <div class="containerImagem">
                 <img class="fundoImg" src="/sistemackc/Views/Img/ImgTelas/fundo.png" alt="fundo da foto do Crash">
@@ -101,8 +101,9 @@
             </div>
         </div>
 
+        <p id="qtdPilotos">QTD. de Pilotos com resultados: 0/15</p>
+        <form method="POST" action="/sistemackc/admtm85/resultado/atualizarRegistro/<?php echo $idCorrida; ?>" id='formPilotos'>
         <div id="pilotosContainer">
-            <form method="POST" action="/sistemackc/admtm85/resultado/atualizarRegistro/<?php echo $idCorrida; ?>">
                 <?php
                 if (isset($dadosResultado) && $dadosResultado != NULL) {
                     foreach ($dadosResultado as $dadosItem) {
@@ -110,12 +111,8 @@
                         $usuario = $usuarioModel->consultarUsuarioPorId($dadosItem["Usuario_id"]);
                         $nome = $usuario['Nome'];
                         $sobrenome = $usuario['Sobrenome'];
-                        $foto = $usuario['Foto'] != NULL ? $usuario['Foto'] : 'perfil_branco.png';
                 ?>
                         <div class="pilot">
-                            <div class="pilot-img-container">
-                                <img class="pilot-img" src="/sistemackc/views/Img/ImgUsuario/<?php echo $foto; ?>" alt="<?php echo $nome . ' ' . $sobrenome; ?>">
-                            </div>
                             <input type="hidden" name="ids[]" value="<?php echo $dadosItem['Id']; ?>">
                             <div class="campos">
                                 <label>Posição:</label>
@@ -148,22 +145,34 @@
                                 <label>Pontuação:</label>
                                 <input readonly type="number" name="pontuacao[]" value="<?php echo isset($dadosItem["Pontuacao_total"]) ? $dadosItem["Pontuacao_total"] : ''; ?>">
                             </div>
+
+                            <div class="campos">
+                                <button type="button" class="btn_excluirRegistro">Excluir registro</button>
+                            </div>
                         </div>
                 <?php
                     }
                 }
                 ?>
-                <button type="submit">Atualizar registros</button>
-            </form>
+                
         </div>
+        <div class="botoes">
+            <button id="addPilot">Adicionar Piloto</button>
+            <button type="submit">Atualizar registros</button>
+        </div>
+    </form>
 
+        <script>
+            //Passando os dados do array de $usuarios pro JS conseguir popular
+            var usuarios = <?php echo json_encode($usuarios); ?>;
+        </script>
 
-    <?php
-            }
-            } else {
-                echo "<h1>Acesso não autorizado</h1>";
-            }
-    ?>
+<?php
+        }
+        } else {
+            echo "<h1>Acesso não autorizado</h1>";
+        }
+?>
 </div>
 
 <script>
@@ -208,6 +217,8 @@
         <span class="copyright">2024 Manas Code | Todos os direitos reservados</span>
     </div>
 </footer>
+
+
 </body>
 
 </html>
