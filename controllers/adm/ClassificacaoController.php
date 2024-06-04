@@ -315,6 +315,20 @@ class ClassificacaoController extends RenderView
         $corridaModel = new Corrida();
         $usuarioModel = new Usuario();
 
+        //Verificar se ja tem Cadastro
+        $resultadosExistentes = $resultadoModel->verificarResultadosExistentes($idCorrida);
+        
+        if (!$resultadosExistentes) {
+            echo "<script>
+                if (confirm('Atenção! Não existe resultado cadastrado para esta corrida.')) {
+                    window.location.href = '/sistemackc/admtm85/resultado/';
+                } else {
+                    window.location.href = '/sistemackc/admtm85/resultado/';
+                }
+            </script>";
+            exit();
+        }
+
         $dadosCorrida = $corridaModel->selecionarCorridaPorIdComNomeDoCamp($idCorrida);
         $nomeAbreviado = $corridaModel->definirAbreviacao($dadosCorrida['Nome_Campeonato']);
         $dadosResultados = $resultadoModel->selecionarResultadoPorCorridaId($idCorrida);

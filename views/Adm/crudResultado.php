@@ -180,13 +180,6 @@
                         ?>
 
             </div>
-            <script>
-                function confirmarExclusao(id, nome, campeonato) {
-                    if (confirm(`Tem certeza que deseja excluir TODOS os registros:\n${campeonato} - ${nome} \n\nOBS.: Essa ação é irreversível.`)) {
-                        window.location.href = '/sistemackc/admtm85/resultado/excluir/' + id;
-                    }
-                }
-            </script>
         <?php } ?>
 
     <?php
