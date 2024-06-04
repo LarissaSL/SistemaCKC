@@ -144,6 +144,21 @@ class ClassificacaoController extends RenderView
         }
 
         $resultadoModel = new Resultado();
+
+        //Verificar se ja tem Cadastro
+        $resultadosExistentes = $resultadoModel->verificarResultadosExistentes($idCorrida);
+        
+        if (!$resultadosExistentes && $local != 'usuario') {
+            echo "<script>
+                if (confirm('Atenção! Não existe resultado cadastrado para esta corrida.')) {
+                    window.location.href = '/sistemackc/admtm85/resultado/';
+                } else {
+                    window.location.href = '/sistemackc/admtm85/resultado/';
+                }
+            </script>";
+            exit();
+        }
+
         $corridaModel = new Corrida();
         $usuarioModel = new Usuario();
 
@@ -278,9 +293,24 @@ class ClassificacaoController extends RenderView
 
     public function atualizar($idCorrida)
     {
+        $resultadoModel = new Resultado();
+
+        //Verificar se ja tem Cadastro
+        $resultadosExistentes = $resultadoModel->verificarResultadosExistentes($idCorrida);
+        
+        if (!$resultadosExistentes) {
+            echo "<script>
+                if (confirm('Atenção! Não existe resultado cadastrado para esta corrida.')) {
+                    window.location.href = '/sistemackc/admtm85/resultado/';
+                } else {
+                    window.location.href = '/sistemackc/admtm85/resultado/';
+                }
+            </script>";
+            exit();
+        }
+
         // Alterar de todos os dados de uma vez
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $resultadoModel = new Resultado();
             
             $posicoes = $_POST['posicoes'];
             $pilotos = $_POST['pilotos'];
