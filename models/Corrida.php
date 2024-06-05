@@ -318,13 +318,16 @@ class Corrida
     }
 
 
-    public function selecionarTodasAsCorridasComNomesEEnderecos()
+    public function selecionarTodasAsCorridasComNomesEEnderecos($ordem = NULL)
     {
+        $ordenacao = $ordem == NULL ? 'ORDER BY corrida.Id DESC' : 'ORDER BY corrida.Data_corrida DESC';
+
         try {
             $query = "SELECT corrida.*, campe.Nome AS Nome_Campeonato, karto.Nome AS Nome_Kartodromo, CONCAT(karto.Rua, ', ', karto.Bairro, ', CEP: ', karto.CEP, ', ', karto.Numero) AS Endereco_Kartodromo
                     FROM corrida 
                     INNER JOIN campeonato campe ON corrida.Campeonato_id = campe.Id 
-                    INNER JOIN kartodromo karto ON corrida.Kartodromo_id = karto.Id";
+                    INNER JOIN kartodromo karto ON corrida.Kartodromo_id = karto.Id
+                    $ordenacao";
             $selecionar = $this->conexao->prepare($query);
             $selecionar->execute();
 

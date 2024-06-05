@@ -120,7 +120,7 @@ class ClassificacaoController extends RenderView
                 }
             } else {
                 // Caso nao tenha filtro, verifica se tem corridas no sistema e trata para mostrar apenas as corridas com Resultados
-                $corridasEncontradas = $corridaModel->selecionarTodasAsCorridasComNomesEEnderecos();
+                $corridasEncontradas = $corridaModel->selecionarTodasAsCorridasComNomesEEnderecos('data');
                 if (!empty($corridasEncontradas)){
                     
                 foreach ($corridasEncontradas as $corrida) {
@@ -320,7 +320,7 @@ class ClassificacaoController extends RenderView
 
         if (!$resultadosExistentes) {
             echo "<script>
-                if (confirm('Atenção! Não existe resultado cadastrado para esta corrida2.')) {
+                if (confirm('Atenção! Não existe resultado cadastrado para esta corrida.')) {
                     window.location.href = '/sistemackc/admtm85/resultado/';
                 } else {
                     window.location.href = '/sistemackc/admtm85/resultado/';
