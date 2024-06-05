@@ -31,11 +31,10 @@ class Resultado
         }
     }
 
-
     public function alterarResultado($id, $usuario_id, $posicao, $melhor_tempo, $pontuacao_total)
     {
         try {
-            $query = "UPDATE Resultado SET Usuario_id = :usuario_id, Tempo_volta = :tempo_volta, Pontuacao = :pontuacao, Pontuacao_total = :pontuacao_total WHERE Id = :id  ";
+            $query = "UPDATE resultado SET Usuario_id = :usuario_id, Melhor_tempo = :melhor_tempo, Posicao = :posicao, Pontuacao_total = :pontuacao_total WHERE Id = :id";
             $alterar = $this->conexao->prepare($query);
             $alterar->bindParam(':id', $id);
             $alterar->bindParam(':usuario_id', $usuario_id);
@@ -52,13 +51,12 @@ class Resultado
             {
                 case 23000:
                     return "Ocorreu um erro. Este resultado já está registrado no sistema.";
-                    break;
                 default:
-                    return "Ocorreu um erro ao alterar resultado : " . $erro->getMessage();
-                    break;
-            }     
+                    return "Ocorreu um erro ao alterar resultado: " . $erro->getMessage();
+            }
         }
     }
+
 
     // Exclui todos os resultados da Corrida
     public function excluirResultado($idCorrida)

@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Inicializa a primeira vez se necessário
     var numeroPilotos = pilotosContainer.querySelectorAll('.pilot').length;
     atualizarNumeroPilotos(numeroPilotos);
+    atualizarVisibilidadeBotaoAdicionar();
 
     // Chama a função gerarPontuacao para cada piloto presente na página
     var pilotos = document.querySelectorAll('.pilot');
@@ -20,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Adiciona evento ao botão de adicionar piloto
     document.getElementById("addPilot").addEventListener("click", function () {
         adicionarPiloto();
+        atualizarVisibilidadeBotaoAdicionar();
     });
 
     // Delegação de eventos para o botão de excluir registro
@@ -36,12 +38,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     pilotoDiv.remove();
                     atualizarNumeroPilotos(numeroPilotos - 1);
                     recalcularPosicoesEPontuacoes();
+                    atualizarVisibilidadeBotaoAdicionar();
                 }
             } else {
                 // Se não houver campo hidden ou o campo estiver vazio, apenas remova a div do piloto
                 pilotoDiv.remove();
                 atualizarNumeroPilotos(numeroPilotos - 1);
                 recalcularPosicoesEPontuacoes();
+                atualizarVisibilidadeBotaoAdicionar();
             }
         }
     });
@@ -53,6 +57,66 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+// Adiciona evento de submit ao formulário - Impedir caso repetida a posição ou piloto
+document.getElementById("formPilotos").addEventListener("submit", function(event) {
+    // Verifica se há posições repetidas
+    var posicoes = document.querySelectorAll("select[name='posicoes[]']");
+    var posicoesSelecionadas = Array.from(posicoes).map(function(select) {
+        return select.value;
+    });
+    var posicoesUnicas = new Set(posicoesSelecionadas);
+
+    if (posicoesUnicas.size !== posicoesSelecionadas.length) {
+        var posicoesRepetidas = [];
+        posicoesSelecionadas.forEach(function(posicao, index) {
+            if (posicoesSelecionadas.indexOf(posicao) !== index) {
+                posicoesRepetidas.push(posicao);
+            }
+        });
+        alert("Erro ao atualizar. As seguintes posições se repetem: \n" + posicoesRepetidas.join(", "));
+        event.preventDefault();
+        return;
+    }
+
+    // Verifica se há pilotos selecionados iguais
+    var pilotos = document.querySelectorAll("select[name='pilotos[]']");
+    var pilotosSelecionados = Array.from(pilotos).map(function(select) {
+        return {
+            value: select.value,
+            nome: select.options[select.selectedIndex].text.trim() 
+        };
+    });
+
+    var pilotosUnicos = new Set(pilotosSelecionados.map(function(piloto) {
+        return piloto.value;
+    }));
+
+    if (pilotosUnicos.size !== pilotosSelecionados.length) {
+        var pilotosRepetidos = [];
+        var pilotosUnicosArray = Array.from(pilotosUnicos);
+        console.log("Pilotos únicos:", pilotosUnicosArray);
+        console.log("Pilotos selecionados:", pilotosSelecionados);
+        pilotosSelecionados.forEach(function(piloto, index) {
+            if (pilotosSelecionados.findIndex(item => item.value === piloto.value) !== index) {
+                pilotosRepetidos.push(piloto.nome);
+            }
+        });
+        alert("Erro ao atualizar. Os seguintes pilotos selecionados se repetem: \n" + pilotosRepetidos.join(", "));
+        event.preventDefault();
+        return;
+    }
+});
+
+// Função para atualizar a visibilidade do botão de adicionar piloto
+function atualizarVisibilidadeBotaoAdicionar() {
+    var numeroPilotos = pilotosContainer.querySelectorAll('.pilot').length;
+    if (numeroPilotos >= 15) {
+        document.getElementById("addPilot").style.display = "none";
+    } else {
+        document.getElementById("addPilot").style.display = "block";
+    }
+}
 
 // Função para popular o select de posições
 function popularPosicoesSelect(selectElement, posicaoInicial) {
@@ -304,8 +368,6 @@ function excluirResultado(resultadoID) {
         if (xhr.readyState == 4) {
             if (xhr.status == 200) {
                 console.log(xhr.responseText);
-                // Recarrega a página após a exclusão bem-sucedida
-                location.reload();
             } else {
                 console.error('Erro ao excluir resultado. Status: ' + xhr.status);
             }

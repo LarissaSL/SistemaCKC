@@ -202,9 +202,6 @@ class ClassificacaoController extends RenderView
         } elseif ($local == 'usuario') {
             $definirAView = 'usuario/exibirResultadoUsuario';
             $urlParaRedirecionar = '/sistemackc/classificacao';
-        } else {
-            $definirAView = 'adm/atualizarResultado';
-            $urlParaRedirecionar = '/sistemackc/admtm85/resultado/atualizar/5';
         }
 
         if (empty($dadosResultados)) {
@@ -318,12 +315,12 @@ class ClassificacaoController extends RenderView
     {
         $resultadoModel = new Resultado();
 
-        //Verificar se ja tem Cadastro
+        // Verificar se já tem Cadastro
         $resultadosExistentes = $resultadoModel->verificarResultadosExistentes($idCorrida);
-        
+
         if (!$resultadosExistentes) {
             echo "<script>
-                if (confirm('Atenção! Não existe resultado cadastrado para esta corrida.')) {
+                if (confirm('Atenção! Não existe resultado cadastrado para esta corrida2.')) {
                     window.location.href = '/sistemackc/admtm85/resultado/';
                 } else {
                     window.location.href = '/sistemackc/admtm85/resultado/';
@@ -340,22 +337,71 @@ class ClassificacaoController extends RenderView
             $melhor_tempo = $_POST['melhor_tempo'];
             $pontuacoes = $_POST['pontuacao'];
             $ids = $_POST['ids'];
-    
+
+            $vetorAtualizacao = [];
+            $vetorCadastro = [];
+
             foreach ($ids as $i => $id) {
+                if (!empty($id)) {
+                    $vetorAtualizacao[] = [
+                        'id' => $id,
+                        'piloto' => $pilotos[$i],
+                        'posicao' => $posicoes[$i],
+                        'melhor_tempo' => $melhor_tempo[$i],
+                        'pontuacao' => $pontuacoes[$i]
+                    ];
+                } else {
+                    $vetorCadastro[] = [
+                        'piloto' => $pilotos[$i],
+                        'posicao' => $posicoes[$i],
+                        'melhor_tempo' => $melhor_tempo[$i],
+                        'pontuacao' => $pontuacoes[$i]
+                    ];
+                }
+            }
+
+            // Processar atualizações
+            foreach ($vetorAtualizacao as $resultadoParaAtualizar) {
                 $resultadoModel->alterarResultado(
-                    $id,
-                    $pilotos[$i],
-                    $posicoes[$i],
-                    $melhor_tempo[$i],
-                    $pontuacoes[$i]
+                    $resultadoParaAtualizar['id'],
+                    $resultadoParaAtualizar['piloto'],
+                    $resultadoParaAtualizar['posicao'],
+                    $resultadoParaAtualizar['melhor_tempo'],
+                    $resultadoParaAtualizar['pontuacao']
                 );
             }
-            // Redirecionar para a página de resultados após a atualização
-            header("Location: /sistemackc/admtm85/resultado");
-            exit();
+
+            // Processar novos cadastros
+            foreach ($vetorCadastro as $resultadoParaCadastrar) {
+                $resultadoModel->inserirResultado(
+                    $resultadoParaCadastrar['piloto'],
+                    $idCorrida,
+                    $resultadoParaCadastrar['melhor_tempo'],
+                    $resultadoParaCadastrar['posicao'],
+                    $resultadoParaCadastrar['pontuacao']
+                );
+            }
         }
 
-        $this->exibir($idCorrida, "viewDeAtualizar");
+        $corridaModel = new Corrida();
+        $usuarioModel = new Usuario();
+
+        $dadosCorrida = $corridaModel->selecionarCorridaPorIdComNomeDoCamp($idCorrida);
+        $nomeAbreviado = empty($dadosCorrida) ? '' : $corridaModel->definirAbreviacao($dadosCorrida['Nome_Campeonato']);
+        $dadosResultados = $resultadoModel->selecionarResultadoPorCorridaId($idCorrida);
+        
+
+        $usuarios = $usuarioModel->obterNomeESobrenomeDosUsuarios();
+            $this->carregarViewComArgumentos( 'adm/atualizarResultado', [
+                'dadosCorrida' => isset($dadosCorrida) ? $dadosCorrida : [],
+                'usuarioModel' => $usuarioModel,
+                'nomeAbreviado' => $nomeAbreviado,
+                'dadosResultado' => $dadosResultados,
+                'usuarios' => isset($usuarios) ? $usuarios : null,
+                'classe' => isset($classe) ? $classe : null,
+                'feedback' => isset($feedback) ? $feedback : null,
+                'urlParaRedirecionar' => isset($urlParaRedirecionar) ? $urlParaRedirecionar : ''
+            ]);
     }
 
     public function excluir($idCorrida)
