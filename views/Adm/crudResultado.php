@@ -148,14 +148,10 @@
                             $resultadoModel = new Resultado();
                             $resultado = $resultadoModel->selecionarResultadoPorCorridaId($corrida['Id']);
 
-                            // Se nao tiver resultado, desativa os botoes de exibir, cadastrar, editar e excluir
-                            $disabled = !$resultado ? "disabled" : "";
-                            $disabledCadastrar = $resultado ? "disabled" : "";
-
-                            echo "<a class='bt-editar $disabledCadastrar' href='/sistemackc/admtm85/resultado/cadastrar/{$corrida["Id"]}'><i class='ph-bold ph-plus-square'></i></a>";
-                            echo "<a class='bt-editar $disabled' href='/sistemackc/admtm85/resultado/exibir/{$corrida["Id"]}'><i class='ph-bold ph-list-magnifying-glass'></i></a>";
-                            echo "<a class='bt-editar $disabled' href='/sistemackc/admtm85/resultado/atualizar/{$corrida["Id"]}'><i class='ph-bold ph-note-pencil'></i></a>";
-                            echo "<a class='bt-excluir $disabled'href='/sistemackc/admtm85/resultado/excluir/{$corrida["Id"]}'><i class='ph-bold ph-trash'></i></a></td>";
+                            echo "<a class='bt-editar' href='/sistemackc/admtm85/resultado/cadastrar/{$corrida["Id"]}'><i class='ph-bold ph-plus-square'></i></a>";
+                            echo "<a class='bt-editar' href='/sistemackc/admtm85/resultado/exibir/{$corrida["Id"]}'><i class='ph-bold ph-list-magnifying-glass'></i></a>";
+                            echo "<a class='bt-editar' href='/sistemackc/admtm85/resultado/atualizar/{$corrida["Id"]}'><i class='ph-bold ph-note-pencil'></i></a>";
+                            echo "<a class='bt-excluir' href='/sistemackc/admtm85/resultado/excluir/{$corrida["Id"]}'><i class='ph-bold ph-trash'></i></a></td>";
                             echo "</div>";
                             echo "</td>";
 
