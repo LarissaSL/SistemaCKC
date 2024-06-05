@@ -45,7 +45,8 @@ img {
 
 button.regulation{
     font-weight: 600;
-    background-color: #730202;
+    background-color: var(--background-button-red);
+    
 }
 
 

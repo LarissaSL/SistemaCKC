@@ -14,9 +14,15 @@ document.getElementById("addPiloto").addEventListener("click", function () {
 // Delegação de eventos para o botão de excluir registro
 document.getElementById("pilotosContainer").addEventListener("click", function (event) {
     if (event.target && event.target.className == "btn_excluirRegistro") {
-        event.target.parentNode.remove();
+        var pilotoDiv = event.target.closest('.piloto');
+        var linhaDiv = pilotoDiv.nextElementSibling;
+        pilotoDiv.remove();
+        if (linhaDiv && linhaDiv.classList.contains('line')) {
+            linhaDiv.remove();
+        }
         atualizarBotaoCadastrar();
         recalcularPosicoesEPontuacoes();
+    
     }
 });
 
@@ -35,7 +41,7 @@ function popularPosicoesSelect(selectElement, posicaoInicial) {
 
     // Adiciona evento de mudança ao select
     selectElement.addEventListener('change', function () {
-        var pilotoDiv = selectElement.parentElement;
+        var pilotoDiv = selectElement.closest('.piloto');
         gerarPontuacao(pilotoDiv);
     });
 }
@@ -59,46 +65,46 @@ function adicionarPiloto() {
     var pilotoDiv = document.createElement('div');
     pilotoDiv.className = 'piloto';
 
-    var labelPosicao = document.createElement('label');
-    labelPosicao.textContent = 'Posição:';
-    pilotoDiv.appendChild(labelPosicao);
+    var campos = [
+        { label: 'Posição:', tipo: 'select', id: 'posicao', nome: 'posicoes[]', fn: popularPosicoesSelect },
+        { label: 'Piloto:', tipo: 'select', nome: 'pilotos[]', fn: popularPilotosSelect },
+        { label: 'Melhor tempo:', tipo: 'input', nome: 'melhor_tempo[]', inputType: 'time' },
+        { label: 'Pontuação:', tipo: 'input', nome: 'pontuacao[]', inputType: 'number', readOnly: true }
+    ];
 
-    var selectPosicao = document.createElement('select');
-    selectPosicao.name = 'posicoes[]';
-    selectPosicao.required = true;
-    popularPosicoesSelect(selectPosicao, proximaPosicao);
-    pilotoDiv.appendChild(selectPosicao);
+    campos.forEach(campo => {
+        var divCampo = document.createElement('div');
+        divCampo.className = 'campos';
 
-    var labelPiloto = document.createElement('label');
-    labelPiloto.textContent = 'Piloto:';
-    pilotoDiv.appendChild(labelPiloto);
+        var label = document.createElement('label');
+        label.textContent = campo.label;
+        divCampo.appendChild(label);
 
-    var selectPiloto = document.createElement('select');
-    selectPiloto.name = 'pilotos[]';
-    selectPiloto.required = true;
-    popularPilotosSelect(selectPiloto, usuarios);
-    pilotoDiv.appendChild(selectPiloto);
+        if (campo.tipo === 'select') {
+            var select = document.createElement('select');
+            select.name = campo.nome;
+            select.required = true;
+            if (campo.id) {
+                select.id = campo.id; // Adiciona o ID ao elemento select
+            }
+            campo.fn(select, campo.nome === 'posicoes[]' ? proximaPosicao : usuarios);
+            divCampo.appendChild(select);
+        } else if (campo.tipo === 'input') {
+            var input = document.createElement('input');
+            input.type = campo.inputType;
+            input.name = campo.nome;
+            input.placeholder = campo.label;
+            input.required = true;
+            if (campo.readOnly) {
+                input.readOnly = true;
+            }
+            divCampo.appendChild(input);
+        }
 
-    var labelMelhorTempo = document.createElement('label');
-    labelMelhorTempo.textContent = 'Melhor tempo:';
-    pilotoDiv.appendChild(labelMelhorTempo);
+        pilotoDiv.appendChild(divCampo);
+    });
 
-    var inputMelhorTempo = document.createElement('input');
-    inputMelhorTempo.type = 'time';
-    inputMelhorTempo.name = 'melhor_tempo[]';
-    inputMelhorTempo.placeholder = 'Melhor Tempo';
-    inputMelhorTempo.required = true;
-    pilotoDiv.appendChild(inputMelhorTempo);
-
-    var labelPontuacao = document.createElement('label');
-    labelPontuacao.textContent = 'Pontuação:';
-    pilotoDiv.appendChild(labelPontuacao);
-
-    var inputPontuacao = document.createElement('input');
-    inputPontuacao.type = 'number';
-    inputPontuacao.name = 'pontuacao[]';
-    inputPontuacao.readOnly = true;
-    pilotoDiv.appendChild(inputPontuacao);
+    
 
     var btnExcluirRegistro = document.createElement('button');
     btnExcluirRegistro.type = 'button';
@@ -106,10 +112,14 @@ function adicionarPiloto() {
     btnExcluirRegistro.textContent = 'Excluir registro';
     pilotoDiv.appendChild(btnExcluirRegistro);
 
-    pilotosContainer.appendChild(pilotoDiv);
+    var lineDiv = document.createElement('div');
+    lineDiv.className = 'line';
 
-    // Gerar a pontuação inicial
+    pilotosContainer.appendChild(pilotoDiv);
+    pilotosContainer.appendChild(lineDiv);
+
     gerarPontuacao(pilotoDiv);
+
 }
 
 // Função para gerar a pontuação baseada na posição

@@ -1,0 +1,27 @@
+.piloto {
+    display: flex;
+    margin-bottom: 2em;
+    margin-top: 3rem;
+}
+
+button.btn_excluirRegistro {
+    height: 5rem;
+    width: 15rem;
+    margin-top: 2.7rem;
+    background-color: var(--background-button-red);
+}
+div.line{
+    content: " ";
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: white;
+    position: relative;
+}
+
+.excluirRegistro {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 1.5rem;
+}

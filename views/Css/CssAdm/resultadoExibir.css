@@ -207,7 +207,10 @@ span.nomePiloto {
     gap: 3rem;
     align-items: center;
 }
-
+button.btn_excluirRegistro {
+    width: 15rem;
+    background-color: var(--background-button-red);
+}
 .btn-editar,
 .btn-danger,
 .btn-voltar {
@@ -269,6 +272,7 @@ span.nomePiloto {
 
     .pilot {
         justify-content: center;
+        align-items: end;
     }
 
 }
