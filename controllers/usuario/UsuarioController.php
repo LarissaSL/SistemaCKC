@@ -174,7 +174,7 @@ class UsuarioController extends RenderView
                 $_SESSION['tipo'] = $usuario['Tipo'];
                 $_SESSION['email'] = $usuario['Email'];
 
-                $rotaParaRedirecionar = $_SESSION['tipo'] == 'Comum' ? "/sistemackc/usuario/{$usuario['Id']}" : "/sistemackc/admtm85/menu";
+                $rotaParaRedirecionar = $_SESSION['tipo'] == 'Comum' ? "/sistemackc/etapas" : "/sistemackc/admtm85/menu";
                 header('Location:' . $rotaParaRedirecionar);
                 exit();
             } else {
