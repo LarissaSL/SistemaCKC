@@ -16,6 +16,7 @@
     <script defer src="/sistemackc/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
 
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
+    <link rel="stylesheet" href="/sistemackc/views/Css/CssAdm/cadastrarCorridas.css">
 
     <title>Cadastro de Corridas</title>
 </head>
@@ -31,14 +32,14 @@
             <nav class="nav">
                 <a class="logo" href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a>
 
-                <button class="hamburger"></button> 
+                <button class="hamburger"></button>
                 <ul class="nav-list">
                     <li><a href="/sistemackc/admtm85/usuario">Usuarios</a></li>
                     <li><a href="/sistemackc/admtm85/campeonato">Campeonatos</a></li>
                     <li><a href="/sistemackc/admtm85/corrida">Corridas</a></li>
                     <li><a href="/sistemackc/admtm85/resultado">Resultados</a></li>
                     <li><a href="/sistemackc/admtm85/kartodromo">Kartodromos</a></li>
-                    
+
                     <li class="drop-down">
                         <?php
                         if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
@@ -47,7 +48,7 @@
                             echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
                             echo "<li><a href='/sistemackc/admtm85/menu'>Menu</a></li>";
                             echo "<li><a href='/sistemackc/logout'>Sair</a></li>";
-                            echo "</ul>"; 
+                            echo "</ul>";
                         } else {
                             echo "<a href='/sistemackc/usuario/login'>Entrar</a>";
                         }
@@ -58,7 +59,7 @@
     </header>
 
 
-    <h1>Cadastro de Corridas</h1>
+    <h1 class="title">Cadastro de Corridas</h1>
     <?php
             if (isset($feedback) && !empty($feedback) && $classe == "semCadastro") {
                 echo "<div class='container-feedback'>";
@@ -84,15 +85,20 @@
                     echo "</div>";
                 }
         ?>
-
+        <div class="background-image"></div>
         <section class="container">
             <form action='/sistemackc/admtm85/corrida/cadastrar' method='POST'>
-                <div>
+                <div class="campos">
                     <label for="nome">Nome:</label>
                     <input type="text" id="nome" name="nome" value="<?php echo isset($dados[0]) ? $dados[0] : ''; ?>" required>
                 </div>
 
-                <div>
+                <div class="campos">
+                    <label for="data">Data da corrida:</label>
+                    <input type="date" id="data" name="dataCorrida" value="<?php echo isset($dados[6]) ? $dados[6] : ''; ?>" required>
+                </div>
+
+                <div class="campos">
                     <label for="campeonato">Campeonato:</label>
                     <select id="campeonato" name="campeonato_id">
                         <?php if (!empty($dados[1])) { ?>
@@ -109,7 +115,12 @@
                     </select>
                 </div>
 
-                <div>
+                <div class="campos">
+                    <label for="horario">Horário:</label>
+                    <input type="time" id="horario" name="horario" value="<?php echo isset($dados[7]) ? $dados[7] : ''; ?>" required>
+                </div>
+
+                <div class="campos">
                     <label for="kartodromo">Kartódromo:</label>
                     <select id="kartodromo" name="kartodromo_id">
                         <?php if (!empty($dados[3])) { ?>
@@ -126,29 +137,22 @@
                     </select>
                 </div>
 
-                <div>
-                    <label for="categoria">Categoria:</label><br>
-                    <input type="radio" id="categoria95" name="categoria" value="95" <?php echo (isset($dados[5]) && $dados[5] == '95') ? 'checked' : ''; ?> required>
-                    <label for="categoria95">95kg</label><br>
-                    <input type="radio" id="categoria110" name="categoria" value="110" <?php echo (isset($dados[5]) && $dados[5] == '110') ? 'checked' : ''; ?> required>
-                    <label for="categoria110">110kg</label><br>
-                    <input type="radio" id="categoriaLivre" name="categoria" value="Livre" <?php echo (isset($dados[5]) && $dados[5] == 'Livre') ? 'checked' : ''; ?> required>
-                    <label for="categoria110">Livre</label><br>
-                </div>
-
-                <div>
-                    <label for="data">Data da corrida:</label>
-                    <input type="date" id="data" name="dataCorrida" value="<?php echo isset($dados[6]) ? $dados[6] : ''; ?>" required>
-                </div>
-
-                <div>
-                    <label for="horario">Horário:</label>
-                    <input type="time" id="horario" name="horario" value="<?php echo isset($dados[7]) ? $dados[7] : ''; ?>" required>
-                </div>
-
-                <div>
+                <div class="campos">
                     <label for="tempo_corrida">Tempo da corrida:</label>
                     <input type="time" id="tempo_corrida" name="tempoCorrida" value="<?php echo isset($dados[8]) ? $dados[8] : '00:25'; ?>" required>
+                </div>
+
+                <div class="categorias">
+                    <label for="categoria">Categoria:</label><br>
+                    <div class="categoria-opcoes">
+
+                        <input type="radio" id="categoria95" name="categoria" value="95" <?php echo (isset($dados[5]) && $dados[5] == '95') ? 'checked' : ''; ?> required>
+                        <label for="categoria95">95kg</label>
+                        <input type="radio" id="categoria110" name="categoria" value="110" <?php echo (isset($dados[5]) && $dados[5] == '110') ? 'checked' : ''; ?> required>
+                        <label for="categoria110">110kg</label>
+                        <input type="radio" id="categoriaLivre" name="categoria" value="Livre" <?php echo (isset($dados[5]) && $dados[5] == 'Livre') ? 'checked' : ''; ?> required>
+                        <label for="categoria110">Livre</label>
+                    </div>
                 </div>
 
                 <div>
@@ -169,25 +173,37 @@
                     <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(47, 44, 44, 0.5)" />
                     <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(49, 46, 46, 0.3)" />
                     <use xlink:href="#gentle-wave" x="48" y="7" fill="var(--background-campos)" />
-
                 </g>
             </svg>
         </div>
         <!-- conteudo na nav -->
         <div class="content">
-            <span class="copyright">2024 Manas Code | Todos os direitos reservados</span>
+            <div class="copyrights">
+                <span class="copyright">© Sistema Gerenciador de corridas de kart. Todos os Direitos Reservados à Manas Code</span>
+                <div class="logos">
+                    <div class="logSistema">
+                        <span class="copySistema">Plataforma</span>
+                        <img class="logo logoSistema" src="/sistemackc/Views/Img/ImgSistema/logoSis_Gerenciador_kart.png" alt="logo do Sistema Gerenciador de Corridas de Kart ">
+                    </div>
+                    <div class="logManas">
+                        <span class="copyDevs">desenvolvedor</span>
+                        <img class="logo logoManasC" src="/sistemackc/Views/Img/ImgSistema/logoManasC.png" alt="logo da desenvolvedora do sistema - Manas Code">
+                    </div>
+                </div>
+            </div>
+
             <div class="navegation">
                 <div class="contact">
                     <a href="https://www.instagram.com/crashkartchampionship?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
                         <i class="ph-fill ph-instagram-logo"></i><!-- logo instagram-->
                     </a>
-                    <a href="#" target="_blank">
+                    <a href="https://wa.me/5511984372045" target="_blank">
                         <i class="ph-fill ph-whatsapp-logo"></i><!-- logo whatsapp-->
                     </a>
                 </div>
                 <div class="navigationLink">
                     <a href="/sistemackc/etapas">Etapas</a>
-                    <a href="#">Classificação</a>
+                    <a href="/sistemackc/classificacao">Classificação</a>
                     <a href="/sistemackc/kartodromo">Kartódromos</a>
                 </div>
             </div>

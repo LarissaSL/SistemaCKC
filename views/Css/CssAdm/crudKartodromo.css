@@ -226,13 +226,13 @@
     }
 
     .background-image{
-        height: 62em;
+        height: 70em;
     }
 }
 
 @media (min-width: 1440px) {
     .background-imageAtualizar{
-        height: 70em;
+        height: 85em;
     }
 }
 

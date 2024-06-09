@@ -116,6 +116,6 @@ button.bt-cadastrar:disabled {
         grid-gap: 2rem 6rem;
     }   
     .background-image {
-        height: 105vh;
+        height: 50em;
     } 
 }
