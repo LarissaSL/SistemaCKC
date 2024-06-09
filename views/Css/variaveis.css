@@ -220,13 +220,15 @@ div#bt-go-back {
 
 }
 
-/* FOOTER */
+
+/* ONDAS */
 .waves {
     position: relative;
     width: 100%;
     height: 15vh;
     margin-bottom: -7px;
 }
+
 
 /* animação das ondas no footer */
 .parallax>use {
@@ -275,13 +277,29 @@ div#bt-go-back {
     background-color: var(--background-campos);
 }
 
-
-/* .copyrights {
+.logos {
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
+    margin-left: 2rem;
+    gap: 3rem;
+}
+.logSistema, .logManas {
+    display: flex;
     flex-direction: column;
-} */
+}
+
+.logos span {
+    margin-bottom: -7rem;
+}
+
+/* TAMANHO DAS LOGOS */
+img.logo.logoSistema {
+    max-width: 90px;
+}
+
+img.logo.logoManasC {
+    max-width: 117px;
+}
+
 .copyright {
     height: 61px;
     font-size: 1.3rem;
@@ -291,10 +309,6 @@ div#bt-go-back {
     margin-left: 2rem;
     margin-right: 2rem;
 }
-
-/* span.dev {
-    margin-top: -24px;
-} */
 
 .navegation {
     display: flex;
