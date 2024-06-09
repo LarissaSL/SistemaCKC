@@ -88,7 +88,6 @@ class ClassificacaoController extends RenderView
             $filtroMes = isset($_GET['filtroMes']) ? $_GET['filtroMes'] : '';
             $filtroAno = isset($_GET['filtroAno']) ? $_GET['filtroAno'] : '';
             $filtroDia = isset($_GET['filtroDia']) ? $_GET['filtroDia'] : '';
-            $filtroClassificacao = isset($_GET['filtroClassificacao']) ? $_GET['filtroClassificacao'] : 'corrida'; 
 
             if (!empty($filtroCampeonato) || !empty($filtroMes) || !empty($filtroAno) || !empty($filtroDia)) {
                 $consulta = $corridaModel->consultarCorridaPorFiltroParaResultado($filtroCampeonato, $filtroMes, $filtroAno, $filtroDia);
@@ -142,7 +141,6 @@ class ClassificacaoController extends RenderView
             'corridas' => isset($corridas) ? $corridas : [],
             'feedback' => isset($feedback) ? $feedback : '',
             'classe' => isset($classe) ? $classe : '',
-            'tipoDeExibicao' => strtolower($filtroClassificacao),
             'campeonatos' => isset($campeonatos) ? $campeonatos : []
         ]);
     }
@@ -151,13 +149,10 @@ class ClassificacaoController extends RenderView
         $url = $_SERVER['REQUEST_URI'];
 
         $partesUrl = explode('/', $url);
-
-        $tipoDeExibicao = $partesUrl[3] == 'corrida' ?  NULL : 'geral';
     
         $idCorrida = isset($partesUrl[4]) ? $partesUrl[4] : '';
 
-
-        $this->exibir($idCorrida, 'usuario', $tipoDeExibicao);
+        $this->exibir($idCorrida, 'usuario', NULL);
     }
 
     public function exibir($idCorrida, $local = NULL, $tipoResultado = NULL)

@@ -97,14 +97,6 @@
 
             <form method="get">
                 <div class="containerFiltros">
-                    <div class="filtro_classificacao">
-                        <label for="filtro_Classificacao">Classificação desejada</label>
-                        <select class="buscaSelect" id="filtroClassificacao" name="filtroClassificacao">
-                            <option value="corrida" <?php echo isset($_GET['filtroClassificacao']) && $_GET['filtroClassificacao'] == 'corrida' ? 'selected' : 'selected'; ?>>Corrida</option>
-                            <option value="geral" disabled<?php echo isset($_GET['filtroClassificacao']) && $_GET['filtroClassificacao'] == 'geral' ? 'selected' : ''; ?>>Geral</option>
-                        </select>
-                    </div>
-
                     <div class="filtro_campeonato">
                         <label for="filtro_Campeonato">Filtrar por Campeonato</label>
                         <select class="buscaSelect" id="filtroCampeonato" name="filtroCampeonato">
@@ -186,7 +178,7 @@
                     echo "<i class='ph ph-steering-wheel'></i>";
                     echo "<p>" . $corrida['qtdPilotos'] . "/15</p>";
                     echo "</div>";
-                    $link = '/sistemackc/classificacao/' . $tipoDeExibicao . '/' . $corrida['id'];
+                    $link = '/sistemackc/classificacao/corrida/' . $corrida['id'];
                     echo "<a class='btn-verResultado' href='$link'>Ver resultado</a>";
                     echo "</article>";
             }
