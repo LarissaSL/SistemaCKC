@@ -85,7 +85,16 @@
         <?php
             if (isset($feedback) && $feedback != '') {
                 echo "<div class='container-feedback'>";
-                echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
+                echo '
+                    <div class="nofifications">
+                        <div class="toast success">
+                            <div class="column">
+                                <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
+                                <span class="'. $classe .'">'. $feedback .'</span>
+                            </div>
+                            <i class="ph ph-x" onclick="(this.parentElement).remove()"></i><!--iconde de X -->
+                        </div>
+                    </div>';
                 echo "</div>";
             } else {
         ?>
@@ -176,7 +185,7 @@
                         <img class="logo logoSistema" src="/sistemackc/Views/Img/ImgSistema/logoSis_Gerenciador_kart.png" alt="logo do Sistema Gerenciador de Corridas de Kart ">
                     </div>
                     <div class="logManas">
-                        <span class="copyDevs">desenvolvedor</span>
+                        <span class="copyDevs">Desenvolvedora</span>
                         <img class="logo logoManasC" src="/sistemackc/Views/Img/ImgSistema/logoManasC.png" alt="logo da desenvolvedora do sistema - Manas Code">
                     </div>
                 </div>

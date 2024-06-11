@@ -17,8 +17,8 @@
 
     <script defer src="/sistemackc/views/Js/notificacao.js"></script> 
       <!-- Custom CSS -->
-      <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/CssUsuario/notificacoes.css">
+    <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
     <title>Teste</title>
 </head>
 
@@ -41,14 +41,27 @@
             <div class="toast success">
                 <div class="column">
                     <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
-                    <span> '. $feedback .'</span>
+                    <span class="<?php echo $classe ?>"><?php echo $feedback ?></span>
                 </div>
                 <i class="ph ph-x" onclick="(this.parentElement).remove()"></i><!--iconde de X -->
             </div>
         </div>';
+
+        echo '
+        <div class="nofifications">
+            <div class="toast success">
+                <div class="column">
+                    <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
+                    <span class="'. $classe .'">'. $feedback .'</span>
+                </div>
+                <i class="ph ph-x" onclick="(this.parentElement).remove()"></i><!--iconde de X -->
+            </div>
+        </div>';
+        
     }
     ?>
-
+    <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
+    <span> '. $feedback .'</span>
     <h1>Jeito 2:</h1>
     <?php
     if (isset($classe) && $classe == 'erro') : ?>

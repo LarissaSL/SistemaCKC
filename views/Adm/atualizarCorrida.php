@@ -15,8 +15,11 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
     <script defer src="/sistemackc/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
 
+    <script defer src="/sistemackc/views/Js/notificacao.js"></script>
+
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/CssAdm/cadastrarCorridas.css">
+    <link rel="stylesheet" href="/sistemackc/views/Css/CssUsuario/notificacoes.css">
 
     <title>Atualizar Corrida</title>
 
@@ -65,7 +68,17 @@
             if (isset($feedback) && $feedback != "") {
                 echo "<div class='container-feedback'>";
                 if ($classe == 'erro') {
-                    echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
+                    echo '
+                    <div class="nofifications">
+                        <div class="toast success">
+                            <div class="column">
+                                <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
+                                <span class="'. $classe .'">'. $feedback .'</span>
+                            </div>
+                            <i class="ph ph-x" onclick="(this.parentElement).remove()"></i><!--iconde de X -->
+                        </div>
+                    </div>';
+
                 }
                 echo "</div>";
             }
@@ -176,7 +189,7 @@
                         <img class="logo logoSistema" src="/sistemackc/Views/Img/ImgSistema/logoSis_Gerenciador_kart.png" alt="logo do Sistema Gerenciador de Corridas de Kart ">
                     </div>
                     <div class="logManas">
-                        <span class="copyDevs">desenvolvedor</span>
+                        <span class="copyDevs">Desenvolvedora</span>
                         <img class="logo logoManasC" src="/sistemackc/Views/Img/ImgSistema/logoManasC.png" alt="logo da desenvolvedora do sistema - Manas Code">
                     </div>
                 </div>

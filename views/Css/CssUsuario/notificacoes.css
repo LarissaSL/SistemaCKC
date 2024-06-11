@@ -4,7 +4,7 @@
 
 .nofifications{
     position: fixed;
-    top: 40px;
+    top: 60px;
     right: 20px;
     color: var(--background-principal);
 }
@@ -21,6 +21,7 @@
     overflow: hidden;
     list-style: none;
     border-radius: 4px;
+    gap: .8rem;
     padding: 16px 17px;
     margin-bottom: 10px;
     background: var(--text-base-light);

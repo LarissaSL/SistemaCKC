@@ -80,21 +80,21 @@
         </nav>
     </header>
 
-        <main class="container-conteudo">
+    <main class="container-conteudo">
 
-            <h1 class="titulo">Erro 404</h1>
-                <?php if (isset($feedback)) {
-                    if (isset($feedback) && $feedback != '') {
-                        echo "<div class='container-feedback'>";
-                        echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
-                        echo "<div class='rotaDestaque'>";
-                        echo "<p>" . $_SERVER['REQUEST_URI'] . "</p>";
-                        echo "</div>";
-                        echo "</div>";
-                    }
-                } ?>
+        <h1 class="titulo">Erro 404</h1>
+        <?php if (isset($feedback)) {
+            if (isset($feedback) && $feedback != '') {
+                echo "<div class='container-feedback'>";
+                echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
+                echo "<div class='rotaDestaque'>";
+                echo "<p>" . $_SERVER['REQUEST_URI'] . "</p>";
+                echo "</div>";
+                echo "</div>";
+            }
+        } ?>
 
-        </main>
+    </main>
 </body>
 
 </html>

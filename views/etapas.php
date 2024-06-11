@@ -9,6 +9,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <!-- ícone de menu  -->
+
+    <script defer src="/sistemackc/views/Js/notificacao.js"></script> 
+      <!-- Custom CSS -->
+    <link rel="stylesheet" href="/sistemackc/views/Css/CssUsuario/notificacoes.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/etapas.css">
 
@@ -118,9 +122,27 @@
                     if (isset($feedback) && $feedback != '') {
                         echo "<div class='container-feedback'>";
                         if ($classe == 'erro') {
-                            echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
+                            echo '
+                            <div class="nofifications">
+                                <div class="toast success">
+                                    <div class="column">
+                                        <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
+                                        <span class="'. $classe .'">'. $feedback .'</span>
+                                    </div>
+                                    <i class="ph ph-x" onclick="(this.parentElement).remove()"></i><!--iconde de X -->
+                                </div>
+                            </div>';
                         } else {
-                            echo "<span class='$classe'><i class='ph ph-check-square'></i><strong>$feedback</strong></span>";
+                            echo '
+                            <div class="nofifications">
+                                <div class="toast success">
+                                    <div class="column">
+                                        <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
+                                        <span class="'. $classe .'">'. $feedback .'</span>
+                                    </div>
+                                    <i class="ph ph-x" onclick="(this.parentElement).remove()"></i><!--iconde de X -->
+                                </div>
+                            </div>';
                         }
                         echo "</div>";
                     }
@@ -187,7 +209,7 @@
                         <img class="logo logoSistema" src="/sistemackc/Views/Img/ImgSistema/logoSis_Gerenciador_kart.png" alt="logo do Sistema Gerenciador de Corridas de Kart ">
                     </div>
                     <div class="logManas">
-                        <span class="copyDevs">desenvolvedor</span>
+                        <span class="copyDevs">Desenvolvedora</span>
                         <img class="logo logoManasC" src="/sistemackc/Views/Img/ImgSistema/logoManasC.png" alt="logo da desenvolvedora do sistema - Manas Code">
                     </div>
                 </div>
