@@ -64,11 +64,7 @@
                 echo "<div class='container-feedback'>";
                 echo '
                     <div class="nofifications">
-<<<<<<< HEAD
                         <div class="toast alerta">
-=======
-                    <div class="toast success">
->>>>>>> a747ce414197091e30f776c6112dfa9fd3a4e60b
                             <div class="column">
                             <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
                             <span class="' . $classe . '">' . $feedback . '</span>

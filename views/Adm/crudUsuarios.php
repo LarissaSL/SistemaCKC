@@ -122,37 +122,8 @@
                         </thead>
                         <tbody><!--corpo da tabela/linhas -->
 
-<<<<<<< HEAD
-            <div class="tabela">
-                <table class='tabela-conteudo'>
-                    <thead class='tb-cabecalho'> <!--cabecalho da tabela -->
-                        <tr class='nome-cabecalhos'>
-                            <th>Ações</th>
-                            <th>Foto de Perfil</th>
-                            <th>Tipo</th>
-                            <th>Nome</th>
-                            <th>Sobrenome</th>
-                            <th>CPF</th>
-                            <th>Email</th>
-                            <th class="modal">Senha</th>
-                            <th class="modal">Peso</th>
-                            <th class="modal">Data de nascimento</th>
-                            <th class="modal">Genero</th>
-                            <th>Telefone</th>
-                            <th class="modal">Data de Registro</th>
-                            <th>Mais informações</th>
-                        </tr>
-                    </thead>
-                    <tbody><!--corpo da tabela/linhas -->
-
-                        <?php
-                        foreach ($usuarios as $usuario) {
-
-                            echo "<tr>";
-=======
                             <?php
                             foreach ($usuarios as $usuario) {
->>>>>>> a747ce414197091e30f776c6112dfa9fd3a4e60b
 
                                 echo "<tr>";
 
@@ -162,51 +133,6 @@
                                     echo "<button class='bt-excluir' onclick='confirmarExclusao({$usuario["Id"]}, \"{$usuario["Nome"]}\", \"{$usuario["Sobrenome"]}\")'><i class='ph-bold ph-trash'></i></button></div></td>"; //<!--Botão de excluir -->
                                 }
 
-<<<<<<< HEAD
-                            $foto = $usuario['Foto'] != NULL ? $usuario['Foto'] : 'perfil_escuro.png';
-                            echo "<td><img style='width: 100px;' src='/sistemackc/views/Img/ImgUsuario/" . $foto . "' alt='Imagem de " . $usuario['Nome'] . "'></td>";
-                            echo "<td>" . $usuario['Tipo'] . "</td>";
-                            echo "<td>" . $usuario['Nome'] . "</td>";
-                            echo "<td>" . $usuario['Sobrenome'] . "</td>";
-                            echo "<td>" . $usuario['Cpf'] . "</td>";
-                            echo "<td>" . $usuario['Email'] . "</td>";
-                            echo "<td class='modal'>" . substr($usuario['Senha'], 0, 5) . " ...</td>";
-                            echo "<td class='modal'>" . $usuario['Peso'] . "</td>";
-                            $dataNascimento = new DateTime($usuario['Data_nascimento']);
-                            echo "<td class='modal'>" . $dataNascimento->format('d/m/Y') . "</td>";
-                            echo "<td class='modal'>" . $usuario['Genero'] . "</td>";
-                            echo "<td>" . $usuario['Telefone'] . "</td>";
-                            echo "<td class='modal'> " . $usuario['Data_registro'] . "</td>";
-                            echo "<td class='bt-modal'>
-                                    <div class='icon-plus'>
-                                        <button class='btModal' 
-                                                foto='<img style=\"width: 90px;\" src=\"/sistemackc/views/Img/ImgUsuario/" . $foto . "\" alt=\"Imagem de " . $usuario['Nome'] . "\">'
-                                                cpf='" . $usuario['Cpf'] . "' 
-                                                data-nascimento='" . $usuario['Data_nascimento'] . "' 
-                                                tipo='" . $usuario['Tipo'] . "' 
-                                                nome='" . $usuario['Nome'] . "' 
-                                                sobrenone='" . $usuario['Sobrenome'] . "' 
-                                                email='" . $usuario['Email'] . "' 
-                                                senha='" . substr($usuario['Senha'], 0, 5) . "' 
-                                                peso='" . $usuario['Peso'] . "' 
-                                                genero='" . $usuario['Genero'] . "' 
-                                                telefone='" . $usuario['Telefone'] . "' 
-                                                data-registro='" . $usuario['Data_registro'] . "'>
-                                                <i class='ph-bold ph-plus'></i>
-                                        </button>
-                                    </div></td>";
-                            echo "</tr>";
-                        }
-                        echo "</table>";
-
-                        ?>
-
-            </div>
-            <script>
-                function confirmarExclusao(id, nome, sobrenome) {
-                    if (confirm(`Tem certeza que deseja excluir:\nID: ${id}  |  ${nome} ${sobrenome}\n\nOBS.: Essa ação é irreversivel.`)) {
-                        window.location.href = './usuario/excluir/' + id;
-=======
                                 $foto = $usuario['Foto'] != NULL ? $usuario['Foto'] : 'perfil_escuro.png';
                                 echo "<td><img style='width: 100px;' src='/sistemackc/views/Img/ImgUsuario/" . $foto . "' alt='Imagem de " . $usuario['Nome'] . "'></td>";
                                 echo "<td>" . $usuario['Tipo'] . "</td>";
@@ -246,7 +172,6 @@
                         if (confirm(`Tem certeza que deseja excluir:\nID: ${id}  |  ${nome} ${sobrenome}\n\nOBS.: Essa ação é irreversivel.`)) {
                             window.location.href = './usuario/excluir/' + id;
                         }
->>>>>>> a747ce414197091e30f776c6112dfa9fd3a4e60b
                     }
                 </script>
 

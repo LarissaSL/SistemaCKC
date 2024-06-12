@@ -62,61 +62,14 @@
         </header>
 
 
-<<<<<<< HEAD
-    <h1 class="title">Cadastro de Corridas</h1>
-    <?php
-            if (isset($feedback) && !empty($feedback) && $classe == "semCadastro") {
-                echo "<div class='container-feedback'>";
-                if ($classe == 'semCadastro') {
-                    echo '
-                        <div class="nofifications">
-                            <div class="toast alerta">
-                                <div class="column">
-                                    <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
-                                    <span class="' . $classe . '">' . $feedback . '</span>
-                                </div>
-                                <i class="ph ph-x" onclick="(this.parentElement).remove()"></i><!--iconde de X -->
-                            </div>
-                        </div>';
-                }
-                if (isset($mostrarBotaoCampeonato) && $mostrarBotaoCampeonato) {
-                    echo '
-                        <div class="nofifications">
-                            <div class="toast alerta">
-                                <div class="column">
-                                    <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
-                                    <span class="' . $classe . '">' . $feedback . '</span>
-                                </div>
-                                <i class="ph ph-x" onclick="(this.parentElement).remove()"></i><!--iconde de X -->
-                            </div>
-                        </div>';
-                }
-                if (isset($mostrarBotaoKartodromo) && $mostrarBotaoKartodromo) {
-                    echo '
-                        <div class="nofifications">
-                            <div class="toast alerta">
-                                <div class="column">
-                                    <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
-                                    <span class="' . $classe . '">' . $feedback . '</span>
-                                </div>
-                                <i class="ph ph-x" onclick="(this.parentElement).remove()"></i><!--iconde de X -->
-                            </div>
-                        </div>';
-                }
-                echo "</div>";
-            } else {
-    ?>
-
-=======
         <h1 class="title">Cadastro de Corridas</h1>
->>>>>>> a747ce414197091e30f776c6112dfa9fd3a4e60b
         <?php
         if (isset($feedback) && !empty($feedback) && $classe == "semCadastro") {
             echo "<div class='container-feedback'>";
             if ($classe == 'semCadastro') {
                 echo '
                         <div class="nofifications">
-                            <div class="toast success">
+                            <div class="toast alerta">
                                 <div class="column">
                                     <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
                                     <span class="' . $classe . '">' . $feedback . '</span>
@@ -128,7 +81,7 @@
             if (isset($mostrarBotaoCampeonato) && $mostrarBotaoCampeonato) {
                 echo '
                         <div class="nofifications">
-                            <div class="toast success">
+                            <div class="toast alerta">
                                 <div class="column">
                                     <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
                                     <span class="' . $classe . '">' . $feedback . '</span>
@@ -140,7 +93,7 @@
             if (isset($mostrarBotaoKartodromo) && $mostrarBotaoKartodromo) {
                 echo '
                         <div class="nofifications">
-                            <div class="toast success">
+                            <div class="toast alerta">
                                 <div class="column">
                                     <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
                                     <span class="' . $classe . '">' . $feedback . '</span>
