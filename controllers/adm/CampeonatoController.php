@@ -83,7 +83,8 @@ class CampeonatoController extends RenderView
 
         $feedback = "";
         $classe = "";
-        $dados = [$infoCampeonato['Nome'], $infoCampeonato['Data_inicio'], $infoCampeonato['Data_termino']];
+
+        $dados = $infoCampeonato != NULL ? [$infoCampeonato['Nome'], $infoCampeonato['Data_inicio'], $infoCampeonato['Data_termino']] : NULL;
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             

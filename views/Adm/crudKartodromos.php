@@ -25,13 +25,14 @@
 </head>
 
 <body>
-    <header>
-        <?php
-        if (!isset($_SESSION)) {
-            session_start();
-        }
-        if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
-        ?>
+
+    <?php
+    if (!isset($_SESSION)) {
+        session_start();
+    }
+    if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
+    ?>
+        <header>
             <!-- Inicio do Conteúdo para o ADM -->
             <nav class="nav">
                 <a class="logo" href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a>
@@ -60,128 +61,129 @@
                     </li>
                 </ul>
             </nav>
-    </header>
-    <main>
-        <!-- Inicio do Conteúdo para o ADM -->
-        <h1 class="title">Manutenção de Kartódromos</h1>
-        <p class="subTititulo">Aqui você pode fazer cadastro, consulta, alteração e exclusão de usuários no sistema.</p>
-        <a class='bt-cadastrar-kart' href='/sistemackc/admtm85/kartodromo/cadastrar'>Cadastrar novo kartódromo</a>
+        </header>
+        <main>
+            <!-- Inicio do Conteúdo para o ADM -->
+            <h1 class="title">Manutenção de Kartódromos</h1>
+            <p class="subTititulo">Aqui você pode fazer cadastro, consulta, alteração e exclusão de usuários no sistema.</p>
+            <a class='bt-cadastrar-kart' href='/sistemackc/admtm85/kartodromo/cadastrar'>Cadastrar novo kartódromo</a>
 
-        <form method="get">
-            <div class="filtro">
-                <div class="filtro_nome">
-                    <label>Filtrar por Nome</label>
-                    <input type="text" name="busca" class="form-control" value="<?php echo htmlspecialchars($busca); ?>">
+            <form method="get">
+                <div class="filtro">
+                    <div class="filtro_nome">
+                        <label>Filtrar por Nome</label>
+                        <input type="text" name="busca" class="form-control" value="<?php echo htmlspecialchars($busca); ?>">
+                    </div>
+                    <div class="bt-filtrar">
+                        <button type="submit" class="btn btn-primary">Filtrar</button>
+                    </div>
                 </div>
-                <div class="bt-filtrar">
-                    <button type="submit" class="btn btn-primary">Filtrar</button>
-                </div>
-            </div>
-        </form>
+            </form>
 
-        <!-- Só mostra feedback se a classe for a de erro -->
-        <?php
+            <!-- Só mostra feedback se a classe for a de erro -->
+            <?php
             if (isset($classe) && $classe == 'alert alert-danger') : ?>
-            <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
-        <?php endif ?>
+                <p class="<?php echo $classe ?>"><?php echo $feedback ?></p>
+            <?php endif ?>
 
-        <div class="tabela">
-            <table class='tabela-conteudo'>
-                <thead class='tb-cabecalho'> <!--cabecalho da tabela -->
-                    <tr class='nome-cabecalhos'>
-                        <th>Ações</th>
-                        <th>Foto</th>
-                        <th>Nome</th>
-                        <th>CEP</th>
-                        <th>Rua</th>
-                        <th>Bairro</th>
-                        <th>Número</th>
-                        <th>Redes</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    foreach ($kartodromos as $kartodromo) {
-                        echo "<tr>";
-                        echo "<td class='acoes'><div class='icos'>
+            <div class="tabela">
+                <table class='tabela-conteudo'>
+                    <thead class='tb-cabecalho'> <!--cabecalho da tabela -->
+                        <tr class='nome-cabecalhos'>
+                            <th>Ações</th>
+                            <th>Foto</th>
+                            <th>Nome</th>
+                            <th>CEP</th>
+                            <th>Rua</th>
+                            <th>Bairro</th>
+                            <th>Número</th>
+                            <th>Redes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        foreach ($kartodromos as $kartodromo) {
+                            echo "<tr>";
+                            echo "<td class='acoes'><div class='icos'>
                         <a class='bt-editar' href='/sistemackc/admtm85/kartodromo/atualizar/{$kartodromo["Id"]}'><i class='ph-bold ph-note-pencil'></i></a>
                         <button class='bt-excluir' onclick='confirmarExclusao({$kartodromo["Id"]}, \"{$kartodromo["Nome"]}\")'><i class='ph-bold ph-trash'></i></button></div></td>";
-                        echo "<td><img style='width: 120px;' src='/sistemackc/views/Img/ImgSistema/" . $kartodromo['Foto'] . "' alt='Imagem do Kartódromo'></td>";
-                        echo "<td>" . $kartodromo['Nome'] . "</td>";
-                        echo "<td>" . $kartodromo['CEP'] . "</td>";
-                        echo "<td>" . $kartodromo['Rua'] . "</td>";
-                        echo "<td>" . $kartodromo['Bairro'] . "</td>";
-                        echo "<td>" . $kartodromo['Numero'] . "</td>";
-                        echo "<td><a class='links' href='{$kartodromo['Redes']}' target='_blank'>acesse aqui</a></td>";
-                        echo "</tr>";
+                            echo "<td><img style='width: 120px;' src='/sistemackc/views/Img/ImgSistema/" . $kartodromo['Foto'] . "' alt='Imagem do Kartódromo'></td>";
+                            echo "<td>" . $kartodromo['Nome'] . "</td>";
+                            echo "<td>" . $kartodromo['CEP'] . "</td>";
+                            echo "<td>" . $kartodromo['Rua'] . "</td>";
+                            echo "<td>" . $kartodromo['Bairro'] . "</td>";
+                            echo "<td>" . $kartodromo['Numero'] . "</td>";
+                            echo "<td><a class='links' href='{$kartodromo['Redes']}' target='_blank'>acesse aqui</a></td>";
+                            echo "</tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+
+            </div>
+            <script>
+                function confirmarExclusao(id, nome) {
+                    if (confirm(`Tem certeza que deseja excluir:\nID: ${id}  |  ${nome}\n\nOBS.: Essa ação é irreversivel.`)) {
+                        window.location.href = '/sistemackc/admtm85/kartodromo/excluir/' + id;
                     }
-                    ?>
-                </tbody>
-            </table>
-
-        </div>
-        <script>
-            function confirmarExclusao(id, nome) {
-                if (confirm(`Tem certeza que deseja excluir:\nID: ${id}  |  ${nome}\n\nOBS.: Essa ação é irreversivel.`)) {
-                    window.location.href = '/sistemackc/admtm85/kartodromo/excluir/' + id;
                 }
-            }
-        </script>
+            </script>
 
-    <?php
-        } else {
-            echo "<h1>Acesso não autorizado</h1>";
-        }
-    ?>
-    </main>
-    <footer>
-        <!-- ondas -->
-        <div class="water">
-            <svg class="waves" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-                <defs>
-                    <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-                </defs>
-                <g class="parallax">
-                    <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(47, 44, 44, 0.7)" />
-                    <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(47, 44, 44, 0.5)" />
-                    <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(49, 46, 46, 0.3)" />
-                    <use xlink:href="#gentle-wave" x="48" y="7" fill="var(--background-campos)" />
-                </g>
-            </svg>
-        </div>
-        <!-- conteudo na nav -->
-        <div class="content">
-            <div class="copyrights">
-                <span class="copyright">© Sistema Gerenciador de corridas de kart. Todos os Direitos Reservados à Manas Code</span>
-                <div class="logos">
-                    <div class="logSistema">
-                        <span class="copySistema">Plataforma</span>
-                        <img class="logo logoSistema" src="/sistemackc/Views/Img/ImgSistema/logoSis_Gerenciador_kart.png" alt="logo do Sistema Gerenciador de Corridas de Kart ">
+        </main>
+        <footer>
+            <!-- ondas -->
+            <div class="water">
+                <svg class="waves" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                    <defs>
+                        <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                    </defs>
+                    <g class="parallax">
+                        <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(47, 44, 44, 0.7)" />
+                        <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(47, 44, 44, 0.5)" />
+                        <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(49, 46, 46, 0.3)" />
+                        <use xlink:href="#gentle-wave" x="48" y="7" fill="var(--background-campos)" />
+                    </g>
+                </svg>
+            </div>
+            <!-- conteudo na nav -->
+            <div class="content">
+                <div class="copyrights">
+                    <span class="copyright">© Sistema Gerenciador de corridas de kart. Todos os Direitos Reservados à Manas Code</span>
+                    <div class="logos">
+                        <div class="logSistema">
+                            <span class="copySistema">Plataforma</span>
+                            <img class="logo logoSistema" src="/sistemackc/Views/Img/ImgSistema/logoSis_Gerenciador_kart.png" alt="logo do Sistema Gerenciador de Corridas de Kart ">
+                        </div>
+                        <div class="logManas">
+                            <span class="copyDevs">desenvolvedor</span>
+                            <img class="logo logoManasC" src="/sistemackc/Views/Img/ImgSistema/logoManasC.png" alt="logo da desenvolvedora do sistema - Manas Code">
+                        </div>
                     </div>
-                    <div class="logManas">
-                        <span class="copyDevs">desenvolvedor</span>
-                        <img class="logo logoManasC" src="/sistemackc/Views/Img/ImgSistema/logoManasC.png" alt="logo da desenvolvedora do sistema - Manas Code">
+                </div>
+
+                <div class="navegation">
+                    <div class="contact">
+                        <a href="https://www.instagram.com/crashkartchampionship?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
+                            <i class="ph-fill ph-instagram-logo"></i><!-- logo instagram-->
+                        </a>
+                        <a href="https://wa.me/5511984372045" target="_blank">
+                            <i class="ph-fill ph-whatsapp-logo"></i><!-- logo whatsapp-->
+                        </a>
+                    </div>
+                    <div class="navigationLink">
+                        <a href="/sistemackc/etapas">Etapas</a>
+                        <a href="/sistemackc/classificacao">Classificação</a>
+                        <a href="/sistemackc/kartodromo">Kartódromos</a>
                     </div>
                 </div>
             </div>
-
-            <div class="navegation">
-                <div class="contact">
-                    <a href="https://www.instagram.com/crashkartchampionship?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
-                        <i class="ph-fill ph-instagram-logo"></i><!-- logo instagram-->
-                    </a>
-                    <a href="https://wa.me/5511984372045" target="_blank">
-                        <i class="ph-fill ph-whatsapp-logo"></i><!-- logo whatsapp-->
-                    </a>
-                </div>
-                <div class="navigationLink">
-                    <a href="/sistemackc/etapas">Etapas</a>
-                    <a href="/sistemackc/classificacao">Classificação</a>
-                    <a href="/sistemackc/kartodromo">Kartódromos</a>
-                </div>
-            </div>
+        </footer>
+    <?php } else { ?>
+        <div class="containerAcesso">
+            <h1>Acesso não autorizado<i class="ph-fill ph-warning"></i></h1>
+            <p>Apenas administradores do Sistema tem acesso</p>
         </div>
-    </footer>
+    <?php } ?>
 </body>
 
 </html>
