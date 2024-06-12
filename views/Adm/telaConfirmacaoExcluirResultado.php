@@ -14,8 +14,8 @@
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <script defer src="/sistemackc/views/Js/notificacao.js"></script> 
-      <!-- Custom CSS -->
+    <script defer src="/sistemackc/views/Js/notificacao.js"></script>
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="/sistemackc/views/Css/CssUsuario/notificacoes.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/CssAdm/resultadoExibir.css">
@@ -25,13 +25,14 @@
 </head>
 
 <body>
-    <header class="header">
-        <?php
-        if (!isset($_SESSION)) {
-            session_start();
-        }
-        if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
-        ?>
+
+    <?php
+    if (!isset($_SESSION)) {
+        session_start();
+    }
+    if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
+    ?>
+        <header class="header">
             <nav class="nav">
                 <a class="logo" href="/sistemackc/"><img src="/sistemackc/views/Img/ImgSistema/logoCKC.png" alt="logo do CKC"></a>
 
@@ -42,7 +43,7 @@
                     <li><a href="/sistemackc/admtm85/corrida">Corridas</a></li>
                     <li><a href="/sistemackc/admtm85/resultado">Resultados</a></li>
                     <li><a href="/sistemackc/admtm85/kartodromo">Kartodromos</a></li>
-                    
+
                     <li class="drop-down">
                         <?php
                         if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') {
@@ -51,7 +52,7 @@
                             echo "<li><a href='/sistemackc/usuario/{$_SESSION['id']}'>Perfil</a></li>";
                             echo "<li><a href='/sistemackc/admtm85/menu'>Menu</a></li>";
                             echo "<li><a href='/sistemackc/logout'>Sair</a></li>";
-                            echo "</ul>"; 
+                            echo "</ul>";
                         } else {
                             echo "<a href='/sistemackc/usuario/login'>Entrar</a>";
                         }
@@ -59,144 +60,147 @@
                     </li>
                 </ul>
             </nav>
-    </header>
+        </header>
 
-    <main>                
-        <?php
-        if (isset($feedback) && !empty($feedback)) {
-            echo "<div class='container-feedback'>";
-            if ($classe == 'erro') {
-                echo '
+        <main>
+            <?php
+            if (isset($feedback) && !empty($feedback)) {
+                echo "<div class='container-feedback'>";
+                if ($classe == 'erro') {
+                    echo '
                     <div class="nofifications">
                         <div class="toast alerta">
                             <div class="column">
                                 <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
-                                <span class="'. $classe .'">'. $feedback .'</span>
+                                <span class="' . $classe . '">' . $feedback . '</span>
                             </div>
                             <i class="ph ph-x" onclick="(this.parentElement).remove()"></i><!--iconde de X -->
                         </div>
                     </div>';
-            }
-            echo "</div>";
-        } else {
-        ?>
+                }
+                echo "</div>";
+            } else {
+            ?>
 
-        <div class="background-image"></div>
-        <h1 class="titulo">Confirmar Exclusão</h1>
-        <div class="containerInformacoes">
-            <div class="containerImagem">
-                <img class="fundoImg" src="/sistemackc/Views/Img/ImgTelas/fundo.png" alt="fundo da foto do Crash">
-                <img class="imagem" src="/sistemackc/Views/Img/ImgTelas/crash.png" alt="foto do Crash">
-            </div>
-            <div class="informacoesCorrida">
-                <div class="title">
-                    <span><?php echo $dadosCorrida['Nome_Campeonato']; ?></span>
+                <div class="background-image"></div>
+                <h1 class="titulo">Confirmar Exclusão</h1>
+                <div class="containerInformacoes">
+                    <div class="containerImagem">
+                        <img class="fundoImg" src="/sistemackc/Views/Img/ImgTelas/fundo.png" alt="fundo da foto do Crash">
+                        <img class="imagem" src="/sistemackc/Views/Img/ImgTelas/crash.png" alt="foto do Crash">
+                    </div>
+                    <div class="informacoesCorrida">
+                        <div class="title">
+                            <span><?php echo $dadosCorrida['Nome_Campeonato']; ?></span>
+                        </div>
+                        <?php $classeH2 = strtolower($nomeAbreviado) . $dadosCorrida['Categoria']; ?>
+                        <h2>
+                            <strong class="<?php echo $classeH2; ?>"><?php echo strtoupper($nomeAbreviado) ?></strong>
+                            <?php echo $dadosCorrida['Nome']; ?>
+                        </h2>
+                        <div class="date">
+                            <span><?php echo date('d/m/Y', strtotime($dadosCorrida['Data_corrida'])); ?></span>
+                        </div>
+                        <div class="categoria">
+                            <span class="categoria <?php echo 'cat' . $dadosCorrida['Categoria']; ?>">
+                                <?php
+                                if ($dadosCorrida['Categoria'] == "Livre") {
+                                    echo $dadosCorrida['Categoria'];
+                                } else {
+                                    echo $dadosCorrida['Categoria'] . " kg";
+                                }
+                                ?>
+                            </span>
+                        </div>
+                    </div>
                 </div>
-                <?php $classeH2 = strtolower($nomeAbreviado) . $dadosCorrida['Categoria']; ?>
-                <h2>
-                    <strong class="<?php echo $classeH2; ?>"><?php echo strtoupper($nomeAbreviado) ?></strong>
-                    <?php echo $dadosCorrida['Nome']; ?>
-                </h2>
-                <div class="date">
-                    <span><?php echo date('d/m/Y', strtotime($dadosCorrida['Data_corrida'])); ?></span>
-                </div>
-                <div class="categoria">
-                    <span class="categoria <?php echo 'cat' . $dadosCorrida['Categoria']; ?>">
-                        <?php 
-                        if ($dadosCorrida['Categoria'] == "Livre") {
-                            echo $dadosCorrida['Categoria'];
-                        } else {
-                            echo $dadosCorrida['Categoria'] . " kg";
-                        }
+
+                <form action="" method="post">
+                    <div class="ranking-container">
+                        <p><i class='ph ph-warning-circle'></i>Você tem certeza que deseja excluir todos os resultados do <strong><?php echo $dadosCorrida['Nome_Campeonato'] . " - " . $dadosCorrida['Nome'] ?></strong>?</p>
+                        <?php
+                        foreach ($dadosResultado as $resultado) :
+                            $usuario = $usuarioModel->consultarUsuarioPorId($resultado['Usuario_id']);
+                            $nome = $usuario['Nome'];
+                            $sobrenome = $usuario['Sobrenome'];
+                            $foto = $usuario['Foto'] != NULL ? $usuario['Foto'] : 'perfil_branco.png';
                         ?>
-                    </span>
-                </div>
+                            <div class="pilot">
+                                <div class="pilot-img-container">
+                                    <img class="pilot-img" src="/sistemackc/views/Img/ImgUsuario/<?php echo $foto; ?>" alt="<?php echo $nome . ' ' . $sobrenome; ?>">
+                                </div>
+                                <div class="pilot-info posicao<?php echo $resultado['Posicao']; ?>">
+                                    <span class="posicaoPiloto"><?php echo $resultado['Posicao']; ?>º</span>
+                                    <span class="nomePiloto"><?php echo $nome . ' ' . $sobrenome; ?></span>
+                                    <span><?php echo $resultado['Melhor_tempo']; ?></span>
+                                    <span><?php echo $resultado['Pontuacao_total']; ?> pts</span>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <div class="botoes">
+                        <a class='btn-editar' href='/sistemackc/admtm85/resultado/'>Cancelar</a>
+                        <button type='submit' class='btn-danger'>Excluir</button>
+                    </div>
+                </form>
+            <?php } ?>
+        </main>
+
+        <footer>
+            <!-- ondas -->
+            <div class="water">
+                <svg class="waves" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                    <defs>
+                        <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                    </defs>
+                    <g class="parallax">
+                        <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(47, 44, 44, 0.7)" />
+                        <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(47, 44, 44, 0.5)" />
+                        <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(49, 46, 46, 0.3)" />
+                        <use xlink:href="#gentle-wave" x="48" y="7" fill="var(--background-campos)" />
+                    </g>
+                </svg>
             </div>
-        </div>
-    
-        <form action="" method="post">
-            <div class="ranking-container">
-                <p><i class='ph ph-warning-circle'></i>Você tem certeza que deseja excluir todos os resultados do <strong><?php echo $dadosCorrida['Nome_Campeonato'] . " - " . $dadosCorrida['Nome'] ?></strong>?</p>
-                <?php
-                foreach ($dadosResultado as $resultado) :
-                    $usuario = $usuarioModel->consultarUsuarioPorId($resultado['Usuario_id']);
-                    $nome = $usuario['Nome'];
-                    $sobrenome = $usuario['Sobrenome'];
-                    $foto = $usuario['Foto'] != NULL ? $usuario['Foto'] : 'perfil_branco.png';
-                ?>
-                    <div class="pilot">
-                        <div class="pilot-img-container">
-                            <img class="pilot-img" src="/sistemackc/views/Img/ImgUsuario/<?php echo $foto; ?>" alt="<?php echo $nome . ' ' . $sobrenome; ?>">
+            <!-- conteudo na nav -->
+            <div class="content">
+                <div class="copyrights">
+                    <span class="copyright">© Sistema Gerenciador de corridas de kart. Todos os Direitos Reservados à Manas Code</span>
+                    <div class="logos">
+                        <div class="logSistema">
+                            <span class="copySistema">Plataforma</span>
+                            <img class="logo logoSistema" src="/sistemackc/Views/Img/ImgSistema/logoSis_Gerenciador_kart.png" alt="logo do Sistema Gerenciador de Corridas de Kart ">
                         </div>
-                        <div class="pilot-info posicao<?php echo $resultado['Posicao']; ?>">
-                            <span class="posicaoPiloto"><?php echo $resultado['Posicao']; ?>º</span>
-                            <span class="nomePiloto"><?php echo $nome . ' ' . $sobrenome; ?></span>
-                            <span><?php echo $resultado['Melhor_tempo']; ?></span>
-                            <span><?php echo $resultado['Pontuacao_total']; ?> pts</span>
+                        <div class="logManas">
+                            <span class="copyDevs">desenvolvedor</span>
+                            <img class="logo logoManasC" src="/sistemackc/Views/Img/ImgSistema/logoManasC.png" alt="logo da desenvolvedora do sistema - Manas Code">
                         </div>
                     </div>
-                <?php endforeach; ?>
-            </div>
+                </div>
 
-            <div class="botoes">
-                <a class='btn-editar' href='/sistemackc/admtm85/resultado/'>Cancelar</a>
-                <button type='submit' class='btn-danger'>Excluir</button>
-            </div>
-        </form>
-        <?php 
-        }} else {
-            echo "<h1>Acesso não autorizado</h1>";
-        }
-        ?>
-    </main> 
-
-    <footer>
-        <!-- ondas -->
-        <div class="water">
-            <svg class="waves" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-                <defs>
-                    <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-                </defs>
-                <g class="parallax">
-                    <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(47, 44, 44, 0.7)" />
-                    <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(47, 44, 44, 0.5)" />
-                    <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(49, 46, 46, 0.3)" />
-                    <use xlink:href="#gentle-wave" x="48" y="7" fill="var(--background-campos)" />
-                </g>
-            </svg>
-        </div>
-        <!-- conteudo na nav -->
-        <div class="content">
-            <div class="copyrights">
-                <span class="copyright">© Sistema Gerenciador de corridas de kart. Todos os Direitos Reservados à Manas Code</span>
-                <div class="logos">
-                    <div class="logSistema">
-                        <span class="copySistema">Plataforma</span>
-                        <img class="logo logoSistema" src="/sistemackc/Views/Img/ImgSistema/logoSis_Gerenciador_kart.png" alt="logo do Sistema Gerenciador de Corridas de Kart ">
+                <div class="navegation">
+                    <div class="contact">
+                        <a href="https://www.instagram.com/crashkartchampionship?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
+                            <i class="ph-fill ph-instagram-logo"></i><!-- logo instagram-->
+                        </a>
+                        <a href="https://wa.me/5511984372045" target="_blank">
+                            <i class="ph-fill ph-whatsapp-logo"></i><!-- logo whatsapp-->
+                        </a>
                     </div>
-                    <div class="logManas">
-                        <span class="copyDevs">desenvolvedor</span>
-                        <img class="logo logoManasC" src="/sistemackc/Views/Img/ImgSistema/logoManasC.png" alt="logo da desenvolvedora do sistema - Manas Code">
+                    <div class="navigationLink">
+                        <a href="/sistemackc/etapas">Etapas</a>
+                        <a href="/sistemackc/classificacao">Classificação</a>
+                        <a href="/sistemackc/kartodromo">Kartódromos</a>
                     </div>
                 </div>
             </div>
-
-            <div class="navegation">
-                <div class="contact">
-                    <a href="https://www.instagram.com/crashkartchampionship?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
-                        <i class="ph-fill ph-instagram-logo"></i><!-- logo instagram-->
-                    </a>
-                    <a href="https://wa.me/5511984372045" target="_blank">
-                        <i class="ph-fill ph-whatsapp-logo"></i><!-- logo whatsapp-->
-                    </a>
-                </div>
-                <div class="navigationLink">
-                    <a href="/sistemackc/etapas">Etapas</a>
-                    <a href="/sistemackc/classificacao">Classificação</a>
-                    <a href="/sistemackc/kartodromo">Kartódromos</a>
-                </div>
-            </div>
+        </footer>
+    <?php } else { ?>
+        <div class="containerAcesso">
+            <h1>Acesso não autorizado<i class="ph-fill ph-warning"></i></h1>
+            <p>Apenas administradores do Sistema tem acesso</p>
         </div>
-    </footer>
+    <?php } ?>
 </body>
+
 </html>

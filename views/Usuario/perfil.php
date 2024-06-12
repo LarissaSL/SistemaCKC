@@ -102,7 +102,6 @@
             <?php if (isset($feedbackSobrePerfil)) : ?>
                 <p><?php echo $feedbackSobrePerfil; ?></p>
             <?php else : ?>
-                
                 <?php $dataFormatada = date('d-m-Y', strtotime($usuario['Data_nascimento'])); ?>
 
                 <section class="container-form">
