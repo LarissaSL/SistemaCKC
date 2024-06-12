@@ -10,8 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     <!-- ícone de menu  -->
 
-    <script defer src="/sistemackc/views/Js/notificacao.js"></script> 
-      <!-- Custom CSS -->
+    <script defer src="/sistemackc/views/Js/notificacao.js"></script>
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="/sistemackc/views/Css/CssUsuario/notificacoes.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/CssUsuario/cadastro.css">
@@ -96,33 +96,33 @@
             </div>
 
             <?php
-                if (isset($feedback) && $feedback != '') {
-                    echo "<div class='container-feedback'>";
-                    if(isset($classe) && $classe == 'erro'){
-                        echo '
+            if (isset($feedback) && $feedback != '') {
+                echo "<div class='container-feedback'>";
+                if (isset($classe) && $classe == 'erro') {
+                    echo '
                         <div class="nofifications">
                             <div class="toast success">
                                 <div class="column">
                                     <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
-                                    <span class="'. $classe .'">'. $feedback .'</span>
+                                    <span class="' . $classe . '">' . $feedback . '</span>
                                 </div>
                                 <i class="ph ph-x" onclick="(this.parentElement).remove()"></i><!--iconde de X -->
                             </div>
                         </div>';
-                    } else {
-                        echo '
+                } else {
+                    echo '
                             <div class="nofifications">
                                 <div class="toast success">
                                     <div class="column">
                                         <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
-                                        <span class="'. $classe .'">'. $feedback .'</span>
+                                        <span class="' . $classe . '">' . $feedback . '</span>
                                     </div>
                                     <i class="ph ph-x" onclick="(this.parentElement).remove()"></i><!--iconde de X -->
                                 </div>
                             </div>';
-                    }
-                    echo "</div>";
                 }
+                echo "</div>";
+            }
             ?>
 
 
@@ -132,7 +132,7 @@
                 echo "<form action='/sistemackc/usuario/cadastro' class='form' method='POST'>";
             } ?>
 
-            <div class="div_container">                
+            <div class="div_container">
                 <div class="campo">
                     <label class="nome" for="nome">Nome:</label>
                     <input type="text" name="nome" value="<?php echo isset($dados[0]) ? $dados[0] : ''; ?>" required>
@@ -147,7 +147,7 @@
                     <label class="dataNascimento" for="dataNascimento">Data de Nascimento:</label>
                     <input type="date" name="dataNascimento" value="<?php echo isset($dados[2]) ? $dados[2] : ''; ?>" required>
                 </div>
-                
+
                 <div class="genero">
                     <label class="escolha" for="genero">Gênero:</label>
                     <input type="radio" value="Masculino" name="genero" <?php echo isset($dados[9]) && $dados[9] == 'Masculino' ? 'checked' : ''; ?>>
@@ -170,7 +170,7 @@
                     <label class="telefone" for="telefone">Celular:</label>
                     <input type="text" name="telefone" value="<?php echo isset($dados[10]) ? $dados[10] : ''; ?>" required>
                 </div>
-                
+
                 <div class="campo">
                     <label class="email" for="email">E-mail:</label>
                     <input type="text" name="email" id="email" value="<?php echo isset($dados[4]) ? htmlspecialchars($dados[4]) : ''; ?>" required>
@@ -181,35 +181,36 @@
                     <input type="text" name="confirmarEmail" id="confirmarEmail" value="<?php echo isset($dados[5]) ? htmlspecialchars($dados[5]) : ''; ?>" required>
                     <span id="emailError" style="color: red;" class="error"></span>
                 </div>
-                
+
                 <div class="campo">
                     <label class="senha" for="senha">Senha:</label>
                     <input type="password" name="senha" id="senha" value="<?php echo isset($dados[6]) ? htmlspecialchars($dados[6]) : ''; ?>" required>
                 </div>
-                
+
                 <div class="campo">
                     <label class="senha" for="confirmarSenha">Confirmação de Senha:</label>
                     <input type="password" name="confirmarSenha" id="confirmarSenha" value="<?php echo isset($dados[7]) ? htmlspecialchars($dados[7]) : ''; ?>" required>
                     <span id="senhaError" style="color: red;" class="error"></span>
-                </div>            
+                </div>
 
                 <div class="campo">
-                <label class="peso" for="peso">Peso:</label>
-                <input type="number" name="peso" value="<?php echo isset($dados[8]) ? $dados[8] : ''; ?>" required>
+                    <label class="peso" for="peso">Peso:</label>
+                    <input type="number" name="peso" value="<?php echo isset($dados[8]) ? $dados[8] : ''; ?>" required>
                 </div>
-            
+
                 <?php if (isset($_SESSION['tipo']) && $_SESSION['tipo'] == 'Administrador') : ?>
-                <div class="campo">
-                <select name="tipo" id="tipo">
-                    <option value="Comum" <?php echo isset($dados[12]) && $dados[12] == 'Comum' ? 'selected' : ''; ?>>Comum</option>
-                    <option value="Administrador" <?php echo isset($dados[12]) && $dados[12] == 'Administrador' ? 'selected' : ''; ?>>Administrador</option>
-                </select>
-                </div>
+                    <div class="campo">
+                        <label class="peso" for="peso">Tipo:</label>
+                        <select name="tipo" id="tipo">
+                            <option value="Comum" <?php echo isset($dados[12]) && $dados[12] == 'Comum' ? 'selected' : ''; ?>>Comum</option>
+                            <option value="Administrador" <?php echo isset($dados[12]) && $dados[12] == 'Administrador' ? 'selected' : ''; ?>>Administrador</option>
+                        </select>
+                    </div>
                 <?php endif; ?>
             </div>
 
-            <div class="button-container">            
-                <button type="submit" class="bt-cadastrar" <?php echo isset($dados[13]) ? $dados[13] : 'disabled'?>>Cadastrar</button>
+            <div class="button-container">
+                <button type="submit" class="bt-cadastrar" <?php echo isset($dados[13]) ? $dados[13] : 'disabled' ?>>Cadastrar</button>
             </div>
 
             </form>
@@ -268,4 +269,3 @@
 </body>
 
 </html>
-

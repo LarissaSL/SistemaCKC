@@ -15,7 +15,9 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script defer src="/sistemackc/views/Js/nav.js"></script>
     <script defer src="/sistemackc/views/Js/scriptResultados.js"></script>
-
+    <script defer src="/sistemackc/views/Js/notificacao.js"></script> 
+      <!-- Custom CSS -->
+    <link rel="stylesheet" href="/sistemackc/views/Css/CssUsuario/notificacoes.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/CssAdm/resultadoExibir.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/CssAdm/cadastrarResultado.css">
@@ -99,7 +101,16 @@
             if (isset($feedback) && !empty($feedback)) {
                 echo "<div class='container-feedback'>";
                 if ($classe == 'erro') {
-                    echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
+                    echo '
+                        <div class="nofifications">
+                            <div class="toast success">
+                                <div class="column">
+                                    <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
+                                    <span class="'. $classe .'">'. $feedback .'</span>
+                                </div>
+                                <i class="ph ph-x" onclick="(this.parentElement).remove()"></i><!--iconde de X -->
+                            </div>
+                        </div>';
                 }
                 echo "</div>";
             }

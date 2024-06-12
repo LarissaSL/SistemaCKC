@@ -14,7 +14,9 @@
 
     <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- ONDE PEGUEI OS ICON TEMPORARIOS 'phosphor-icons' -->
     <script defer src="/sistemackc/views/Js/nav.js"></script> <!-- O atributo "defer" serve para que o script roda depois do html -->
-
+    <script defer src="/sistemackc/views/Js/notificacao.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/sistemackc/views/Css/CssUsuario/notificacoes.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/CssAdm/cadastrarCorridas.css">
 
@@ -64,13 +66,40 @@
             if (isset($feedback) && !empty($feedback) && $classe == "semCadastro") {
                 echo "<div class='container-feedback'>";
                 if ($classe == 'semCadastro') {
-                    echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
+                    echo '
+                        <div class="nofifications">
+                            <div class="toast success">
+                                <div class="column">
+                                    <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
+                                    <span class="' . $classe . '">' . $feedback . '</span>
+                                </div>
+                                <i class="ph ph-x" onclick="(this.parentElement).remove()"></i><!--iconde de X -->
+                            </div>
+                        </div>';
                 }
                 if (isset($mostrarBotaoCampeonato) && $mostrarBotaoCampeonato) {
-                    echo "<a class='bt-redirecionar' href='/sistemackc/admtm85/campeonato'>Cadastrar campeonato</a><br>";
+                    echo '
+                        <div class="nofifications">
+                            <div class="toast success">
+                                <div class="column">
+                                    <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
+                                    <span class="' . $classe . '">' . $feedback . '</span>
+                                </div>
+                                <i class="ph ph-x" onclick="(this.parentElement).remove()"></i><!--iconde de X -->
+                            </div>
+                        </div>';
                 }
                 if (isset($mostrarBotaoKartodromo) && $mostrarBotaoKartodromo) {
-                    echo "<a class='bt-redirecionar' href='/sistemackc/admtm85/kartodromo'>Cadastrar kartodromo</a>";
+                    echo '
+                        <div class="nofifications">
+                            <div class="toast success">
+                                <div class="column">
+                                    <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
+                                    <span class="' . $classe . '">' . $feedback . '</span>
+                                </div>
+                                <i class="ph ph-x" onclick="(this.parentElement).remove()"></i><!--iconde de X -->
+                            </div>
+                        </div>';
                 }
                 echo "</div>";
             } else {
@@ -80,7 +109,16 @@
                 if (isset($feedback) && !empty($feedback)) {
                     echo "<div class='container-feedback'>";
                     if ($classe == 'erro') {
-                        echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
+                        echo '
+                            <div class="nofifications">
+                                <div class="toast success">
+                                    <div class="column">
+                                        <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
+                                        <span class="' . $classe . '">' . $feedback . '</span>
+                                    </div>
+                                    <i class="ph ph-x" onclick="(this.parentElement).remove()"></i><!--iconde de X -->
+                                </div>
+                            </div>';
                     }
                     echo "</div>";
                 }
