@@ -14,7 +14,9 @@
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <!-- CSS Files -->
+    <script defer src="/sistemackc/views/Js/notificacao.js"></script> 
+      <!-- Custom CSS -->
+    <link rel="stylesheet" href="/sistemackc/views/Css/CssUsuario/notificacoes.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/CssAdm/resultadoExibir.css">
     <link rel="icon" href="/sistemackc/views/Img/ImgIcones/crash_icon.ico" type="image/x-icon">
@@ -66,7 +68,16 @@
         <?php
             if (isset($feedback) && $feedback != '') {
                 echo "<div class='container-feedback'>";
-                echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
+                echo '
+                    <div class="nofifications">
+                        <div class="toast success">
+                            <div class="column">
+                                <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
+                                <span class="'. $classe .'">'. $feedback .'</span>
+                            </div>
+                            <i class="ph ph-x" onclick="(this.parentElement).remove()"></i><!--iconde de X -->
+                        </div>
+                    </div>';
                 echo '<a class="btn-voltar" href="/sistemackc/admtm85/resultado">Voltar</a>';
                 echo "</div>";
                

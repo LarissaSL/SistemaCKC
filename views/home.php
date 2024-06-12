@@ -190,24 +190,39 @@
                 <h2 class="subtitulo">Conheça nossos patrocinadores</h2>
             </div>
             <div class="containerLogos">
-                <div class="patrocinador">
+            <div class="patrocinador">
                     <a href="#">
-                        <img src="/sistemackc/Views/Img/ImgTelas/logoVertical1.png" alt="patrocinador">
+                        <img src="/sistemackc/Views/Img/ImgTelas/patrocinadorMARQUES.jpeg" alt="patrocinador">
                     </a>
                 </div>
                 <div class="patrocinador">
                     <a href="#">
-                        <img src="/sistemackc/Views/Img/ImgTelas/logoVertical2.png" alt="patrocinador">
+                        <img src="/sistemackc/Views/Img/ImgTelas/patrocianadorSKINA.jpeg" alt="patrocinador">
                     </a>
                 </div>
                 <div class="patrocinador">
                     <a href="#">
-                        <img src="/sistemackc/Views/Img/ImgTelas/logoVertical1.png" alt="patrocinador">
+                        <img src="/sistemackc/Views/Img/ImgTelas/patrocinadorKOKARE.jpeg" alt="patrocinador">
                     </a>
                 </div>
                 <div class="patrocinador">
                     <a href="#">
-                        <img src="/sistemackc/Views/Img/ImgTelas/logoVertical2.png" alt="patrocinador">
+                        <img src="/sistemackc/Views/Img/ImgTelas/patrocinadorUM_CONTO.png" alt="patrocinador">
+                    </a>
+                </div>
+                <div class="patrocinador">
+                    <a href="#">
+                        <img src="/sistemackc/Views/Img/ImgTelas/patrocinadorALEX_ACABAMENTOS.jpeg" alt="patrocinador">
+                    </a>
+                </div>
+                <div class="patrocinador">
+                    <a href="#">
+                        <img src="/sistemackc/Views/Img/ImgTelas/patrocinadorRFS.jpeg" alt="patrocinador">
+                    </a>
+                </div>
+                <div class="patrocinador">
+                    <a href="#">
+                        <img src="/sistemackc/Views/Img/ImgTelas/patrocinadorMY.jpeg" alt="patrocinador">
                     </a>
                 </div>
             </div>
@@ -261,7 +276,7 @@
             </div>
         </div>
     </footer>
-    
+
     <script src="https://cdn.botpress.cloud/webchat/v1/inject.js"></script>
     <script defer src="https://mediafiles.botpress.cloud/5a7f406f-c78a-46b6-a7e5-bf4a1daed5fb/webchat/config.js"></script>
 </body>

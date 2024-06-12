@@ -17,7 +17,9 @@
     <script src="/sistemackc/views/Js/fotos.js"></script>
 
 
-    <!-- Custom CSS -->
+    <script defer src="/sistemackc/views/Js/notificacao.js"></script> 
+      <!-- Custom CSS -->
+    <link rel="stylesheet" href="/sistemackc/views/Css/CssUsuario/notificacoes.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/CssAdm/crudKartodromo.css">
 
@@ -66,14 +68,23 @@
         <div id="bt-go-back">
             <a class="bt-voltar" href="/sistemackc/admtm85/campeonato/"><i class="ph ph-caret-left"></i>Voltar</a>
         </div>
-        <h1 class="titulo">Alterar Campeonato</h1>
+        <h1 class="titulo">Atualizar Campeonato</h1>
 
 
         <?php
             if (isset($feedback) && $feedback != "") {
                 echo "<div class='container-feedback'>";
                 if ($classe == 'erro') {
-                    echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
+                    echo '
+                        <div class="nofifications">
+                            <div class="toast success">
+                                <div class="column">
+                                    <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
+                                    <span class="'. $classe .'">'. $feedback .'</span>
+                                </div>
+                                <i class="ph ph-x" onclick="(this.parentElement).remove()"></i><!--iconde de X -->
+                            </div>
+                        </div>';
                 }
                 echo "</div>";
             }
