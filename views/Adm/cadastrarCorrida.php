@@ -68,7 +68,7 @@
                 if ($classe == 'semCadastro') {
                     echo '
                         <div class="nofifications">
-                            <div class="toast success">
+                            <div class="toast alerta">
                                 <div class="column">
                                     <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
                                     <span class="' . $classe . '">' . $feedback . '</span>
@@ -80,7 +80,7 @@
                 if (isset($mostrarBotaoCampeonato) && $mostrarBotaoCampeonato) {
                     echo '
                         <div class="nofifications">
-                            <div class="toast success">
+                            <div class="toast alerta">
                                 <div class="column">
                                     <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
                                     <span class="' . $classe . '">' . $feedback . '</span>
@@ -92,7 +92,7 @@
                 if (isset($mostrarBotaoKartodromo) && $mostrarBotaoKartodromo) {
                     echo '
                         <div class="nofifications">
-                            <div class="toast success">
+                            <div class="toast alerta">
                                 <div class="column">
                                     <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
                                     <span class="' . $classe . '">' . $feedback . '</span>
@@ -111,7 +111,7 @@
                     if ($classe == 'erro') {
                         echo '
                             <div class="nofifications">
-                                <div class="toast success">
+                                <div class="toast alerta">
                                     <div class="column">
                                         <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
                                         <span class="' . $classe . '">' . $feedback . '</span>

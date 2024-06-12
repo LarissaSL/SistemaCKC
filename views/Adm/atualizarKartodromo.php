@@ -79,7 +79,7 @@
                 if($classe == 'erro'){
                     echo '
                         <div class="nofifications">
-                            <div class="toast success">
+                            <div class="toast alerta">
                                 <div class="column">
                                     <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
                                     <span class="'. $classe .'">'. $feedback .'</span>
@@ -90,7 +90,7 @@
                 } else {
                     echo '
                         <div class="nofifications">
-                            <div class="toast success">
+                            <div class="toast alerta">
                                 <div class="column">
                                     <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
                                     <span class="'. $classe .'">'. $feedback .'</span>

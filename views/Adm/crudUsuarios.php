@@ -44,7 +44,7 @@
                     <li><a href="/sistemackc/admtm85/corrida">Corridas</a></li>
                     <li><a href="/sistemackc/admtm85/resultado">Resultados</a></li>
                     <li><a href="/sistemackc/admtm85/kartodromo">Kartodromos</a></li>
-                        
+
 
                     <li class="drop-down">
                         <?php
@@ -121,10 +121,10 @@
                         </tr>
                     </thead>
                     <tbody><!--corpo da tabela/linhas -->
-                        
+
                         <?php
                         foreach ($usuarios as $usuario) {
-        
+
                             echo "<tr>";
 
                             echo "<td class='acoes'><div class='icos'>
@@ -147,23 +147,28 @@
                             echo "<td class='modal'>" . $usuario['Genero'] . "</td>";
                             echo "<td>" . $usuario['Telefone'] . "</td>";
                             echo "<td class='modal'> " . $usuario['Data_registro'] . "</td>";
-                            echo "<td class='bt-modal'><div class='icon-plus'><button class='btModal' 
-                                    foto='<img style=\"width: 90px;\" src=\"/sistemackc/views/Img/ImgUsuario/" . $foto . "\" alt=\"Imagem de " . $usuario['Nome'] . "\">'
-                                    cpf='" . $usuario['Cpf'] . "' 
-                                    data-nascimento='" . $usuario['Data_nascimento'] . "' 
-                                    tipo='" . $usuario['Tipo'] . "' 
-                                    nome='" . $usuario['Nome'] . "' 
-                                    sobrenone='" . $usuario['Sobrenome'] . "' 
-                                    email='" . $usuario['Email'] . "' 
-                                    senha='" . substr($usuario['Senha'], 0, 5) . "' 
-                                    peso='" . $usuario['Peso'] . "' 
-                                    genero='" . $usuario['Genero'] . "' 
-                                    telefone='" . $usuario['Telefone'] . "' 
-                                    data-registro='" . $usuario['Data_registro'] . "'><i class='ph-bold ph-plus'></i></button></div></td>";
+                            echo "<td class='bt-modal'>
+                                    <div class='icon-plus'>
+                                        <button class='btModal' 
+                                                foto='<img style=\"width: 90px;\" src=\"/sistemackc/views/Img/ImgUsuario/" . $foto . "\" alt=\"Imagem de " . $usuario['Nome'] . "\">'
+                                                cpf='" . $usuario['Cpf'] . "' 
+                                                data-nascimento='" . $usuario['Data_nascimento'] . "' 
+                                                tipo='" . $usuario['Tipo'] . "' 
+                                                nome='" . $usuario['Nome'] . "' 
+                                                sobrenone='" . $usuario['Sobrenome'] . "' 
+                                                email='" . $usuario['Email'] . "' 
+                                                senha='" . substr($usuario['Senha'], 0, 5) . "' 
+                                                peso='" . $usuario['Peso'] . "' 
+                                                genero='" . $usuario['Genero'] . "' 
+                                                telefone='" . $usuario['Telefone'] . "' 
+                                                data-registro='" . $usuario['Data_registro'] . "'>
+                                                <i class='ph-bold ph-plus'></i>
+                                        </button>
+                                    </div></td>";
                             echo "</tr>";
                         }
                         echo "</table>";
-                        
+
                         ?>
 
             </div>
@@ -232,4 +237,5 @@
         </div>
     </footer>
 </body>
+
 </html>

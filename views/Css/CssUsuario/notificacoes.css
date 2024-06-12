@@ -62,8 +62,11 @@
 }
 
 /* a partir daqui entra o css espacifico (erro, sucesso...) cor linha */
-.toast.success::before{
+.toast.alerta::before{
     background:var(--notificacao-exclamacao);
+}
+.toast.success::before{
+    background:green;
 }
 .toast.error::before{
     background:var(--categoria-ckc-110);
@@ -74,8 +77,11 @@
     font-size: 2.7rem;
 }
 /* cor dos icones exclamação e error */
-.toast.success .column i{
+.toast.alerta .column i{
     color: var(--notificacao-exclamacao);
+}
+.toast.success .column i{
+    color: green;
 }
 
 .toast.error .column i{

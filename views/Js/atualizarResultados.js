@@ -58,6 +58,45 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+// Estrutura da notificação
+function notificacao(classe, feedback) {
+    var container = document.createElement('div');
+    container.classList.add('nofifications');
+
+    var toast = document.createElement('div');
+    toast.classList.add('toast', 'alerta');
+
+    var column = document.createElement('div');
+    column.classList.add('column');
+
+    var icon = document.createElement('i');
+    icon.classList.add('ph-fill', 'ph-warning');
+
+    var message = document.createElement('span');
+    message.className = classe;
+    message.textContent = feedback;
+
+    var closeIcon = document.createElement('i');
+    closeIcon.classList.add('ph', 'ph-x');
+    closeIcon.onclick = function() {
+        container.remove();
+    };
+
+    column.appendChild(icon);
+    column.appendChild(message);
+    toast.appendChild(column);
+    toast.appendChild(closeIcon);
+    container.appendChild(toast);
+
+    document.body.appendChild(container);
+     
+     // Remove a notificação automaticamente 
+    setTimeout(function() {
+        container.remove();
+    }, 10000);
+
+}
+
 // Adiciona evento de submit ao formulário - Impedir caso repetida a posição ou piloto
 document.getElementById("formPilotos").addEventListener("submit", function(event) {
     // Verifica se há posições repetidas
@@ -74,7 +113,7 @@ document.getElementById("formPilotos").addEventListener("submit", function(event
                 posicoesRepetidas.push(posicao);
             }
         });
-        alert("Erro ao atualizar. As seguintes posições se repetem: \n" + posicoesRepetidas.join(", "));
+        notificacao('error', "Erro ao atualizar. As seguintes posições se repetem: \n" + posicoesRepetidas.join(", "));
         event.preventDefault();
         return;
     }
@@ -102,7 +141,7 @@ document.getElementById("formPilotos").addEventListener("submit", function(event
                 pilotosRepetidos.push(piloto.nome);
             }
         });
-        alert("Erro ao atualizar. Os seguintes pilotos selecionados se repetem: \n" + pilotosRepetidos.join(", "));
+        notificacao('error', "Erro ao atualizar. Os seguintes pilotos selecionados se repetem: \n" + pilotosRepetidos.join(", "));
         event.preventDefault();
         return;
     }

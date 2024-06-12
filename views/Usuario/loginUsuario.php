@@ -90,7 +90,7 @@
 
             <?php if (isset($feedback)) : ?>
                 <div class="nofifications">
-                    <div class="toast success">
+                    <div class="toast alerta">
                         <div class="column">
                             <i class="ph-fill ph-warning"></i><!--icone de exclamação-->
                             <span class="<?php echo $classe ?>"><?php echo $feedback ?></span>

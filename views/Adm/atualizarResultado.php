@@ -15,7 +15,8 @@
     <script defer src="/sistemackc/views/Js/atualizarResultados.js"></script>
 
     <link rel="icon" href="/sistemackc/views/Img/ImgIcones/crash_icon.ico" type="image/x-icon">
-
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/sistemackc/views/Css/CssUsuario/notificacoes.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/variaveis.css">
     <link rel="stylesheet" href="/sistemackc/views/Css/CssAdm/resultadoExibir.css">
 
@@ -99,7 +100,12 @@
         <?php
             if (isset($feedback) && $feedback != '') {
                 echo "<div class='container-feedback'>";
-                echo "<span class='$classe'><i class='ph ph-warning-circle'></i><strong>$feedback</strong></span>";
+                echo "
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            notificacao('$classe', '$feedback');
+                        });
+                    </script>";
                 echo "</div>";
             }
         ?>
