@@ -102,7 +102,6 @@
             <?php if (isset($feedbackSobrePerfil)) : ?>
                 <p><?php echo $feedbackSobrePerfil; ?></p>
             <?php else : ?>
-                <h2 class="subtitulo">Perfil do Usuário ID: <?php echo $usuario['Id']; ?></h2>
                 <?php $dataFormatada = date('d-m-Y', strtotime($usuario['Data_nascimento'])); ?>
 
                 <section class="container-form">
@@ -321,6 +320,9 @@
                 </div>
             </div>
         </footer>
+        
+        <script src="https://cdn.botpress.cloud/webchat/v1/inject.js"></script>
+        <script defer src="https://mediafiles.botpress.cloud/5a7f406f-c78a-46b6-a7e5-bf4a1daed5fb/webchat/config.js"></script>
 </body>
 
 </html>
