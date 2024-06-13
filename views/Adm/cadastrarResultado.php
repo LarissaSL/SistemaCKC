@@ -209,7 +209,7 @@
                             <img class="logo logoSistema" src="/sistemackc/Views/Img/ImgSistema/logoSis_Gerenciador_kart.png" alt="logo do Sistema Gerenciador de Corridas de Kart ">
                         </div>
                         <div class="logManas">
-                            <span class="copyDevs">desenvolvedor</span>
+                            <span class="copyDevs">Desenvolvedora</span>
                             <img class="logo logoManasC" src="/sistemackc/Views/Img/ImgSistema/logoManasC.png" alt="logo da desenvolvedora do sistema - Manas Code">
                         </div>
                     </div>
