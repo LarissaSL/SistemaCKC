@@ -172,7 +172,7 @@
                         </p>
                     </div>
                     <div class="botao">
-                        <a class="bt-redirecionar" href="#">Vamos nessa!</a>
+                        <a class="bt-redirecionar" href="https://www.youtube.com/@kartamadorsp" target="_blank">Vamos nessa!</a>
                     </div>
                 </div>
             </div>
